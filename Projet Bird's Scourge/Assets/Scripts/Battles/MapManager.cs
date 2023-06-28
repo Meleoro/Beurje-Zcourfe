@@ -13,12 +13,17 @@ public class MapManager : MonoBehaviour
         get { return _instance;  }
     }
 
+
+    [Header("Map Infos")] 
+    public Dictionary<Vector2Int, OverlayTile> map;
+
+
     [Header("Références")] 
     public GameObject overlayTile;
     public Transform overlayTilesContainer;
     private Tilemap _tilemap;
     
-
+    
     
     private void Awake()
     {
@@ -29,6 +34,7 @@ public class MapManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    
     private void Start()
     {
         _tilemap = GetComponentInChildren<Tilemap>();
@@ -36,11 +42,14 @@ public class MapManager : MonoBehaviour
         InitialiseMap();
     }
 
+    
 
     // CREE ET PLACE LES OVERLAYTILES (ELLES SERVENT DE COLLIDER MAIS AUSSI D'INDICATEUR EN JEU)
     public void InitialiseMap()
     {
         BoundsInt bounds = _tilemap.cellBounds;
+
+        map = new Dictionary<Vector2Int, OverlayTile>();
 
         // On parcourt toutes les tiles de la tilemap
         for (int x = bounds.xMin; x < bounds.xMax; x++)
@@ -59,6 +68,8 @@ public class MapManager : MonoBehaviour
 
                         newOverlayTile.transform.position = new Vector3(posNewOverlayTile.x, posNewOverlayTile.y,
                             posNewOverlayTile.z + 1);
+                        
+                        map.Add(new Vector2Int(tilePos.x, tilePos.y), newOverlayTile.GetComponent<OverlayTile>());
                     }
                 }
             }

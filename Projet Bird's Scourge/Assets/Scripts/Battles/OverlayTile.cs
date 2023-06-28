@@ -7,6 +7,15 @@ public class OverlayTile : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
 
+    [Header("Pathfinding")]
+    private int costG;
+    private int costH;
+    
+    public int costF
+    {
+        get { return costG + costF;  }
+    }
+
 
     private void Start()
     {
