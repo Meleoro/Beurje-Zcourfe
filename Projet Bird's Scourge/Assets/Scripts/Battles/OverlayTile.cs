@@ -8,13 +8,12 @@ public class OverlayTile : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     [Header("Pathfinding")]
-    private int costG;
-    private int costH;
-    
-    public int costF
-    {
-        get { return costG + costF;  }
-    }
+    [HideInInspector] public int costG;
+    [HideInInspector] public int costH;
+    public int costF { get { return costG + costH; } }
+    [HideInInspector] public OverlayTile previous;
+    [HideInInspector] public OverlayTile isBlocked;
+    [HideInInspector] public Vector3Int posOverlayTile;
 
 
     private void Start()

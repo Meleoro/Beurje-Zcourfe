@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6670072259211808969}
   m_Layer: 0
   m_Name: OverlayTile
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,6 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca65ecb39ff384408df5c315c83f994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  costG: 0
+  costH: 0
+  previous: {fileID: 0}
+  isBlocked: {fileID: 0}
+  posOverlayTile: {x: 0, y: 0, z: 0}
 --- !u!60 &6670072259211808969
 PolygonCollider2D:
   m_ObjectHideFlags: 0

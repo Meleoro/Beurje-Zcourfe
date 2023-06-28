@@ -32,15 +32,19 @@ public class MapManager : MonoBehaviour
         
         else
             Destroy(gameObject);
-    }
-
-    
-    private void Start()
-    {
+        
         _tilemap = GetComponentInChildren<Tilemap>();
         
         InitialiseMap();
     }
+
+    
+    /*private void Start()
+    {
+        _tilemap = GetComponentInChildren<Tilemap>();
+        
+        InitialiseMap();
+    }*/
 
     
 
@@ -65,6 +69,8 @@ public class MapManager : MonoBehaviour
                     {
                         GameObject newOverlayTile = Instantiate(overlayTile, overlayTilesContainer);
                         Vector3 posNewOverlayTile = _tilemap.GetCellCenterWorld(tilePos);
+
+                        newOverlayTile.GetComponent<OverlayTile>().posOverlayTile = tilePos;
 
                         newOverlayTile.transform.position = new Vector3(posNewOverlayTile.x, posNewOverlayTile.y,
                             posNewOverlayTile.z + 1);
