@@ -9,6 +9,7 @@ public class DataChara : ScriptableObject
     public string charaName;
     public int startHealth;
     public int maxLevel;
+    public int moveRange;
 
 
     [Header("Stats")] 

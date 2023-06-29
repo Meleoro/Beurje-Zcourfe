@@ -5,24 +5,48 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    public Vector2Int startTile;
+    [Header("GeneralDatas")] 
+    public DataChara data;
     
+    [Header("CurrentDatas")]
+    public Vector2Int startTile;
     public OverlayTile currentTile;
+    public List<OverlayTile> currentTilesAtRange = new List<OverlayTile>();
+    private bool isSelected;
+    
+    [Header("References")]
+    private RangeFinder rangeFinder;
 
 
     private void Start()
     {
+        rangeFinder = new RangeFinder();
+        
         currentTile = MapManager.Instance.map[startTile];
 
         MoveToTile(currentTile.transform.position);
     }
 
 
+    // FIND ALL AVAILABLE TILES AT RANGE
+    public void FindTilesAtRange()
+    {
+        currentTilesAtRange = rangeFinder.FindTilesInRange(currentTile, data.moveRange);
+        
+        MouseManager.Instance.DisplayTilesAtRange();
+    }
+
+
+    // INSTANT MOVE
     public void MoveToTile(Vector2 newPos)
     {
         transform.position = newPos + new Vector2(0, 0.4f);
+        
+        FindTilesAtRange();
     }
     
+    
+    // MOVE WITH BREAKS 
     public IEnumerator MoveToTile(List<OverlayTile> path)
     {
         for(int i = 0; i < path.Count; i++)
@@ -32,7 +56,8 @@ public class Unit : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         
-        
         currentTile = path[path.Count - 1];
+
+        FindTilesAtRange();
     }
 }

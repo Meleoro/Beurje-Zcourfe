@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PathFinder : MonoBehaviour
+public class PathFinder
 {
     // RENVOIE UNE LISTE QUI EST LE CHEMIN ENTRE DEUX POINTS
     public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11e573b8e61ddc4c8f994878d654055, type: 3}
+  m_Name: Archer
+  m_EditorClassIdentifier: 
+  charaName: Archer
+  startHealth: 10
+  maxLevel: 5
+  moveRange: 3
+  PM: 0
+  attaqueData: {fileID: 0}
+  levelCompetence1: 0
+  competenceData1: {fileID: 0}
+  levelCompetence2: 0
+  competenceData2: {fileID: 0}
+  levelPassif: 0
+  passifData: {fileID: 0}
+  currentLevel: 0
