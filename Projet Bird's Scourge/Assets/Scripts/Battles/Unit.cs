@@ -55,7 +55,7 @@ public class Unit : MonoBehaviour
         {
             transform.position = path[i].transform.position + new Vector3(0, 0.4f, -1);
 
-            transform.DOScale(new Vector3(0.7f, 1.3f, 1f), 0.04f)
+            transform.DOScale(new Vector3(0.75f, 1.25f, 1f), 0.04f)
                 .OnComplete(() => transform.DOScale(Vector3.one, 0.04f));
             
             yield return new WaitForSeconds(0.2f);
