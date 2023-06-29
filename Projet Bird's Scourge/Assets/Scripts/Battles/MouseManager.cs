@@ -96,9 +96,28 @@ public class MouseManager : MonoBehaviour
 
             else if(selectedUnit != null)
             {
-                StartCoroutine(selectedUnit.MoveToTile(pathFinder.FindPath(selectedUnit.currentTile, clickedObject.GetComponent<OverlayTile>())));
+                if (tilesAtRangeDisplayed.Contains(clickedObject.GetComponent<OverlayTile>()))
+                {
+                    StartCoroutine(selectedUnit.MoveToTile(pathFinder.FindPath(selectedUnit.currentTile, clickedObject.GetComponent<OverlayTile>())));
+                }
+                else
+                {
+                    StopSelection();
+                }
             }
         }
+
+        else
+        {
+            StopSelection();
+        }
+    }
+
+    private void StopSelection()
+    {
+        selectedUnit = null;
+        
+        DisplayTilesAtRange();
     }
     
 
