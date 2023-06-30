@@ -95,6 +95,7 @@ public class DataCompetenceEditor : Editor
         GUILayout.Space(5);
         
         // GENERAL
+        /*
         using (new GUILayout.VerticalScope(EditorStyles.helpBox))
         {
             GUILayout.Label("General", moduleNameStyle);
@@ -202,7 +203,7 @@ public class DataCompetenceEditor : Editor
             }
         }
         
-        GUILayout.Space(20);
+        GUILayout.Space(20);*/
         
         
         // LEVELS
@@ -254,20 +255,16 @@ public class DataCompetenceEditor : Editor
                 listLevels = so.FindProperty("levels");
                 SerializedProperty MyListRef = listLevels.GetArrayElementAtIndex(i);
                 
-                SerializedProperty upgradeDegats = MyListRef.FindPropertyRelative("upgradeDegats");
                 SerializedProperty newDegatsMin = MyListRef.FindPropertyRelative("newDegatsMin");
                 SerializedProperty newDegatsMax = MyListRef.FindPropertyRelative("newDegatsMax");
                 
-                SerializedProperty upgradePaterne = MyListRef.FindPropertyRelative("upgradePaterne");
                 SerializedProperty isCustom = MyListRef.FindPropertyRelative("isCustom");
                 SerializedProperty newPaterne = MyListRef.FindPropertyRelative("newPaterne");
                 SerializedProperty newPaternePrefab = MyListRef.FindPropertyRelative("newPaternePrefab");
                 SerializedProperty newPortee = MyListRef.FindPropertyRelative("newPortee");
-
-                SerializedProperty upgradeEffet = MyListRef.FindPropertyRelative("upgradeEffet");
+                
                 SerializedProperty newEffet = MyListRef.FindPropertyRelative("newEffet");
-
-                SerializedProperty upgradeAlteration = MyListRef.FindPropertyRelative("upgradeAlteration");
+                
                 SerializedProperty newAlteration = MyListRef.FindPropertyRelative("newAlteration");
 
                 using (new GUILayout.VerticalScope(EditorStyles.helpBox))
@@ -278,25 +275,16 @@ public class DataCompetenceEditor : Editor
                     
                     // Partie Dégâts
                     GUILayout.Label("Degats", titreStyle);
-
-                    EditorGUILayout.PropertyField(upgradeDegats);
-
-                    if (currentScript.levels[i].upgradeDegats)
-                    {
-                        EditorGUILayout.PropertyField(newDegatsMin);
-                        EditorGUILayout.PropertyField(newDegatsMax);
-                    }
                     
+                    EditorGUILayout.PropertyField(newDegatsMin);
+                    EditorGUILayout.PropertyField(newDegatsMax);
+
                     GUILayout.Space(10);
                     
                     
                     // Partie Paterne
                     GUILayout.Label("Paterne", titreStyle);
-
-                    EditorGUILayout.PropertyField(upgradePaterne);
                     
-                    if (currentScript.levels[i].upgradePaterne)
-                    {
                         EditorGUILayout.PropertyField(isCustom);
 
                         if (currentScript.levels[i].isCustom)
@@ -329,29 +317,21 @@ public class DataCompetenceEditor : Editor
                             EditorGUILayout.PropertyField(newPaternePrefab);
                             EditorGUILayout.PropertyField(newPortee);
                         }
-                    }
+                    
                     
                     GUILayout.Space(10);
                     
                     
                     // Partie Effets / Alteration
                     GUILayout.Label("Effet / Alteration", titreStyle);
-
-                    EditorGUILayout.PropertyField(upgradeEffet);
                     
-                    if (currentScript.levels[i].upgradeEffet)
-                    {
-                        EditorGUILayout.PropertyField(newEffet);
-                    }
+                    EditorGUILayout.PropertyField(newEffet);
+                    
                     
                     GUILayout.Space(3);
                     
-                    EditorGUILayout.PropertyField(upgradeAlteration);
+                    EditorGUILayout.PropertyField(newAlteration);
                     
-                    if (currentScript.levels[i].upgradeAlteration)
-                    {
-                        EditorGUILayout.PropertyField(newAlteration);
-                    }
                 }
             }
         }

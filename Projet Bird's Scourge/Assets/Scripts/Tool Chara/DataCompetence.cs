@@ -58,25 +58,6 @@ public class DataCompetence : ScriptableObject
 
     //[Header("LevelUp")] 
     public List<CompetenceLevel> levels = new List<CompetenceLevel>(1);
-
-
-    /*public void InitialiseList()
-    {
-        for (int i = 0; i < 7; i++)
-        {
-            paterne.Add(new List<bool>());
-            
-            for (int j = 0; j < 7; j++)
-            {
-                paterne[i].Add(false);
-            }
-        }
-    }
-
-    public void ChangeValue(int x, int y, bool newValue)
-    {
-        paterne[x][y] = newValue;
-    }*/
 }
 
 [System.Serializable]
@@ -89,19 +70,15 @@ public class ListBool
 [System.Serializable]
 public class CompetenceLevel
 {
-    public bool upgradeDegats;
     public int newDegatsMin;
     public int newDegatsMax;
     
-    public bool upgradePaterne;
     public bool isCustom;
     [SerializeField] public List<ListBool> newPaterne = new List<ListBool>();
     public DataCompetence.Paternes newPaternePrefab;
     public int newPortee;
-
-    public bool upgradeEffet;
+    
     public DataCompetence.Effets newEffet;
-
-    public bool upgradeAlteration;
+    
     public DataCompetence.Alterations newAlteration;
 }
