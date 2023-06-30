@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "DataChara")]
-public class DataChara : ScriptableObject
+[CreateAssetMenu(menuName = "DataUnit")]
+public class DataUnit : ScriptableObject
 {
     [Header("General")] 
     public string charaName;
-    public int startHealth;
     public int moveRange;
-
-
-    [Header("Stats")] 
-    public int PM;
     
+    [Header("Sprites")] 
+    public Sprite idleSprite;
+    public Sprite attackSprite;
+    public Sprite damageSprite;
+
 
     [Header("Competences")] 
     public DataCompetence attaqueData;
@@ -28,4 +28,17 @@ public class DataChara : ScriptableObject
     [Header("Levels")] 
     public int currentLevel;
 
+}
+
+
+[System.Serializable]
+public class UnitLevel
+{
+    [Header("StatsGeneral")] 
+    public int maxHealth;
+    public int moveRange;
+    
+    [Header("Stats")] 
+    public int strength;
+    public int defense;
 }

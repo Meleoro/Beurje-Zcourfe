@@ -8,7 +8,7 @@ using DG.Tweening;
 public class Unit : MonoBehaviour
 {
     [Header("GeneralDatas")] 
-    public DataChara data;
+    public DataUnit data;
     
     [Header("CurrentDatas")]
     public Vector2Int startTile;
