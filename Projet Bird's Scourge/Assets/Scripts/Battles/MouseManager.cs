@@ -15,9 +15,11 @@ public class MouseManager : MonoBehaviour
     [Header("Other")]
     public Unit selectedUnit;
     private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
-    
+    private List<OverlayTile> currentPath = new List<OverlayTile>();
+
     [Header("References")]
     private PathFinder pathFinder;
+    private ArrowCreator arrowCreator;
 
 
     private void Awake()
@@ -33,6 +35,7 @@ public class MouseManager : MonoBehaviour
     private void Start()
     {
         pathFinder = new PathFinder();
+        arrowCreator = new ArrowCreator();
     }
 
 
@@ -42,6 +45,8 @@ public class MouseManager : MonoBehaviour
 
         if (currentTile != null)
         {
+            DisplayArrow(currentTile.GetComponent<OverlayTile>());
+            
             transform.position = currentTile.transform.position;
         }
 
@@ -53,6 +58,7 @@ public class MouseManager : MonoBehaviour
         }
     }
 
+    
 
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
     public void DisplayTilesAtRange()
@@ -78,7 +84,7 @@ public class MouseManager : MonoBehaviour
     }
 
 
-    // SEEK ON WHICH THE CHARACTER CLICKED
+    // SEEK ON WHICH ELEMENT THE CHARACTER CLICKED
     private void VerifyClickedElement()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -98,7 +104,7 @@ public class MouseManager : MonoBehaviour
             {
                 if (tilesAtRangeDisplayed.Contains(clickedObject.GetComponent<OverlayTile>()))
                 {
-                    StartCoroutine(selectedUnit.MoveToTile(pathFinder.FindPath(selectedUnit.currentTile, clickedObject.GetComponent<OverlayTile>())));
+                    StartCoroutine(selectedUnit.MoveToTile(currentPath));
                 }
                 else
                 {
@@ -137,5 +143,30 @@ public class MouseManager : MonoBehaviour
         }
 
         return null;
+    }
+
+    
+    private void DisplayArrow(OverlayTile focusedTile)
+    {
+        if (selectedUnit != null)
+        {
+            if (tilesAtRangeDisplayed.Contains(focusedTile))
+            {
+                for (int i = 0; i < currentPath.Count; i++)
+                {
+                    currentPath[i].HideArrow();
+                }
+                
+                currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile);
+
+                for (int i = 0; i < currentPath.Count; i++)
+                {
+                    OverlayTile previousTile = i > 0 ? currentPath[i - 1] : selectedUnit.currentTile;
+                    OverlayTile nextTile = i < currentPath.Count - 1 ? currentPath[i + 1] : null;
+                    
+                    currentPath[i].DisplayArrow(arrowCreator.CreateArrow(previousTile, currentPath[i], nextTile));
+                }
+            }
+        }
     }
 }

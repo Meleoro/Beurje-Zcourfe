@@ -75,7 +75,7 @@ public class PathFinder
     }
     
     
-    // REGARDE LES COUTS F (EN FONCTION DU DEPART) DE CHAQUES CASES D'UNE LISTE ET RENVOIE LA PLUS PROCHE
+    // REGARDE LES COUTS F (EN FONCTION DU DEPART ET DE LA FIN) DE CHAQUE CASE D'UNE LISTE ET RENVOIE LA PLUS INTERESSANTE
     private int FindNearestTile(List<OverlayTile> tiles)
     {
         int indexSelectedTile = 0;

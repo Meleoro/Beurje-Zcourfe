@@ -37,15 +37,6 @@ public class MapManager : MonoBehaviour
         
         InitialiseMap();
     }
-
-    
-    /*private void Start()
-    {
-        _tilemap = GetComponentInChildren<Tilemap>();
-        
-        InitialiseMap();
-    }*/
-
     
 
     // CREE ET PLACE LES OVERLAYTILES (ELLES SERVENT DE COLLIDER MAIS AUSSI D'INDICATEUR EN JEU)
@@ -55,7 +46,7 @@ public class MapManager : MonoBehaviour
 
         map = new Dictionary<Vector2Int, OverlayTile>();
 
-        // On parcourt toutes les tiles de la tilemap
+        // We go through every tile of the tilemap
         for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
             for (int y = bounds.yMin; y < bounds.yMax; y++)
@@ -64,7 +55,7 @@ public class MapManager : MonoBehaviour
                 {
                     Vector3Int tilePos = new Vector3Int(x, y, z);
 
-                    // On verifie si l'emplacement contient bien une tile
+                    // We check if the location contains a tile, then instantiate and setup an overlay tile
                     if (_tilemap.HasTile(tilePos))
                     {
                         GameObject newOverlayTile = Instantiate(overlayTile, overlayTilesContainer);
