@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RangeFinder : MonoBehaviour
+public class RangeFinder 
 {
     // VA CHERCHER TOUTES LES TILES DISPONIBLES DANS UNE CERTAINE RANGE 
     public List<OverlayTile> FindTilesInRange(OverlayTile start, int range)

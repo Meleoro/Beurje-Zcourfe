@@ -13,15 +13,36 @@ MonoBehaviour:
   m_Name: Archer
   m_EditorClassIdentifier: 
   charaName: Archer
-  startHealth: 10
-  maxLevel: 5
   moveRange: 3
-  PM: 0
+  idleSprite: {fileID: 0}
+  attackSprite: {fileID: 0}
+  damageSprite: {fileID: 0}
   attaqueData: {fileID: 0}
-  levelCompetence1: 0
-  competenceData1: {fileID: 0}
-  levelCompetence2: 0
-  competenceData2: {fileID: 0}
-  levelPassif: 0
+  levelUnlockCompetence1: 0
+  competence1Data: {fileID: 0}
+  levelUnlockCompetence2: 0
+  competence2Data: {fileID: 0}
+  levelUnlockPassif: 0
   passifData: {fileID: 0}
-  currentLevel: 0
+  levels:
+  - PV: 10
+    PM: 4
+    force: 10
+    defense: 10
+    vitesse: 10
+    agilite: 10
+    precision: 10
+  - PV: 10
+    PM: 4
+    force: 10
+    defense: 10
+    vitesse: 10
+    agilite: 10
+    precision: 10
+  - PV: 10
+    PM: 4
+    force: 10
+    defense: 10
+    vitesse: 10
+    agilite: 10
+    precision: 10
