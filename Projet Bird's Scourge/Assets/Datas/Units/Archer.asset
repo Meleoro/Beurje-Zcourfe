@@ -17,7 +17,7 @@ MonoBehaviour:
   idleSprite: {fileID: 0}
   attackSprite: {fileID: 0}
   damageSprite: {fileID: 0}
-  attaqueData: {fileID: 0}
+  attaqueData: {fileID: 11400000, guid: 983068a2f25cd5a4d9b31a8bbe822763, type: 2}
   levelUnlockCompetence1: 0
   competence1Data: {fileID: 0}
   levelUnlockCompetence2: 0

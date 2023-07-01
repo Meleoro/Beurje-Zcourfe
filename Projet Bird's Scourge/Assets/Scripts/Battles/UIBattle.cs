@@ -31,6 +31,12 @@ public class UIBattle : MonoBehaviour
         if(unitInfos.competence2Data != null)
            competence2Button.text = unitInfos.competence2Data.competenceName;
     }
+
+
+    public void ClickButton(int index)
+    {
+        MouseManager.Instance.ChangeSelectedCompetence(index);
+    }
     
     
 }

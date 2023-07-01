@@ -5,7 +5,43 @@ using UnityEngine;
 
 public class RangeFinder 
 {
-    // VA CHERCHER TOUTES LES TILES DISPONIBLES DANS UNE CERTAINE RANGE 
+    // FIND THE TILES CONCERNED WITH THE COMPETENCE IN THE PARAMETERS
+    public List<OverlayTile> FindTilesCompetence(OverlayTile start, DataCompetence competenceUsed, int competenceLevel)
+    {
+        // First we find the coordinates to check
+        List<Vector2Int> coordinates = new List<Vector2Int>();
+        List<OverlayTile> tilesToColor = new List<OverlayTile>();
+
+        if (competenceUsed.levels[competenceLevel].isCustom)
+        {
+            List<ListBool> paterne = competenceUsed.levels[competenceLevel].newPaterne;
+
+            for (int x = 0; x < paterne.Count; x++)
+            {
+                for (int y = 0; y < paterne[x].list.Count; y++)
+                {
+                    if (paterne[x].list[y])
+                    {
+                        coordinates.Add(new Vector2Int( start.posOverlayTile.x + x - 3, start.posOverlayTile.y + y - 3));
+                    }
+                }
+            }
+        }
+        
+        // Next we verify if they exist and, if so, add them to the returned list
+        for (int i = 0; i < coordinates.Count; i++)
+        {
+            if (MapManager.Instance.map.ContainsKey(coordinates[i]))
+            {
+                tilesToColor.Add(MapManager.Instance.map[coordinates[i]]);
+            }
+        }
+        
+        return tilesToColor;
+    }
+
+    
+    // SEEK ALL THE TILES AVAILABLE IN A SPECIFIC RANGE
     public List<OverlayTile> FindTilesInRange(OverlayTile start, int range)
     {
         List<OverlayTile> tilesInRange = new List<OverlayTile>();

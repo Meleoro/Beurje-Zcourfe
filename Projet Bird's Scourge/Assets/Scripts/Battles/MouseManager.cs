@@ -12,12 +12,17 @@ public class MouseManager : MonoBehaviour
         get { return _instance; }
     }
     
+    [Header("OverlayTiles")]
+    private List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
+    private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
+    [HideInInspector] public int indexCompetence;
+    
     [Header("Other")]
     public Unit selectedUnit;
-    private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
     private List<OverlayTile> currentPath = new List<OverlayTile>();
 
-    [Header("References")]
+    [Header("References")] 
+    public UIBattle currentUI;
     private PathFinder pathFinder;
     private ArrowCreator arrowCreator;
 
@@ -36,6 +41,8 @@ public class MouseManager : MonoBehaviour
     {
         pathFinder = new PathFinder();
         arrowCreator = new ArrowCreator();
+
+        indexCompetence = -1;
     }
 
 
@@ -54,32 +61,7 @@ public class MouseManager : MonoBehaviour
         {
             VerifyClickedElement();
 
-            DisplayTilesAtRange();
-        }
-    }
-
-    
-
-    // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
-    public void DisplayTilesAtRange()
-    {
-        for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
-        {
-            tilesAtRangeDisplayed[i].HideTile();
-        }
-
-        if (selectedUnit != null)
-        {
-            tilesAtRangeDisplayed = selectedUnit.currentTilesAtRange;
-
-            for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
-            {
-                tilesAtRangeDisplayed[i].ShowTile();
-            }
-        }
-        else
-        {
-            tilesAtRangeDisplayed = new List<OverlayTile>();
+            ManageOverlayTiles();
         }
     }
 
@@ -98,9 +80,13 @@ public class MouseManager : MonoBehaviour
             if (clickedObject.CompareTag("Unit"))
             {
                 selectedUnit = clickedObject.GetComponent<Unit>();
+                
+                currentUI.OpenUnitInfos(selectedUnit.data);
+
+                indexCompetence = -1;
             }
 
-            else if(selectedUnit != null)
+            else if(selectedUnit != null && clickedObject.CompareTag("Tile"))
             {
                 if (tilesAtRangeDisplayed.Contains(clickedObject.GetComponent<OverlayTile>()))
                 {
@@ -115,15 +101,17 @@ public class MouseManager : MonoBehaviour
 
         else
         {
-            StopSelection();
+            //StopSelection();
         }
     }
 
+    
+    // WHEN THE CHARACTER DESELECT A CHARACTER
     private void StopSelection()
     {
         selectedUnit = null;
-        
-        DisplayTilesAtRange();
+
+        ManageOverlayTiles();
     }
     
 
@@ -146,6 +134,7 @@ public class MouseManager : MonoBehaviour
     }
 
     
+    // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
     private void DisplayArrow(OverlayTile focusedTile)
     {
         if (selectedUnit != null)
@@ -168,5 +157,80 @@ public class MouseManager : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    // MANAGE WHICH COLOR HAS TO HAVE EVERYTILES DEPENDING ON THE SITUATION
+    private void ManageOverlayTiles()
+    {
+        for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+        {
+            tilesAtRangeDisplayed[i].HideTile();
+        }
+
+        for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
+        {
+            tilesCompetenceDisplayed[i].HideTile();
+        }
+
+        
+        // If a competence is selected
+        if (indexCompetence != -1) 
+        {
+            DisplayTilesCompetence(indexCompetence);
+        }
+        
+        // If only the character is selected
+        else 
+        {
+            DisplayTilesAtRange();
+        }
+    }
+    
+    
+    // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
+    public void DisplayTilesAtRange()
+    {
+        if (selectedUnit != null)
+        {
+            tilesAtRangeDisplayed = selectedUnit.currentTilesAtRange;
+
+            for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+            {
+                tilesAtRangeDisplayed[i].ShowTile();
+            }
+        }
+        else
+        {
+            tilesAtRangeDisplayed = new List<OverlayTile>();
+        }
+    }
+    
+    
+    // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
+    public void DisplayTilesCompetence(int index)
+    {
+        for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
+        {
+            tilesCompetenceDisplayed[i].ShowTile();
+        }
+    }
+    
+    
+    // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
+    public void ChangeSelectedCompetence(int index)
+    {
+        if (index == 0)
+            tilesCompetenceDisplayed = selectedUnit.tilesAttack;
+        
+        else if (index == 1)
+            tilesCompetenceDisplayed = selectedUnit.tilesCompetence1;
+        
+        else
+            tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
+
+        indexCompetence = index;
+
+        ManageOverlayTiles();
     }
 }

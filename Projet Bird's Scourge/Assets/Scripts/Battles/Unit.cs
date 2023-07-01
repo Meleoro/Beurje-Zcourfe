@@ -11,10 +11,18 @@ public class Unit : MonoBehaviour
     public DataUnit data;
     
     [Header("CurrentDatas")]
-    public Vector2Int startTile;
-    public OverlayTile currentTile;
-    public List<OverlayTile> currentTilesAtRange = new List<OverlayTile>();
+    [HideInInspector] public Vector2Int startTile;
+    [HideInInspector] public OverlayTile currentTile;
+    [HideInInspector] public List<OverlayTile> currentTilesAtRange = new List<OverlayTile>();
+    [HideInInspector] public List<OverlayTile> tilesAttack = new List<OverlayTile>();
+    [HideInInspector] public List<OverlayTile> tilesCompetence1 = new List<OverlayTile>();
+    [HideInInspector] public List<OverlayTile> tilesCompetence2 = new List<OverlayTile>();
     private bool isSelected;
+
+    [Header("ElementsToSave")] 
+    public int attackLevel;
+    public int competence1Level;
+    public int competence2Level;
     
     [Header("References")]
     private RangeFinder rangeFinder;
@@ -38,6 +46,19 @@ public class Unit : MonoBehaviour
         MouseManager.Instance.DisplayTilesAtRange();
     }
 
+    // FIND ALL THE TILES TO COLOR WHEN A COMPETENCE IS SELECTED
+    public void FindTilesCompetences()
+    {
+        if(data.attaqueData != null) 
+            tilesAttack = rangeFinder.FindTilesCompetence(currentTile, data.attaqueData, attackLevel);
+        
+        if(data.competence1Data != null)
+            tilesCompetence1 = rangeFinder.FindTilesCompetence(currentTile, data.competence1Data, competence1Level);
+        
+        if(data.competence2Data != null)
+            tilesCompetence2 = rangeFinder.FindTilesCompetence(currentTile, data.competence2Data, competence2Level);
+    }
+
 
     // INSTANT MOVE
     public void MoveToTile(Vector2 newPos)
@@ -45,6 +66,7 @@ public class Unit : MonoBehaviour
         transform.position = newPos + new Vector2(0, 0.4f);
         
         FindTilesAtRange();
+        FindTilesCompetences();
     }
     
     
@@ -64,5 +86,6 @@ public class Unit : MonoBehaviour
         currentTile = path[path.Count - 1];
 
         FindTilesAtRange();
+        FindTilesCompetences();
     }
 }
