@@ -15,7 +15,7 @@ public class DataCompetenceEditor : Editor
     private DataCompetence currentScript;
 
     [Header("General")] 
-    private SerializedProperty propDegatsMin;
+    private SerializedProperty propName;
     private SerializedProperty propDegatsMax;
     private SerializedProperty propCooldown;
     
@@ -44,7 +44,7 @@ public class DataCompetenceEditor : Editor
         so = serializedObject;
         currentScript = target as DataCompetence;
 
-        propDegatsMin = so.FindProperty("degatsMin");
+        propName = so.FindProperty("competenceName");
         propDegatsMax = so.FindProperty("degatsMax");
         propCooldown = so.FindProperty("cooldown");
         
@@ -75,9 +75,13 @@ public class DataCompetenceEditor : Editor
     {
         so.Update();
 
+        
+        
+        
+        
         //EditorGUILayout.PropertyField(propPaterne);
         
-        if (propPaterne.arraySize == 0)
+        /*if (propPaterne.arraySize == 0)
         {
             for (int i = 0; i < 7; i++)
             {
@@ -92,48 +96,20 @@ public class DataCompetenceEditor : Editor
             }
         }
         
-        GUILayout.Space(5);
+        GUILayout.Space(5);*/
         
         // GENERAL
-        /*
         using (new GUILayout.VerticalScope(EditorStyles.helpBox))
         {
             GUILayout.Label("General", moduleNameStyle);
             GUILayout.Space(3);
-
-            using (new GUILayout.HorizontalScope())
-            {
-                float stockage = EditorGUIUtility.labelWidth;
-                EditorGUIUtility.labelWidth = 85;
-                
-                EditorGUILayout.PropertyField(propDegatsMin, GUILayout.MinWidth(EditorGUIUtility.labelWidth + 30));
-
-                GUILayout.Space(11);
-                
-                EditorGUIUtility.labelWidth = 85;
-                
-                EditorGUILayout.PropertyField(propDegatsMax, GUILayout.MinWidth(EditorGUIUtility.labelWidth + 30));
-                
-                EditorGUIUtility.labelWidth = stockage;
-                
-                if (currentScript.degatsMin < 0)
-                {
-                    currentScript.degatsMin = 0;
-                }
-                if (currentScript.degatsMax < currentScript.degatsMin)
-                {
-                    currentScript.degatsMax = currentScript.degatsMin;
-                }
-            }
-
-            EditorGUILayout.PropertyField(propCooldown);
             
-            if (currentScript.cooldown < 0)
-            {
-                currentScript.cooldown = 0;
-            }
+            EditorGUILayout.PropertyField(propName);
         }
         
+        GUILayout.Space(10);
+        
+        /*
         GUILayout.Space(20);
         
         // PATERNE

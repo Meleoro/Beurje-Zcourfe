@@ -40,21 +40,7 @@ public class DataCompetence : ScriptableObject
 
     
     //[Header("General")]
-    public int degatsMin;
-    public int degatsMax;
-    public int cooldown;
-    
-    //[Header("Paterne")]
-    public bool hasCustomPaterne;
-    [SerializeField] public List<ListBool> customPaterne = new List<ListBool>();
-    public Paternes paternePrefab;
-    public int portee;
-    
-    //[Header("Effets")]
-    public bool doEffet;
-    public Effets effet;
-    public bool doAlteration;
-    public Alterations alteration;
+    public string competenceName;
 
     //[Header("LevelUp")] 
     public List<CompetenceLevel> levels = new List<CompetenceLevel>(1);
