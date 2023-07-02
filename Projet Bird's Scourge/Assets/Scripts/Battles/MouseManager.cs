@@ -24,7 +24,7 @@ public class MouseManager : MonoBehaviour
     private List<OverlayTile> currentPath = new List<OverlayTile>();
 
     [Header("References")] 
-    public UIBattle currentUI;
+    public UIBattleManager currentUI;
     private PathFinder pathFinder;
     private ArrowCreator arrowCreator;
 
@@ -94,7 +94,7 @@ public class MouseManager : MonoBehaviour
             {
                 if (competenceSelect)
                 {
-                    selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed);
+                    StartCoroutine(selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed));
                 }
             }
 

@@ -45,11 +45,20 @@ public class Unit : MonoBehaviour
     //--------------------------ATTACK PART------------------------------
     
     // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
-    public void AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles)
+    public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles)
     {
         if (competenceTiles.Contains(clickedEnnemy.currentTile))
         {
-            Debug.Log("Attack !");
+            List<Vector2> positions = new List<Vector2>();
+
+            positions.Add(transform.position);
+            positions.Add(clickedEnnemy.transform.position);
+
+            CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+
+            yield return new WaitForSeconds(1f);
+            
+            StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true));
         }
     }
     

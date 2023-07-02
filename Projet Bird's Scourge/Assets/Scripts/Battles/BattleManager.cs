@@ -15,8 +15,8 @@ public class BattleManager : MonoBehaviour
     [Header("Units/Ennemies")]
     private List<Unit> activeUnitsList = new List<Unit>();
     private List<Unit> activeEnnemieslist = new List<Unit>();
-    public Dictionary<Vector2Int, Unit> activeUnits;
-    public Dictionary<Vector2Int, Ennemy> activeEnnemies;
+    public Dictionary<Vector2Int, Unit> activeUnits = new Dictionary<Vector2Int, Unit>();
+    public Dictionary<Vector2Int, Ennemy> activeEnnemies = new Dictionary<Vector2Int, Ennemy>();
 
 
     private void Awake()
