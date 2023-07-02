@@ -43,7 +43,7 @@ public class Unit : MonoBehaviour
     {
         currentTilesAtRange = rangeFinder.FindTilesInRange(currentTile, data.moveRange);
         
-        MouseManager.Instance.DisplayTilesAtRange();
+        MouseManager.Instance.ManageOverlayTiles();
     }
 
     // FIND ALL THE TILES TO COLOR WHEN A COMPETENCE IS SELECTED

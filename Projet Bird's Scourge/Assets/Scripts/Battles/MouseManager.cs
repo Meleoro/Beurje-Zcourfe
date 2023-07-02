@@ -17,6 +17,7 @@ public class MouseManager : MonoBehaviour
     private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
     private int indexCompetence;
     private bool competenceSelect;
+    private bool unitSelect;
     
     [Header("Other")]
     public Unit selectedUnit;
@@ -47,13 +48,16 @@ public class MouseManager : MonoBehaviour
 
     void Update()
     {
-        GameObject currentTile = GetFocusedTile();
+        OverlayTile currentTile = GetFocusedTile();
 
-        if (currentTile != null)
+        if (unitSelect)
         {
-            DisplayArrow(currentTile.GetComponent<OverlayTile>());
+            if (currentTile != null)
+            {
+                DisplayArrow(currentTile);
             
-            transform.position = currentTile.transform.position;
+                transform.position = currentTile.transform.position;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -83,9 +87,10 @@ public class MouseManager : MonoBehaviour
                 currentUI.OpenUnitInfos(selectedUnit.data);
 
                 competenceSelect = false;
+                unitSelect = true;
             }
 
-            else if(selectedUnit != null && clickedObject.CompareTag("Tile"))
+            else if(unitSelect && clickedObject.CompareTag("Tile") && !competenceSelect)
             {
                 if (tilesAtRangeDisplayed.Contains(clickedObject.GetComponent<OverlayTile>()))
                 {
@@ -108,14 +113,15 @@ public class MouseManager : MonoBehaviour
     // WHEN THE CHARACTER DESELECT A CHARACTER
     private void StopSelection()
     {
-        selectedUnit = null;
+        competenceSelect = false;
+        unitSelect = false;
 
         ManageOverlayTiles();
     }
     
 
     // SEEK ON WHICH TILE IS THE MOUSE
-    private GameObject GetFocusedTile()
+    private OverlayTile GetFocusedTile()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -125,7 +131,7 @@ public class MouseManager : MonoBehaviour
         {
             if (hits[i].collider.gameObject.CompareTag("Tile"))
             {
-                return hits[i].collider.gameObject;
+                return hits[i].collider.gameObject.GetComponent<OverlayTile>();
             }
         }
 
@@ -136,7 +142,7 @@ public class MouseManager : MonoBehaviour
     // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
     private void DisplayArrow(OverlayTile focusedTile)
     {
-        if (selectedUnit != null && !competenceSelect)
+        if (unitSelect && !competenceSelect)
         {
             if (tilesAtRangeDisplayed.Contains(focusedTile))
             {
@@ -160,7 +166,7 @@ public class MouseManager : MonoBehaviour
 
 
     // MANAGE WHICH COLOR HAS TO HAVE EVERYTILES DEPENDING ON THE SITUATION
-    private void ManageOverlayTiles()
+    public void ManageOverlayTiles()
     {
         for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
         {
@@ -188,9 +194,9 @@ public class MouseManager : MonoBehaviour
     
     
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
-    public void DisplayTilesAtRange()
+    private void DisplayTilesAtRange()
     {
-        if (selectedUnit != null)
+        if (unitSelect)
         {
             tilesAtRangeDisplayed = selectedUnit.currentTilesAtRange;
 
@@ -207,7 +213,7 @@ public class MouseManager : MonoBehaviour
     
     
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
-    public void DisplayTilesCompetence(int index)
+    private void DisplayTilesCompetence(int index)
     {
         for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
         {
@@ -238,6 +244,9 @@ public class MouseManager : MonoBehaviour
             indexCompetence = index;
             competenceSelect = true;
         }
+        
+        unitSelect = true;
+
 
         ManageOverlayTiles();
     }
