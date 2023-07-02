@@ -31,13 +31,39 @@ public class Unit : MonoBehaviour
     private void Start()
     {
         rangeFinder = new RangeFinder();
-        
-        currentTile = MapManager.Instance.map[startTile];
 
-        MoveToTile(currentTile.transform.position);
+        FindCurrentTile();
+    }
+
+    private void Update()
+    {
+        if (currentTile == null)
+        {
+            FindCurrentTile();
+        }
     }
 
 
+    // FIND ON WHICH TILE THE CHARACTER HAS BEEN DRAG AND DROP
+    public void FindCurrentTile()
+    {
+        Vector2 posToCheck = new Vector2(transform.position.x, transform.position.y - 0.4f);
+        RaycastHit2D[] hits = Physics2D.RaycastAll(posToCheck, Vector2.zero);;
+        
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.gameObject.CompareTag("Tile"))
+            {
+                currentTile = hits[i].collider.gameObject.GetComponent<OverlayTile>();
+                
+                MoveToTile(hits[i].collider.gameObject.transform.position);
+
+                return;
+            }
+        }
+    }
+    
+    
     // FIND ALL AVAILABLE TILES AT RANGE
     public void FindTilesAtRange()
     {
@@ -46,6 +72,7 @@ public class Unit : MonoBehaviour
         MouseManager.Instance.ManageOverlayTiles();
     }
 
+    
     // FIND ALL THE TILES TO COLOR WHEN A COMPETENCE IS SELECTED
     public void FindTilesCompetences()
     {
