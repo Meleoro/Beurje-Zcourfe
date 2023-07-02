@@ -32,17 +32,3 @@ MonoBehaviour:
     vitesse: 10
     agilite: 10
     precision: 10
-  - PV: 10
-    PM: 4
-    force: 10
-    defense: 10
-    vitesse: 10
-    agilite: 10
-    precision: 10
-  - PV: 10
-    PM: 4
-    force: 10
-    defense: 10
-    vitesse: 10
-    agilite: 10
-    precision: 10

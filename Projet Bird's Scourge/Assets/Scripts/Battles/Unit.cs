@@ -19,6 +19,7 @@ public class Unit : MonoBehaviour
     private bool isSelected;
 
     [Header("ElementsToSave")] 
+    public int currentHealth;
     public int attackLevel;
     public int competence1Level;
     public int competence2Level;
