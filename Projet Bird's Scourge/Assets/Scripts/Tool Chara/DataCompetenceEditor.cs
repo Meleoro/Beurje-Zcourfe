@@ -203,13 +203,13 @@ public class DataCompetenceEditor : Editor
                     SerializedProperty currentLevel = listLevels.GetArrayElementAtIndex(listLevels.arraySize - 1);
                     SerializedProperty currentPaterne = currentLevel.FindPropertyRelative("newPaterne");
                     
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < 9; i++)
                     {
                         currentPaterne.InsertArrayElementAtIndex(currentPaterne.arraySize);
 
                         SerializedProperty newList = currentPaterne.GetArrayElementAtIndex(currentPaterne.arraySize - 1).FindPropertyRelative("list");
 
-                        for (int j = 0; j < 7; j++)
+                        for (int j = 0; j < 9; j++)
                         {
                             newList.InsertArrayElementAtIndex(newList.arraySize);
                         }
@@ -265,17 +265,17 @@ public class DataCompetenceEditor : Editor
 
                         if (currentScript.levels[i].isCustom)
                         {
-                            using (new GUILayout.VerticalScope(EditorStyles.helpBox, new [] {GUILayout.MinWidth(150)}))
+                            using (new GUILayout.VerticalScope(EditorStyles.helpBox, new [] {GUILayout.MinWidth(200)}))
                             {
-                                for (int k = 0; k < 7; k++)
+                                for (int k = 0; k < 9; k++)
                                 {
                                     using (new GUILayout.HorizontalScope())
                                     {
                                         SerializedProperty currentList = newPaterne.GetArrayElementAtIndex(k).FindPropertyRelative("list");
                             
-                                        for (int j = 0; j < 7; j++)
+                                        for (int j = 0; j < 9; j++)
                                         {
-                                            if (k != 3 || j != 3)
+                                            if (k != 4 || j != 4)
                                             {
                                                 EditorGUILayout.PropertyField(currentList.GetArrayElementAtIndex(j), GUIContent.none, GUILayout.MinWidth(EditorGUIUtility.labelWidth - 350));
                                             }

@@ -15,7 +15,8 @@ public class MouseManager : MonoBehaviour
     [Header("OverlayTiles")]
     private List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
     private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
-    [HideInInspector] public int indexCompetence;
+    private int indexCompetence;
+    private bool competenceSelect;
     
     [Header("Other")]
     public Unit selectedUnit;
@@ -41,8 +42,6 @@ public class MouseManager : MonoBehaviour
     {
         pathFinder = new PathFinder();
         arrowCreator = new ArrowCreator();
-
-        indexCompetence = -1;
     }
 
 
@@ -83,7 +82,7 @@ public class MouseManager : MonoBehaviour
                 
                 currentUI.OpenUnitInfos(selectedUnit.data);
 
-                indexCompetence = -1;
+                competenceSelect = false;
             }
 
             else if(selectedUnit != null && clickedObject.CompareTag("Tile"))
@@ -137,7 +136,7 @@ public class MouseManager : MonoBehaviour
     // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
     private void DisplayArrow(OverlayTile focusedTile)
     {
-        if (selectedUnit != null)
+        if (selectedUnit != null && !competenceSelect)
         {
             if (tilesAtRangeDisplayed.Contains(focusedTile))
             {
@@ -175,7 +174,7 @@ public class MouseManager : MonoBehaviour
 
         
         // If a competence is selected
-        if (indexCompetence != -1) 
+        if (competenceSelect) 
         {
             DisplayTilesCompetence(indexCompetence);
         }
@@ -229,7 +228,16 @@ public class MouseManager : MonoBehaviour
         else
             tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
 
-        indexCompetence = index;
+        
+        if (indexCompetence == index && competenceSelect)
+        {
+            competenceSelect = false;
+        }
+        else
+        {
+            indexCompetence = index;
+            competenceSelect = true;
+        }
 
         ManageOverlayTiles();
     }

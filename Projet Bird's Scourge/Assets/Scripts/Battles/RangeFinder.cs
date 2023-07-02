@@ -16,13 +16,15 @@ public class RangeFinder
         {
             List<ListBool> paterne = competenceUsed.levels[competenceLevel].newPaterne;
 
-            for (int x = 0; x < paterne.Count; x++)
+            for (int y = 0; y < paterne.Count; y++)
             {
-                for (int y = 0; y < paterne[x].list.Count; y++)
+                for (int x = 0; x < paterne[y].list.Count; x++)
                 {
-                    if (paterne[x].list[y])
+                    if (paterne[y].list[x])
                     {
-                        coordinates.Add(new Vector2Int( start.posOverlayTile.x + x - 3, start.posOverlayTile.y + y - 3));
+                        int newY = paterne.Count - y - 1;
+
+                        coordinates.Add(new Vector2Int( start.posOverlayTile.x + x - paterne.Count / 2, start.posOverlayTile.y + newY - paterne.Count / 2));
                     }
                 }
             }
