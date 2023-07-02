@@ -1,11 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
 
-public class Unit : MonoBehaviour
+public class Ennemy : MonoBehaviour
 {
     [Header("GeneralDatas")] 
     public DataUnit data;
@@ -38,23 +37,10 @@ public class Unit : MonoBehaviour
         {
             FindCurrentTile();
             
-            BattleManager.Instance.AddUnit(this);
+            BattleManager.Instance.AddEnnemy(this);
         }
     }
 
-    //--------------------------ATTACK PART------------------------------
-    
-    // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
-    public void AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles)
-    {
-        if (competenceTiles.Contains(clickedEnnemy.currentTile))
-        {
-            Debug.Log("Attack !");
-        }
-    }
-    
-    
-    //--------------------------TILES PART------------------------------
 
     // FIND ON WHICH TILE THE CHARACTER HAS BEEN DRAG AND DROP
     public void FindCurrentTile()
@@ -99,8 +85,6 @@ public class Unit : MonoBehaviour
     }
 
 
-    //--------------------------MOVE PART------------------------------
-    
     // INSTANT MOVE
     public void MoveToTile(Vector2 newPos)
     {

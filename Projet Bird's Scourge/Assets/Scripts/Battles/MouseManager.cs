@@ -89,6 +89,14 @@ public class MouseManager : MonoBehaviour
                 competenceSelect = false;
                 unitSelect = true;
             }
+            
+            else if (clickedObject.CompareTag("Ennemy"))
+            {
+                if (competenceSelect)
+                {
+                    selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed);
+                }
+            }
 
             else if(unitSelect && clickedObject.CompareTag("Tile") && !competenceSelect)
             {

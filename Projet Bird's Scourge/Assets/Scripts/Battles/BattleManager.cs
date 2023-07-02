@@ -12,9 +12,11 @@ public class BattleManager : MonoBehaviour
         get { return _instance; }
     }
     
-    [Header("currentInfos")]
-    public List<Unit> activeUnits = new List<Unit>();
-    public List<Unit> activeEnnemies = new List<Unit>();
+    [Header("Units/Ennemies")]
+    private List<Unit> activeUnitsList = new List<Unit>();
+    private List<Unit> activeEnnemieslist = new List<Unit>();
+    public Dictionary<Vector2Int, Unit> activeUnits;
+    public Dictionary<Vector2Int, Ennemy> activeEnnemies;
 
 
     private void Awake()
@@ -24,5 +26,16 @@ public class BattleManager : MonoBehaviour
         
         else
             Destroy(gameObject);
+    }
+
+
+    public void AddUnit(Unit newUnit)
+    {
+        activeUnits.Add(new Vector2Int(newUnit.currentTile.posOverlayTile.x, newUnit.currentTile.posOverlayTile.y), newUnit);
+    }
+    
+    public void AddEnnemy(Ennemy newUnit)
+    {
+        activeEnnemies.Add(new Vector2Int(newUnit.currentTile.posOverlayTile.x, newUnit.currentTile.posOverlayTile.y), newUnit);
     }
 }
