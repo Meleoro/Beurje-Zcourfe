@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class StatsCalculator 
 {
-    public int CalculateDamages(int strength, int strengthMultiplicator, int defense)
+    public int CalculateDamages(int strength, float strengthMultiplicator, int defense)
     {
-        return defense - strength * strengthMultiplicator;
+        return Mathf.RoundToInt(defense - strength * strengthMultiplicator);
     }
 }

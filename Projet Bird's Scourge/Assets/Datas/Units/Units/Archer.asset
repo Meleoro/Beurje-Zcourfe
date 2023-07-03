@@ -19,9 +19,9 @@ MonoBehaviour:
   damageSprite: {fileID: 21300000, guid: ee4191e5f3796c04c84edbd414c39cd7, type: 3}
   attaqueData: {fileID: 11400000, guid: 983068a2f25cd5a4d9b31a8bbe822763, type: 2}
   levelUnlockCompetence1: 0
-  competence1Data: {fileID: 0}
+  competence1Data: {fileID: 11400000, guid: 74847024a1770644a88436e3cf551403, type: 2}
   levelUnlockCompetence2: 0
-  competence2Data: {fileID: 0}
+  competence2Data: {fileID: 11400000, guid: 3f9653b948800c24790b26785da4d327, type: 2}
   levelUnlockPassif: 0
   passifData: {fileID: 0}
   levels:

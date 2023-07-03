@@ -157,7 +157,6 @@ RectTransform:
   - {fileID: 326293804}
   - {fileID: 365375123}
   - {fileID: 11168815}
-  - {fileID: 430766624}
   m_Father: {fileID: 2060032310}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1522,7 +1521,7 @@ GameObject:
   - component: {fileID: 239695304}
   - component: {fileID: 239695303}
   m_Layer: 5
-  m_Name: Multiplicateur
+  m_Name: Text Multiplicateur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1569,7 +1568,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STR x1.2
+  m_text: STR x 1.8
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0616bf2fa59b97c4a92d632ceaa7b4c9, type: 2}
   m_sharedMaterial: {fileID: 7403570091586827775, guid: 0616bf2fa59b97c4a92d632ceaa7b4c9, type: 2}
@@ -1632,7 +1631,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: -5.4045906, w: 0}
+  m_margin: {x: 0, y: 0, z: -18.90313, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1793,7 +1792,7 @@ GameObject:
   - component: {fileID: 280470095}
   - component: {fileID: 280470094}
   m_Layer: 5
-  m_Name: Mana (1)
+  m_Name: Cout Mana Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2694,6 +2693,7 @@ GameObject:
   - component: {fileID: 382846193}
   - component: {fileID: 382846195}
   - component: {fileID: 382846194}
+  - component: {fileID: 382846196}
   m_Layer: 5
   m_Name: "Bouton Comp\xE9tence 2"
   m_TagString: Untagged
@@ -2764,6 +2764,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 382846192}
   m_CullTransparentMesh: 1
+--- !u!114 &382846196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382846192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 382846194}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &383031437
 GameObject:
   m_ObjectHideFlags: 0
@@ -2863,7 +2907,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 430766623}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2871,7 +2915,7 @@ RectTransform:
   - {fileID: 13033982}
   - {fileID: 799615336}
   - {fileID: 1766026062}
-  m_Father: {fileID: 9835985}
+  m_Father: {fileID: 2060032310}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -3310,7 +3354,7 @@ GameObject:
   - component: {fileID: 596445092}
   - component: {fileID: 596445091}
   m_Layer: 5
-  m_Name: Mana
+  m_Name: Cout Mana Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3754,6 +3798,7 @@ GameObject:
   - component: {fileID: 712508653}
   - component: {fileID: 712508655}
   - component: {fileID: 712508654}
+  - component: {fileID: 712508656}
   m_Layer: 5
   m_Name: "Bouton Comp\xE9tence 1"
   m_TagString: Untagged
@@ -3825,6 +3870,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712508652}
   m_CullTransparentMesh: 1
+--- !u!114 &712508656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712508652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 712508654}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &746934449
 GameObject:
   m_ObjectHideFlags: 0
@@ -4489,7 +4578,7 @@ GameObject:
   - component: {fileID: 938782163}
   - component: {fileID: 938782162}
   m_Layer: 5
-  m_Name: LVL
+  m_Name: LVL Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4895,7 +4984,7 @@ GameObject:
   - component: {fileID: 982238572}
   - component: {fileID: 982238571}
   m_Layer: 5
-  m_Name: Mana
+  m_Name: Cout Mana Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5031,7 +5120,7 @@ GameObject:
   - component: {fileID: 985517113}
   - component: {fileID: 985517112}
   m_Layer: 5
-  m_Name: Icone Range (1)
+  m_Name: Icone Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5318,7 +5407,7 @@ GameObject:
   - component: {fileID: 1066300363}
   - component: {fileID: 1066300362}
   m_Layer: 5
-  m_Name: Multiplicateur
+  m_Name: Multiplicateur Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5700,6 +5789,7 @@ GameObject:
   - component: {fileID: 1158209048}
   - component: {fileID: 1158209050}
   - component: {fileID: 1158209049}
+  - component: {fileID: 1158209051}
   m_Layer: 5
   m_Name: Bouton Attaque
   m_TagString: Untagged
@@ -5771,6 +5861,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158209047}
   m_CullTransparentMesh: 1
+--- !u!114 &1158209051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158209047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1158209049}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1160205460
 GameObject:
   m_ObjectHideFlags: 0
@@ -5783,7 +5917,7 @@ GameObject:
   - component: {fileID: 1160205463}
   - component: {fileID: 1160205462}
   m_Layer: 5
-  m_Name: Nom (1)
+  m_Name: Nom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7187,7 +7321,7 @@ GameObject:
   - component: {fileID: 1367504153}
   - component: {fileID: 1367504152}
   m_Layer: 5
-  m_Name: Multiplicateur (1)
+  m_Name: Multiplicateur Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8185,6 +8319,86 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: unitHP
+      value: 
+      objectReference: {fileID: 234185737}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: LifeBar
+      value: 
+      objectReference: {fileID: 326293805}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: unitArt
+      value: 
+      objectReference: {fileID: 1064162923}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: unitName
+      value: 
+      objectReference: {fileID: 373072422}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: unitLevel
+      value: 
+      objectReference: {fileID: 938782162}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: attackName
+      value: 
+      objectReference: {fileID: 1308284170}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: unitShadow
+      value: 
+      objectReference: {fileID: 106163641}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: attackManaCost
+      value: 
+      objectReference: {fileID: 596445091}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence1Name
+      value: 
+      objectReference: {fileID: 596697364}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence2Name
+      value: 
+      objectReference: {fileID: 1160205462}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: attackDescription
+      value: 
+      objectReference: {fileID: 100756072}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence1ManaCost
+      value: 
+      objectReference: {fileID: 982238571}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence2ManaCost
+      value: 
+      objectReference: {fileID: 280470094}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: attackDamageMultiplier
+      value: 
+      objectReference: {fileID: 239695303}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence1Description
+      value: 
+      objectReference: {fileID: 1205130254}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence2Description
+      value: 
+      objectReference: {fileID: 1747922465}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence1DamageMultiplier
+      value: 
+      objectReference: {fileID: 1066300362}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence2DamageMultiplier
+      value: 
+      objectReference: {fileID: 1367504152}
+    - target: {fileID: 7201552441579085390, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -231
+      objectReference: {fileID: 0}
+    - target: {fileID: 7201552441579085390, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 158
+      objectReference: {fileID: 0}
     - target: {fileID: 7550060001617107756, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: startTile.x
       value: 0
@@ -8198,8 +8412,12 @@ PrefabInstance:
       value: Battle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3246569275197219667, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 221226356819109001, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 430766624}
     - targetCorrespondingSourceObject: {fileID: 221226356819109001, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9835985}
@@ -8463,7 +8681,7 @@ GameObject:
   - component: {fileID: 1747922466}
   - component: {fileID: 1747922465}
   m_Layer: 5
-  m_Name: Description (1)
+  m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

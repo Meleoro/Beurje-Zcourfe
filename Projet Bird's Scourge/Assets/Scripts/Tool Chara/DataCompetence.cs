@@ -41,6 +41,7 @@ public class DataCompetence : ScriptableObject
     
     //[Header("General")]
     public string competenceName;
+   
 
     //[Header("LevelUp")] 
     public List<CompetenceLevel> levels = new List<CompetenceLevel>(1);
@@ -56,7 +57,9 @@ public class ListBool
 [System.Serializable]
 public class CompetenceLevel
 {
-    public int damageMultiplicator;
+    public string competenceDescription;
+    public int competenceManaCost;
+    public float damageMultiplier;
     
     public bool isCustom;
     [SerializeField] public List<ListBool> newPaterne = new List<ListBool>();

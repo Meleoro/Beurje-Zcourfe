@@ -62,7 +62,7 @@ public class Unit : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
             
-            clickedEnnemy.TakeDamages(statsCalculator.CalculateDamages(data.levels[currentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplicator, 5));
+            clickedEnnemy.TakeDamages(statsCalculator.CalculateDamages(data.levels[currentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, 5));
             
             StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true));
         }
