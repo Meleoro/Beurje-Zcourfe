@@ -54,18 +54,22 @@ public class Unit : MonoBehaviour
     {
         if (competenceTiles.Contains(clickedEnnemy.currentTile))
         {
-            List<Vector2> positions = new List<Vector2>();
+            if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
+            {
+                List<Vector2> positions = new List<Vector2>();
 
-            positions.Add(transform.position);
-            positions.Add(clickedEnnemy.transform.position);
+                positions.Add(transform.position);
+                positions.Add(clickedEnnemy.transform.position);
 
-            CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+                CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
 
-            yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(1f);
             
-            clickedEnnemy.TakeDamages(statsCalculator.CalculateDamages(data.levels[currentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, 5));
+                clickedEnnemy.TakeDamages(statsCalculator.CalculateDamages(data.levels[currentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, 5));
+                BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
             
-            StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true));
+                StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true));
+            }
         }
     }
 
@@ -76,6 +80,7 @@ public class Unit : MonoBehaviour
 
         if (currentHealth < 0)
         {
+            BattleManager.Instance.RemoveUnit(this);
             Destroy(gameObject);
         }
     }
