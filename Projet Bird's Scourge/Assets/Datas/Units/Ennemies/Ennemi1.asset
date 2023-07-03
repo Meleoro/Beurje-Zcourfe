@@ -21,6 +21,6 @@ MonoBehaviour:
   competenceData: {fileID: 0}
   force: 0
   defense: 0
-  vitesse: 0
+  vitesse: 5
   agilite: 0
   precision: 0

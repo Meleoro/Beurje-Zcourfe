@@ -7,7 +7,7 @@ using DG.Tweening;
 public class Ennemy : MonoBehaviour
 {
     [Header("GeneralDatas")] 
-    public DataUnit data;
+    public DataEnnemi data;
     
     [Header("CurrentDatas")]
     [HideInInspector] public OverlayTile currentTile;
@@ -16,6 +16,7 @@ public class Ennemy : MonoBehaviour
     [HideInInspector] public List<OverlayTile> tilesCompetence1 = new List<OverlayTile>();
     [HideInInspector] public List<OverlayTile> tilesCompetence2 = new List<OverlayTile>();
     private bool isSelected;
+    [HideInInspector] public int haste;
 
     [Header("ElementsToSave")]
     public int attackLevel;
@@ -74,37 +75,11 @@ public class Ennemy : MonoBehaviour
         }
     }
     
-    
-    // FIND ALL AVAILABLE TILES AT RANGE
-    public void FindTilesAtRange()
-    {
-        currentTilesAtRange = rangeFinder.FindTilesInRange(currentTile, data.moveRange);
-        
-        MouseManager.Instance.ManageOverlayTiles();
-    }
-
-    
-    // FIND ALL THE TILES TO COLOR WHEN A COMPETENCE IS SELECTED
-    public void FindTilesCompetences()
-    {
-        if(data.attaqueData != null) 
-            tilesAttack = rangeFinder.FindTilesCompetence(currentTile, data.attaqueData, attackLevel);
-        
-        if(data.competence1Data != null)
-            tilesCompetence1 = rangeFinder.FindTilesCompetence(currentTile, data.competence1Data, competence1Level);
-        
-        if(data.competence2Data != null)
-            tilesCompetence2 = rangeFinder.FindTilesCompetence(currentTile, data.competence2Data, competence2Level);
-    }
-
 
     // INSTANT MOVE
     public void MoveToTile(Vector2 newPos)
     {
         transform.position = newPos + new Vector2(0, 0.4f);
-        
-        FindTilesAtRange();
-        FindTilesCompetences();
     }
     
     
@@ -122,8 +97,5 @@ public class Ennemy : MonoBehaviour
         }
         
         currentTile = path[path.Count - 1];
-
-        FindTilesAtRange();
-        FindTilesCompetences();
     }
 }

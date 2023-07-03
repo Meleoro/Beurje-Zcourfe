@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     [HideInInspector] public List<OverlayTile> tilesCompetence1 = new List<OverlayTile>();
     [HideInInspector] public List<OverlayTile> tilesCompetence2 = new List<OverlayTile>();
     private bool isSelected;
+    [HideInInspector] public int haste;
 
     [Header("ElementsToSave")] 
     public int currentHealth;
