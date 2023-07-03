@@ -301,6 +301,8 @@ public class BattleManager : MonoBehaviour
 
         if (currentMana < 0)
             currentMana = 0;
+        
+        UIBattleManager.Instance.UpdateManaUI();
     }
 
     public void GainMana(int manaGained)
@@ -309,5 +311,7 @@ public class BattleManager : MonoBehaviour
 
         if (currentMana > manaMax)
             currentMana = manaMax;
+        
+        UIBattleManager.Instance.UpdateManaUI();
     }
 }

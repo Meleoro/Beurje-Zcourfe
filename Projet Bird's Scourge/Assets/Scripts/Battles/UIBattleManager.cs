@@ -40,6 +40,12 @@ public class UIBattleManager : MonoBehaviour
     public GameObject competence1CancelButton;
     public GameObject competence2CancelButton;
 
+    [Header("Mana")] 
+    public TextMeshProUGUI conteurMana;
+    public List<Image> manaIconList;
+    public Sprite filledManaIcon;
+    public Sprite emptyManaIcon;
+    
     [Header("AttackUI")] 
     public RectTransform attackUI;
     public Image leftChara;
@@ -123,6 +129,23 @@ public class UIBattleManager : MonoBehaviour
         } 
     }
 
+    // ACTUALISE L'UI DU MANA
+    public void UpdateManaUI()
+    {
+        conteurMana.text = BattleManager.Instance.currentMana.ToString();
+        
+        for (int i = 0; i >= manaIconList.Count; i++)
+        {
+            if (i <= BattleManager.Instance.currentMana)
+            {
+                manaIconList[i].sprite = filledManaIcon;
+            }
+            else
+            {
+                manaIconList[i].sprite = emptyManaIcon;
+            }
+        }
+    }
 
     // INFORM OTHER SCRIPT THAT A BUTTON HAS BEEN PRESSED
     public void ClickButton(int index)
