@@ -238,21 +238,21 @@ public class MouseManager : MonoBehaviour
         {
             competenceUsed = selectedUnit.data.attaqueData;
             tilesCompetenceDisplayed = selectedUnit.tilesAttack;
-            competenceLevel = selectedUnit.attackLevel;
+            competenceLevel = selectedUnit.attackLevel - 1;
         }
 
         else if (index == 1)
         {
             competenceUsed = selectedUnit.data.competence1Data;
             tilesCompetenceDisplayed = selectedUnit.tilesCompetence1;
-            competenceLevel = selectedUnit.competence1Level;
+            competenceLevel = selectedUnit.competence1Level - 1;
         }
 
         else
         {
             competenceUsed = selectedUnit.data.competence2Data;
             tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
-            competenceLevel = selectedUnit.competence2Level;
+            competenceLevel = selectedUnit.competence2Level - 1;
         }
 
 

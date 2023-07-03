@@ -121,13 +121,13 @@ public class Unit : MonoBehaviour
     public void FindTilesCompetences()
     {
         if(data.attaqueData != null) 
-            tilesAttack = rangeFinder.FindTilesCompetence(currentTile, data.attaqueData, attackLevel);
+            tilesAttack = rangeFinder.FindTilesCompetence(currentTile, data.attaqueData, attackLevel - 1);
         
         if(data.competence1Data != null)
-            tilesCompetence1 = rangeFinder.FindTilesCompetence(currentTile, data.competence1Data, competence1Level);
+            tilesCompetence1 = rangeFinder.FindTilesCompetence(currentTile, data.competence1Data, competence1Level - 1);
         
         if(data.competence2Data != null)
-            tilesCompetence2 = rangeFinder.FindTilesCompetence(currentTile, data.competence2Data, competence2Level);
+            tilesCompetence2 = rangeFinder.FindTilesCompetence(currentTile, data.competence2Data, competence2Level - 1);
     }
 
 
