@@ -231,7 +231,9 @@ public class DataCompetenceEditor : Editor
                 listLevels = so.FindProperty("levels");
                 SerializedProperty MyListRef = listLevels.GetArrayElementAtIndex(i);
                 
-                SerializedProperty damageMultiplicator = MyListRef.FindPropertyRelative("damageMultiplicator");
+                SerializedProperty damageMultiplier = MyListRef.FindPropertyRelative("damageMultiplier");
+                SerializedProperty competenceDescription = MyListRef.FindPropertyRelative("competenceDescription");
+                SerializedProperty competenceManaCost = MyListRef.FindPropertyRelative("competenceManaCost");
 
                 SerializedProperty isCustom = MyListRef.FindPropertyRelative("isCustom");
                 SerializedProperty newPaterne = MyListRef.FindPropertyRelative("newPaterne");
@@ -251,7 +253,9 @@ public class DataCompetenceEditor : Editor
                     // Partie Dégâts
                     GUILayout.Label("Degats", titreStyle);
                     
-                    EditorGUILayout.PropertyField(damageMultiplicator);
+                    EditorGUILayout.PropertyField(damageMultiplier);
+                    EditorGUILayout.PropertyField(competenceDescription);
+                    EditorGUILayout.PropertyField(competenceManaCost);
 
                     GUILayout.Space(10);
                     

@@ -15,10 +15,27 @@ public class UIBattleManager : MonoBehaviour
         get { return _instance; }
     }
     
+    [Header("Unit Info")]
+    public Image unitArt;
+    public Image unitShadow;
+    public TextMeshProUGUI unitName;
+    public TextMeshProUGUI unitLevel;
+    public TextMeshProUGUI unitHP;
+    public Slider LifeBar;
+    
     [Header("Buttons")]
-    public TextMeshProUGUI attackButton;
-    public TextMeshProUGUI competence1Button;
-    public TextMeshProUGUI competence2Button;
+        public TextMeshProUGUI attackName;
+    public TextMeshProUGUI competence1Name;
+    public TextMeshProUGUI competence2Name;
+        public TextMeshProUGUI attackDescription;
+    public TextMeshProUGUI competence1Description;
+    public TextMeshProUGUI competence2Description;
+        public TextMeshProUGUI attackManaCost;
+    public TextMeshProUGUI competence1ManaCost;
+    public TextMeshProUGUI competence2ManaCost;
+        public TextMeshProUGUI attackDamageMultiplier;
+    public TextMeshProUGUI competence1DamageMultiplier;
+    public TextMeshProUGUI competence2DamageMultiplier;
 
     [Header("AttackUI")] 
     public RectTransform attackUI;
@@ -51,20 +68,47 @@ public class UIBattleManager : MonoBehaviour
     public void OpenUnitInfos(DataUnit unitInfos)
     {
         ActualiseButtons(unitInfos);
+        ActualiseUnitInfo(unitInfos);
     }
 
+    // ACTUALISE THE UNIT INFOS
+    public void ActualiseUnitInfo(DataUnit unitInfos)
+    {
+        unitName.text = unitInfos.charaName;
+        unitShadow.sprite = unitArt.sprite;
+        unitArt.sprite = unitInfos.idleSprite;
+        unitLevel.text = "LVL " + unitInfos.levels[0].level;  // how to track the current level ?
+        unitHP.text = "currentHP" + " / " + unitInfos.levels[0].PV + " HP"; // how to track the current level ?
+        LifeBar.maxValue = unitInfos.levels[0].PV; // how to track the current level ?
+        //LifeBar.value = "currentHP"      // how to track the current HP amount ?
+    }
     
     // ACTUALISE THE BUTTONS INFOS
     public void ActualiseButtons(DataUnit unitInfos)
     {
-        if(unitInfos.attaqueData != null)
-            attackButton.text = unitInfos.attaqueData.competenceName;
+        if (unitInfos.attaqueData is not null)
+        {
+            attackName.text = unitInfos.attaqueData.competenceName;
+            attackDescription.text = unitInfos.attaqueData.levels[0].competenceDescription;
+            attackManaCost.text = unitInfos.attaqueData.levels[unitInfos.levelUnlockCompetence1].competenceManaCost.ToString(); // how to track the current level ?
+            attackDamageMultiplier.text = "STR x" + unitInfos.attaqueData.levels[unitInfos.levelUnlockCompetence2].damageMultiplier; // how to track the current level ?
+        }
+
+        if (unitInfos.competence1Data is not null)
+        {
+            competence1Name.text = unitInfos.competence1Data.competenceName;
+            competence1Description.text = unitInfos.competence1Data.levels[0].competenceDescription;
+            competence1ManaCost.text = unitInfos.competence1Data.levels[unitInfos.levelUnlockCompetence1].competenceManaCost.ToString(); // how to track the current level ?
+            competence1DamageMultiplier.text = "STR x" + unitInfos.competence1Data.levels[unitInfos.levelUnlockCompetence2].damageMultiplier; // how to track the current level ?
+        }
         
-        if(unitInfos.competence1Data != null)
-           competence1Button.text = unitInfos.competence1Data.competenceName;
-        
-        if(unitInfos.competence2Data != null)
-           competence2Button.text = unitInfos.competence2Data.competenceName;
+        if (unitInfos.competence2Data is not null)
+        {
+            competence2Name.text = unitInfos.competence2Data.competenceName;
+            competence2Description.text = unitInfos.competence2Data.levels[0].competenceDescription;
+            competence2ManaCost.text = unitInfos.competence2Data.levels[unitInfos.levelUnlockCompetence1].competenceManaCost.ToString(); // how to track the current level ?
+            competence2DamageMultiplier.text = "STR x" + unitInfos.competence2Data.levels[unitInfos.levelUnlockCompetence2].damageMultiplier; // how to track the current level ?
+        } 
     }
 
 

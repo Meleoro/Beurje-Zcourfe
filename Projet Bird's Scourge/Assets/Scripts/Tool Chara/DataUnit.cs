@@ -37,6 +37,7 @@ public class DataUnit : ScriptableObject
 public class UnitLevel
 {
     //[Header("StatsGeneral")] 
+    public int level;
     public int PV;
     public int PM;
 
