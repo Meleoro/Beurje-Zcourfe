@@ -65,7 +65,7 @@ public class UIBattleManager : MonoBehaviour
     //--------------------------INFOS UI PART------------------------------
     
     // CHANGE THE UI TO SHOW THE INFOS OF THE CURRENTLY SELECTED UNIT
-    public void OpenUnitInfos(DataUnit unitInfos)
+    public void OpenUnitInfos(DataUnit unitInfos, Unit unitScript)
     {
         ActualiseButtons(unitInfos);
         ActualiseUnitInfo(unitInfos);

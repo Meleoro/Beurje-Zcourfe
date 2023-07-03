@@ -85,7 +85,7 @@ public class MouseManager : MonoBehaviour
             {
                 selectedUnit = clickedObject.GetComponent<Unit>();
                 
-                UIBattleManager.Instance.OpenUnitInfos(selectedUnit.data);
+                UIBattleManager.Instance.OpenUnitInfos(selectedUnit.data, selectedUnit);
 
                 competenceSelect = false;
                 unitSelect = true;
