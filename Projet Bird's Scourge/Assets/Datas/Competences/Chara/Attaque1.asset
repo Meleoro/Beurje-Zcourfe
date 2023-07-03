@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   competenceName: Tir d'arc
   levels:
-  - newDegatsMin: 0
-    newDegatsMax: 0
+  - damageMultiplicator: 0
     isCustom: 1
     newPaterne:
     - list: 000000000000000000
@@ -31,8 +30,7 @@ MonoBehaviour:
     newPortee: 0
     newEffet: 0
     newAlteration: 0
-  - newDegatsMin: 0
-    newDegatsMax: 0
+  - damageMultiplicator: 0
     isCustom: 1
     newPaterne:
     - list: 000000000000000000

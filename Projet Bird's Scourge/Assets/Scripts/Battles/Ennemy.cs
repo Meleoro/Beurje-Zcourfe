@@ -17,10 +17,11 @@ public class Ennemy : MonoBehaviour
     [HideInInspector] public List<OverlayTile> tilesCompetence2 = new List<OverlayTile>();
     private bool isSelected;
 
-    [Header("ElementsToSave")] 
+    [Header("ElementsToSave")]
     public int attackLevel;
     public int competence1Level;
     public int competence2Level;
+    private int currentHealth;
     
     [Header("References")]
     private RangeFinder rangeFinder;
@@ -41,6 +42,18 @@ public class Ennemy : MonoBehaviour
         }
     }
 
+    
+    // REDUCE THE HEALTH OF THE ENNEMY AND VERIFY IF HE IS DEAD
+    public void TakeDamages(int damages)
+    {
+        currentHealth -= damages;
+
+        if (currentHealth < 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
 
     // FIND ON WHICH TILE THE CHARACTER HAS BEEN DRAG AND DROP
     public void FindCurrentTile()

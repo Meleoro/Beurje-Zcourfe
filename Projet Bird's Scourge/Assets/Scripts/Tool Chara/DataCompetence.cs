@@ -56,8 +56,7 @@ public class ListBool
 [System.Serializable]
 public class CompetenceLevel
 {
-    public int newDegatsMin;
-    public int newDegatsMax;
+    public int damageMultiplicator;
     
     public bool isCustom;
     [SerializeField] public List<ListBool> newPaterne = new List<ListBool>();

@@ -231,9 +231,8 @@ public class DataCompetenceEditor : Editor
                 listLevels = so.FindProperty("levels");
                 SerializedProperty MyListRef = listLevels.GetArrayElementAtIndex(i);
                 
-                SerializedProperty newDegatsMin = MyListRef.FindPropertyRelative("newDegatsMin");
-                SerializedProperty newDegatsMax = MyListRef.FindPropertyRelative("newDegatsMax");
-                
+                SerializedProperty damageMultiplicator = MyListRef.FindPropertyRelative("damageMultiplicator");
+
                 SerializedProperty isCustom = MyListRef.FindPropertyRelative("isCustom");
                 SerializedProperty newPaterne = MyListRef.FindPropertyRelative("newPaterne");
                 SerializedProperty newPaternePrefab = MyListRef.FindPropertyRelative("newPaternePrefab");
@@ -252,8 +251,7 @@ public class DataCompetenceEditor : Editor
                     // Partie Dégâts
                     GUILayout.Label("Degats", titreStyle);
                     
-                    EditorGUILayout.PropertyField(newDegatsMin);
-                    EditorGUILayout.PropertyField(newDegatsMax);
+                    EditorGUILayout.PropertyField(damageMultiplicator);
 
                     GUILayout.Space(10);
                     

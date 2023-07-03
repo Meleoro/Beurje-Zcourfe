@@ -16,6 +16,8 @@ public class MouseManager : MonoBehaviour
     private List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
     private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
     private int indexCompetence;
+    private int competenceLevel;
+    private DataCompetence competenceUsed;
     private bool competenceSelect;
     private bool unitSelect;
     
@@ -94,7 +96,7 @@ public class MouseManager : MonoBehaviour
             {
                 if (competenceSelect)
                 {
-                    StartCoroutine(selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed));
+                    StartCoroutine(selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed, competenceUsed, competenceLevel));
                 }
             }
 
@@ -234,15 +236,27 @@ public class MouseManager : MonoBehaviour
     public void ChangeSelectedCompetence(int index)
     {
         if (index == 0)
+        {
+            competenceUsed = selectedUnit.data.attaqueData;
             tilesCompetenceDisplayed = selectedUnit.tilesAttack;
-        
-        else if (index == 1)
-            tilesCompetenceDisplayed = selectedUnit.tilesCompetence1;
-        
-        else
-            tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
+            competenceLevel = selectedUnit.attackLevel;
+        }
 
-        
+        else if (index == 1)
+        {
+            competenceUsed = selectedUnit.data.competence1Data;
+            tilesCompetenceDisplayed = selectedUnit.tilesCompetence1;
+            competenceLevel = selectedUnit.competence1Level;
+        }
+
+        else
+        {
+            competenceUsed = selectedUnit.data.competence2Data;
+            tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
+            competenceLevel = selectedUnit.competence2Level;
+        }
+
+
         if (indexCompetence == index && competenceSelect)
         {
             competenceSelect = false;

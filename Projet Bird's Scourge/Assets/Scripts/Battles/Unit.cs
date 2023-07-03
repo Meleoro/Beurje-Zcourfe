@@ -20,17 +20,20 @@ public class Unit : MonoBehaviour
 
     [Header("ElementsToSave")] 
     public int currentHealth;
+    public int currentLevel;
     public int attackLevel;
     public int competence1Level;
     public int competence2Level;
     
     [Header("References")]
     private RangeFinder rangeFinder;
+    private StatsCalculator statsCalculator;
 
 
     private void Start()
     {
         rangeFinder = new RangeFinder();
+        statsCalculator = new StatsCalculator();
     }
 
     private void Update()
@@ -46,7 +49,7 @@ public class Unit : MonoBehaviour
     //--------------------------ATTACK PART------------------------------
     
     // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
-    public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles)
+    public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
         if (competenceTiles.Contains(clickedEnnemy.currentTile))
         {
@@ -59,8 +62,18 @@ public class Unit : MonoBehaviour
 
             yield return new WaitForSeconds(1f);
             
+            clickedEnnemy.TakeDamages(statsCalculator.CalculateDamages(data.levels[currentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplicator, 5));
+            
             StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true));
         }
+    }
+
+    // REDUCE THE HEALTH OF THE UNIT AND VERIFY IF HE IS DEAD
+    public void TakeDamages(int damages)
+    {
+        currentHealth -= damages;
+
+        if (currentHealth < 0) ;
     }
     
     

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fedef99d1d97d0849a93fdf642d1a6db, type: 3}
+  m_Name: Ennemi1
+  m_EditorClassIdentifier: 
+  charaName: 
+  maxHealth: 0
+  idleSprite: {fileID: 21300000, guid: 52d0c6d6327ad634798c1b2817012da3, type: 3}
+  attackSprite: {fileID: 21300000, guid: 91184733f9d778346ba59ba6f95a9c21, type: 3}
+  damageSprite: {fileID: 21300000, guid: ee4191e5f3796c04c84edbd414c39cd7, type: 3}
+  attaqueData: {fileID: 0}
+  competenceData: {fileID: 0}
+  force: 0
+  defense: 0
+  vitesse: 0
+  agilite: 0
+  precision: 0

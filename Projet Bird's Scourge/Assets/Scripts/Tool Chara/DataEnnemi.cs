@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataEnnemi : MonoBehaviour
+[CreateAssetMenu(menuName = "DataEnnemy")]
+public class DataEnnemi : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("General")] 
+    public string charaName;
+    public int maxHealth;
+    
+    [Header("Sprites")]
+    public Sprite idleSprite;
+    public Sprite attackSprite;
+    public Sprite damageSprite;
+    
+    [Header("Competences")] 
+    public DataCompetence attaqueData;
+    public DataCompetence competenceData;
+    
+    [Header("Stats")] 
+    public int force;
+    public int defense;
+    public int vitesse;
+    public int agilite;
+    public int precision;
 }
