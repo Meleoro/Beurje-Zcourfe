@@ -182,6 +182,8 @@ public class BattleManager : MonoBehaviour
                 newElements.Remove(newElements[indexSelected]);
             }
         }
+
+        UIBattleManager.Instance.UpdateTurnUI();
     }
 
     
@@ -287,7 +289,7 @@ public class BattleManager : MonoBehaviour
         order.RemoveAt(0);
         
         GainMana(1);
-        
+        UIBattleManager.Instance.UpdateTurnUI();
         ActualiseOrder();
     }
     

@@ -22,7 +22,7 @@ public class Ennemy : MonoBehaviour
     public int attackLevel;
     public int competence1Level;
     public int competence2Level;
-    private int currentHealth;
+    public int currentHealth;
     
     [Header("References")]
     private RangeFinder rangeFinder;

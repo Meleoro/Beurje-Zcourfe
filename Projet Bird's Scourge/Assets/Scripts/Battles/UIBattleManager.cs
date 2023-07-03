@@ -40,6 +40,15 @@ public class UIBattleManager : MonoBehaviour
     public GameObject competence1CancelButton;
     public GameObject competence2CancelButton;
 
+    [Header("Cases Tour")] 
+    public List<Image> listeFondCases;
+    public Sprite fondAllié;
+    public Sprite fondEnnemi;
+    public List<Image> listeArtCases;
+    public List<Image> listeShadowCases;
+    public List<TextMeshProUGUI> listeTextPvCases;
+    public List<Slider> listeLifeBarCases;
+    
     [Header("Mana")] 
     public TextMeshProUGUI conteurMana;
     public List<Image> manaIconList;
@@ -145,6 +154,100 @@ public class UIBattleManager : MonoBehaviour
         }
     }
 
+    // ACTUALISE L'UI DE L'ORDRE DES TOURS
+    public void UpdateTurnUI()
+    {
+        for (int i = 0; i < listeFondCases.Count; i++)
+        {
+            if (BattleManager.Instance.order[i].CompareTag("Ennemy")) 
+            {
+                listeFondCases[i].sprite = fondEnnemi;  
+            }
+            else if (BattleManager.Instance.order[i].CompareTag("Unit"))
+            {
+                listeFondCases[i].sprite = fondAllié;  
+            }
+        }
+
+        for (int i = 0; i < listeArtCases.Count; i++)
+        {
+            if (i == 0)
+            {
+                if (BattleManager.Instance.order[i].CompareTag("Unit"))
+                {
+                    listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Unit>().data.attackSprite;
+                }
+                else
+                {
+                    listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.attackSprite;
+                }
+                listeShadowCases[i].sprite = listeArtCases[i].sprite;  
+            }
+
+            if (BattleManager.Instance.order[i].CompareTag("Unit"))
+            {
+                if (i != 0)
+                {
+                    if (BattleManager.Instance.order[i].GetComponent<Unit>().currentHealth <= (BattleManager.Instance.order[i].GetComponent<Unit>().data
+                            .levels[(BattleManager.Instance.order[i].GetComponent<Unit>().currentLevel - 1)].PV) * 30 / 100)
+                    {
+                        listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Unit>().data.damageSprite;
+                    }
+                    else
+                    {
+                        listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Unit>().data.idleSprite;
+                    }
+                    listeShadowCases[i].sprite = listeArtCases[i].sprite;  
+                }
+            }
+            else
+            {
+                if (BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth <= (BattleManager.Instance.order[i].GetComponent<Ennemy>().data
+                      .maxHealth) * 30 / 100)
+                {
+                    listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.damageSprite;
+                }
+                else
+                {
+                    listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.idleSprite;
+                }
+                listeShadowCases[i].sprite = listeArtCases[i].sprite;  
+            }
+          
+        }
+
+        for (int i = 0; i < listeTextPvCases.Count; i++)
+        {
+                if (BattleManager.Instance.order[i].CompareTag("Unit"))
+                {
+                    listeTextPvCases[i].text = BattleManager.Instance.order[i].GetComponent<Unit>().currentHealth + "/" + 
+                                               BattleManager.Instance.order[i].GetComponent<Unit>().data.levels[BattleManager.
+                                                   Instance.order[i].GetComponent<Unit>().currentLevel-1].PV;
+                }
+                else
+                {
+                    listeTextPvCases[i].text = BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth + "/" +
+                                               BattleManager.Instance.order[i].GetComponent<Ennemy>().data.maxHealth;
+                }
+        }
+
+        for (int i = 0; i < listeLifeBarCases.Count; i++)
+        {
+            if (BattleManager.Instance.order[i].CompareTag("Unit"))
+            {
+                listeLifeBarCases[i].maxValue = BattleManager.Instance.order[i].GetComponent<Unit>().data.levels[BattleManager.
+                    Instance.order[i].GetComponent<Unit>().currentLevel-1].PV;
+                listeLifeBarCases[i].value = BattleManager.Instance.order[i].GetComponent<Unit>().currentHealth;
+            }
+            else
+            {
+                listeLifeBarCases[i].maxValue = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.maxHealth;
+                listeLifeBarCases[i].value = BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth; 
+            }
+           
+        }
+    }
+    
     // INFORM OTHER SCRIPT THAT A BUTTON HAS BEEN PRESSED
     public void ClickButton(int index)
     {
