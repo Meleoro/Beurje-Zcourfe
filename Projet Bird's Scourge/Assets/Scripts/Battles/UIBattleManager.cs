@@ -36,6 +36,9 @@ public class UIBattleManager : MonoBehaviour
         public TextMeshProUGUI attackDamageMultiplier;
     public TextMeshProUGUI competence1DamageMultiplier;
     public TextMeshProUGUI competence2DamageMultiplier;
+    public GameObject attackCancelButton;
+    public GameObject competence1CancelButton;
+    public GameObject competence2CancelButton;
 
     [Header("AttackUI")] 
     public RectTransform attackUI;
@@ -125,6 +128,55 @@ public class UIBattleManager : MonoBehaviour
     public void ClickButton(int index)
     {
         MouseManager.Instance.ChangeSelectedCompetence(index);
+    }
+
+
+    public void ChangeButtonState(int index)
+    {
+        if (index == 0)
+        {
+            Debug.Log(MouseManager.Instance.competenceUsed);
+            if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.attaqueData)
+            {
+                attackCancelButton.SetActive(false);
+            }
+            else
+            {
+                attackCancelButton.SetActive(true);
+                competence1CancelButton.SetActive(false);
+                competence2CancelButton.SetActive(false);
+            }
+        }
+        
+        if (index == 1)
+        {
+            Debug.Log(MouseManager.Instance.competenceUsed);
+            if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.competence1Data)
+            {
+                competence1CancelButton.SetActive(false);
+            }
+            else 
+            {
+                competence1CancelButton.SetActive(true);
+                attackCancelButton.SetActive(false);
+                competence2CancelButton.SetActive(false);
+            }
+        }
+
+        if (index == 2)
+        {
+            Debug.Log(MouseManager.Instance.competenceUsed);
+            if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.competence2Data)
+            {
+                competence2CancelButton.SetActive(false);
+            }
+            else 
+            {
+                competence2CancelButton.SetActive(true);
+                attackCancelButton.SetActive(false);
+                competence1CancelButton.SetActive(false);
+            }
+        }
     }
     
     

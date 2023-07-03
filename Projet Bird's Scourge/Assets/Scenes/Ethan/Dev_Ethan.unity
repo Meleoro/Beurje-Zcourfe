@@ -1026,7 +1026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &138535393
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1060,7 +1060,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2852,7 +2852,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 382846194}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1901596022}
+        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
+        m_MethodName: ChangeButtonState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1901596022}
+        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
+        m_MethodName: ClickButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &383031437
 GameObject:
   m_ObjectHideFlags: 0
@@ -3061,7 +3085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &502780218
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3095,7 +3119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3958,7 +3982,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 712508654}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1901596022}
+        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
+        m_MethodName: ChangeButtonState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1901596022}
+        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
+        m_MethodName: ClickButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &746934449
 GameObject:
   m_ObjectHideFlags: 0
@@ -4476,7 +4524,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &893861904
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4510,7 +4558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5949,7 +5997,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1158209049}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1901596022}
+        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
+        m_MethodName: ChangeButtonState
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1901596022}
+        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
+        m_MethodName: ClickButton
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1160205460
 GameObject:
   m_ObjectHideFlags: 0
@@ -8400,6 +8472,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Buttons PLACEHOLDERS
       objectReference: {fileID: 0}
+    - target: {fileID: 3656782899310139075, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: b2f8fc68476aa514f841baeba41217a2, type: 2}
     - target: {fileID: 4955065182393436152, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -8509,6 +8585,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 100756072}
     - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: attackCancelButton
+      value: 
+      objectReference: {fileID: 138535392}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: competence1ManaCost
       value: 
       objectReference: {fileID: 982238571}
@@ -8528,6 +8608,14 @@ PrefabInstance:
       propertyPath: competence2Description
       value: 
       objectReference: {fileID: 1747922465}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence1CancelButton
+      value: 
+      objectReference: {fileID: 893861903}
+    - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: competence2CancelButton
+      value: 
+      objectReference: {fileID: 502780217}
     - target: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: competence1DamageMultiplier
       value: 
@@ -8604,6 +8692,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3246569275197219667, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
     - {fileID: 1358318462944908997, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+    - {fileID: 8769862062523219834, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 221226356819109001, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       insertIndex: -1
@@ -9408,6 +9497,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1816941509}
   m_CullTransparentMesh: 1
+--- !u!114 &1901596022 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6592238632114190163, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+  m_PrefabInstance: {fileID: 1704727719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a319c3cdf73b0c945b5c88a315f49dc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1903816032
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,12 +17,12 @@ public class MouseManager : MonoBehaviour
     private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
     private int indexCompetence;
     private int competenceLevel;
-    private DataCompetence competenceUsed;
+    [HideInInspector] public DataCompetence competenceUsed;
     private bool competenceSelect;
     private bool unitSelect;
     
     [Header("Other")]
-    public Unit selectedUnit;
+    [HideInInspector] public Unit selectedUnit;
     private List<OverlayTile> currentPath = new List<OverlayTile>();
 
     [Header("References")]
@@ -259,6 +259,7 @@ public class MouseManager : MonoBehaviour
         if (indexCompetence == index && competenceSelect)
         {
             competenceSelect = false;
+            competenceUsed = null;
         }
         else
         {
