@@ -66,7 +66,7 @@ public class UIBattleManager : MonoBehaviour
     private void Start()
     {
         AttackUISetup();
-        
+        UpdateManaUI();
         attackUI.gameObject.SetActive(false);
     }
 
@@ -133,17 +133,15 @@ public class UIBattleManager : MonoBehaviour
     public void UpdateManaUI()
     {
         conteurMana.text = BattleManager.Instance.currentMana.ToString();
-        
-        for (int i = 0; i >= manaIconList.Count; i++)
+
+        for (int i = 0; i < manaIconList.Count; i++)
         {
-            if (i <= BattleManager.Instance.currentMana)
-            {
-                manaIconList[i].sprite = filledManaIcon;
-            }
-            else
-            {
-                manaIconList[i].sprite = emptyManaIcon;
-            }
+            manaIconList[i].sprite = emptyManaIcon;
+        }
+        
+        for (int i = 0; i < BattleManager.Instance.currentMana; i++)
+        {
+            manaIconList[i].sprite = filledManaIcon;
         }
     }
 
@@ -158,7 +156,6 @@ public class UIBattleManager : MonoBehaviour
     {
         if (index == 0)
         {
-            Debug.Log(MouseManager.Instance.competenceUsed);
             if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.attaqueData)
             {
                 attackCancelButton.SetActive(false);
@@ -173,7 +170,6 @@ public class UIBattleManager : MonoBehaviour
         
         if (index == 1)
         {
-            Debug.Log(MouseManager.Instance.competenceUsed);
             if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.competence1Data)
             {
                 competence1CancelButton.SetActive(false);
@@ -188,7 +184,6 @@ public class UIBattleManager : MonoBehaviour
 
         if (index == 2)
         {
-            Debug.Log(MouseManager.Instance.competenceUsed);
             if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.competence2Data)
             {
                 competence2CancelButton.SetActive(false);
