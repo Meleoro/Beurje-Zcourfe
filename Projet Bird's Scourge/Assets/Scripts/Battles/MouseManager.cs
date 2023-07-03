@@ -25,8 +25,7 @@ public class MouseManager : MonoBehaviour
     public Unit selectedUnit;
     private List<OverlayTile> currentPath = new List<OverlayTile>();
 
-    [Header("References")] 
-    public UIBattleManager currentUI;
+    [Header("References")]
     private PathFinder pathFinder;
     private ArrowCreator arrowCreator;
 
@@ -86,7 +85,7 @@ public class MouseManager : MonoBehaviour
             {
                 selectedUnit = clickedObject.GetComponent<Unit>();
                 
-                currentUI.OpenUnitInfos(selectedUnit.data);
+                UIBattleManager.Instance.OpenUnitInfos(selectedUnit.data);
 
                 competenceSelect = false;
                 unitSelect = true;
