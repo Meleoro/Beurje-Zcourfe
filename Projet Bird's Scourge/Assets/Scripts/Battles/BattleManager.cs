@@ -23,6 +23,10 @@ public class BattleManager : MonoBehaviour
     [Header("Order")] 
     public List<GameObject> order;
 
+    [Header("Mana")] 
+    public int manaMax = 5;
+    public int currentMana;
+
     [Header("Références")] 
     public UIBattleManager UIBattle;
 
@@ -282,6 +286,28 @@ public class BattleManager : MonoBehaviour
     {
         order.RemoveAt(0);
         
+        GainMana(1);
+        
         ActualiseOrder();
+    }
+    
+    
+    
+    // ----------------------- MANA MANAGEMENT -----------------------
+
+    public void LoseMana(int manaLost)
+    {
+        currentMana -= manaLost;
+
+        if (currentMana < 0)
+            currentMana = 0;
+    }
+
+    public void GainMana(int manaGained)
+    {
+        currentMana += manaGained;
+
+        if (currentMana > manaMax)
+            currentMana = manaMax;
     }
 }

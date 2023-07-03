@@ -51,6 +51,7 @@ public class Ennemy : MonoBehaviour
 
         if (currentHealth < 0)
         {
+            BattleManager.Instance.RemoveEnnemy(this);
             Destroy(gameObject);
         }
     }
