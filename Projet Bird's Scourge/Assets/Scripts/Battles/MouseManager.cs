@@ -86,6 +86,7 @@ public class MouseManager : MonoBehaviour
                 selectedUnit = clickedObject.GetComponent<Unit>();
                 
                 UIBattleManager.Instance.OpenUnitInfos(selectedUnit.data, selectedUnit);
+                UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
 
                 competenceSelect = false;
                 unitSelect = true;
@@ -96,6 +97,11 @@ public class MouseManager : MonoBehaviour
                 if (competenceSelect)
                 {
                     StartCoroutine(selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed, competenceUsed, competenceLevel));
+                }
+                else
+                {
+                    selectedUnit = clickedObject.GetComponent<Unit>();
+                    UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
                 }
             }
 
@@ -119,12 +125,13 @@ public class MouseManager : MonoBehaviour
     }
 
     
-    // WHEN THE CHARACTER DESELECT A CHARACTER
+    // WHEN THE PLAYER DESELECT A CHARACTER
     private void StopSelection()
     {
         competenceSelect = false;
         unitSelect = false;
-
+        selectedUnit = null;
+        UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
         ManageOverlayTiles();
     }
     

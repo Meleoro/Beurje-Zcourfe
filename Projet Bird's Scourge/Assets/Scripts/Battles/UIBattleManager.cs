@@ -42,6 +42,7 @@ public class UIBattleManager : MonoBehaviour
 
     [Header("Cases Tour")] 
     public List<Image> listeFondCases;
+    public List<Image> listeFondIlluminé;
     public Sprite fondAllié;
     public Sprite fondEnnemi;
     public List<Image> listeArtCases;
@@ -54,6 +55,22 @@ public class UIBattleManager : MonoBehaviour
     public List<Image> manaIconList;
     public Sprite filledManaIcon;
     public Sprite emptyManaIcon;
+
+    [Header("Menu Preview Attaques")] 
+    public TextMeshProUGUI textDMG;
+    public TextMeshProUGUI textACC;
+    public TextMeshProUGUI textCRT;
+    public TextMeshProUGUI nomAllié;
+    public TextMeshProUGUI nomEnnemi;
+    public TextMeshProUGUI PvAllié;
+    public TextMeshProUGUI PvEnnemi;
+    public Slider BarreDeVieAllié;
+    public Slider BarreDeVieEnnemi;
+    public Image ArtAllié;
+    public Image OmbreAllié;
+    public Image ArtEnnemi;
+    public Image OmbreEnnemi;
+    
     
     [Header("AttackUI")] 
     public RectTransform attackUI;
@@ -247,7 +264,38 @@ public class UIBattleManager : MonoBehaviour
            
         }
     }
-    
+
+    public void UpdateTurnUISelectedUnit(Unit unitInfos)
+    {
+        if (MouseManager.Instance.selectedUnit != null)
+        {
+            for (int i = 0; i < listeFondIlluminé.Count; i++)
+            {
+                if (unitInfos == BattleManager.Instance.order[i].GetComponent<Unit>())
+                {
+                    listeFondIlluminé[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    listeFondIlluminé[i].gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < listeFondIlluminé.Count; i++)
+            {
+                listeFondIlluminé[i].gameObject.SetActive(false);
+            }
+        }
+      
+    }
+
+    public void UpdateAttackPreview()
+    {
+        
+    }
+
     // INFORM OTHER SCRIPT THAT A BUTTON HAS BEEN PRESSED
     public void ClickButton(int index)
     {
