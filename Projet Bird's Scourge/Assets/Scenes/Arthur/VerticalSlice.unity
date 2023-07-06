@@ -328,6 +328,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battle
       objectReference: {fileID: 0}
+    - target: {fileID: 8809603037399226087, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e27291b726c05864e800dae4b23aed69, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
