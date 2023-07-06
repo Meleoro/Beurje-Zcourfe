@@ -54,7 +54,8 @@ public class MouseManager : MonoBehaviour
         {
             OverlayTile currentTile = GetFocusedTile();
             
-            transform.position = currentTile.transform.position;
+            if(currentTile != null)
+                transform.position = currentTile.transform.position;
 
             if (unitSelect)
             {
