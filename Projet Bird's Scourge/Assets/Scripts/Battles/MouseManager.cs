@@ -81,9 +81,9 @@ public class MouseManager : MonoBehaviour
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
-        if (hits.Length > 0)
+        for (int i = 0; i < hits.Length; i++)
         {
-            GameObject clickedObject = hits[0].collider.gameObject;
+            GameObject clickedObject = hits[i].collider.gameObject;
 
             if (clickedObject.CompareTag("Unit"))
             {
@@ -94,6 +94,8 @@ public class MouseManager : MonoBehaviour
 
                 competenceSelect = false;
                 unitSelect = true;
+                
+                break;
             }
             
             else if (clickedObject.CompareTag("Ennemy"))
@@ -101,11 +103,8 @@ public class MouseManager : MonoBehaviour
                 if (competenceSelect)
                 {
                     StartCoroutine(selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed, competenceUsed, competenceLevel));
-                }
-                else
-                {
-                    selectedUnit = clickedObject.GetComponent<Unit>();
-                    UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
+                    
+                    break;
                 }
             }
 
@@ -114,6 +113,8 @@ public class MouseManager : MonoBehaviour
                 if (tilesAtRangeDisplayed.Contains(clickedObject.GetComponent<OverlayTile>()))
                 {
                     StartCoroutine(selectedUnit.MoveToTile(currentPath));
+                    
+                    break;
                 }
                 else
                 {
@@ -122,10 +123,7 @@ public class MouseManager : MonoBehaviour
             }
         }
 
-        else
-        {
-            //StopSelection();
-        }
+        //StopSelection();
     }
 
     
