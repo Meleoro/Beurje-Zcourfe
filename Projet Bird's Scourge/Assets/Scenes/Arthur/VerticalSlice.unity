@@ -282,11 +282,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1332218464396071553, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.841
+      value: 2.641
       objectReference: {fileID: 0}
     - target: {fileID: 1332218464396071553, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.794
+      value: -0.293
       objectReference: {fileID: 0}
     - target: {fileID: 2278465922231995638, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_RootOrder
@@ -335,7 +335,7 @@ PrefabInstance:
     - target: {fileID: 4849761822756363501, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f21d852c44b710441a06cda1748be66d, type: 2}
+      objectReference: {fileID: 2100000, guid: dbc7cd4596bc43f4e919ecac61da6825, type: 2}
     - target: {fileID: 7754583800397855363, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_Name
       value: Battle
@@ -343,7 +343,7 @@ PrefabInstance:
     - target: {fileID: 8809603037399226087, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: f21d852c44b710441a06cda1748be66d, type: 2}
+      objectReference: {fileID: 2100000, guid: 6d586800ea53f514ba6e26b5815d752f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
