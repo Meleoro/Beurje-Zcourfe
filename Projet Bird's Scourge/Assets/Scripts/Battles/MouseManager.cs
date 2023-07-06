@@ -23,6 +23,7 @@ public class MouseManager : MonoBehaviour
     
     [Header("Other")]
     [HideInInspector] public Unit selectedUnit;
+    [HideInInspector] public bool noControl;
     private List<OverlayTile> currentPath = new List<OverlayTile>();
 
     [Header("References")]
@@ -49,23 +50,26 @@ public class MouseManager : MonoBehaviour
 
     void Update()
     {
-        OverlayTile currentTile = GetFocusedTile();
-
-        if (unitSelect)
+        if (!noControl)
         {
-            if (currentTile != null)
-            {
-                DisplayArrow(currentTile);
+            OverlayTile currentTile = GetFocusedTile();
             
-                transform.position = currentTile.transform.position;
+            transform.position = currentTile.transform.position;
+
+            if (unitSelect)
+            {
+                if (currentTile != null)
+                {
+                    DisplayArrow(currentTile);
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            VerifyClickedElement();
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                VerifyClickedElement();
 
-            ManageOverlayTiles();
+                ManageOverlayTiles();
+            }
         }
     }
 

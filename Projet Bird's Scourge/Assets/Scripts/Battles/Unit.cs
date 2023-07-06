@@ -52,6 +52,8 @@ public class Unit : MonoBehaviour
     // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
     public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
+        MouseManager.Instance.noControl = true;
+        
         if (competenceTiles.Contains(clickedEnnemy.currentTile))
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
@@ -146,6 +148,8 @@ public class Unit : MonoBehaviour
     // MOVE WITH BREAKS 
     public IEnumerator MoveToTile(List<OverlayTile> path)
     {
+        MouseManager.Instance.noControl = true;
+        
         for(int i = 0; i < path.Count; i++)
         {
             transform.position = path[i].transform.position + new Vector3(0, 0.4f, -1);
@@ -158,6 +162,8 @@ public class Unit : MonoBehaviour
         
         currentTile = path[path.Count - 1];
 
+        MouseManager.Instance.noControl = false;
+        
         FindTilesAtRange();
         FindTilesCompetences();
     }

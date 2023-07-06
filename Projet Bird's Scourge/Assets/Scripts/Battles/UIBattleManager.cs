@@ -410,6 +410,8 @@ public class UIBattleManager : MonoBehaviour
         AttackUISetup();
         
         attackUI.gameObject.SetActive(false);
+
+        MouseManager.Instance.noControl = false;
     }
     
 }
