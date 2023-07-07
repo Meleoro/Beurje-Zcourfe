@@ -54,7 +54,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _MaskValue: 10
+    - _MaskValue: 20
     - _WindImpact: 1
     - _WindScale: 5
     - _WindStrength: 0.1
