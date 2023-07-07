@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FireMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 3b35cae6ed7930b4eb9c9cbd0429228d, type: 3}
+  m_Name: WindMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: 33628814b6e22e44fb4e1b85decec66d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -28,11 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: bad327edae6af9a4d8d70400d9b24f7d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTexture:
-        m_Texture: {fileID: 2800000, guid: bad327edae6af9a4d8d70400d9b24f7d, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -57,20 +53,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _ColorBlendValue: 0.2
     - _EnableExternalAlpha: 0
-    - _NoiseFadeValue: 0.16
-    - _NoiseScale: 50
-    - _NoiseScrollSpeed: -1
-    - _ScrollSpeed: 1
+    - _MaskValue: 10
+    - _WindImpact: 1
+    - _WindScale: 5
+    - _WindStrength: 0.1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 1, g: 0.66730356, b: 0, a: 1}
-    - _Color2: {r: 1, g: 0, b: 0.0107851, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _WindSpeedDirection: {r: 0.2, g: 0.2, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4314678988892650364
+--- !u!114 &4372222319863322363
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
