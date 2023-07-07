@@ -57,6 +57,7 @@ public class UIBattleManager : MonoBehaviour
     public Sprite emptyManaIcon;
 
     [Header("Menu Preview Attaques")] 
+    public GameObject previewMenu;
     public TextMeshProUGUI textDMG;
     public TextMeshProUGUI textACC;
     public TextMeshProUGUI textCRT;
@@ -292,11 +293,6 @@ public class UIBattleManager : MonoBehaviour
       
     }
 
-    public void UpdateAttackPreview()
-    {
-        
-    }
-
     // INFORM OTHER SCRIPT THAT A BUTTON HAS BEEN PRESSED
     public void ClickButton(int index)
     {
@@ -352,6 +348,27 @@ public class UIBattleManager : MonoBehaviour
     
     //--------------------------ATTACK PART------------------------------
 
+
+    public void OpenAttackPreview(int damage,int hitRate, int critRate, Unit Allié, Ennemy Ennemi)
+    {
+        previewMenu.SetActive(true);
+        textDMG.text = damage.ToString();
+        textACC.text = hitRate.ToString();
+        textCRT.text = critRate.ToString();
+        nomAllié.text = Allié.data.name;
+        nomEnnemi.text = Ennemi.data.charaName;
+        PvAllié.text = Allié.currentHealth + " / " + Allié.data.levels[Allié.currentLevel - 1].PV;
+        PvEnnemi.text = Ennemi.currentHealth + " / " + Ennemi.data.maxHealth;
+        BarreDeVieAllié.maxValue = Allié.data.levels[Allié.currentLevel - 1].PV;
+        BarreDeVieAllié.value = Allié.currentHealth;
+        BarreDeVieEnnemi.maxValue = Ennemi.data.maxHealth;
+        BarreDeVieEnnemi.value = Ennemi.currentHealth;
+        ArtAllié.sprite = Allié.data.attackSprite;
+        OmbreAllié.sprite = ArtAllié.sprite;
+        ArtEnnemi.sprite = Ennemi.data.damageSprite;
+        OmbreEnnemi.sprite = ArtEnnemi.sprite;
+    }
+    
     // SETUP EVERY ALPHAS WHEN THE SCENE START
     public void AttackUISetup()
     {
