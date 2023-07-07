@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Random = UnityEngine.Random;
 
 
 public class Unit : MonoBehaviour
@@ -66,11 +67,36 @@ public class Unit : MonoBehaviour
                 CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
 
                 yield return new WaitForSeconds(1f);
+                
+                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[currentLevel-1].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.agilite);
+                int attackDamage = statsCalculator.CalculateDamages(data.levels[currentLevel-1].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.defense);
+                int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[currentLevel-1].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.chance);
+                Debug.Log(attackHitRate);
+                Debug.Log(attackDamage);
+                Debug.Log(attackCriticalRate);
+                
+                if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
+                {
+                    if (Random.Range(0, 100) <= attackCriticalRate) // Si c'est un critique
+                    {
+                        clickedEnnemy.TakeDamages(attackDamage * 2);
+                        BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
+                        
+                        StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,attackDamage * 2,false,true));
+                    }
+                    else // si ce n'est pas un critique
+                    {
+                        clickedEnnemy.TakeDamages(attackDamage);
+                        BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
             
-                clickedEnnemy.TakeDamages(statsCalculator.CalculateDamages(data.levels[currentLevel-1].force, competenceUsed.levels[competenceLevel].damageMultiplier, 5));
-                BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
-            
-                StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true));
+                        StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,attackDamage,false,false)); 
+                    }
+                }
+                else // Si c'est un miss
+                {
+                    StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,0,true,false));
+                }
+                UIBattleManager.Instance.UpdateTurnUI();
             }
         }
     }
@@ -80,7 +106,7 @@ public class Unit : MonoBehaviour
     {
         currentHealth -= damages;
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
             BattleManager.Instance.RemoveUnit(this);
             Destroy(gameObject);

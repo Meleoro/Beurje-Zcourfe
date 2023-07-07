@@ -26,42 +26,42 @@ MonoBehaviour:
   passifData: {fileID: 0}
   levels:
   - level: 0
-    PV: 8
-    PM: 4
-    force: 10
-    defense: 10
-    vitesse: 10
-    agilite: 10
-    precision: 10
-  - level: 0
-    PV: -8
-    PM: 4
-    force: 10
-    defense: 10
-    vitesse: 10
-    agilite: 10
-    precision: 10
-  - level: 0
     PV: 10
-    PM: 4
-    force: 10
-    defense: 10
+    PM: 10
+    force: 5
+    defense: 2
     vitesse: 10
-    agilite: 10
-    precision: 10
+    agilite: 5
+    chance: 8
   - level: 0
-    PV: 10
-    PM: 4
-    force: 10
-    defense: 10
-    vitesse: 10
-    agilite: 10
-    precision: 10
+    PV: 0
+    PM: 0
+    force: 0
+    defense: 0
+    vitesse: 0
+    agilite: 0
+    chance: 0
   - level: 0
-    PV: 20
-    PM: 4
-    force: 10
-    defense: 10
-    vitesse: 10
-    agilite: 10
-    precision: 10
+    PV: 0
+    PM: 0
+    force: 0
+    defense: 0
+    vitesse: 0
+    agilite: 0
+    chance: 0
+  - level: 0
+    PV: 0
+    PM: 0
+    force: 0
+    defense: 0
+    vitesse: 0
+    agilite: 0
+    chance: 0
+  - level: 0
+    PV: 0
+    PM: 0
+    force: 0
+    defense: 0
+    vitesse: 0
+    agilite: 0
+    chance: 0

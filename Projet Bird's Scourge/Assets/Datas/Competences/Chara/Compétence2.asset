@@ -18,6 +18,8 @@ MonoBehaviour:
       +1 if target dies.
     competenceManaCost: 1
     damageMultiplier: 1.8
+    baseHitRate: 100
+    criticalMultiplier: 2
     isCustom: 1
     newPaterne:
     - list: 000000000000000000
@@ -37,6 +39,8 @@ MonoBehaviour:
       +1 if target dies.
     competenceManaCost: 1
     damageMultiplier: 1.8
+    baseHitRate: 100
+    criticalMultiplier: 2
     isCustom: 1
     newPaterne:
     - list: 000000000000000000

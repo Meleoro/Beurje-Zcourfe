@@ -46,5 +46,5 @@ public class UnitLevel
     public int defense;
     public int vitesse;
     public int agilite;
-    public int precision;
+    public int chance;
 }
