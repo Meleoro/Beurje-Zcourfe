@@ -75,6 +75,8 @@ public class Unit : MonoBehaviour
                 Debug.Log(attackDamage);
                 Debug.Log(attackCriticalRate);
                 
+                UIBattleManager.Instance.OpenAttackPreview(attackDamage,attackHitRate,attackCriticalRate,this,clickedEnnemy);
+                
                 if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
                 {
                     if (Random.Range(0, 100) <= attackCriticalRate) // Si c'est un critique
