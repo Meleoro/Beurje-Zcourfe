@@ -148,7 +148,7 @@ public class DataUnitEditor : Editor
                 SerializedProperty defense = MyListRef.FindPropertyRelative("defense");
                 SerializedProperty vitesse = MyListRef.FindPropertyRelative("vitesse");
                 SerializedProperty agilite = MyListRef.FindPropertyRelative("agilite");
-                SerializedProperty precision = MyListRef.FindPropertyRelative("precision");
+                SerializedProperty chance = MyListRef.FindPropertyRelative("chance");
 
                 using (new GUILayout.VerticalScope(EditorStyles.helpBox))
                 {
@@ -172,7 +172,7 @@ public class DataUnitEditor : Editor
                     EditorGUILayout.PropertyField(defense);
                     EditorGUILayout.PropertyField(vitesse);
                     EditorGUILayout.PropertyField(agilite);
-                    EditorGUILayout.PropertyField(precision);
+                    EditorGUILayout.PropertyField(chance);
                 }
             }
         }

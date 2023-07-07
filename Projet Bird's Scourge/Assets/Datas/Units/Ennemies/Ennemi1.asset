@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fedef99d1d97d0849a93fdf642d1a6db, type: 3}
   m_Name: Ennemi1
   m_EditorClassIdentifier: 
-  charaName: 
-  maxHealth: 20
-  idleSprite: {fileID: 21300000, guid: 52d0c6d6327ad634798c1b2817012da3, type: 3}
+  charaName: Jean Pignon
+  maxHealth: 25
+  idleSprite: {fileID: 21300000, guid: 6fad51dbd15fabe499a6751414c54e4e, type: 3}
   attackSprite: {fileID: 21300000, guid: 1f715f8f071edf147849e609a8bc2076, type: 3}
   damageSprite: {fileID: 21300000, guid: 6fad51dbd15fabe499a6751414c54e4e, type: 3}
   attaqueData: {fileID: 0}
@@ -22,5 +22,5 @@ MonoBehaviour:
   force: 0
   defense: 0
   vitesse: 5
-  agilite: 0
-  precision: 0
+  agilite: 2
+  chance: 3

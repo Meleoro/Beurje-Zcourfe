@@ -15,8 +15,10 @@ MonoBehaviour:
   competenceName: Peircing Arrow
   levels:
   - competenceDescription: Reduces the target's defense for 3 turns.
-    competenceManaCost: 2
+    competenceManaCost: 0
     damageMultiplier: 1.2
+    baseHitRate: 85
+    criticalMultiplier: 1.1
     isCustom: 1
     newPaterne:
     - list: 000000000000000000
@@ -35,6 +37,8 @@ MonoBehaviour:
   - competenceDescription: Reduces the target's defense for 3 turns.
     competenceManaCost: 0
     damageMultiplier: 1.2
+    baseHitRate: 85
+    criticalMultiplier: 1.1
     isCustom: 1
     newPaterne:
     - list: 000000000000000000

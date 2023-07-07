@@ -16,7 +16,9 @@ MonoBehaviour:
   levels:
   - competenceDescription: Pushes the target back 2 tiles.
     competenceManaCost: 2
-    damageMultiplier: 2.5
+    damageMultiplier: 3.5
+    baseHitRate: 40
+    criticalMultiplier: 0.8
     isCustom: 1
     newPaterne:
     - list: 000000000000000000
@@ -34,7 +36,9 @@ MonoBehaviour:
     newAlteration: 0
   - competenceDescription: Pushes the target back 2 tiles.
     competenceManaCost: 2
-    damageMultiplier: 2.5
+    damageMultiplier: 3.5
+    baseHitRate: 40
+    criticalMultiplier: 0.8
     isCustom: 1
     newPaterne:
     - list: 000000000000000000

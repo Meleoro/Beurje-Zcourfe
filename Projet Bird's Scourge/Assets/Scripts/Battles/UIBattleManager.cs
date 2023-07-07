@@ -73,6 +73,7 @@ public class UIBattleManager : MonoBehaviour
     
     
     [Header("AttackUI")] 
+    public TextMeshProUGUI damageNumber;
     public RectTransform attackUI;
     public Image leftChara;
     public Image rightChara;
@@ -361,11 +362,12 @@ public class UIBattleManager : MonoBehaviour
 
         attackUI.DORotate(Vector3.zero, 0);
         attackUI.localScale = Vector3.one;
+        damageNumber.rectTransform.localScale = Vector3.one;
     }
     
     
     // WHEN THE ATTACK UI HAS TO APPEAR
-    public IEnumerator AttackUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftAttack)
+    public IEnumerator AttackUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftAttack,int damage,bool miss,bool crit)
     {
         attackUI.gameObject.SetActive(true);
 
@@ -388,6 +390,31 @@ public class UIBattleManager : MonoBehaviour
             attackUI.DOShakePosition(1f, 10f);
             attackUI.DOScale(attackUI.localScale * 1.1f, 0.2f);
             attackUI.DORotate(new Vector3(0, 0, -5), 0.1f);
+
+            if (!miss)
+            {
+                if (crit)
+                {
+                    damageNumber.text = "CRIT " + damage.ToString();
+                    damageNumber.color = new Color(255, 255, 0);
+                }
+                else
+                {
+                    damageNumber.text = damage.ToString();
+                    damageNumber.color = new Color(255, 0, 0);
+                }
+            }
+            else
+            {
+                damageNumber.text = "Miss";
+                damageNumber.color = new Color(0, 0, 255);
+            }
+            
+
+            damageNumber.DOFade(1, 0.07f);
+            damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
+            damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
+            damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up,0.2f);
         }
 
         yield return new WaitForSeconds(1.5f);

@@ -60,6 +60,8 @@ public class CompetenceLevel
     public string competenceDescription;
     public int competenceManaCost;
     public float damageMultiplier;
+    public int baseHitRate;
+    public float criticalMultiplier;
     
     public bool isCustom;
     [SerializeField] public List<ListBool> newPaterne = new List<ListBool>();
