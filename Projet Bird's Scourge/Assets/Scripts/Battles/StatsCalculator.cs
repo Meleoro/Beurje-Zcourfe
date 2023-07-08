@@ -6,7 +6,7 @@ public class StatsCalculator
 {
     public int CalculateDamages(int strength, float strengthMultiplicator, int defense)
     {
-        return Mathf.RoundToInt((strength * strengthMultiplicator) - defense);
+        return Mathf.Clamp(Mathf.RoundToInt((strength * strengthMultiplicator) - defense), 0, 10000);
     }
 
     
