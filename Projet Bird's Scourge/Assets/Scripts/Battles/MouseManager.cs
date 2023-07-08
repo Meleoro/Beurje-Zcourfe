@@ -160,6 +160,8 @@ public class MouseManager : MonoBehaviour
             
             if (hits[i].collider.gameObject.CompareTag("Tile"))
             {
+                UIBattleManager.Instance.CloseAttackPreview();
+                
                 return hits[i].collider.gameObject.GetComponent<OverlayTile>();
             }
         }

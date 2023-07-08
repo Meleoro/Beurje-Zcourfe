@@ -369,6 +369,12 @@ public class UIBattleManager : MonoBehaviour
         ArtEnnemi.sprite = Ennemi.data.damageSprite;
         OmbreEnnemi.sprite = ArtEnnemi.sprite;
     }
+
+    public void CloseAttackPreview()
+    {
+        previewMenu.SetActive(false);
+    }
+    
     
     // SETUP EVERY ALPHAS WHEN THE SCENE START
     public void AttackUISetup()
