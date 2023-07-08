@@ -25,7 +25,6 @@ public class Unit : MonoBehaviour
     
     [Header("ElementsToSave")] 
     public int currentHealth;
-
     [SerializeField] private int currentLevel;
     public int CurrentLevel{
         get { return currentLevel - 1; }
