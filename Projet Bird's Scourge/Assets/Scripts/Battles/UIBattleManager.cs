@@ -113,7 +113,7 @@ public class UIBattleManager : MonoBehaviour
     {
         unitName.text = unitInfos.charaName;
         
-        if (unitScript.currentHealth <= (unitInfos.levels[unitScript.currentLevel-1].PV) * 30 / 100)
+        if (unitScript.currentHealth <= (unitInfos.levels[unitScript.CurrentLevel].PV) * 30 / 100)
         {
             unitArt.sprite = unitInfos.damageSprite;
         }
@@ -123,9 +123,9 @@ public class UIBattleManager : MonoBehaviour
         }
       
         unitShadow.sprite = unitArt.sprite;
-        unitLevel.text = "LVL " + unitScript.currentLevel;
-        unitHP.text = unitScript.currentHealth + " / " + unitInfos.levels[unitScript.currentLevel-1].PV + " HP"; 
-        LifeBar.maxValue = unitInfos.levels[unitScript.currentLevel-1].PV;
+        unitLevel.text = "LVL " + unitScript.CurrentLevel + 1;
+        unitHP.text = unitScript.currentHealth + " / " + unitInfos.levels[unitScript.CurrentLevel].PV + " HP"; 
+        LifeBar.maxValue = unitInfos.levels[unitScript.CurrentLevel].PV;
         LifeBar.value = unitScript.currentHealth;
     }
     
@@ -135,25 +135,25 @@ public class UIBattleManager : MonoBehaviour
         if (unitInfos.attaqueData is not null)
         {
             attackName.text = unitInfos.attaqueData.competenceName;
-            attackDescription.text = unitInfos.attaqueData.levels[unitScript.attackLevel-1].competenceDescription;
-            attackManaCost.text = unitInfos.attaqueData.levels[unitScript.attackLevel-1].competenceManaCost.ToString(); 
-            attackDamageMultiplier.text = "STR x" + unitInfos.attaqueData.levels[unitScript.attackLevel-1].damageMultiplier; 
+            attackDescription.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceDescription;
+            attackManaCost.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceManaCost.ToString(); 
+            attackDamageMultiplier.text = "STR x" + unitInfos.attaqueData.levels[unitScript.AttackLevel].damageMultiplier; 
         }
 
         if (unitInfos.competence1Data is not null)
         {
             competence1Name.text = unitInfos.competence1Data.competenceName;
-            competence1Description.text = unitInfos.competence1Data.levels[unitScript.competence1Level-1].competenceDescription;
-            competence1ManaCost.text = unitInfos.competence1Data.levels[unitScript.competence1Level-1].competenceManaCost.ToString();
-            competence1DamageMultiplier.text = "STR x" + unitInfos.competence1Data.levels[unitScript.competence1Level-1].damageMultiplier; 
+            competence1Description.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceDescription;
+            competence1ManaCost.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceManaCost.ToString();
+            competence1DamageMultiplier.text = "STR x" + unitInfos.competence1Data.levels[unitScript.Competence1Level].damageMultiplier; 
         }
         
         if (unitInfos.competence2Data is not null)
         {
             competence2Name.text = unitInfos.competence2Data.competenceName;
-            competence2Description.text = unitInfos.competence2Data.levels[unitScript.competence2Level-1].competenceDescription;
-            competence2ManaCost.text = unitInfos.competence2Data.levels[unitScript.competence2Level-1].competenceManaCost.ToString(); 
-            competence2DamageMultiplier.text = "STR x" + unitInfos.competence2Data.levels[unitScript.competence2Level-1].damageMultiplier;
+            competence2Description.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceDescription;
+            competence2ManaCost.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceManaCost.ToString(); 
+            competence2DamageMultiplier.text = "STR x" + unitInfos.competence2Data.levels[unitScript.Competence2Level].damageMultiplier;
         } 
     }
 
@@ -208,7 +208,7 @@ public class UIBattleManager : MonoBehaviour
                 if (i != 0)
                 {
                     if (BattleManager.Instance.order[i].GetComponent<Unit>().currentHealth <= (BattleManager.Instance.order[i].GetComponent<Unit>().data
-                            .levels[(BattleManager.Instance.order[i].GetComponent<Unit>().currentLevel - 1)].PV) * 30 / 100)
+                            .levels[(BattleManager.Instance.order[i].GetComponent<Unit>().CurrentLevel)].PV) * 30 / 100)
                     {
                         listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Unit>().data.damageSprite;
                     }
@@ -241,7 +241,7 @@ public class UIBattleManager : MonoBehaviour
                 {
                     listeTextPvCases[i].text = BattleManager.Instance.order[i].GetComponent<Unit>().currentHealth + "/" + 
                                                BattleManager.Instance.order[i].GetComponent<Unit>().data.levels[BattleManager.
-                                                   Instance.order[i].GetComponent<Unit>().currentLevel-1].PV;
+                                                   Instance.order[i].GetComponent<Unit>().CurrentLevel].PV;
                 }
                 else
                 {
@@ -255,7 +255,7 @@ public class UIBattleManager : MonoBehaviour
             if (BattleManager.Instance.order[i].CompareTag("Unit"))
             {
                 listeLifeBarCases[i].maxValue = BattleManager.Instance.order[i].GetComponent<Unit>().data.levels[BattleManager.
-                    Instance.order[i].GetComponent<Unit>().currentLevel-1].PV;
+                    Instance.order[i].GetComponent<Unit>().CurrentLevel].PV;
                 listeLifeBarCases[i].value = BattleManager.Instance.order[i].GetComponent<Unit>().currentHealth;
             }
             else
@@ -358,9 +358,9 @@ public class UIBattleManager : MonoBehaviour
         textCRT.text = critRate.ToString();
         nomAllié.text = Allié.data.name;
         nomEnnemi.text = Ennemi.data.charaName;
-        PvAllié.text = Allié.currentHealth + " / " + Allié.data.levels[Allié.currentLevel - 1].PV;
+        PvAllié.text = Allié.currentHealth + " / " + Allié.data.levels[Allié.CurrentLevel].PV;
         PvEnnemi.text = Ennemi.currentHealth + " / " + Ennemi.data.maxHealth;
-        BarreDeVieAllié.maxValue = Allié.data.levels[Allié.currentLevel - 1].PV;
+        BarreDeVieAllié.maxValue = Allié.data.levels[Allié.CurrentLevel].PV;
         BarreDeVieAllié.value = Allié.currentHealth;
         BarreDeVieEnnemi.maxValue = Ennemi.data.maxHealth;
         BarreDeVieEnnemi.value = Ennemi.currentHealth;

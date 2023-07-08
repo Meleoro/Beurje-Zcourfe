@@ -148,6 +148,16 @@ public class MouseManager : MonoBehaviour
 
         for (int i = 0; i < hits.Length; i++)
         {
+            if (hits[i].collider.gameObject.CompareTag("Ennemy"))
+            {
+                if (competenceSelect)
+                {
+                    selectedUnit.DisplayBattleStats(hits[i].collider.GetComponent<Ennemy>(), competenceUsed, competenceLevel);
+                }
+
+                return hits[i].collider.GetComponent<Ennemy>().currentTile;
+            }
+            
             if (hits[i].collider.gameObject.CompareTag("Tile"))
             {
                 return hits[i].collider.gameObject.GetComponent<OverlayTile>();
@@ -156,6 +166,7 @@ public class MouseManager : MonoBehaviour
 
         return null;
     }
+    
     
     // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
     private void DisplayArrow(OverlayTile focusedTile)
@@ -182,6 +193,8 @@ public class MouseManager : MonoBehaviour
         }
     }
 
+    
+    
 
     // MANAGE WHICH COLOR HAS TO HAVE EVERYTILES DEPENDING ON THE SITUATION
     public void ManageOverlayTiles()
@@ -247,21 +260,21 @@ public class MouseManager : MonoBehaviour
         {
             competenceUsed = selectedUnit.data.attaqueData;
             tilesCompetenceDisplayed = selectedUnit.tilesAttack;
-            competenceLevel = selectedUnit.attackLevel - 1;
+            competenceLevel = selectedUnit.AttackLevel;
         }
 
         else if (index == 1)
         {
             competenceUsed = selectedUnit.data.competence1Data;
             tilesCompetenceDisplayed = selectedUnit.tilesCompetence1;
-            competenceLevel = selectedUnit.competence1Level - 1;
+            competenceLevel = selectedUnit.Competence1Level;
         }
 
         else
         {
             competenceUsed = selectedUnit.data.competence2Data;
             tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
-            competenceLevel = selectedUnit.competence2Level - 1;
+            competenceLevel = selectedUnit.Competence2Level;
         }
 
 

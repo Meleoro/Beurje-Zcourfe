@@ -11,6 +11,7 @@ public class Unit : MonoBehaviour
     [Header("GeneralDatas")] 
     public DataUnit data;
     
+    
     [Header("CurrentDatas")]
     [HideInInspector] public OverlayTile currentTile;
     [HideInInspector] public List<OverlayTile> currentTilesAtRange = new List<OverlayTile>();
@@ -21,12 +22,30 @@ public class Unit : MonoBehaviour
     [HideInInspector] public int haste;
     private int PM;
 
+    
     [Header("ElementsToSave")] 
     public int currentHealth;
-    public int currentLevel;
-    public int attackLevel;
-    public int competence1Level;
-    public int competence2Level;
+
+    [SerializeField] private int currentLevel;
+    public int CurrentLevel{
+        get { return currentLevel - 1; }
+    }
+
+    [SerializeField] private int attackLevel;
+    public int AttackLevel{
+        get { return attackLevel - 1; }
+    }
+
+    [SerializeField] private int competence1Level;
+    public int Competence1Level{
+        get { return competence1Level - 1; }
+    }
+
+    [SerializeField] private int competence2Level;
+    public int Competence2Level{
+        get { return competence2Level - 1; }
+    }
+
     
     [Header("References")]
     private RangeFinder rangeFinder;
@@ -70,14 +89,9 @@ public class Unit : MonoBehaviour
 
                 yield return new WaitForSeconds(1f);
                 
-                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[currentLevel-1].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.agilite);
-                int attackDamage = statsCalculator.CalculateDamages(data.levels[currentLevel-1].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.defense);
-                int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[currentLevel-1].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.chance);
-                Debug.Log(attackHitRate);
-                Debug.Log(attackDamage);
-                Debug.Log(attackCriticalRate);
-                
-                UIBattleManager.Instance.OpenAttackPreview(attackDamage,attackHitRate,attackCriticalRate,this,clickedEnnemy);
+                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.agilite);
+                int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.defense);
+                int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.chance);
                 
                 if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
                 {
@@ -107,6 +121,18 @@ public class Unit : MonoBehaviour
         }
     }
 
+    
+    // SHOW CHANCES TO HIT, DO A CRITICAL HIT AND THE DAMAGES
+    public void DisplayBattleStats(Ennemy clickedEnnemy, DataCompetence competenceUsed, int competenceLevel)
+    {
+        int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.agilite);
+        int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.defense);
+        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.chance);
+
+        UIBattleManager.Instance.OpenAttackPreview(attackDamage,attackHitRate,attackCriticalRate,this,clickedEnnemy);
+    }
+
+    
     // REDUCE THE HEALTH OF THE UNIT AND VERIFY IF HE IS DEAD
     public void TakeDamages(int damages)
     {
@@ -205,7 +231,7 @@ public class Unit : MonoBehaviour
 
     public void InitialiseTurn()
     {
-        PM = data.levels[currentLevel].PM;
+        PM = data.levels[CurrentLevel].PM;
 
         FindTilesAtRange();
     }
