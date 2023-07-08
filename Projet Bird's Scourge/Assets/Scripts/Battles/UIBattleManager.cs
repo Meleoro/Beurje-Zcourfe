@@ -40,7 +40,7 @@ public class UIBattleManager : MonoBehaviour
     public GameObject competence1CancelButton;
     public GameObject competence2CancelButton;
 
-    [Header("Cases Tour")] 
+    [Header("Cases Tour")]
     public List<Image> listeFondCases;
     public List<Image> listeFondIlluminé;
     public Sprite fondAllié;
@@ -49,6 +49,7 @@ public class UIBattleManager : MonoBehaviour
     public List<Image> listeShadowCases;
     public List<TextMeshProUGUI> listeTextPvCases;
     public List<Slider> listeLifeBarCases;
+    public TextMeshProUGUI compteurPointsMouvement;
     
     [Header("Mana")] 
     public TextMeshProUGUI conteurMana;
@@ -64,9 +65,11 @@ public class UIBattleManager : MonoBehaviour
     public TextMeshProUGUI nomAllié;
     public TextMeshProUGUI nomEnnemi;
     public TextMeshProUGUI PvAllié;
-    public TextMeshProUGUI PvEnnemi;
     public Slider BarreDeVieAllié;
-    public Slider BarreDeVieEnnemi;
+    public TextMeshProUGUI PvEnnemiPre;
+    public TextMeshProUGUI PvEnnemiPost;
+    public Slider BarreDeVieEnnemiPre;
+    public Slider BarreDeVieEnnemiPost;
     public Image ArtAllié;
     public Image OmbreAllié;
     public Image ArtEnnemi;
@@ -267,6 +270,13 @@ public class UIBattleManager : MonoBehaviour
         }
     }
 
+    // ACTUALISE LE COMPTEUR DE POINTS DE MOUVEMENT
+    public void UpdateMovePointsUI(Unit currentUnit)
+    {
+        compteurPointsMouvement.text = currentUnit.PM.ToString();
+    }
+    
+    // MET LES CASE DE L'UNITÉ SÉLÉCTIONNÉE EN SURBRILLANCE
     public void UpdateTurnUISelectedUnit(Unit unitInfos)
     {
         if (MouseManager.Instance.selectedUnit != null)
@@ -356,14 +366,23 @@ public class UIBattleManager : MonoBehaviour
         textDMG.text = damage.ToString();
         textACC.text = hitRate.ToString();
         textCRT.text = critRate.ToString();
+        
         nomAllié.text = Allié.data.name;
         nomEnnemi.text = Ennemi.data.charaName;
+        
         PvAllié.text = Allié.currentHealth + " / " + Allié.data.levels[Allié.CurrentLevel].PV;
-        PvEnnemi.text = Ennemi.currentHealth + " / " + Ennemi.data.maxHealth;
         BarreDeVieAllié.maxValue = Allié.data.levels[Allié.CurrentLevel].PV;
         BarreDeVieAllié.value = Allié.currentHealth;
-        BarreDeVieEnnemi.maxValue = Ennemi.data.maxHealth;
-        BarreDeVieEnnemi.value = Ennemi.currentHealth;
+        
+        PvEnnemiPre.text = Ennemi.currentHealth + " / " + Ennemi.data.maxHealth + " >";
+        BarreDeVieEnnemiPre.maxValue = Ennemi.data.maxHealth;
+        BarreDeVieEnnemiPre.value = Ennemi.currentHealth;
+        
+        if(Ennemi.currentHealth - damage > 0) PvEnnemiPost.text = Ennemi.currentHealth - damage + " / " + Ennemi.data.maxHealth;
+        else PvEnnemiPost.text = 0 + " / " + Ennemi.data.maxHealth;
+        BarreDeVieEnnemiPost.maxValue = Ennemi.data.maxHealth;
+        BarreDeVieEnnemiPost.value = Ennemi.currentHealth - damage;
+        
         ArtAllié.sprite = Allié.data.attackSprite;
         OmbreAllié.sprite = ArtAllié.sprite;
         ArtEnnemi.sprite = Ennemi.data.damageSprite;
