@@ -113,8 +113,7 @@ public class BattleManager : MonoBehaviour
     public void CalculateOrder()
     {
         int wantedLength = 10;
-        bool orderFound = false;
-        
+
         order = new List<GameObject>();
 
         // We create the whole order list (not sorted)
@@ -291,6 +290,16 @@ public class BattleManager : MonoBehaviour
         GainMana(1);
         UIBattleManager.Instance.UpdateTurnUI();
         ActualiseOrder();
+
+        if (order[0].CompareTag("Unit"))
+        {
+            order[0].GetComponent<Unit>().InitialiseTurn();
+        }
+        
+        else if (order[0].CompareTag("Ennemy"))
+        {
+            NextTurn();
+        }
     }
     
     

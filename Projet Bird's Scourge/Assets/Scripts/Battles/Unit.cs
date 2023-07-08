@@ -19,6 +19,7 @@ public class Unit : MonoBehaviour
     [HideInInspector] public List<OverlayTile> tilesCompetence2 = new List<OverlayTile>();
     private bool isSelected;
     [HideInInspector] public int haste;
+    private int PM;
 
     [Header("ElementsToSave")] 
     public int currentHealth;
@@ -45,6 +46,7 @@ public class Unit : MonoBehaviour
             FindCurrentTile();
             
             BattleManager.Instance.AddUnit(this);
+            InitialiseTurn();
         }
     }
 
@@ -141,7 +143,7 @@ public class Unit : MonoBehaviour
     // FIND ALL AVAILABLE TILES AT RANGE
     public void FindTilesAtRange()
     {
-        currentTilesAtRange = rangeFinder.FindTilesInRange(currentTile, data.moveRange);
+        currentTilesAtRange = rangeFinder.FindTilesInRange(currentTile, PM);
         
         MouseManager.Instance.ManageOverlayTiles();
     }
@@ -184,6 +186,8 @@ public class Unit : MonoBehaviour
 
             transform.DOScale(new Vector3(0.75f, 1.25f, 1f), 0.04f)
                 .OnComplete(() => transform.DOScale(Vector3.one, 0.04f));
+
+            PM -= 1;
             
             yield return new WaitForSeconds(0.2f);
         }
@@ -194,5 +198,13 @@ public class Unit : MonoBehaviour
         
         FindTilesAtRange();
         FindTilesCompetences();
+    }
+
+
+    public void InitialiseTurn()
+    {
+        PM = data.levels[currentLevel].PM;
+
+        FindTilesAtRange();
     }
 }
