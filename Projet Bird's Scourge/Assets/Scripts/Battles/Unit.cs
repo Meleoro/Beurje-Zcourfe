@@ -100,7 +100,9 @@ public class Unit : MonoBehaviour
                 {
                     StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,0,true,false));
                 }
+                
                 UIBattleManager.Instance.UpdateTurnUI();
+                BattleManager.Instance.NextTurn();
             }
         }
     }

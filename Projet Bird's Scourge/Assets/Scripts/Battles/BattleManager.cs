@@ -297,6 +297,8 @@ public class BattleManager : MonoBehaviour
         
         else if (order[0].CompareTag("Ennemy"))
         {
+            Debug.Log("Ennemy Played");
+            
             NextTurn();
         }
     }
