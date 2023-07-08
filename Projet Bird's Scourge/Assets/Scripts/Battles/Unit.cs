@@ -20,7 +20,7 @@ public class Unit : MonoBehaviour
     [HideInInspector] public List<OverlayTile> tilesCompetence2 = new List<OverlayTile>();
     private bool isSelected;
     [HideInInspector] public int haste;
-    private int PM;
+    public int PM;
 
     
     [Header("ElementsToSave")] 
@@ -216,7 +216,7 @@ public class Unit : MonoBehaviour
                 .OnComplete(() => transform.DOScale(Vector3.one, 0.04f));
 
             PM -= 1;
-            
+            UIBattleManager.Instance.UpdateMovePointsUI(this);
             yield return new WaitForSeconds(0.2f);
         }
         
@@ -232,7 +232,7 @@ public class Unit : MonoBehaviour
     public void InitialiseTurn()
     {
         PM = data.levels[CurrentLevel].PM;
-
+        UIBattleManager.Instance.UpdateMovePointsUI(this);
         FindTilesAtRange();
     }
 }

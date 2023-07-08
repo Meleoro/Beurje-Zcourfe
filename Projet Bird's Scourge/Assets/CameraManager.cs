@@ -35,6 +35,26 @@ public class CameraManager : MonoBehaviour
         _camera = GetComponent<Camera>();
     }
 
+    private void Update()
+    {
+        if (Input.GetAxisRaw("Horizontal") > 0)
+        {
+            transform.position += Vector3.right * 0.01f;
+        }
+        else if (Input.GetAxisRaw("Horizontal") < 0)
+        {
+            transform.position += Vector3.left * 0.01f;
+        }
+        
+        if (Input.GetAxisRaw("Vertical") > 0)
+        {
+            transform.position += Vector3.up * 0.01f;
+        }
+        else    if (Input.GetAxisRaw("Vertical") < 0)
+        {
+            transform.position += Vector3.down * 0.01f;
+        }
+    }
 
     // MOVE THE CAMERA TO ZOOM ON ALL THE UNITS CONCERNED BY THE ATTACK
     public void EnterCameraBattle(List<Vector2> unitsPositions, float duration)
