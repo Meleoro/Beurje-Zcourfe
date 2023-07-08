@@ -352,6 +352,7 @@ public class UIBattleManager : MonoBehaviour
     public void OpenAttackPreview(int damage,int hitRate, int critRate, Unit Allié, Ennemy Ennemi)
     {
         previewMenu.SetActive(true);
+        previewMenu.transform.position = Ennemi.transform.position + Vector3.up;
         textDMG.text = damage.ToString();
         textACC.text = hitRate.ToString();
         textCRT.text = critRate.ToString();

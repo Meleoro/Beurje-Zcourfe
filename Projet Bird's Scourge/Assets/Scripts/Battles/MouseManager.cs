@@ -53,13 +53,13 @@ public class MouseManager : MonoBehaviour
         if (!noControl)
         {
             OverlayTile currentTile = GetFocusedTile();
-            
-            if(currentTile != null)
+
+            if(currentTile is not null)
                 transform.position = currentTile.transform.position;
 
             if (unitSelect)
             {
-                if (currentTile != null)
+                if (currentTile is not null)
                 {
                     DisplayArrow(currentTile);
                 }
@@ -156,7 +156,6 @@ public class MouseManager : MonoBehaviour
 
         return null;
     }
-
     
     // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
     private void DisplayArrow(OverlayTile focusedTile)
