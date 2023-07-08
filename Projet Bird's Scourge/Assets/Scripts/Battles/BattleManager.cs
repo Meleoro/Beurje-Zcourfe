@@ -190,7 +190,6 @@ public class BattleManager : MonoBehaviour
     public void ActualiseOrder()
     {
         int wantedLength = 10;
-        bool orderFound = false;
 
         // We create the whole order list (not sorted)
         while (order.Count < wantedLength)
