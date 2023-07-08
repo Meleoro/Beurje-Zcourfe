@@ -183,7 +183,7 @@ public class DataEnnemiEditor : Editor
             EditorGUILayout.PropertyField(defense);
             EditorGUILayout.PropertyField(vitesse);
             EditorGUILayout.PropertyField(agilite);
-            EditorGUILayout.PropertyField(defense);
+            EditorGUILayout.PropertyField(chance);
         }
         
         
