@@ -3,8 +3,112 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RangeFinder 
+public class RangeFinder
 {
+    // FINDS THE TILES WHERE AN ENNEMY CAN MOVE
+    public List<OverlayTile> FindMoveTilesEnnemy(OverlayTile start, List<ListBool> movePatern)
+    {
+        List<Vector2Int> coordinates = new List<Vector2Int>();
+        List<OverlayTile> moveTiles = new List<OverlayTile>();
+
+        for (int y = 0; y < movePatern.Count; y++)
+        {
+            for (int x = 0; x < movePatern[y].list.Count; x++)
+            {
+                if (movePatern[y].list[x])
+                {
+                    int newY = movePatern.Count - y - 1;
+                    
+                    coordinates.Add(new Vector2Int( start.posOverlayTile.x + x - movePatern.Count / 2, start.posOverlayTile.y + newY - movePatern.Count / 2));
+                }
+            }
+        }
+
+        for (int i = 0; i < coordinates.Count; i++)
+        {
+            if (MapManager.Instance.map.ContainsKey(coordinates[i]))
+            {
+                moveTiles.Add(MapManager.Instance.map[coordinates[i]]);
+            }
+        }
+
+        return moveTiles;
+    }
+
+
+    public List<OverlayTile> FindTilesCompetenceEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel)
+    {
+        List<OverlayTile> result = new List<OverlayTile>();
+        List<Vector2Int> tilesUnits = BattleManager.Instance.activeUnits.Keys.ToList();
+
+        int greaterDistanceUnit = 0;
+        int nearestDistanceUnit = 100;
+
+        OverlayTile currentMoveTile = null;
+        OverlayTile currentAttackTile = null;
+        
+        for (int i = 0; i < possibleMoves.Count; i++)
+        {
+            List<OverlayTile> attackTiles = FindTilesCompetence(possibleMoves[i], competenceUsed, competenceLevel);
+            Vector2Int currentMoveCoordinates = (Vector2Int) possibleMoves[i].posOverlayTile;
+
+            for (int j = 0; j < attackTiles.Count; j++)
+            {
+                Vector2Int currentAttackCoordinates = (Vector2Int) attackTiles[j].posOverlayTile;
+                
+                // If the attack hits an unit
+                if (tilesUnits.Contains(currentAttackCoordinates))
+                {
+                    int currentDistance = CalculateDistance(currentMoveCoordinates, currentAttackCoordinates);
+                    
+                    if (nearestDistanceUnit > currentDistance)
+                    {
+                        nearestDistanceUnit = currentDistance;
+
+                        currentMoveTile = possibleMoves[i];
+                        currentAttackTile = attackTiles[j];
+                    }
+                }
+            }
+        }
+
+        if (currentMoveTile != null)
+        {
+            result.Add(currentMoveTile);
+            result.Add(currentAttackTile);
+        }
+
+        // If no possible attack was found
+        else
+        {
+            for (int i = 0; i < possibleMoves.Count; i++)
+            {
+                for (int j = 0; j < tilesUnits.Count; j++)
+                {
+                    int currentDistance = CalculateDistance((Vector2Int) possibleMoves[i].posOverlayTile, tilesUnits[i]);
+                    
+                    if (nearestDistanceUnit > currentDistance)
+                    {
+                        nearestDistanceUnit = currentDistance;
+
+                        currentMoveTile = possibleMoves[i];
+                    }
+                }
+            }
+            
+            result.Add(currentMoveTile);
+        }
+
+        return result;
+    }
+
+
+    public int CalculateDistance(Vector2Int start, Vector2Int end)
+    {
+        return Mathf.Abs(start.x - end.x) + Mathf.Abs(start.y - end.y);
+    }
+
+
     // FIND THE TILES CONCERNED WITH THE COMPETENCE IN THE PARAMETERS
     public List<OverlayTile> FindTilesCompetence(OverlayTile start, DataCompetence competenceUsed, int competenceLevel)
     {

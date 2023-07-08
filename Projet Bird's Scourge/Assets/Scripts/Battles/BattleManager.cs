@@ -15,7 +15,7 @@ public class BattleManager : MonoBehaviour
     }
     
     [Header("Units/Ennemies")]
-    private Dictionary<Vector2Int, Unit> activeUnits = new Dictionary<Vector2Int, Unit>();
+    public Dictionary<Vector2Int, Unit> activeUnits = new Dictionary<Vector2Int, Unit>();
     private Dictionary<Vector2Int, Ennemy> activeEnnemies = new Dictionary<Vector2Int, Ennemy>();
     private List<Unit> currentUnits = new List<Unit>();
     private List<Ennemy> currentEnnemies = new List<Ennemy>();
@@ -297,9 +297,7 @@ public class BattleManager : MonoBehaviour
         
         else if (order[0].CompareTag("Ennemy"))
         {
-            Debug.Log("Ennemy Played");
-            
-            NextTurn();
+            order[0].GetComponent<Ennemy>().DoTurn();
         }
     }
     
