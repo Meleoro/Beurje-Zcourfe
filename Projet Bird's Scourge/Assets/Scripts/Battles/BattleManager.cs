@@ -47,7 +47,7 @@ public class BattleManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        if(Input.GetKeyDown(KeyCode.Q))
         {
             NextTurn();
         }
@@ -287,8 +287,11 @@ public class BattleManager : MonoBehaviour
         order.RemoveAt(0);
         
         GainMana(1);
-        UIBattleManager.Instance.UpdateTurnUI();
         ActualiseOrder();
+        
+        UIBattleManager.Instance.UpdateTurnUISelectedUnit(MouseManager.Instance.selectedUnit);
+        UIBattleManager.Instance.UpdateTurnUI();
+        StartCoroutine(UIBattleManager.Instance.NewTurnAnimation());
 
         if (order[0].CompareTag("Unit"))
         {

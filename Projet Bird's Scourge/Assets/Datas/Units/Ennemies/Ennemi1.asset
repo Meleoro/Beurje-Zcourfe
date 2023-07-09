@@ -31,7 +31,7 @@ MonoBehaviour:
   attaqueData: {fileID: 11400000, guid: 8b80294e95d6d894dacb6b8e23d09164, type: 2}
   competenceData: {fileID: 0}
   force: 10
-  defense: 10
+  defense: 4
   vitesse: 5
   agilite: 2
   chance: 3

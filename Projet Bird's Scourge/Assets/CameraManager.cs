@@ -17,8 +17,24 @@ public class CameraManager : MonoBehaviour
     private Vector3 savePos;
     private float saveSize;
 
+    [Header("Movement")] 
+    public bool canMove;
+    public float moveSpeed;
+    public float smoothMoveFactor;
+    private Vector3 moveVelocity;
+    
+    [Header("Zoom")] 
+    public bool canZoom;
+    public float zoomSpeed;
+    public float smoothZoomFactor;
+    public float maxZoom;
+    public float minZoom;
+    private float zoomVelocity;
+    private float zoom;
+    
     [Header("References")] 
     private Camera _camera;
+    public RectTransform worldUI;
 
 
     private void Awake()
@@ -33,29 +49,36 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         _camera = GetComponent<Camera>();
+        zoom = _camera.orthographicSize;
     }
 
     private void Update()
     {
-        if (Input.GetAxisRaw("Horizontal") > 0)
-        {
-            transform.position += Vector3.right * 0.01f;
-        }
-        else if (Input.GetAxisRaw("Horizontal") < 0)
-        {
-            transform.position += Vector3.left * 0.01f;
-        }
-        
-        if (Input.GetAxisRaw("Vertical") > 0)
-        {
-            transform.position += Vector3.up * 0.01f;
-        }
-        else    if (Input.GetAxisRaw("Vertical") < 0)
-        {
-            transform.position += Vector3.down * 0.01f;
-        }
+        Move();
+        Zoom();
     }
 
+    public void Move()
+    {
+        if (canMove)
+        {
+            Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal")*moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed,0);
+            transform.localPosition = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
+        }
+    }
+    
+    public void Zoom()
+    {
+        if (canZoom)
+        {
+            worldUI.localScale = new Vector3(zoom,zoom,zoom)/3;
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            zoom -= scroll * zoomSpeed;
+            zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+            _camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, zoom,ref zoomVelocity,smoothZoomFactor);
+        }
+    }
+    
     // MOVE THE CAMERA TO ZOOM ON ALL THE UNITS CONCERNED BY THE ATTACK
     public void EnterCameraBattle(List<Vector2> unitsPositions, float duration)
     {

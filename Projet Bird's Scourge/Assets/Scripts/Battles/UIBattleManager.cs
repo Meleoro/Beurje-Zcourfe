@@ -74,6 +74,16 @@ public class UIBattleManager : MonoBehaviour
     public Image OmbreAllié;
     public Image ArtEnnemi;
     public Image OmbreEnnemi;
+
+    [Header("Annonce Nouveau Tour")] 
+    public Image blackScreen;
+    public Animation animationTour;
+    public Image fondCase;
+    public Image ArtUnité;
+    public Image OmbreUnité;
+    public TextMeshProUGUI textNomPerso;
+    public Sprite FondAllié;
+    public Sprite FondEnnemi;
     
     
     [Header("AttackUI")] 
@@ -99,6 +109,8 @@ public class UIBattleManager : MonoBehaviour
         AttackUISetup();
         UpdateManaUI();
         attackUI.gameObject.SetActive(false);
+        animationTour["allié"].layer = 0;
+        animationTour["ennemi"].layer = 1;
     }
 
 
@@ -266,16 +278,9 @@ public class UIBattleManager : MonoBehaviour
                 listeLifeBarCases[i].maxValue = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.maxHealth;
                 listeLifeBarCases[i].value = BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth; 
             }
-           
         }
     }
 
-    // ACTUALISE LE COMPTEUR DE POINTS DE MOUVEMENT
-    public void UpdateMovePointsUI(Unit currentUnit)
-    {
-        compteurPointsMouvement.text = currentUnit.PM.ToString();
-    }
-    
     // MET LES CASE DE L'UNITÉ SÉLÉCTIONNÉE EN SURBRILLANCE
     public void UpdateTurnUISelectedUnit(Unit unitInfos)
     {
@@ -303,13 +308,54 @@ public class UIBattleManager : MonoBehaviour
       
     }
 
+    public IEnumerator NewTurnAnimation()
+    {
+        bool isAllié = false;
+        if ((BattleManager.Instance.order[0].CompareTag("Unit"))) isAllié = true;
+        else isAllié = false;
+        animationTour.gameObject.SetActive(true);
+        
+        if (isAllié)
+        {
+            fondCase.sprite = FondAllié;
+            ArtUnité.sprite = BattleManager.Instance.order[0].GetComponent<Unit>().data.attackSprite;
+            OmbreUnité.sprite = ArtUnité.sprite;
+            textNomPerso.text = BattleManager.Instance.order[0].GetComponent<Unit>().data.charaName + "'s turn";
+            
+            blackScreen.DOFade(0.7f, 0.2f);
+            animationTour.Play("allié");
+            yield return new WaitForSeconds(animationTour["allié"].length);
+            blackScreen.DOFade(0, 0.2f);
+            animationTour.gameObject.SetActive(false);
+        }
+        else
+        {
+            fondCase.sprite = FondEnnemi;
+            ArtUnité.sprite = BattleManager.Instance.order[0].GetComponent<Ennemy>().data.attackSprite;
+            OmbreUnité.sprite = ArtUnité.sprite;
+            textNomPerso.text = BattleManager.Instance.order[0].GetComponent<Ennemy>().data.charaName + "'s turn";;
+            
+            blackScreen.DOFade(0.7f, 0.2f);
+            animationTour.Play("ennemi");
+            yield return new WaitForSeconds(animationTour["ennemi"].length);
+            blackScreen.DOFade(0, 0.2f);
+            animationTour.gameObject.SetActive(false);
+        }
+    }
+    
+    // ACTUALISE LE COMPTEUR DE POINTS DE MOUVEMENT
+    public void UpdateMovePointsUI(Unit currentUnit)
+    {
+        compteurPointsMouvement.text = currentUnit.PM.ToString();
+    }
+
     // INFORM OTHER SCRIPT THAT A BUTTON HAS BEEN PRESSED
     public void ClickButton(int index)
     {
         MouseManager.Instance.ChangeSelectedCompetence(index);
     }
 
-
+    // FAIT APPARAITRE OU DISPARAITRE LES BOUTONS D'ANULATION DES SKILLS
     public void ChangeButtonState(int index)
     {
         if (index == 0)

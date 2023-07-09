@@ -27,8 +27,8 @@ MonoBehaviour:
   levels:
   - level: 0
     PV: 10
-    PM: 10
-    force: 5
+    PM: 4
+    force: 10
     defense: 2
     vitesse: 10
     agilite: 5
