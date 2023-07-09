@@ -57,9 +57,7 @@ public class RangeFinder
             for (int j = 0; j < attackTiles.Count; j++)
             {
                 Vector2Int currentAttackCoordinates = (Vector2Int) attackTiles[j].posOverlayTile;
-                
-                Debug.Log(tilesUnits[0]);
-                
+
                 // If the attack hits an unit
                 if (tilesUnits.Contains(currentAttackCoordinates))
                 {
