@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.WSA;
 
 public class RangeFinder
 {
@@ -36,13 +37,14 @@ public class RangeFinder
     }
 
 
-    public List<OverlayTile> FindTilesCompetenceEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel)
+    public List<OverlayTile> FindTilesCompetenceEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel, OverlayTile currentTile, bool shyBehavior)
     {
         List<OverlayTile> result = new List<OverlayTile>();
         List<Vector2Int> tilesUnits = BattleManager.Instance.activeUnits.Keys.ToList();
 
         int greaterDistanceUnit = 0;
         int nearestDistanceUnit = 100;
+        int smallerMoveDistance = 100;
 
         OverlayTile currentMoveTile = null;
         OverlayTile currentAttackTile = null;
@@ -59,14 +61,54 @@ public class RangeFinder
                 // If the attack hits an unit
                 if (tilesUnits.Contains(currentAttackCoordinates))
                 {
+                    // Distance between the attack spot and the attacked spot
                     int currentDistance = CalculateDistance(currentMoveCoordinates, currentAttackCoordinates);
-                    
-                    if (nearestDistanceUnit > currentDistance)
-                    {
-                        nearestDistanceUnit = currentDistance;
+                    int currentMoveDistance = CalculateDistance((Vector2Int)currentTile.posOverlayTile, currentMoveCoordinates);
 
-                        currentMoveTile = possibleMoves[i];
-                        currentAttackTile = attackTiles[j];
+                    // If the ennemy wants to go as near as possible
+                    if (!shyBehavior)
+                    {
+                        if (nearestDistanceUnit == currentDistance)
+                        {
+                            if (currentMoveDistance < smallerMoveDistance)
+                            {
+                                currentMoveTile = possibleMoves[i];
+                                currentAttackTile = attackTiles[j];
+                                smallerMoveDistance = currentMoveDistance;
+                            }
+                        }
+                        
+                        if (nearestDistanceUnit > currentDistance)
+                        {
+                            nearestDistanceUnit = currentDistance;
+
+                            currentMoveTile = possibleMoves[i];
+                            currentAttackTile = attackTiles[j];
+                            smallerMoveDistance = currentMoveDistance;
+                        }
+                    }
+
+                    // If the ennemy wants to go as far as possible
+                    else
+                    {
+                        if (greaterDistanceUnit == currentDistance)
+                        {
+                            if (currentMoveDistance < smallerMoveDistance)
+                            {
+                                currentMoveTile = possibleMoves[i];
+                                currentAttackTile = attackTiles[j];
+                                smallerMoveDistance = currentMoveDistance;
+                            }
+                        }
+                        
+                        if (greaterDistanceUnit < currentDistance)
+                        {
+                            greaterDistanceUnit = currentDistance;
+
+                            currentMoveTile = possibleMoves[i];
+                            currentAttackTile = attackTiles[j];
+                            smallerMoveDistance = currentMoveDistance;
+                        }
                     }
                 }
             }

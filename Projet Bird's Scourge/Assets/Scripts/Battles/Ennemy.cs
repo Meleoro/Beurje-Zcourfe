@@ -52,7 +52,7 @@ public class Ennemy : MonoBehaviour
         FindTilesAtRange();
 
         List<OverlayTile> moveTileAttackTile =
-            rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0);
+            rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, true);
 
         List<OverlayTile> movePath = pathFinder.FindPath(currentTile, moveTileAttackTile[0]);
 
@@ -94,19 +94,19 @@ public class Ennemy : MonoBehaviour
                 attackedUnit.TakeDamages(attackDamage * 2);
                 BattleManager.Instance.LoseMana(competenceUsed.levels[0].competenceManaCost);
                         
-                StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, attackedUnit.data.damageSprite, true,attackDamage * 2,false,true));
+                StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.damageSprite, attackedUnit.data.attackSprite, true,attackDamage * 2,false,true));
             }
             else // si ce n'est pas un critique
             {
                 attackedUnit.TakeDamages(attackDamage);
                 BattleManager.Instance.LoseMana(competenceUsed.levels[0].competenceManaCost);
             
-                StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, attackedUnit.data.damageSprite, true,attackDamage,false,false)); 
+                StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.damageSprite, attackedUnit.data.attackSprite, true,attackDamage,false,false)); 
             }
         }
         else // Si c'est un miss
         {
-            StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.attackSprite, attackedUnit.data.damageSprite, true,0,true,false));
+            StartCoroutine(UIBattleManager.Instance.AttackUIFeel(data.damageSprite, attackedUnit.data.attackSprite, true,0,true,false));
         }
                 
         UIBattleManager.Instance.UpdateTurnUI();
