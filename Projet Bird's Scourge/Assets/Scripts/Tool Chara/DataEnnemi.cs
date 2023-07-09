@@ -17,6 +17,7 @@ public class DataEnnemi : ScriptableObject
     
     //[Header("Movement")] 
     public List<ListBool> movePatern = new List<ListBool>();
+    public bool shyBehavior;
     public int nbrMovements;
 
     //[Header("Competences")] 

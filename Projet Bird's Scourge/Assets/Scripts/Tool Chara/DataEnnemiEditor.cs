@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 
@@ -26,6 +27,7 @@ public class DataEnnemiEditor : Editor
     [Header("Movement")] 
     public SerializedProperty movePatern;
     public SerializedProperty nbrMovements;
+    public SerializedProperty shyBehavior;
     private int paternSize;
 
     [Header("Competences")] 
@@ -65,6 +67,7 @@ public class DataEnnemiEditor : Editor
         
         movePatern = so.FindProperty("movePatern");
         nbrMovements = so.FindProperty("nbrMovements");
+        shyBehavior = so.FindProperty("shyBehavior");
         
         attaqueData = so.FindProperty("attaqueData");
         competenceData = so.FindProperty("competenceData");
@@ -156,6 +159,7 @@ public class DataEnnemiEditor : Editor
                 }
             }
             
+            EditorGUILayout.PropertyField(shyBehavior);
             EditorGUILayout.PropertyField(nbrMovements);
         }
         

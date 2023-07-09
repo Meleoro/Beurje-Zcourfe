@@ -106,6 +106,27 @@ public class BattleManager : MonoBehaviour
     }
 
 
+    public void ActualiseUnits()
+    {
+        activeUnits.Clear();
+        
+        for (int i = 0; i < currentUnits.Count; i++)
+        {
+            activeUnits.Add((Vector2Int)currentUnits[i].currentTile.posOverlayTile, currentUnits[i]);
+        }
+    }
+    
+    public void ActualiseEnnemies()
+    {
+        activeEnnemies.Clear();
+        
+        for (int i = 0; i < currentEnnemies.Count; i++)
+        {
+            activeEnnemies.Add((Vector2Int)currentEnnemies[i].currentTile.posOverlayTile, currentEnnemies[i]);
+        }
+    }
+
+
     
     // ----------------------- ORDER MANAGEMENT -----------------------
     

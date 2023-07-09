@@ -58,6 +58,8 @@ public class RangeFinder
             {
                 Vector2Int currentAttackCoordinates = (Vector2Int) attackTiles[j].posOverlayTile;
                 
+                Debug.Log(tilesUnits[0]);
+                
                 // If the attack hits an unit
                 if (tilesUnits.Contains(currentAttackCoordinates))
                 {
@@ -70,6 +72,7 @@ public class RangeFinder
                     {
                         if (nearestDistanceUnit == currentDistance)
                         {
+
                             if (currentMoveDistance < smallerMoveDistance)
                             {
                                 currentMoveTile = possibleMoves[i];

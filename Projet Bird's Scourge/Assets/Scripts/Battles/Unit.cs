@@ -225,6 +225,8 @@ public class Unit : MonoBehaviour
         
         FindTilesAtRange();
         FindTilesCompetences();
+        
+        BattleManager.Instance.ActualiseUnits();
     }
 
 
