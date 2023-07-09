@@ -14,6 +14,9 @@ public class UIBattleManager : MonoBehaviour
     {
         get { return _instance; }
     }
+
+    [Header("Paramètres")] 
+    public float dureeAnimTour;
     
     [Header("Unit Info")]
     public Image unitArt;

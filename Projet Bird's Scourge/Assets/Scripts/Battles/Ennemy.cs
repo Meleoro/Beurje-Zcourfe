@@ -110,7 +110,7 @@ public class Ennemy : MonoBehaviour
         }
                 
         UIBattleManager.Instance.UpdateTurnUI();
-        BattleManager.Instance.NextTurn();
+        StartCoroutine(BattleManager.Instance.NextTurn());
     }
     
 
@@ -152,7 +152,7 @@ public class Ennemy : MonoBehaviour
         
         currentTile = path[path.Count - 1];
         
-        BattleManager.Instance.NextTurn();
+        StartCoroutine(BattleManager.Instance.NextTurn());
         
         BattleManager.Instance.ActualiseEnnemies();
     }

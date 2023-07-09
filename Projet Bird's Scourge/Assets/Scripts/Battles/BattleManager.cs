@@ -45,14 +45,6 @@ public class BattleManager : MonoBehaviour
         UIBattle.gameObject.SetActive(true);
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            NextTurn();
-        }
-    }
-
 
     // ----------------------- DICTIONNARIES MANAGEMENT -----------------------
 
@@ -303,7 +295,7 @@ public class BattleManager : MonoBehaviour
 
 
     // Go to the next turn and actualise the order
-    public void NextTurn()
+    public IEnumerator NextTurn()
     {
         order.RemoveAt(0);
         
@@ -314,6 +306,8 @@ public class BattleManager : MonoBehaviour
         UIBattleManager.Instance.UpdateTurnUI();
         StartCoroutine(UIBattleManager.Instance.NewTurnAnimation());
 
+        yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimTour);
+        
         if (order[0].CompareTag("Unit"))
         {
             order[0].GetComponent<Unit>().InitialiseTurn();
@@ -323,6 +317,12 @@ public class BattleManager : MonoBehaviour
         {
             order[0].GetComponent<Ennemy>().DoTurn();
         }
+    }
+
+    // Exist because stupid buttons can't launch coroutines
+    public void NextTurnButton()
+    {
+        StartCoroutine(NextTurn());
     }
     
     

@@ -9080,6 +9080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a319c3cdf73b0c945b5c88a315f49dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dureeAnimTour: 3
   unitArt: {fileID: 9118945150608735572}
   unitShadow: {fileID: 8308925016601901827}
   unitName: {fileID: 7046951356608822628}
@@ -10802,7 +10803,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2969509553714553913}
         m_TargetAssemblyTypeName: BattleManager, Assembly-CSharp
-        m_MethodName: NextTurn
+        m_MethodName: NextTurnButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
