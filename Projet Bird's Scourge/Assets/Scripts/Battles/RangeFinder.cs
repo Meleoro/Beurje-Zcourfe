@@ -128,7 +128,7 @@ public class RangeFinder
             {
                 for (int j = 0; j < tilesUnits.Count; j++)
                 {
-                    int currentDistance = CalculateDistance((Vector2Int) possibleMoves[i].posOverlayTile, tilesUnits[i]);
+                    int currentDistance = CalculateDistance((Vector2Int) possibleMoves[i].posOverlayTile, tilesUnits[j]);
                     
                     if (nearestDistanceUnit > currentDistance)
                     {
