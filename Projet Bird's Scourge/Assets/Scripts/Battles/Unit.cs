@@ -115,7 +115,7 @@ public class Unit : MonoBehaviour
                 }
                 
                 UIBattleManager.Instance.UpdateTurnUI();
-                StartCoroutine(BattleManager.Instance.NextTurn());
+                //StartCoroutine(BattleManager.Instance.NextTurn());
             }
         }
     }

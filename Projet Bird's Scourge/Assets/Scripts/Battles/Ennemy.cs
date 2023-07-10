@@ -49,6 +49,7 @@ public class Ennemy : MonoBehaviour
 
     public void DoTurn()
     {
+        UIBattleManager.Instance.SwitchButtonInteractible(false);
         FindTilesAtRange();
 
         List<OverlayTile> moveTileAttackTile =
@@ -108,7 +109,8 @@ public class Ennemy : MonoBehaviour
         {
             StartCoroutine(UIBattleManager.Instance.AttackUIFeel(attackedUnit.data.damageSprite, data.attackSprite, false,0,true,false));
         }
-                
+
+        yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
         UIBattleManager.Instance.UpdateTurnUI();
         StartCoroutine(BattleManager.Instance.NextTurn());
     }

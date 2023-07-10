@@ -17,6 +17,7 @@ public class UIBattleManager : MonoBehaviour
 
     [Header("Paramètres")] 
     public float dureeAnimTour;
+    public float dureeAnimAttaque;
     
     [Header("Unit Info")]
     public Image unitArt;
@@ -25,8 +26,12 @@ public class UIBattleManager : MonoBehaviour
     public TextMeshProUGUI unitLevel;
     public TextMeshProUGUI unitHP;
     public Slider LifeBar;
-    
-    [Header("Buttons")]
+
+    [Header("Buttons")] 
+    public Button attackButton;
+    public Button skill1Button;
+    public Button skill2Button;
+    public Button endTurnButton;
         public TextMeshProUGUI attackName;
     public TextMeshProUGUI competence1Name;
     public TextMeshProUGUI competence2Name;
@@ -313,6 +318,7 @@ public class UIBattleManager : MonoBehaviour
 
     public IEnumerator NewTurnAnimation()
     {
+        SwitchButtonInteractible(false);
         bool isAllié = false;
         if ((BattleManager.Instance.order[0].CompareTag("Unit"))) isAllié = true;
         else isAllié = false;
@@ -343,6 +349,8 @@ public class UIBattleManager : MonoBehaviour
             yield return new WaitForSeconds(animationTour["ennemi"].length);
             blackScreen.DOFade(0, 0.2f);
             animationTour.gameObject.SetActive(false);
+
+            SwitchButtonInteractible(BattleManager.Instance.order[0].CompareTag("Unit"));
         }
     }
     
@@ -403,6 +411,14 @@ public class UIBattleManager : MonoBehaviour
             }
         }
     }
+
+    public void SwitchButtonInteractible(bool Activate)
+    {
+        attackButton.interactable = Activate;
+        skill1Button.interactable = Activate;
+        skill2Button.interactable = Activate;
+        endTurnButton.interactable = Activate;
+    }
     
     
     //--------------------------ATTACK PART------------------------------
@@ -442,8 +458,7 @@ public class UIBattleManager : MonoBehaviour
     {
         previewMenu.SetActive(false);
     }
-    
-    
+
     // SETUP EVERY ALPHAS WHEN THE SCENE START
     public void AttackUISetup()
     {
@@ -461,6 +476,7 @@ public class UIBattleManager : MonoBehaviour
     // WHEN THE ATTACK UI HAS TO APPEAR
     public IEnumerator AttackUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftAttack,int damage,bool miss,bool crit)
     {
+        SwitchButtonInteractible(false);
         attackUI.gameObject.SetActive(true);
 
         leftChara.gameObject.SetActive(true);
@@ -474,7 +490,7 @@ public class UIBattleManager : MonoBehaviour
         leftChara.DOFade(1, 0.07f);
         rightChara.DOFade(1, 0.07f);
 
-        if (leftAttack)
+        if (leftAttack) // SI UN ALLIÉ ATTAQUE ----------------------------------------------------------------------------------------
         {
             leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 30, 0.5f);
             leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 15, 0.5f);
@@ -483,6 +499,8 @@ public class UIBattleManager : MonoBehaviour
             attackUI.DOScale(attackUI.localScale * 1.1f, 0.2f);
             attackUI.DORotate(new Vector3(0, 0, -5), 0.1f);
 
+            damageNumber.rectTransform.anchoredPosition = new Vector3(143, 126, 0);
+            damageNumber.rectTransform.rotation = new Quaternion(0, 0, 7,0);
             if (!miss)
             {
                 if (crit)
@@ -508,6 +526,42 @@ public class UIBattleManager : MonoBehaviour
             damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
             damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up,0.2f);
         }
+        else // SI UN ENNEMI ATTAQUE ------------------------------------------------------------------------------------------------------------
+        {
+            leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 30, 0.5f);
+            leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 15, 0.5f);
+
+            attackUI.DOShakePosition(1f, 10f);
+            attackUI.DOScale(attackUI.localScale * 1.1f, 0.2f);
+            attackUI.DORotate(new Vector3(0, 0, -5), 0.1f);
+
+            
+            damageNumber.rectTransform.anchoredPosition = new Vector3(-143, 126, 0);
+            damageNumber.transform.rotation = new Quaternion(0, 0, -7,0);
+            if (!miss)
+            {
+                if (crit)
+                {
+                    damageNumber.text = "CRIT " + damage.ToString();
+                    damageNumber.color = new Color(255, 255, 0);
+                }
+                else
+                {
+                    damageNumber.text = damage.ToString();
+                    damageNumber.color = new Color(255, 0, 0);
+                }
+            }
+            else
+            {
+                damageNumber.text = "Miss";
+                damageNumber.color = new Color(0, 0, 255);
+            }
+            
+            damageNumber.DOFade(1, 0.07f);
+            damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
+            damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
+            damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up,0.2f);
+        }
 
         yield return new WaitForSeconds(1.5f);
         
@@ -527,10 +581,18 @@ public class UIBattleManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         AttackUISetup();
-        
         attackUI.gameObject.SetActive(false);
-
         MouseManager.Instance.noControl = false;
+
+        if (BattleManager.Instance.order[0].CompareTag("Unit"))
+        {
+            SwitchButtonInteractible(true);
+        }
+        else if (BattleManager.Instance.order[0].CompareTag("Ennemy"))
+        {
+            SwitchButtonInteractible(false);
+
+        }
     }
     
 }
