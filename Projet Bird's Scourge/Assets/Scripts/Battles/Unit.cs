@@ -74,6 +74,7 @@ public class Unit : MonoBehaviour
     public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
         MouseManager.Instance.noControl = true;
+        CameraManager.Instance.canMove = false;
         
         if (competenceTiles.Contains(clickedEnnemy.currentTile))
         {

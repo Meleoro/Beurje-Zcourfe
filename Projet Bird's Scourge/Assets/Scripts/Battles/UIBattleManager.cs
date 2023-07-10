@@ -318,6 +318,7 @@ public class UIBattleManager : MonoBehaviour
 
     public IEnumerator NewTurnAnimation()
     {
+        CameraManager.Instance.canMove = false;
         SwitchButtonInteractible(false);
         bool isAllié = false;
         if ((BattleManager.Instance.order[0].CompareTag("Unit"))) isAllié = true;
@@ -349,9 +350,10 @@ public class UIBattleManager : MonoBehaviour
             yield return new WaitForSeconds(animationTour["ennemi"].length);
             blackScreen.DOFade(0, 0.2f);
             animationTour.gameObject.SetActive(false);
-
-            SwitchButtonInteractible(BattleManager.Instance.order[0].CompareTag("Unit"));
+            CameraManager.Instance.canMove = true;
         }
+        SwitchButtonInteractible(BattleManager.Instance.order[0].CompareTag("Unit"));
+        CameraManager.Instance.canMove = (bool)BattleManager.Instance.order[0].CompareTag("Unit");
     }
     
     // ACTUALISE LE COMPTEUR DE POINTS DE MOUVEMENT
@@ -476,6 +478,7 @@ public class UIBattleManager : MonoBehaviour
     // WHEN THE ATTACK UI HAS TO APPEAR
     public IEnumerator AttackUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftAttack,int damage,bool miss,bool crit)
     {
+        CameraManager.Instance.canMove = false;
         SwitchButtonInteractible(false);
         attackUI.gameObject.SetActive(true);
 
@@ -586,6 +589,7 @@ public class UIBattleManager : MonoBehaviour
 
         if (BattleManager.Instance.order[0].CompareTag("Unit"))
         {
+            CameraManager.Instance.canMove = true;
             SwitchButtonInteractible(true);
         }
         else if (BattleManager.Instance.order[0].CompareTag("Ennemy"))

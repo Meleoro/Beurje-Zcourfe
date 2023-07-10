@@ -23,8 +23,7 @@ public class CameraManager : MonoBehaviour
     public float smoothMoveFactor;
     private Vector3 moveVelocity;
     
-    [Header("Zoom")] 
-    public bool canZoom;
+    [Header("Zoom")]
     public float zoomSpeed;
     public float smoothZoomFactor;
     public float maxZoom;
@@ -69,7 +68,7 @@ public class CameraManager : MonoBehaviour
     
     public void Zoom()
     {
-        if (canZoom)
+        if (canMove)
         {
             worldUI.localScale = new Vector3(zoom,zoom,zoom)/3;
             float scroll = Input.GetAxis("Mouse ScrollWheel");
