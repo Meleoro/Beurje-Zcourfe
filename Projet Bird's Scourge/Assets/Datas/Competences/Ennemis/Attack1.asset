@@ -15,7 +15,7 @@ MonoBehaviour:
   competenceName: YepCCa
   levels:
   - competenceDescription: esgtedherg
-    competenceManaCost: 1
+    competenceManaCost: 0
     damageMultiplier: 1
     baseHitRate: 85
     criticalMultiplier: 1
