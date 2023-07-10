@@ -146,7 +146,7 @@ public class UIBattleManager : MonoBehaviour
         LifeBar.maxValue = unitInfos.levels[unitScript.CurrentLevel].PV;
         LifeBar.value = unitScript.currentHealth;
     }
-    
+
     // ACTUALISE THE BUTTONS INFOS
     public void ActualiseButtons(DataUnit unitInfos, Unit unitScript)
     {
