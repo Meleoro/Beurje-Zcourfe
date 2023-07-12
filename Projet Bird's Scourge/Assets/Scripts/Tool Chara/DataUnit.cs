@@ -7,7 +7,7 @@ public class DataUnit : ScriptableObject
 {
     /*[Header("General")] */
     public string charaName;
-    public int moveRange;
+    public bool isEnnemy;
     
     /*[Header("Sprites")] */
     public Sprite idleSprite;
@@ -39,7 +39,9 @@ public class UnitLevel
     //[Header("StatsGeneral")] 
     public int level;
     public int PV;
+    
     public int PM;
+    public List<ListBool> movePatern = new List<ListBool>();
 
     //[Header("Stats")] 
     public int force;
