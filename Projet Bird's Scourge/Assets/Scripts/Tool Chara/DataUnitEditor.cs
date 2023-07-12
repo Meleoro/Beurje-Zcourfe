@@ -135,11 +135,8 @@ public class DataUnitEditor : Editor
                     levels.DeleteArrayElementAtIndex(levels.arraySize - 1);
                 }
             }
-            
-            if(currentScript.isEnnemy)
-                paternSize = EditorGUILayout.IntField ("Paterne Size", paternSize);
-            
-            
+
+
             so.ApplyModifiedProperties();
             
             for (int i = 0; i < levels.arraySize; i++)
@@ -152,13 +149,14 @@ public class DataUnitEditor : Editor
                 SerializedProperty PV = MyListRef.FindPropertyRelative("PV");
                 SerializedProperty PM = MyListRef.FindPropertyRelative("PM");
                 SerializedProperty movePatern = MyListRef.FindPropertyRelative("movePatern");
+                SerializedProperty shyBehavior = MyListRef.FindPropertyRelative("shyBehavior");
                 
                 SerializedProperty force = MyListRef.FindPropertyRelative("force");
                 SerializedProperty defense = MyListRef.FindPropertyRelative("defense");
                 SerializedProperty vitesse = MyListRef.FindPropertyRelative("vitesse");
                 SerializedProperty agilite = MyListRef.FindPropertyRelative("agilite");
                 SerializedProperty chance = MyListRef.FindPropertyRelative("chance");
-
+                
                 using (new GUILayout.VerticalScope(EditorStyles.helpBox))
                 {
                     GUILayout.Label("Level " + (i + 1), moduleNameStyle);
@@ -176,7 +174,11 @@ public class DataUnitEditor : Editor
                     }
                     else
                     {
-                        //paternSize = movePatern.arraySize;
+                        paternSize = movePatern.arraySize;
+                
+                        paternSize = EditorGUILayout.IntField ("Paterne Size", paternSize);
+                        
+
                         
                         if (paternSize != movePatern.arraySize)
                         {
@@ -217,6 +219,8 @@ public class DataUnitEditor : Editor
                                 }
                             }
                         }
+
+                        EditorGUILayout.PropertyField(shyBehavior);
                     }
 
                     GUILayout.Space(10);

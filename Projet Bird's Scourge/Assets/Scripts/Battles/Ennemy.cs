@@ -7,8 +7,10 @@ using DG.Tweening;
 public class Ennemy : MonoBehaviour
 {
     [Header("GeneralDatas")] 
-    public DataEnnemi data;
-    
+    public DataUnit data;
+    [Min(1)] [SerializeField] int currentLevel = 1;
+    public int CurrentLevel => currentLevel - 1;
+
     [Header("CurrentDatas")]
     [HideInInspector] public OverlayTile currentTile;
     [HideInInspector] public List<OverlayTile> currentMoveTiles = new List<OverlayTile>();
@@ -53,7 +55,7 @@ public class Ennemy : MonoBehaviour
         FindTilesAtRange();
 
         List<OverlayTile> moveTileAttackTile =
-            rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.shyBehavior);
+            rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.levels[CurrentLevel].shyBehavior);
 
         List<OverlayTile> movePath = pathFinder.FindPath(currentTile, moveTileAttackTile[0]);
 
@@ -84,9 +86,9 @@ public class Ennemy : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
                 
-        int attackHitRate = statsCalculator.CalculateHitRate(data.agilite, competenceUsed.levels[0].baseHitRate,attackedUnit.data.levels[attackedUnit.CurrentLevel].agilite);
-        int attackDamage = statsCalculator.CalculateDamages(data.force, competenceUsed.levels[0].damageMultiplier, attackedUnit.data.levels[attackedUnit.CurrentLevel].defense);
-        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.chance, competenceUsed.levels[0].criticalMultiplier, attackedUnit.data.levels[attackedUnit.CurrentLevel].chance);
+        int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[0].baseHitRate,attackedUnit.data.levels[attackedUnit.CurrentLevel].agilite);
+        int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[0].damageMultiplier, attackedUnit.data.levels[attackedUnit.CurrentLevel].defense);
+        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[0].criticalMultiplier, attackedUnit.data.levels[attackedUnit.CurrentLevel].chance);
                 
         if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
         {
@@ -207,6 +209,6 @@ public class Ennemy : MonoBehaviour
     // FIND ALL AVAILABLE TILES AT RANGE
     public void FindTilesAtRange()
     {
-        currentMoveTiles = rangeFinder.FindMoveTilesEnnemy(currentTile, data.movePatern);
+        currentMoveTiles = rangeFinder.FindMoveTilesEnnemy(currentTile, data.levels[CurrentLevel].movePatern);
     }
 }

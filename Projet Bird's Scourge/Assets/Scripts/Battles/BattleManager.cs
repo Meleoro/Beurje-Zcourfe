@@ -288,7 +288,7 @@ public class BattleManager : MonoBehaviour
         {
             if (currentEnnemies[i].haste < 100)
             {
-                currentEnnemies[i].haste += currentEnnemies[i].data.vitesse;
+                currentEnnemies[i].haste += currentEnnemies[i].data.levels[currentEnnemies[i].CurrentLevel].vitesse;
             }
         }
     }

@@ -89,9 +89,9 @@ public class Unit : MonoBehaviour
 
                 yield return new WaitForSeconds(1f);
                 
-                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.agilite);
-                int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.defense);
-                int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.chance);
+                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
                 
                 if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
                 {
@@ -125,9 +125,9 @@ public class Unit : MonoBehaviour
     // SHOW CHANCES TO HIT, DO A CRITICAL HIT AND THE DAMAGES
     public void DisplayBattleStats(Ennemy clickedEnnemy, DataCompetence competenceUsed, int competenceLevel)
     {
-        int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.agilite);
-        int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.defense);
-        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.chance);
+        int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.levels[0].PV);
+        int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[0].PV);
+        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[0].PV);
 
         UIBattleManager.Instance.OpenAttackPreview(attackDamage,attackHitRate,attackCriticalRate,this,clickedEnnemy);
     }

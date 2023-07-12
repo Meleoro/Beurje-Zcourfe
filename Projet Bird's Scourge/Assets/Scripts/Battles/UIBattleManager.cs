@@ -244,8 +244,7 @@ public class UIBattleManager : MonoBehaviour
             }
             else
             {
-                if (BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth <= (BattleManager.Instance.order[i].GetComponent<Ennemy>().data
-                      .maxHealth) * 30 / 100)
+                if (BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth <= (BattleManager.Instance.order[i].GetComponent<Ennemy>().data.levels[BattleManager.Instance.order[i].GetComponent<Ennemy>().CurrentLevel].PV) * 30 / 100)
                 {
                     listeArtCases[i].sprite = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.damageSprite;
                 }
@@ -269,7 +268,7 @@ public class UIBattleManager : MonoBehaviour
                 else
                 {
                     listeTextPvCases[i].text = BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth + "/" +
-                                               BattleManager.Instance.order[i].GetComponent<Ennemy>().data.maxHealth;
+                                               BattleManager.Instance.order[i].GetComponent<Ennemy>().data.levels[BattleManager.Instance.order[i].GetComponent<Ennemy>().CurrentLevel].PV;
                 }
         }
 
@@ -283,7 +282,7 @@ public class UIBattleManager : MonoBehaviour
             }
             else
             {
-                listeLifeBarCases[i].maxValue = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.maxHealth;
+                listeLifeBarCases[i].maxValue = BattleManager.Instance.order[i].GetComponent<Ennemy>().data.levels[BattleManager.Instance.order[i].GetComponent<Ennemy>().CurrentLevel].PV;
                 listeLifeBarCases[i].value = BattleManager.Instance.order[i].GetComponent<Ennemy>().currentHealth; 
             }
         }
@@ -441,13 +440,13 @@ public class UIBattleManager : MonoBehaviour
         BarreDeVieAllié.maxValue = Allié.data.levels[Allié.CurrentLevel].PV;
         BarreDeVieAllié.value = Allié.currentHealth;
         
-        PvEnnemiPre.text = Ennemi.currentHealth + " / " + Ennemi.data.maxHealth + " >";
-        BarreDeVieEnnemiPre.maxValue = Ennemi.data.maxHealth;
+        PvEnnemiPre.text = Ennemi.currentHealth + " / " + Ennemi.data.levels[Ennemi.CurrentLevel].PV + " >";
+        BarreDeVieEnnemiPre.maxValue = Ennemi.data.levels[Ennemi.CurrentLevel].PV;
         BarreDeVieEnnemiPre.value = Ennemi.currentHealth;
         
-        if(Ennemi.currentHealth - damage > 0) PvEnnemiPost.text = Ennemi.currentHealth - damage + " / " + Ennemi.data.maxHealth;
-        else PvEnnemiPost.text = 0 + " / " + Ennemi.data.maxHealth;
-        BarreDeVieEnnemiPost.maxValue = Ennemi.data.maxHealth;
+        if(Ennemi.currentHealth - damage > 0) PvEnnemiPost.text = Ennemi.currentHealth - damage + " / " + Ennemi.data.levels[Ennemi.CurrentLevel].PV;
+        else PvEnnemiPost.text = 0 + " / " + Ennemi.data.levels[Ennemi.CurrentLevel].PV;
+        BarreDeVieEnnemiPost.maxValue = Ennemi.data.levels[Ennemi.CurrentLevel].PV;
         BarreDeVieEnnemiPost.value = Ennemi.currentHealth - damage;
         
         ArtAllié.sprite = Allié.data.attackSprite;
