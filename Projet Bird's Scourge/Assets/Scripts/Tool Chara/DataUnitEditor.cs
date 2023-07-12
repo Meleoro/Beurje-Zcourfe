@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEditor.TerrainTools;
@@ -16,6 +17,7 @@ public class DataUnitEditor : Editor
 
     [Header("General")] 
     private SerializedProperty charaName;
+    private SerializedProperty isEnnemy;
     
     private SerializedProperty idleSprite;
     private SerializedProperty attackSprite;
@@ -32,6 +34,7 @@ public class DataUnitEditor : Editor
 
     private SerializedProperty levels;
     private int levelSize;
+    private int paternSize;
     
 
     private void OnEnable()
@@ -40,6 +43,7 @@ public class DataUnitEditor : Editor
         currentScript = target as DataUnit;
 
         charaName = so.FindProperty("charaName");
+        isEnnemy = so.FindProperty("isEnnemy");
         
         idleSprite = so.FindProperty("idleSprite");
         attackSprite = so.FindProperty("attackSprite");
@@ -80,6 +84,7 @@ public class DataUnitEditor : Editor
 
 
             EditorGUILayout.PropertyField(charaName);
+            EditorGUILayout.PropertyField(isEnnemy);
                 
             GUILayout.Space(8);
             GUILayout.Label("Sprites", titreStyle);
@@ -131,6 +136,9 @@ public class DataUnitEditor : Editor
                 }
             }
             
+            if(currentScript.isEnnemy)
+                paternSize = EditorGUILayout.IntField ("Paterne Size", paternSize);
+            
             
             so.ApplyModifiedProperties();
             
@@ -143,6 +151,7 @@ public class DataUnitEditor : Editor
                 
                 SerializedProperty PV = MyListRef.FindPropertyRelative("PV");
                 SerializedProperty PM = MyListRef.FindPropertyRelative("PM");
+                SerializedProperty movePatern = MyListRef.FindPropertyRelative("movePatern");
                 
                 SerializedProperty force = MyListRef.FindPropertyRelative("force");
                 SerializedProperty defense = MyListRef.FindPropertyRelative("defense");
@@ -160,7 +169,55 @@ public class DataUnitEditor : Editor
                     GUILayout.Label("General", titreStyle);
                     
                     EditorGUILayout.PropertyField(PV);
-                    EditorGUILayout.PropertyField(PM);
+                    
+                    if (!currentScript.isEnnemy)
+                    {
+                        EditorGUILayout.PropertyField(PM);
+                    }
+                    else
+                    {
+                        //paternSize = movePatern.arraySize;
+                        
+                        if (paternSize != movePatern.arraySize)
+                        {
+                            movePatern.ClearArray();
+                
+                            for (int j = 0; j < paternSize; j++)
+                            {
+                                movePatern.InsertArrayElementAtIndex(movePatern.arraySize);
+
+                                SerializedProperty currentList = movePatern.GetArrayElementAtIndex(movePatern.arraySize - 1)
+                                    .FindPropertyRelative("list");
+
+                                for (int k = 0; k < paternSize; k++)
+                                {
+                                    currentList.InsertArrayElementAtIndex(currentList.arraySize);
+                                }
+                            }
+                        }
+
+
+                        using (new GUILayout.VerticalScope(EditorStyles.helpBox, new [] {GUILayout.MinWidth(22 * movePatern.arraySize)}))
+                        {
+                            for (int k = 0; k < movePatern.arraySize; k++)
+                            {
+                                using (new GUILayout.HorizontalScope())
+                                {
+                                    SerializedProperty currentList = movePatern.GetArrayElementAtIndex(k).FindPropertyRelative("list");
+                            
+                                    for (int j = 0; j < movePatern.arraySize; j++)
+                                    {
+                                        if (k != movePatern.arraySize / 2 || j != movePatern.arraySize / 2)
+                                        {
+                                            EditorGUILayout.PropertyField(currentList.GetArrayElementAtIndex(j), GUIContent.none, GUILayout.MinWidth(EditorGUIUtility.labelWidth - 350));
+                                        }
+                                        else
+                                            GUILayout.Space(21);
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     GUILayout.Space(10);
                     
