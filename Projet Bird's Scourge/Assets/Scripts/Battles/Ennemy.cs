@@ -32,6 +32,8 @@ public class Ennemy : MonoBehaviour
         rangeFinder = new RangeFinder();
         pathFinder = new PathFinder();
         statsCalculator = new StatsCalculator();
+
+        currentHealth = data.levels[CurrentLevel].PV;
     }
     
 
