@@ -300,14 +300,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3656782899310139075, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: data
-      value: 
-      objectReference: {fileID: 11400000, guid: 39282983948e3fb4b823b3dd3d4aefb7, type: 2}
-    - target: {fileID: 3656782899310139075, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: currentLevel
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3872039880566347172, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -368,18 +360,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5506190755816666170, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5506190755816666170, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 0.9583333
-      objectReference: {fileID: 0}
-    - target: {fileID: 5506190755816666170, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.9583333
-      objectReference: {fileID: 0}
     - target: {fileID: 5600903721619991519, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -412,10 +392,6 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -50
       objectReference: {fileID: 0}
-    - target: {fileID: 6527437641261310107, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 01bd9665a3d9dfe43997e8efb78d6085, type: 2}
     - target: {fileID: 7754583800397855363, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_Name
       value: Battle
@@ -459,22 +435,6 @@ PrefabInstance:
     - target: {fileID: 8636795963253301364, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -143.4582
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809603037399226087, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809603037399226087, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_Size.y
-      value: 0.9583333
-      objectReference: {fileID: 0}
-    - target: {fileID: 8809603037399226087, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 1657455321, guid: af707f0c1b11b264a9a87285441a17be, type: 3}
-    - target: {fileID: 8809603037399226087, guid: f2bcb146fa4cc904c8c24d472cb28729, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
