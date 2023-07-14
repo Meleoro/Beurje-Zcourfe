@@ -90,7 +90,7 @@ public class MouseManager : MonoBehaviour
             {
                 selectedUnit = clickedObject.GetComponent<Unit>();
                 
-                UIBattleManager.Instance.OpenUnitInfos(selectedUnit.data, selectedUnit);
+                UIBattleManager.Instance.OpenUnitInfos(selectedUnit.data, selectedUnit,null);
                 UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
 
                 competenceSelect = false;
@@ -154,8 +154,26 @@ public class MouseManager : MonoBehaviour
                 {
                     selectedUnit.DisplayBattleStats(hits[i].collider.GetComponent<Ennemy>(), competenceUsed, competenceLevel);
                 }
+                else
+                {
+                    UIBattleManager.Instance.OpenUnitInfos(hits[i].collider.GetComponent<Ennemy>().data,null,hits[i].collider.GetComponent<Ennemy>());
+                }
 
                 return hits[i].collider.GetComponent<Ennemy>().currentTile;
+            }
+            else if (hits[i].collider.gameObject.CompareTag("Unit"))
+            {
+                UIBattleManager.Instance.OpenUnitInfos(hits[i].collider.GetComponent<Unit>().data,hits[i].collider.GetComponent<Unit>(),null);
+            }
+            else if (BattleManager.Instance.order[0].CompareTag("Unit"))
+            {
+                UIBattleManager.Instance.OpenUnitInfos(BattleManager.Instance.order[0].GetComponent<Unit>().data,
+                    BattleManager.Instance.order[0].GetComponent<Unit>(), null);
+            }
+            else if (BattleManager.Instance.order[0].CompareTag("Ennemy"))
+            {
+                UIBattleManager.Instance.OpenUnitInfos(BattleManager.Instance.order[0].GetComponent<Ennemy>().data,
+                    null, BattleManager.Instance.order[0].GetComponent<Ennemy>());
             }
             
             if (hits[i].collider.gameObject.CompareTag("Tile"))
@@ -169,6 +187,7 @@ public class MouseManager : MonoBehaviour
         return null;
     }
     
+   
     
     // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
     private void DisplayArrow(OverlayTile focusedTile)

@@ -18,8 +18,11 @@ public class UIBattleManager : MonoBehaviour
     [Header("Paramètres")] 
     public float dureeAnimTour;
     public float dureeAnimAttaque;
-    
-    [Header("Unit Info")]
+
+    [Header("Unit Info")] 
+    public Image fondBarreInfo;
+    public Sprite fondBleu;
+    public Sprite fondRouge;
     public Image unitArt;
     public Image unitShadow;
     public TextMeshProUGUI unitName;
@@ -125,59 +128,122 @@ public class UIBattleManager : MonoBehaviour
     //--------------------------INFOS UI PART------------------------------
     
     // CHANGE THE UI TO SHOW THE INFOS OF THE CURRENTLY SELECTED UNIT
-    public void OpenUnitInfos(DataUnit unitInfos, Unit unitScript)
+    public void OpenUnitInfos(DataUnit unitInfos, Unit unitScript,Ennemy ennemyScript)
     {
-        ActualiseButtons(unitInfos,unitScript);
-        ActualiseUnitInfo(unitInfos, unitScript);
+        ActualiseButtons(unitInfos,unitScript,ennemyScript);
+        ActualiseUnitInfo(unitInfos, unitScript,ennemyScript);
     }
 
     // ACTUALISE THE UNIT INFOS
-    public void ActualiseUnitInfo(DataUnit unitInfos, Unit unitScript)
+    public void ActualiseUnitInfo(DataUnit unitInfos, Unit unitScript, Ennemy ennemyScript)
     {
-        unitName.text = unitInfos.charaName;
-        
-        if (unitScript.currentHealth <= (unitInfos.levels[unitScript.CurrentLevel].PV) * 30 / 100)
+        bool isAllié = false;
+        if ((unitInfos.isEnnemy)) isAllié = false;
+        else isAllié = true;
+
+        if (isAllié)
         {
-            unitArt.sprite = unitInfos.damageSprite;
+            fondBarreInfo.sprite = fondBleu;
+            unitName.text = unitInfos.charaName;
+        
+            if (unitScript.currentHealth <= (unitInfos.levels[unitScript.CurrentLevel].PV) * 30 / 100)
+            {
+                unitArt.sprite = unitInfos.damageSprite;
+            }
+            else
+            {
+                unitArt.sprite = unitInfos.idleSprite;
+            }
+      
+            unitShadow.sprite = unitArt.sprite;
+            unitLevel.text = "LVL " + unitScript.CurrentLevel + 1;
+            unitHP.text = unitScript.currentHealth + " / " + unitInfos.levels[unitScript.CurrentLevel].PV + " HP"; 
+            LifeBar.maxValue = unitInfos.levels[unitScript.CurrentLevel].PV;
+            LifeBar.value = unitScript.currentHealth;
         }
         else
         {
-            unitArt.sprite = unitInfos.idleSprite;
+            fondBarreInfo.sprite = fondRouge;
+            unitName.text = unitInfos.charaName;
+        
+            if (ennemyScript.currentHealth <= (unitInfos.levels[ennemyScript.CurrentLevel].PV) * 30 / 100)
+            {
+                unitArt.sprite = unitInfos.damageSprite;
+            }
+            else
+            {
+                unitArt.sprite = unitInfos.idleSprite;
+            }
+      
+            unitShadow.sprite = unitArt.sprite;
+            unitLevel.text = "LVL " + ennemyScript.CurrentLevel + 1;
+            unitHP.text = ennemyScript.currentHealth + " / " + unitInfos.levels[ennemyScript.CurrentLevel].PV + " HP"; 
+            LifeBar.maxValue = unitInfos.levels[ennemyScript.CurrentLevel].PV;
+            LifeBar.value = ennemyScript.currentHealth;
         }
       
-        unitShadow.sprite = unitArt.sprite;
-        unitLevel.text = "LVL " + unitScript.CurrentLevel + 1;
-        unitHP.text = unitScript.currentHealth + " / " + unitInfos.levels[unitScript.CurrentLevel].PV + " HP"; 
-        LifeBar.maxValue = unitInfos.levels[unitScript.CurrentLevel].PV;
-        LifeBar.value = unitScript.currentHealth;
     }
 
     // ACTUALISE THE BUTTONS INFOS
-    public void ActualiseButtons(DataUnit unitInfos, Unit unitScript)
+    public void ActualiseButtons(DataUnit unitInfos, Unit unitScript, Ennemy ennemyScript)
     {
-        if (unitInfos.attaqueData is not null)
-        {
-            attackName.text = unitInfos.attaqueData.competenceName;
-            attackDescription.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceDescription;
-            attackManaCost.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceManaCost.ToString(); 
-            attackDamageMultiplier.text = "STR x" + unitInfos.attaqueData.levels[unitScript.AttackLevel].damageMultiplier; 
-        }
+        bool isAllié = false;
+        if ((unitInfos.isEnnemy)) isAllié = false;
+        else isAllié = true;
 
-        if (unitInfos.competence1Data is not null)
+        if (isAllié)
         {
-            competence1Name.text = unitInfos.competence1Data.competenceName;
-            competence1Description.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceDescription;
-            competence1ManaCost.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceManaCost.ToString();
-            competence1DamageMultiplier.text = "STR x" + unitInfos.competence1Data.levels[unitScript.Competence1Level].damageMultiplier; 
-        }
+            if (unitInfos.attaqueData is not null)
+            {
+                attackName.text = unitInfos.attaqueData.competenceName;
+                attackDescription.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceDescription;
+                attackManaCost.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceManaCost.ToString(); 
+                attackDamageMultiplier.text = "STR x" + unitInfos.attaqueData.levels[unitScript.AttackLevel].damageMultiplier; 
+            }
+
+            if (unitInfos.competence1Data is not null)
+            {
+                competence1Name.text = unitInfos.competence1Data.competenceName;
+                competence1Description.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceDescription;
+                competence1ManaCost.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceManaCost.ToString();
+                competence1DamageMultiplier.text = "STR x" + unitInfos.competence1Data.levels[unitScript.Competence1Level].damageMultiplier; 
+            }
         
-        if (unitInfos.competence2Data is not null)
+            if (unitInfos.competence2Data is not null)
+            {
+                competence2Name.text = unitInfos.competence2Data.competenceName;
+                competence2Description.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceDescription;
+                competence2ManaCost.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceManaCost.ToString(); 
+                competence2DamageMultiplier.text = "STR x" + unitInfos.competence2Data.levels[unitScript.Competence2Level].damageMultiplier;
+            }   
+        }
+        else
         {
-            competence2Name.text = unitInfos.competence2Data.competenceName;
-            competence2Description.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceDescription;
-            competence2ManaCost.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceManaCost.ToString(); 
-            competence2DamageMultiplier.text = "STR x" + unitInfos.competence2Data.levels[unitScript.Competence2Level].damageMultiplier;
-        } 
+            if (unitInfos.attaqueData is not null)
+            {
+                attackName.text = unitInfos.attaqueData.competenceName;
+                attackDescription.text = unitInfos.attaqueData.levels[ennemyScript.CurrentLevel].competenceDescription;
+                attackManaCost.text = unitInfos.attaqueData.levels[ennemyScript.CurrentLevel].competenceManaCost.ToString(); 
+                attackDamageMultiplier.text = "STR x" + unitInfos.attaqueData.levels[ennemyScript.CurrentLevel].damageMultiplier; 
+            }
+
+            if (unitInfos.competence1Data is not null)
+            {
+                competence1Name.text = unitInfos.competence1Data.competenceName;
+                competence1Description.text = unitInfos.competence1Data.levels[ennemyScript.CurrentLevel].competenceDescription;
+                competence1ManaCost.text = unitInfos.competence1Data.levels[ennemyScript.CurrentLevel].competenceManaCost.ToString();
+                competence1DamageMultiplier.text = "STR x" + unitInfos.competence1Data.levels[ennemyScript.CurrentLevel].damageMultiplier; 
+            }
+        
+            if (unitInfos.competence2Data is not null)
+            {
+                competence2Name.text = unitInfos.competence2Data.competenceName;
+                competence2Description.text = unitInfos.competence2Data.levels[ennemyScript.CurrentLevel].competenceDescription;
+                competence2ManaCost.text = unitInfos.competence2Data.levels[ennemyScript.CurrentLevel].competenceManaCost.ToString(); 
+                competence2DamageMultiplier.text = "STR x" + unitInfos.competence2Data.levels[ennemyScript.CurrentLevel].damageMultiplier;
+            }   
+        }
+       
     }
 
     // ACTUALISE L'UI DU MANA
