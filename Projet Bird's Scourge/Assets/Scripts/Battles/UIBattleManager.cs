@@ -143,7 +143,7 @@ public class UIBattleManager : MonoBehaviour
 
         if (isAllié)
         {
-            fondBarreInfo.sprite = fondBleu;
+            //fondBarreInfo.sprite = fondBleu;
             unitName.text = unitInfos.charaName;
         
             if (unitScript.currentHealth <= (unitInfos.levels[unitScript.CurrentLevel].PV) * 30 / 100)
@@ -163,7 +163,7 @@ public class UIBattleManager : MonoBehaviour
         }
         else
         {
-            fondBarreInfo.sprite = fondRouge;
+            //fondBarreInfo.sprite = fondRouge;
             unitName.text = unitInfos.charaName;
         
             if (ennemyScript.currentHealth <= (unitInfos.levels[ennemyScript.CurrentLevel].PV) * 30 / 100)
