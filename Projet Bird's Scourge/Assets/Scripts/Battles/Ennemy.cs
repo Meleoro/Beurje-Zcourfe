@@ -50,6 +50,17 @@ public class Ennemy : MonoBehaviour
     }
 
 
+    public void ActivateOutline()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
+    }
+
+    public void DesactivateOutline()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
+    }
+
+
 
     public void DoTurn()
     {

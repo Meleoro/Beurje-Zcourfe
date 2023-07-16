@@ -68,8 +68,20 @@ public class Unit : MonoBehaviour
         }
     }
 
+
+    public void ActivateOutline()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
+    }
+
+    public void DesactivateOutline()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
+    }
+
+
     //--------------------------ATTACK PART------------------------------
-    
+
     // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
     public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
@@ -158,6 +170,8 @@ public class Unit : MonoBehaviour
         {
             if (hits[i].collider.gameObject.CompareTag("Tile"))
             {
+                Debug.Log(12);
+
                 currentTile = hits[i].collider.gameObject.GetComponent<OverlayTile>();
                 
                 MoveToTile(hits[i].collider.gameObject.transform.position);
