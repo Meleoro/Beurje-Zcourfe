@@ -13,9 +13,11 @@ public class MouseManager : MonoBehaviour
     }
 
     [Header("Paramètres")]
-    public bool outlineWhenOver;
-    public Color outlineSelectedUnit;
-    public Color outlineSelectedEnnemy;
+    [SerializeField] private bool outlineWhenOver;
+    [SerializeField] private Color outlineSelectedUnit;
+    [SerializeField] private Color outlineSelectedEnnemy;
+    [SerializeField] private Color tilesMovementColor;
+    [SerializeField] private Color tilesAttackColor;
 
     [Header("OverlayTiles")]
     private List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
@@ -396,6 +398,8 @@ public class MouseManager : MonoBehaviour
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
                 tilesAtRangeDisplayed[i].ShowTile();
+
+                tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
             }
         }
         else if(currentEnnemy != null)
@@ -405,6 +409,8 @@ public class MouseManager : MonoBehaviour
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
                 tilesAtRangeDisplayed[i].ShowTile();
+
+                tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
             }
         }
 
@@ -421,6 +427,8 @@ public class MouseManager : MonoBehaviour
         for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
         {
             tilesCompetenceDisplayed[i].ShowTile();
+
+            tilesCompetenceDisplayed[i].ChangeColor(tilesAttackColor);
         }
     }
     

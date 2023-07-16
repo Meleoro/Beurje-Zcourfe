@@ -214,6 +214,8 @@ public class Unit : MonoBehaviour
     public void MoveToTile(Vector2 newPos)
     {
         transform.position = newPos + new Vector2(0, 0.4f);
+
+        currentTile.isBlocked = true;
         
         FindTilesAtRange();
         FindTilesCompetences();
@@ -224,6 +226,7 @@ public class Unit : MonoBehaviour
     public IEnumerator MoveToTile(List<OverlayTile> path)
     {
         MouseManager.Instance.noControl = true;
+        currentTile.isBlocked = false;
         
         for(int i = 0; i < path.Count; i++)
         {
@@ -238,6 +241,7 @@ public class Unit : MonoBehaviour
         }
         
         currentTile = path[path.Count - 1];
+        currentTile.isBlocked = true;
 
         MouseManager.Instance.noControl = false;
         
