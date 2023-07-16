@@ -10401,8 +10401,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb9691a29aea5546b56a9b7f06f6b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  outlineWhenOver: 0
+  outlineSelectedUnit: {r: 0, g: 1, b: 0.007124901, a: 1}
+  outlineSelectedEnnemy: {r: 1, g: 0, b: 0, a: 1}
   competenceUsed: {fileID: 0}
   selectedUnit: {fileID: 0}
+  selectedEnnemy: {fileID: 0}
   noControl: 0
 --- !u!1 &4268310383405360248
 GameObject:
@@ -14750,7 +14754,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dbc7cd4596bc43f4e919ecac61da6825, type: 2}
+  - {fileID: 2100000, guid: efa1cee198cb5fd4693e8ef4f9ab3b00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -17835,7 +17839,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: efa1cee198cb5fd4693e8ef4f9ab3b00, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
