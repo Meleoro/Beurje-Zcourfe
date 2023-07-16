@@ -24,9 +24,10 @@ public class MouseManager : MonoBehaviour
     [Header("OverlayUnit")]
     private Unit currentOverlayedUnit; 
     private Ennemy currentOverlayedEnnemy;
+    [HideInInspector] public Unit selectedUnit;
+    [HideInInspector] public Ennemy selectedEnnemy;
 
     [Header("Other")]
-    [HideInInspector] public Unit selectedUnit;
     [HideInInspector] public bool noControl;
     private List<OverlayTile> currentPath = new List<OverlayTile>();
 
@@ -218,12 +219,16 @@ public class MouseManager : MonoBehaviour
             {
                 currentOverlayedEnnemy.DesactivateOutline();
                 currentOverlayedEnnemy = null;
+
+                ManageOverlayTiles();
             }
                 
             else if(currentOverlayedUnit != null)
             {
                 currentOverlayedUnit.DesactivateOutline();
                 currentOverlayedUnit = null;
+
+                ManageOverlayTiles();
             }
         }
 
@@ -234,6 +239,8 @@ public class MouseManager : MonoBehaviour
             {
                 currentOverlayedUnit = currentUnit;
                 currentOverlayedUnit.ActivateOutline();
+
+                ManageOverlayTiles();
             }
         }
 
@@ -244,6 +251,8 @@ public class MouseManager : MonoBehaviour
             {
                 currentOverlayedEnnemy = currentEnnemy;
                 currentOverlayedEnnemy.ActivateOutline();
+
+                ManageOverlayTiles();
             }
         }
     }
@@ -301,23 +310,40 @@ public class MouseManager : MonoBehaviour
         // If only the character is selected
         else 
         {
-            DisplayTilesAtRange();
+            if(selectedUnit == null && selectedEnnemy == null)
+            {
+                DisplayTilesAtRange(currentOverlayedUnit, currentOverlayedEnnemy);
+            }
+            else
+            {
+                DisplayTilesAtRange(selectedUnit, selectedEnnemy);
+            }
         }
     }
     
     
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
-    private void DisplayTilesAtRange()
+    private void DisplayTilesAtRange(Unit currentUnit, Ennemy currentEnnemy)
     {
-        if (unitSelect)
+        if (currentUnit != null)
         {
-            tilesAtRangeDisplayed = selectedUnit.currentTilesAtRange;
+            tilesAtRangeDisplayed = currentUnit.currentTilesAtRange;
 
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
                 tilesAtRangeDisplayed[i].ShowTile();
             }
         }
+        else if(currentEnnemy != null)
+        {
+            tilesAtRangeDisplayed = currentEnnemy.currentMoveTiles;
+
+            for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+            {
+                tilesAtRangeDisplayed[i].ShowTile();
+            }
+        }
+
         else
         {
             tilesAtRangeDisplayed = new List<OverlayTile>();
