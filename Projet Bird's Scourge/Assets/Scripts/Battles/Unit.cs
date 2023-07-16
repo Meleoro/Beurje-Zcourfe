@@ -170,8 +170,6 @@ public class Unit : MonoBehaviour
         {
             if (hits[i].collider.gameObject.CompareTag("Tile"))
             {
-                Debug.Log(12);
-
                 currentTile = hits[i].collider.gameObject.GetComponent<OverlayTile>();
                 
                 MoveToTile(hits[i].collider.gameObject.transform.position);
