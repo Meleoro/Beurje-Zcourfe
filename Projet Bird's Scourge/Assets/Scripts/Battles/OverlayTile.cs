@@ -30,14 +30,19 @@ public class OverlayTile : MonoBehaviour
 
     public void ShowTile()
     {
-        _spriteRenderer.color = new Color(1, 1, 1, 1);
+        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.b, _spriteRenderer.color.g, 1);
     }
 
     public void HideTile()
     {
-        _spriteRenderer.color = new Color(1, 1, 1, 0);
+        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.b, _spriteRenderer.color.g, 0);
         
         HideArrow();
+    }
+
+    public void ChangeColor(Color newColor)
+    {
+        _spriteRenderer.color = new Color(newColor.r, newColor.b, newColor.g, _spriteRenderer.color.a);
     }
 
     public void HideArrow()

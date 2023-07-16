@@ -50,9 +50,14 @@ public class Ennemy : MonoBehaviour
     }
 
 
-    public void ActivateOutline()
+    public void ActivateOutline(Color newColor)
     {
         GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
+
+        if (newColor != null)
+        {
+            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", newColor);
+        }
     }
 
     public void DesactivateOutline()

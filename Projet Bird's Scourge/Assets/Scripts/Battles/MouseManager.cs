@@ -14,7 +14,9 @@ public class MouseManager : MonoBehaviour
 
     [Header("Paramètres")]
     public bool outlineWhenOver;
-    
+    public Color outlineSelectedUnit;
+    public Color outlineSelectedEnnemy;
+
     [Header("OverlayTiles")]
     private List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
     private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
@@ -97,14 +99,14 @@ public class MouseManager : MonoBehaviour
             if (clickedObject.CompareTag("Unit"))
             {
                 Unit currentUnit = clickedObject.GetComponent<Unit>();
-                
+
+                ManageOverlayUnit(currentUnit, null, true);
+
                 UIBattleManager.Instance.OpenUnitInfos(currentUnit.data, currentUnit, null);
                 UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
 
                 competenceSelect = false;
                 unitSelect = true;
-
-                ManageOverlayUnit(currentUnit, null, true);
                 
                 break;
             }
@@ -254,7 +256,7 @@ public class MouseManager : MonoBehaviour
                 if (currentUnit != currentOverlayedUnit)
                 {
                     if (outlineWhenOver)
-                        currentOverlayedUnit.ActivateOutline();
+                        currentOverlayedUnit.ActivateOutline(outlineSelectedUnit);
 
                     currentOverlayedUnit = currentUnit;
 
@@ -268,7 +270,7 @@ public class MouseManager : MonoBehaviour
                 if (currentEnnemy != currentOverlayedEnnemy)
                 {
                     if (outlineWhenOver)
-                        currentOverlayedEnnemy.ActivateOutline();
+                        currentOverlayedEnnemy.ActivateOutline(outlineSelectedEnnemy);
 
                     currentOverlayedEnnemy = currentEnnemy;
 
@@ -286,7 +288,7 @@ public class MouseManager : MonoBehaviour
                     selectedUnit.DesactivateOutline();
                 }
 
-                currentUnit.ActivateOutline();
+                currentUnit.ActivateOutline(outlineSelectedUnit);
 
                 selectedUnit = currentUnit;
                 selectedEnnemy = null;
@@ -299,7 +301,7 @@ public class MouseManager : MonoBehaviour
                     selectedEnnemy.DesactivateOutline();
                 }
 
-                currentEnnemy.ActivateOutline();
+                currentEnnemy.ActivateOutline(outlineSelectedEnnemy);
 
                 selectedEnnemy = currentEnnemy;
                 selectedUnit = null;
