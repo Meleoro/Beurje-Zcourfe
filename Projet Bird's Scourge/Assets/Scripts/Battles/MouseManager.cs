@@ -95,7 +95,7 @@ public class MouseManager : MonoBehaviour
 
         RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
 
-        if(hits.Length > 0)
+        if(hits.Length > 0 && !isOnButton)
         {
             for (int i = 0; i < hits.Length; i++)
             {
@@ -146,8 +146,7 @@ public class MouseManager : MonoBehaviour
                 }
             }
         }
-
-        else if (!isOnButton)
+        else if(!isOnButton)
         {
             StopSelection();
         }
