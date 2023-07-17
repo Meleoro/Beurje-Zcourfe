@@ -69,7 +69,7 @@ public class Ennemy : MonoBehaviour
 
     public void DoTurn()
     {
-        UIBattleManager.Instance.SwitchButtonInteractible(false);
+        UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         FindTilesAtRange();
 
         List<OverlayTile> moveTileAttackTile =

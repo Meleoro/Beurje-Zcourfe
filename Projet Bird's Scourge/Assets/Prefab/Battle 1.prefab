@@ -795,13 +795,14 @@ GameObject:
   m_Component:
   - component: {fileID: 644993968712508748}
   - component: {fileID: 5764069547690877472}
+  - component: {fileID: 6467984301106180366}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &644993968712508748
 Transform:
   m_ObjectHideFlags: 0
@@ -833,6 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a319c3cdf73b0c945b5c88a315f49dc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonScript: {fileID: 6467984301106180366}
   dureeAnimTour: 3
   dureeAnimAttaque: 2
   fondBarreInfo: {fileID: 8641550429628930982}
@@ -844,25 +846,6 @@ MonoBehaviour:
   unitLevel: {fileID: 4437107296373123456}
   unitHP: {fileID: 70532061093840198}
   LifeBar: {fileID: 2346965971376391230}
-  attackButton: {fileID: 4884268492455773374}
-  skill1Button: {fileID: 3916260380718572542}
-  skill2Button: {fileID: 5533491732745893039}
-  endTurnButton: {fileID: 1046772763600743687}
-  attackName: {fileID: 2702722635863052639}
-  competence1Name: {fileID: 9151300291805710342}
-  competence2Name: {fileID: 4770695742627512705}
-  attackDescription: {fileID: 8199746181191725947}
-  competence1Description: {fileID: 4645187473727119322}
-  competence2Description: {fileID: 2571609360527058619}
-  attackManaCost: {fileID: 59713381309880258}
-  competence1ManaCost: {fileID: 7715936204207214791}
-  competence2ManaCost: {fileID: 7193653681239082230}
-  attackDamageMultiplier: {fileID: 597866757056429448}
-  competence1DamageMultiplier: {fileID: 736841014512346149}
-  competence2DamageMultiplier: {fileID: 1314781598132934548}
-  attackCancelButton: {fileID: 5655572827387520768}
-  competence1CancelButton: {fileID: 4702167325269974835}
-  competence2CancelButton: {fileID: 7197548951202606680}
   listeFondCases:
   - {fileID: 2844867086234166698}
   - {fileID: 3602851333563500503}
@@ -934,6 +917,37 @@ MonoBehaviour:
   leftChara: {fileID: 3883719743480049560}
   rightChara: {fileID: 1946965769018530418}
   attackFond: {fileID: 6627574131451859915}
+--- !u!114 &6467984301106180366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625871887068318018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56789c8c2b6df3248b95907ed06c77f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackButton: {fileID: 4884268492455773374}
+  skill1Button: {fileID: 3916260380718572542}
+  skill2Button: {fileID: 5533491732745893039}
+  endTurnButton: {fileID: 1046772763600743687}
+  attackName: {fileID: 2702722635863052639}
+  competence1Name: {fileID: 9151300291805710342}
+  competence2Name: {fileID: 4770695742627512705}
+  attackDescription: {fileID: 8199746181191725947}
+  competence1Description: {fileID: 4645187473727119322}
+  competence2Description: {fileID: 2571609360527058619}
+  attackManaCost: {fileID: 59713381309880258}
+  competence1ManaCost: {fileID: 7715936204207214791}
+  competence2ManaCost: {fileID: 7193653681239082230}
+  attackDamageMultiplier: {fileID: 597866757056429448}
+  competence1DamageMultiplier: {fileID: 736841014512346149}
+  competence2DamageMultiplier: {fileID: 1314781598132934548}
+  attackCancelButton: {fileID: 5655572827387520768}
+  competence1CancelButton: {fileID: 4702167325269974835}
+  competence2CancelButton: {fileID: 7197548951202606680}
 --- !u!1 &632454088573138622
 GameObject:
   m_ObjectHideFlags: 0
@@ -8295,6 +8309,7 @@ GameObject:
   - component: {fileID: 5856709227025947506}
   - component: {fileID: 1609141661009261820}
   - component: {fileID: 4884268492455773374}
+  - component: {fileID: 4434039246837674057}
   m_Layer: 5
   m_Name: Bouton Attaque
   m_TagString: Untagged
@@ -8409,31 +8424,68 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1609141661009261820}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5764069547690877472}
-        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
-        m_MethodName: ChangeButtonState
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5764069547690877472}
-        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
-        m_MethodName: ClickButton
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &4434039246837674057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3107735752078425082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: EnterButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: ExitButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: ClickButton
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &3111521402379973333
 GameObject:
   m_ObjectHideFlags: 0
@@ -9907,6 +9959,7 @@ GameObject:
   - component: {fileID: 734659438784351986}
   - component: {fileID: 954688873280649230}
   - component: {fileID: 5533491732745893039}
+  - component: {fileID: 1113750029043551388}
   m_Layer: 5
   m_Name: "Bouton Comp\xE9tence 2"
   m_TagString: Untagged
@@ -10021,31 +10074,68 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 954688873280649230}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5764069547690877472}
-        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
-        m_MethodName: ChangeButtonState
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5764069547690877472}
-        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
-        m_MethodName: ClickButton
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 2
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &1113750029043551388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4091478868085518096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: EnterButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: ExitButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: ClickButton
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &4129671552023570985
 GameObject:
   m_ObjectHideFlags: 0
@@ -10402,12 +10492,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineWhenOver: 0
-  outlineSelectedUnit: {r: 0, g: 1, b: 0.007124901, a: 1}
+  outlineSelectedUnit: {r: 0.86226416, g: 1, b: 0.86334443, a: 1}
   outlineSelectedEnnemy: {r: 1, g: 0, b: 0, a: 1}
+  tilesMovementColor: {r: 0.53207546, g: 0.9570014, b: 1, a: 1}
+  tilesAttackColor: {r: 1, g: 0, b: 0, a: 1}
   competenceUsed: {fileID: 0}
   selectedUnit: {fileID: 0}
   selectedEnnemy: {fileID: 0}
   noControl: 0
+  isOnButton: 0
 --- !u!1 &4268310383405360248
 GameObject:
   m_ObjectHideFlags: 0
@@ -13592,6 +13685,7 @@ GameObject:
   - component: {fileID: 6453792426766171733}
   - component: {fileID: 1104239900871792115}
   - component: {fileID: 3916260380718572542}
+  - component: {fileID: 5682449577942396569}
   m_Layer: 5
   m_Name: "Bouton Comp\xE9tence 1"
   m_TagString: Untagged
@@ -13706,31 +13800,68 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1104239900871792115}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5764069547690877472}
-        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
-        m_MethodName: ChangeButtonState
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 5764069547690877472}
-        m_TargetAssemblyTypeName: UIBattleManager, Assembly-CSharp
-        m_MethodName: ClickButton
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+--- !u!114 &5682449577942396569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6200011654264628569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: EnterButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: ExitButton
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6467984301106180366}
+          m_TargetAssemblyTypeName: UIBattleButtons, Assembly-CSharp
+          m_MethodName: ClickButton
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 1
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6234096020002440105
 GameObject:
   m_ObjectHideFlags: 0
@@ -17520,7 +17651,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8801848311388351509}
   m_Enabled: 1
-  m_CellSize: {x: 1.305, y: 0.6525, z: 0.87}
+  m_CellSize: {x: 1.3065, y: 0.6525, z: 0.87}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 3
   m_CellSwizzle: 0
