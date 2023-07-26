@@ -10,6 +10,7 @@ public class Ennemy : MonoBehaviour
     public DataUnit data;
     [Min(1)] [SerializeField] int currentLevel = 1;
     public int CurrentLevel => currentLevel - 1;
+    [HideInInspector] public bool isSummoned;
 
     [Header("CurrentDatas")]
     [HideInInspector] public OverlayTile currentTile;
@@ -43,7 +44,7 @@ public class Ennemy : MonoBehaviour
         {
             FindCurrentTile();
             
-            BattleManager.Instance.AddEnnemy(this);
+            BattleManager.Instance.AddEnnemy(this, isSummoned);
             
             FindTilesAtRange();
         }
@@ -66,7 +67,7 @@ public class Ennemy : MonoBehaviour
     }
 
 
-
+    // EXECUTE THE ENNEMY'S TURN
     public void DoTurn()
     {
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
@@ -116,6 +117,7 @@ public class Ennemy : MonoBehaviour
     }
 
 
+    // ATTACK ONE PLAYER'S UNIT
     public IEnumerator AttackUnit(Unit attackedUnit, DataCompetence competenceUsed)
     {
         List<Vector2> positions = new List<Vector2>();
@@ -160,6 +162,7 @@ public class Ennemy : MonoBehaviour
     }
 
 
+    // SUMMONS ANOTHER ENNEMY
     public IEnumerator SummonUnit(DataCompetence currentCompetence, OverlayTile currentTile)
     {
         List<Vector2> positions = new List<Vector2>();
@@ -174,10 +177,11 @@ public class Ennemy : MonoBehaviour
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
         
-        GameObject summonedUnit = currentCompetence.levels[0].summonedUnit;
+        GameObject summonedEnnemy = currentCompetence.levels[0].summonedUnit;
         Vector2 spawnPos = currentTile.transform.position + Vector3.up * 0.5f;
 
-        Instantiate(summonedUnit, spawnPos, Quaternion.identity);
+        GameObject currentEnnemy = Instantiate(summonedEnnemy, spawnPos, Quaternion.identity);
+        currentEnnemy.GetComponent<Ennemy>().isSummoned = true;
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
         
@@ -185,7 +189,6 @@ public class Ennemy : MonoBehaviour
         StartCoroutine(BattleManager.Instance.NextTurn());
     }
     
-
     
     // REDUCE THE HEALTH OF THE ENNEMY AND VERIFY IF HE IS DEAD
     public void TakeDamages(int damages)
@@ -198,6 +201,7 @@ public class Ennemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
     
     
     //--------------------------MOVE PART------------------------------
@@ -285,6 +289,7 @@ public class Ennemy : MonoBehaviour
         
         BattleManager.Instance.ActualiseEnnemies();
     }
+    
     
     
     //--------------------------TILES PART------------------------------

@@ -63,7 +63,7 @@ public class Unit : MonoBehaviour
         {
             FindCurrentTile();
             
-            BattleManager.Instance.AddUnit(this);
+            BattleManager.Instance.AddUnit(this, false);
             InitialiseTurn();
         }
     }

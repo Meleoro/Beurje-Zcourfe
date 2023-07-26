@@ -48,20 +48,22 @@ public class BattleManager : MonoBehaviour
 
     // ----------------------- DICTIONNARIES MANAGEMENT -----------------------
 
-    public void AddUnit(Unit newUnit)
+    public void AddUnit(Unit newUnit, bool summoned)
     {
         activeUnits.Add(new Vector2Int(newUnit.currentTile.posOverlayTile.x, newUnit.currentTile.posOverlayTile.y), newUnit);
         currentUnits.Add(newUnit);
         
-        CalculateOrder();
+        if(!summoned)
+            CalculateOrder();
     }
     
-    public void AddEnnemy(Ennemy newEnnemy)
+    public void AddEnnemy(Ennemy newEnnemy, bool summoned)
     {
         activeEnnemies.Add(new Vector2Int(newEnnemy.currentTile.posOverlayTile.x, newEnnemy.currentTile.posOverlayTile.y), newEnnemy);
         currentEnnemies.Add(newEnnemy);
         
-        CalculateOrder();
+        if(!summoned)
+            CalculateOrder();
     }
     
     
@@ -78,7 +80,7 @@ public class BattleManager : MonoBehaviour
             }
         }
         
-        CalculateOrder();
+        ActualiseOrder();
     }
     
     public void RemoveEnnemy(Ennemy ennemy)
@@ -94,7 +96,7 @@ public class BattleManager : MonoBehaviour
             }
         }
         
-        CalculateOrder();
+        ActualiseOrder();
     }
 
 
@@ -125,7 +127,7 @@ public class BattleManager : MonoBehaviour
     // Create the order of the fight in the beginning 
     public void CalculateOrder()
     {
-        int wantedLength = 10;
+        int wantedLength = 4;
 
         order = new List<GameObject>();
 
@@ -202,7 +204,7 @@ public class BattleManager : MonoBehaviour
     // Actualise the order during the fight 
     public void ActualiseOrder()
     {
-        int wantedLength = 10;
+        int wantedLength = 4;
 
         // We create the whole order list (not sorted)
         while (order.Count < wantedLength)
