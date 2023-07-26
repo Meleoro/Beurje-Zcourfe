@@ -311,13 +311,13 @@ public class BattleManager : MonoBehaviour
         if (order[0].CompareTag("Unit"))
         {
             order[0].GetComponent<Unit>().InitialiseTurn();
-            UIBattleManager.Instance.SwitchButtonInteractible(true);
+            UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(true);
         }
         
         else if (order[0].CompareTag("Ennemy"))
         {
             order[0].GetComponent<Ennemy>().DoTurn();
-            UIBattleManager.Instance.SwitchButtonInteractible(false);
+            UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         }
     }
 

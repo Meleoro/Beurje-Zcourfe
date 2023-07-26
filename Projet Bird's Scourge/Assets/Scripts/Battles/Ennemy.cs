@@ -50,10 +50,26 @@ public class Ennemy : MonoBehaviour
     }
 
 
+    public void ActivateOutline(Color newColor)
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
+
+        if (newColor != null)
+        {
+            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", newColor);
+        }
+    }
+
+    public void DesactivateOutline()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
+    }
+
+
 
     public void DoTurn()
     {
-        UIBattleManager.Instance.SwitchButtonInteractible(false);
+        UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         FindTilesAtRange();
 
         List<OverlayTile> moveTileAttackTile =
@@ -140,13 +156,17 @@ public class Ennemy : MonoBehaviour
     public void MoveToTile(Vector2 newPos)
     {
         transform.position = newPos + new Vector2(0, 0.4f);
+
+        currentTile.isBlocked = true;
     }
     
     
     // MOVE WITH BREAKS 
     public IEnumerator MoveToTile(List<OverlayTile> path)
     {
-        for(int i = 0; i < path.Count; i++)
+        currentTile.isBlocked = false;
+
+        for (int i = 0; i < path.Count; i++)
         {
             transform.position = path[i].transform.position + new Vector3(0, 0.4f, -1);
 
@@ -157,7 +177,8 @@ public class Ennemy : MonoBehaviour
         }
         
         currentTile = path[path.Count - 1];
-        
+        currentTile.isBlocked = true;
+
         StartCoroutine(BattleManager.Instance.NextTurn());
         
         BattleManager.Instance.ActualiseEnnemies();

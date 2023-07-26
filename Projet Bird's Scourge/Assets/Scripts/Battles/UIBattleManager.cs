@@ -15,38 +15,23 @@ public class UIBattleManager : MonoBehaviour
         get { return _instance; }
     }
 
+    [Header("Extensions")]
+    public UIBattleButtons buttonScript;
+
     [Header("Paramètres")] 
     public float dureeAnimTour;
     public float dureeAnimAttaque;
-    
-    [Header("Unit Info")]
+
+    [Header("Unit Info")] 
+    public Image fondBarreInfo;
+    public Sprite fondBleu;
+    public Sprite fondRouge;
     public Image unitArt;
     public Image unitShadow;
     public TextMeshProUGUI unitName;
     public TextMeshProUGUI unitLevel;
     public TextMeshProUGUI unitHP;
     public Slider LifeBar;
-
-    [Header("Buttons")] 
-    public Button attackButton;
-    public Button skill1Button;
-    public Button skill2Button;
-    public Button endTurnButton;
-        public TextMeshProUGUI attackName;
-    public TextMeshProUGUI competence1Name;
-    public TextMeshProUGUI competence2Name;
-        public TextMeshProUGUI attackDescription;
-    public TextMeshProUGUI competence1Description;
-    public TextMeshProUGUI competence2Description;
-        public TextMeshProUGUI attackManaCost;
-    public TextMeshProUGUI competence1ManaCost;
-    public TextMeshProUGUI competence2ManaCost;
-        public TextMeshProUGUI attackDamageMultiplier;
-    public TextMeshProUGUI competence1DamageMultiplier;
-    public TextMeshProUGUI competence2DamageMultiplier;
-    public GameObject attackCancelButton;
-    public GameObject competence1CancelButton;
-    public GameObject competence2CancelButton;
 
     [Header("Cases Tour")]
     public List<Image> listeFondCases;
@@ -125,59 +110,60 @@ public class UIBattleManager : MonoBehaviour
     //--------------------------INFOS UI PART------------------------------
     
     // CHANGE THE UI TO SHOW THE INFOS OF THE CURRENTLY SELECTED UNIT
-    public void OpenUnitInfos(DataUnit unitInfos, Unit unitScript)
+    public void OpenUnitInfos(DataUnit unitInfos, Unit unitScript,Ennemy ennemyScript)
     {
-        ActualiseButtons(unitInfos,unitScript);
-        ActualiseUnitInfo(unitInfos, unitScript);
+        buttonScript.ActualiseButtons(unitInfos,unitScript,ennemyScript);
+        ActualiseUnitInfo(unitInfos, unitScript,ennemyScript);
     }
 
     // ACTUALISE THE UNIT INFOS
-    public void ActualiseUnitInfo(DataUnit unitInfos, Unit unitScript)
+    public void ActualiseUnitInfo(DataUnit unitInfos, Unit unitScript, Ennemy ennemyScript)
     {
-        unitName.text = unitInfos.charaName;
-        
-        if (unitScript.currentHealth <= (unitInfos.levels[unitScript.CurrentLevel].PV) * 30 / 100)
+        bool isAllié = false;
+        if ((unitInfos.isEnnemy)) isAllié = false;
+        else isAllié = true;
+
+        if (isAllié)
         {
-            unitArt.sprite = unitInfos.damageSprite;
+            //fondBarreInfo.sprite = fondBleu;
+            unitName.text = unitInfos.charaName;
+        
+            if (unitScript.currentHealth <= (unitInfos.levels[unitScript.CurrentLevel].PV) * 30 / 100)
+            {
+                unitArt.sprite = unitInfos.damageSprite;
+            }
+            else
+            {
+                unitArt.sprite = unitInfos.idleSprite;
+            }
+      
+            unitShadow.sprite = unitArt.sprite;
+            unitLevel.text = "LVL " + unitScript.CurrentLevel + 1;
+            unitHP.text = unitScript.currentHealth + " / " + unitInfos.levels[unitScript.CurrentLevel].PV + " HP"; 
+            LifeBar.maxValue = unitInfos.levels[unitScript.CurrentLevel].PV;
+            LifeBar.value = unitScript.currentHealth;
         }
         else
         {
-            unitArt.sprite = unitInfos.idleSprite;
+            //fondBarreInfo.sprite = fondRouge;
+            unitName.text = unitInfos.charaName;
+        
+            if (ennemyScript.currentHealth <= (unitInfos.levels[ennemyScript.CurrentLevel].PV) * 30 / 100)
+            {
+                unitArt.sprite = unitInfos.damageSprite;
+            }
+            else
+            {
+                unitArt.sprite = unitInfos.idleSprite;
+            }
+      
+            unitShadow.sprite = unitArt.sprite;
+            unitLevel.text = "LVL " + ennemyScript.CurrentLevel + 1;
+            unitHP.text = ennemyScript.currentHealth + " / " + unitInfos.levels[ennemyScript.CurrentLevel].PV + " HP"; 
+            LifeBar.maxValue = unitInfos.levels[ennemyScript.CurrentLevel].PV;
+            LifeBar.value = ennemyScript.currentHealth;
         }
       
-        unitShadow.sprite = unitArt.sprite;
-        unitLevel.text = "LVL " + unitScript.CurrentLevel + 1;
-        unitHP.text = unitScript.currentHealth + " / " + unitInfos.levels[unitScript.CurrentLevel].PV + " HP"; 
-        LifeBar.maxValue = unitInfos.levels[unitScript.CurrentLevel].PV;
-        LifeBar.value = unitScript.currentHealth;
-    }
-
-    // ACTUALISE THE BUTTONS INFOS
-    public void ActualiseButtons(DataUnit unitInfos, Unit unitScript)
-    {
-        if (unitInfos.attaqueData is not null)
-        {
-            attackName.text = unitInfos.attaqueData.competenceName;
-            attackDescription.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceDescription;
-            attackManaCost.text = unitInfos.attaqueData.levels[unitScript.AttackLevel].competenceManaCost.ToString(); 
-            attackDamageMultiplier.text = "STR x" + unitInfos.attaqueData.levels[unitScript.AttackLevel].damageMultiplier; 
-        }
-
-        if (unitInfos.competence1Data is not null)
-        {
-            competence1Name.text = unitInfos.competence1Data.competenceName;
-            competence1Description.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceDescription;
-            competence1ManaCost.text = unitInfos.competence1Data.levels[unitScript.Competence1Level].competenceManaCost.ToString();
-            competence1DamageMultiplier.text = "STR x" + unitInfos.competence1Data.levels[unitScript.Competence1Level].damageMultiplier; 
-        }
-        
-        if (unitInfos.competence2Data is not null)
-        {
-            competence2Name.text = unitInfos.competence2Data.competenceName;
-            competence2Description.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceDescription;
-            competence2ManaCost.text = unitInfos.competence2Data.levels[unitScript.Competence2Level].competenceManaCost.ToString(); 
-            competence2DamageMultiplier.text = "STR x" + unitInfos.competence2Data.levels[unitScript.Competence2Level].damageMultiplier;
-        } 
     }
 
     // ACTUALISE L'UI DU MANA
@@ -318,7 +304,7 @@ public class UIBattleManager : MonoBehaviour
     public IEnumerator NewTurnAnimation()
     {
         CameraManager.Instance.canMove = false;
-        SwitchButtonInteractible(false);
+        buttonScript.SwitchButtonInteractible(false);
         bool isAllié = false;
         if ((BattleManager.Instance.order[0].CompareTag("Unit"))) isAllié = true;
         else isAllié = false;
@@ -351,7 +337,7 @@ public class UIBattleManager : MonoBehaviour
             animationTour.gameObject.SetActive(false);
             CameraManager.Instance.canMove = true;
         }
-        SwitchButtonInteractible(BattleManager.Instance.order[0].CompareTag("Unit"));
+        buttonScript.SwitchButtonInteractible(BattleManager.Instance.order[0].CompareTag("Unit"));
         CameraManager.Instance.canMove = (bool)BattleManager.Instance.order[0].CompareTag("Unit");
     }
     
@@ -360,70 +346,9 @@ public class UIBattleManager : MonoBehaviour
     {
         compteurPointsMouvement.text = currentUnit.PM.ToString();
     }
-
-    // INFORM OTHER SCRIPT THAT A BUTTON HAS BEEN PRESSED
-    public void ClickButton(int index)
-    {
-        MouseManager.Instance.ChangeSelectedCompetence(index);
-    }
-
-    // FAIT APPARAITRE OU DISPARAITRE LES BOUTONS D'ANULATION DES SKILLS
-    public void ChangeButtonState(int index)
-    {
-        if (index == 0)
-        {
-            if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.attaqueData)
-            {
-                attackCancelButton.SetActive(false);
-            }
-            else
-            {
-                attackCancelButton.SetActive(true);
-                competence1CancelButton.SetActive(false);
-                competence2CancelButton.SetActive(false);
-            }
-        }
-        
-        if (index == 1)
-        {
-            if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.competence1Data)
-            {
-                competence1CancelButton.SetActive(false);
-            }
-            else 
-            {
-                competence1CancelButton.SetActive(true);
-                attackCancelButton.SetActive(false);
-                competence2CancelButton.SetActive(false);
-            }
-        }
-
-        if (index == 2)
-        {
-            if (MouseManager.Instance.competenceUsed == MouseManager.Instance.selectedUnit.data.competence2Data)
-            {
-                competence2CancelButton.SetActive(false);
-            }
-            else 
-            {
-                competence2CancelButton.SetActive(true);
-                attackCancelButton.SetActive(false);
-                competence1CancelButton.SetActive(false);
-            }
-        }
-    }
-
-    public void SwitchButtonInteractible(bool Activate)
-    {
-        attackButton.interactable = Activate;
-        skill1Button.interactable = Activate;
-        skill2Button.interactable = Activate;
-        endTurnButton.interactable = Activate;
-    }
     
     
     //--------------------------ATTACK PART------------------------------
-
 
     public void OpenAttackPreview(int damage,int hitRate, int critRate, Unit Allié, Ennemy Ennemi)
     {
@@ -478,7 +403,7 @@ public class UIBattleManager : MonoBehaviour
     public IEnumerator AttackUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftAttack,int damage,bool miss,bool crit)
     {
         CameraManager.Instance.canMove = false;
-        SwitchButtonInteractible(false);
+        buttonScript.SwitchButtonInteractible(false);
         attackUI.gameObject.SetActive(true);
 
         leftChara.gameObject.SetActive(true);
@@ -589,11 +514,11 @@ public class UIBattleManager : MonoBehaviour
         if (BattleManager.Instance.order[0].CompareTag("Unit"))
         {
             CameraManager.Instance.canMove = true;
-            SwitchButtonInteractible(true);
+            buttonScript.SwitchButtonInteractible(true);
         }
         else if (BattleManager.Instance.order[0].CompareTag("Ennemy"))
         {
-            SwitchButtonInteractible(false);
+            buttonScript.SwitchButtonInteractible(false);
 
         }
     }

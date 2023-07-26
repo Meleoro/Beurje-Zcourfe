@@ -12,11 +12,11 @@ public class StatsCalculator
     
     public int CalculateHitRate(int AGIUnit, float skillBaseHitRate, int AGIEnnemi)
     {
-        return Mathf.RoundToInt(skillBaseHitRate + AGIUnit - AGIEnnemi);
+        return Mathf.Clamp(Mathf.RoundToInt(skillBaseHitRate + AGIUnit - AGIEnnemi),0,200);
     }
     
     public int CalculateCriticalRate(int CHAUnit, float critMultiplicator, int CHAEnnemi)
     {
-        return Mathf.RoundToInt(((CHAUnit - CHAEnnemi) * 5) * critMultiplicator);
+        return  Mathf.Clamp(Mathf.RoundToInt(((CHAUnit - CHAEnnemi) * 5) * critMultiplicator),0,100);
     }
 }

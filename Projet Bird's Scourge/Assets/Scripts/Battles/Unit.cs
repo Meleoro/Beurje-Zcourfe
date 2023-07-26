@@ -68,8 +68,25 @@ public class Unit : MonoBehaviour
         }
     }
 
+
+    public void ActivateOutline(Color newColor)
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
+
+        if(newColor != null)
+        {
+            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", newColor);
+        }
+    }
+
+    public void DesactivateOutline()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
+    }
+
+
     //--------------------------ATTACK PART------------------------------
-    
+
     // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
     public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
@@ -197,6 +214,8 @@ public class Unit : MonoBehaviour
     public void MoveToTile(Vector2 newPos)
     {
         transform.position = newPos + new Vector2(0, 0.4f);
+
+        currentTile.isBlocked = true;
         
         FindTilesAtRange();
         FindTilesCompetences();
@@ -207,6 +226,7 @@ public class Unit : MonoBehaviour
     public IEnumerator MoveToTile(List<OverlayTile> path)
     {
         MouseManager.Instance.noControl = true;
+        currentTile.isBlocked = false;
         
         for(int i = 0; i < path.Count; i++)
         {
@@ -221,6 +241,7 @@ public class Unit : MonoBehaviour
         }
         
         currentTile = path[path.Count - 1];
+        currentTile.isBlocked = true;
 
         MouseManager.Instance.noControl = false;
         

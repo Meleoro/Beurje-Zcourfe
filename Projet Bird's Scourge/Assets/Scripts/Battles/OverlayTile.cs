@@ -14,7 +14,7 @@ public class OverlayTile : MonoBehaviour
     [HideInInspector] public int costH;
     public int costF { get { return costG + costH; } }
     [HideInInspector] public OverlayTile previous;
-    [HideInInspector] public OverlayTile isBlocked;
+    [HideInInspector] public bool isBlocked;
     [HideInInspector] public Vector3Int posOverlayTile;
     
 
@@ -30,14 +30,19 @@ public class OverlayTile : MonoBehaviour
 
     public void ShowTile()
     {
-        _spriteRenderer.color = new Color(1, 1, 1, 1);
+        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0.8f);
     }
 
     public void HideTile()
     {
-        _spriteRenderer.color = new Color(1, 1, 1, 0);
+        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0);
         
         HideArrow();
+    }
+
+    public void ChangeColor(Color newColor)
+    {
+        _spriteRenderer.color = new Color(newColor.r, newColor.g, newColor.b, _spriteRenderer.color.a);
     }
 
     public void HideArrow()
