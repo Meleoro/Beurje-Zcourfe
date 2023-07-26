@@ -9,6 +9,8 @@ public class DataCompetence : ScriptableObject
 {
     public enum Effets
     {
+        none,
+        invocation,
         soin,
         poussee,
         teleportation,
@@ -18,6 +20,7 @@ public class DataCompetence : ScriptableObject
 
     public enum Alterations
     {
+        none,
         brulure,
         malediction,
         maladie,
@@ -69,6 +72,7 @@ public class CompetenceLevel
     public int newPortee;
     
     public DataCompetence.Effets newEffet;
+    public GameObject summonedUnit;
     
     public DataCompetence.Alterations newAlteration;
 }

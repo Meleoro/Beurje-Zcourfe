@@ -74,29 +74,7 @@ public class DataCompetenceEditor : Editor
     public override void OnInspectorGUI()
     {
         so.Update();
-
         
-        
-        
-        
-        //EditorGUILayout.PropertyField(propPaterne);
-        
-        /*if (propPaterne.arraySize == 0)
-        {
-            for (int i = 0; i < 7; i++)
-            {
-                propPaterne.InsertArrayElementAtIndex(propPaterne.arraySize);
-
-                SerializedProperty newList = propPaterne.GetArrayElementAtIndex(propPaterne.arraySize - 1).FindPropertyRelative("list");
-
-                for (int j = 0; j < 7; j++)
-                {
-                    newList.InsertArrayElementAtIndex(newList.arraySize);
-                }
-            }
-        }
-        
-        GUILayout.Space(5);*/
         
         // GENERAL
         using (new GUILayout.VerticalScope(EditorStyles.helpBox))
@@ -108,79 +86,7 @@ public class DataCompetenceEditor : Editor
         }
         
         GUILayout.Space(10);
-        
-        /*
-        GUILayout.Space(20);
-        
-        // PATERNE
-        using (new GUILayout.VerticalScope(EditorStyles.helpBox))
-        {
-            GUILayout.Label("Paterne", moduleNameStyle);
-            GUILayout.Space(3);
 
-            EditorGUILayout.PropertyField(propHasCustomPaterne);
-
-            if (currentScript.hasCustomPaterne)
-            {
-                using (new GUILayout.VerticalScope(EditorStyles.helpBox, new [] {GUILayout.MinWidth(150)}))
-                {
-                    for (int i = 0; i < 7; i++)
-                    {
-                        using (new GUILayout.HorizontalScope())
-                        {
-                            SerializedProperty currentList =
-                                propPaterne.GetArrayElementAtIndex(i).FindPropertyRelative("list");
-                            
-                            for (int j = 0; j < 7; j++)
-                            {
-                                if (i != 3 || j != 3)
-                                {
-                                    EditorGUILayout.PropertyField(currentList.GetArrayElementAtIndex(j), GUIContent.none, GUILayout.MinWidth(EditorGUIUtility.labelWidth - 350));
-                                }
-                                else
-                                    GUILayout.Space(21);
-                            }
-                        }
-                    }
-                }
-            }
-
-            else
-            {
-                EditorGUILayout.PropertyField(propPaternePrefab);
-                EditorGUILayout.PropertyField(propPortee);
-
-                if (currentScript.portee < 0)
-                {
-                    currentScript.portee = 0;
-                }
-            }
-        }
-        
-        GUILayout.Space(20);
-        
-        // EFFETS / ALTERATIONS
-        using (new GUILayout.VerticalScope(EditorStyles.helpBox))
-        {
-            GUILayout.Label("Effets / Alterations", moduleNameStyle);
-            GUILayout.Space(3);
-
-            EditorGUILayout.PropertyField(propDoEffet);
-            if (currentScript.doEffet)
-            {
-                EditorGUILayout.PropertyField(propEffet);
-                GUILayout.Space(10);
-            }
-            
-            EditorGUILayout.PropertyField(propDoAlteration);
-            if (currentScript.doAlteration)
-            {
-                EditorGUILayout.PropertyField(propAlteration);
-            }
-        }
-        
-        GUILayout.Space(20);*/
-        
         
         // LEVELS
         using (new GUILayout.VerticalScope(EditorStyles.helpBox))
@@ -244,6 +150,7 @@ public class DataCompetenceEditor : Editor
                 SerializedProperty newPortee = MyListRef.FindPropertyRelative("newPortee");
                 
                 SerializedProperty newEffet = MyListRef.FindPropertyRelative("newEffet");
+                SerializedProperty summonedUnit = MyListRef.FindPropertyRelative("summonedUnit");
                 
                 SerializedProperty newAlteration = MyListRef.FindPropertyRelative("newAlteration");
 
@@ -269,38 +176,39 @@ public class DataCompetenceEditor : Editor
                     // Partie Paterne
                     GUILayout.Label("Paterne", titreStyle);
                     
-                        EditorGUILayout.PropertyField(isCustom);
+                    EditorGUILayout.PropertyField(isCustom);
 
-                        if (currentScript.levels[i].isCustom)
+                    if (currentScript.levels[i].isCustom)
+                    {
+                        using (new GUILayout.VerticalScope(EditorStyles.helpBox, new [] {GUILayout.MinWidth(200)}))
                         {
-                            using (new GUILayout.VerticalScope(EditorStyles.helpBox, new [] {GUILayout.MinWidth(200)}))
+                            for (int k = 0; k < 9; k++) 
                             {
-                                for (int k = 0; k < 9; k++)
+                                using (new GUILayout.HorizontalScope())
                                 {
-                                    using (new GUILayout.HorizontalScope())
+                                    SerializedProperty currentList = newPaterne.GetArrayElementAtIndex(k).FindPropertyRelative("list");
+                                    
+                                    for (int j = 0; j < 9; j++)
                                     {
-                                        SerializedProperty currentList = newPaterne.GetArrayElementAtIndex(k).FindPropertyRelative("list");
-                            
-                                        for (int j = 0; j < 9; j++)
+                                        if (k != 4 || j != 4)
                                         {
-                                            if (k != 4 || j != 4)
-                                            {
-                                                EditorGUILayout.PropertyField(currentList.GetArrayElementAtIndex(j), GUIContent.none, GUILayout.MinWidth(EditorGUIUtility.labelWidth - 350));
-                                            }
-                                            else
-                                                GUILayout.Space(21);
+                                            EditorGUILayout.PropertyField(currentList.GetArrayElementAtIndex(j), GUIContent.none, GUILayout.MinWidth(EditorGUIUtility.labelWidth - 350));
                                         }
+                                        else
+                                            GUILayout.Space(21);
                                     }
                                 }
                             }
                         }
-                        else
-                        {
-                            GUILayout.Space(3);
+                    }
+                        
+                    else
+                    {
+                        GUILayout.Space(3);
                             
-                            EditorGUILayout.PropertyField(newPaternePrefab);
-                            EditorGUILayout.PropertyField(newPortee);
-                        }
+                        EditorGUILayout.PropertyField(newPaternePrefab);
+                        EditorGUILayout.PropertyField(newPortee);
+                    }
                     
                     
                     GUILayout.Space(10);
@@ -310,9 +218,14 @@ public class DataCompetenceEditor : Editor
                     GUILayout.Label("Effet / Alteration", titreStyle);
                     
                     EditorGUILayout.PropertyField(newEffet);
+
+                    if (currentScript.levels[i].newEffet == DataCompetence.Effets.invocation)
+                    {
+                        EditorGUILayout.PropertyField(summonedUnit);
+                    }
                     
                     
-                    GUILayout.Space(3);
+                    GUILayout.Space(5);
                     
                     EditorGUILayout.PropertyField(newAlteration);
                     

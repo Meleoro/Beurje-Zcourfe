@@ -37,7 +37,7 @@ public class RangeFinder
     }
 
 
-    public List<OverlayTile> FindTilesCompetenceEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel, OverlayTile currentTile, bool shyBehavior)
+    public List<OverlayTile> FindTilesAttackEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel, OverlayTile currentTile, bool shyBehavior)
     {
         List<OverlayTile> result = new List<OverlayTile>();
         List<Vector2Int> tilesUnits = BattleManager.Instance.activeUnits.Keys.ToList();
@@ -144,6 +144,100 @@ public class RangeFinder
 
         return result;
     }
+    
+    public List<OverlayTile> FindTilesCompetenceEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel, OverlayTile currentTile, bool shyBehavior, bool isBuff)
+    {
+        List<OverlayTile> result = new List<OverlayTile>();
+        List<Vector2Int> tilesAllies = BattleManager.Instance.activeEnnemies.Keys.ToList();
+        List<Vector2Int> tilesEnnemies = BattleManager.Instance.activeUnits.Keys.ToList();
+
+        int greaterDistanceUnit = 0;
+        int greaterDistanceEnnemy = 0;    // FINDS THE POSITION FAREST FROM THE PLAYER UNITS
+        int nearestDistanceUnit = 100;
+        int smallerMoveDistance = 100;
+
+        OverlayTile currentMoveTile = null;
+        OverlayTile currentAttackTile = null;
+        
+        for (int i = 0; i < possibleMoves.Count; i++)
+        {
+            List<OverlayTile> attackTiles = FindTilesCompetence(possibleMoves[i], competenceUsed, competenceLevel);
+            Vector2Int currentMoveCoordinates = (Vector2Int) possibleMoves[i].posOverlayTile;
+
+            for (int j = 0; j < attackTiles.Count; j++)
+            {
+                Vector2Int currentAttackCoordinates = (Vector2Int) attackTiles[j].posOverlayTile;
+
+                // If the attack hits an unit
+                if (!isBuff || tilesAllies.Contains(currentAttackCoordinates))
+                {
+                    // Distance between the attack spot and the attacked spot
+                    int currentDistance = CalculateDistance(currentMoveCoordinates, currentAttackCoordinates);
+                    int currentMoveDistance = CalculateDistance((Vector2Int)currentTile.posOverlayTile, currentMoveCoordinates);
+
+                    // If the ennemy wants to go as near as possible
+                    if (!shyBehavior)
+                    {
+                        
+                    }
+
+                    // If the ennemy wants to go as far as possible
+                    else
+                    {
+                        // We calculate the nearest ennemy distance
+                        int maxDist = 0;
+                        
+                        for (int k = 0; k < tilesEnnemies.Count; k++)
+                        {
+                            int currentDist = CalculateDistance(currentMoveCoordinates, tilesEnnemies[k]);
+
+                            if (currentDist > maxDist)
+                            {
+                                maxDist = currentDist;
+                            }
+                        }
+
+
+                        if (maxDist > greaterDistanceEnnemy)
+                        {
+                            greaterDistanceEnnemy = maxDist;
+                            currentMoveTile = possibleMoves[i];
+                            currentAttackTile = attackTiles[j];
+                        }
+                    }
+                }
+            }
+        }
+
+        if (currentMoveTile != null)
+        {
+            result.Add(currentMoveTile);
+            result.Add(currentAttackTile);
+        }
+
+        // If no possible attack was found
+        else
+        {
+            for (int i = 0; i < possibleMoves.Count; i++)
+            {
+                for (int j = 0; j < tilesAllies.Count; j++)
+                {
+                    int currentDistance = CalculateDistance((Vector2Int) possibleMoves[i].posOverlayTile, tilesAllies[j]);
+                    
+                    if (nearestDistanceUnit > currentDistance)
+                    {
+                        nearestDistanceUnit = currentDistance;
+
+                        currentMoveTile = possibleMoves[i];
+                    }
+                }
+            }
+            
+            result.Add(currentMoveTile);
+        }
+
+        return result;
+    }
 
 
     public int CalculateDistance(Vector2Int start, Vector2Int end)
@@ -182,7 +276,10 @@ public class RangeFinder
         {
             if (MapManager.Instance.map.ContainsKey(coordinates[i]))
             {
-                tilesToColor.Add(MapManager.Instance.map[coordinates[i]]);
+                if (!MapManager.Instance.map[coordinates[i]].isBlocked)
+                {
+                    tilesToColor.Add(MapManager.Instance.map[coordinates[i]]);
+                }
             }
         }
         
