@@ -12,7 +12,7 @@ public class MouseManager : MonoBehaviour
         get { return _instance; }
     }
 
-    [Header("Paramètres")]
+    [Header("Paramï¿½tres")]
     [SerializeField] private bool outlineWhenOver;
     [SerializeField] private Color outlineSelectedUnit;
     [SerializeField] private Color outlineSelectedEnnemy;
@@ -445,6 +445,24 @@ public class MouseManager : MonoBehaviour
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
     public void ChangeSelectedCompetence(int index)
     {
+        if (indexCompetence == index && competenceSelect)
+        {
+            competenceSelect = false;
+            competenceUsed = null;
+        }
+        else
+        {
+            indexCompetence = index;
+            competenceSelect = true;
+            
+            for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
+            {
+                tilesCompetenceDisplayed[i].HideTile();
+            }
+
+        }
+        
+        
         if (index == 0)
         {
             competenceUsed = selectedUnit.data.attaqueData;
@@ -465,18 +483,7 @@ public class MouseManager : MonoBehaviour
             tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
             competenceLevel = selectedUnit.Competence2Level;
         }
-
-
-        if (indexCompetence == index && competenceSelect)
-        {
-            competenceSelect = false;
-            competenceUsed = null;
-        }
-        else
-        {
-            indexCompetence = index;
-            competenceSelect = true;
-        }
+        
         
         unitSelect = true;
 
