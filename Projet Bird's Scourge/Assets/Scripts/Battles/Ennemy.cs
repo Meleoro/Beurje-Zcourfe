@@ -236,6 +236,8 @@ public class Ennemy : MonoBehaviour
         StartCoroutine(BattleManager.Instance.NextTurn());
         
         BattleManager.Instance.ActualiseEnnemies();
+        
+        FindTilesAtRange();
     }
     
     
@@ -262,6 +264,8 @@ public class Ennemy : MonoBehaviour
         currentTile.isBlocked = true;
         
         BattleManager.Instance.ActualiseEnnemies();
+        
+        FindTilesAtRange();
     }
     
     
@@ -288,6 +292,8 @@ public class Ennemy : MonoBehaviour
         currentTile.isBlocked = true;
         
         BattleManager.Instance.ActualiseEnnemies();
+        
+        FindTilesAtRange();
     }
     
     
