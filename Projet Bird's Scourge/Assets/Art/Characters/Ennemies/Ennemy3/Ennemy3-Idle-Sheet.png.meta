@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cdf08bf9a1fbc0c42924c64e8716b286
+guid: 19e2660cb6c52684a8e3c2d249335407
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 46
+  spritePixelsToUnits: 40
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -107,400 +107,400 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_0
+      name: Ennemy3-Idle-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ce4d4aea52db81341805b513980225af
-      internalID: 912667325
+      spriteID: 84c0aadc0c60de1448e506e9221934c0
+      internalID: -1046392450
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_1
+      name: Ennemy3-Idle-Sheet_1
       rect:
         serializedVersion: 2
-        x: 46
+        x: 42
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7d606ad49daa1444ab9566f3210e2561
-      internalID: 812013794
+      spriteID: 528c35df23a29b64fb6178ac7e203d4e
+      internalID: 1406178191
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_2
+      name: Ennemy3-Idle-Sheet_2
       rect:
         serializedVersion: 2
-        x: 92
+        x: 84
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1867c76c3f6e1d4cae6081b19e0d030
-      internalID: 1923391075
+      spriteID: bb65cba3e30145b49aecee82eac115ce
+      internalID: 1833565498
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_3
+      name: Ennemy3-Idle-Sheet_3
       rect:
         serializedVersion: 2
-        x: 138
+        x: 126
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c482f17f8f0d25542890767486370138
-      internalID: 109611318
+      spriteID: fd461fa287f9a4944a34547550b2855e
+      internalID: 1726188682
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_4
+      name: Ennemy3-Idle-Sheet_4
       rect:
         serializedVersion: 2
-        x: 184
+        x: 168
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8f5177f967ce936478d5f68464a101c5
-      internalID: 1291129243
+      spriteID: 115cbd260a8b4ec4a8318faf7966ee31
+      internalID: -1804397152
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_5
+      name: Ennemy3-Idle-Sheet_5
       rect:
         serializedVersion: 2
-        x: 230
+        x: 210
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 913b73400d63d31439cf16fe8493d596
-      internalID: 467698514
+      spriteID: 2046f270638cf9246824a2f13f36fd81
+      internalID: -1202548095
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_6
+      name: Ennemy3-Idle-Sheet_6
       rect:
         serializedVersion: 2
-        x: 276
+        x: 252
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77ab7fa3845286548b46e8c77793849d
-      internalID: -227290204
+      spriteID: cfb180a709b1df54f93cddc6ab71108b
+      internalID: -1559720531
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_7
+      name: Ennemy3-Idle-Sheet_7
       rect:
         serializedVersion: 2
-        x: 322
+        x: 294
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2e8131c94561cf24aaf1e9ec9fc35202
-      internalID: 901530165
+      spriteID: be3259297b099814b9c04643e14df2e2
+      internalID: 1902250649
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_8
+      name: Ennemy3-Idle-Sheet_8
       rect:
         serializedVersion: 2
-        x: 368
+        x: 336
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f20cef025d3d8834aa65cd4c6321b5d7
-      internalID: 1983013170
+      spriteID: 72b6bccb757618643a148a93125372d7
+      internalID: 709252786
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_9
+      name: Ennemy3-Idle-Sheet_9
       rect:
         serializedVersion: 2
-        x: 414
+        x: 378
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 489da17171941024f8969d4e0a4f8a2e
-      internalID: 450714632
+      spriteID: 6491280f196587a4db5e6661a85749e9
+      internalID: -536562084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_10
+      name: Ennemy3-Idle-Sheet_10
       rect:
         serializedVersion: 2
-        x: 460
+        x: 420
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 49c685cd5d83a1640a2b08b15745714e
-      internalID: 1291950828
+      spriteID: 0da91d6668cafea428d922f3f41c4129
+      internalID: -888345181
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_11
+      name: Ennemy3-Idle-Sheet_11
       rect:
         serializedVersion: 2
-        x: 506
+        x: 462
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fef51c48379366c4fb34eb8e475a427c
-      internalID: 2056524951
+      spriteID: ce6038833108b3d46a6a6d1e29b8ebc7
+      internalID: 2085648723
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_12
+      name: Ennemy3-Idle-Sheet_12
       rect:
         serializedVersion: 2
-        x: 552
+        x: 504
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c4243667cca86fd4ead8d49f7604de4f
-      internalID: 2016151297
+      spriteID: ad721767fdd4f324da4da8fdcd9ecb59
+      internalID: 373413800
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_13
+      name: Ennemy3-Idle-Sheet_13
       rect:
         serializedVersion: 2
-        x: 598
+        x: 546
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6eae0b24d0d6e0d4e915f49f82c68c2d
-      internalID: -705277907
+      spriteID: 698d3cb7067467c4595a4f44724c4583
+      internalID: -755557520
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_14
+      name: Ennemy3-Idle-Sheet_14
       rect:
         serializedVersion: 2
-        x: 644
+        x: 588
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32e7701b2026d8c4eae83b9dc3475a90
-      internalID: 1589745247
+      spriteID: 3e00cffb0f1ecd744ab090cb4da67f4c
+      internalID: -1505623881
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_15
+      name: Ennemy3-Idle-Sheet_15
       rect:
         serializedVersion: 2
-        x: 690
+        x: 630
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4643a3963648abc4eb386afbaf7ea199
-      internalID: -1759047221
+      spriteID: 71eb19ee088cd0d4580f23f63d259042
+      internalID: -945051919
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_16
+      name: Ennemy3-Idle-Sheet_16
       rect:
         serializedVersion: 2
-        x: 736
+        x: 672
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e0b7a43fd7c17f40b36cfedde923fb5
-      internalID: -1449729634
+      spriteID: 1407b7e5b8304e44692de39b1810562f
+      internalID: 1313449913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_17
+      name: Ennemy3-Idle-Sheet_17
       rect:
         serializedVersion: 2
-        x: 782
+        x: 714
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 564957a65a01e374ba111dfa5abe26ee
-      internalID: -1418438090
+      spriteID: fa62267c1491a8d4bb6b0314670315c3
+      internalID: 1229346811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ennemy2-Idle-Sheet_18
+      name: Ennemy3-Idle-Sheet_18
       rect:
         serializedVersion: 2
-        x: 828
+        x: 756
         y: 0
-        width: 46
-        height: 46
-      alignment: 9
-      pivot: {x: 0.5, y: 0.6}
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8a717d1eaf313e949937db23535abb28
-      internalID: -1798330750
+      spriteID: 7e9f1ad9153249843afae90054b0789f
+      internalID: -1109370616
       vertices: []
       indices: 
       edges: []
@@ -516,25 +516,25 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ennemy2-Idle-Sheet_0: 912667325
-      Ennemy2-Idle-Sheet_1: 812013794
-      Ennemy2-Idle-Sheet_10: 1291950828
-      Ennemy2-Idle-Sheet_11: 2056524951
-      Ennemy2-Idle-Sheet_12: 2016151297
-      Ennemy2-Idle-Sheet_13: -705277907
-      Ennemy2-Idle-Sheet_14: 1589745247
-      Ennemy2-Idle-Sheet_15: -1759047221
-      Ennemy2-Idle-Sheet_16: -1449729634
-      Ennemy2-Idle-Sheet_17: -1418438090
-      Ennemy2-Idle-Sheet_18: -1798330750
-      Ennemy2-Idle-Sheet_2: 1923391075
-      Ennemy2-Idle-Sheet_3: 109611318
-      Ennemy2-Idle-Sheet_4: 1291129243
-      Ennemy2-Idle-Sheet_5: 467698514
-      Ennemy2-Idle-Sheet_6: -227290204
-      Ennemy2-Idle-Sheet_7: 901530165
-      Ennemy2-Idle-Sheet_8: 1983013170
-      Ennemy2-Idle-Sheet_9: 450714632
+      Ennemy3-Idle-Sheet_0: -1046392450
+      Ennemy3-Idle-Sheet_1: 1406178191
+      Ennemy3-Idle-Sheet_10: -888345181
+      Ennemy3-Idle-Sheet_11: 2085648723
+      Ennemy3-Idle-Sheet_12: 373413800
+      Ennemy3-Idle-Sheet_13: -755557520
+      Ennemy3-Idle-Sheet_14: -1505623881
+      Ennemy3-Idle-Sheet_15: -945051919
+      Ennemy3-Idle-Sheet_16: 1313449913
+      Ennemy3-Idle-Sheet_17: 1229346811
+      Ennemy3-Idle-Sheet_18: -1109370616
+      Ennemy3-Idle-Sheet_2: 1833565498
+      Ennemy3-Idle-Sheet_3: 1726188682
+      Ennemy3-Idle-Sheet_4: -1804397152
+      Ennemy3-Idle-Sheet_5: -1202548095
+      Ennemy3-Idle-Sheet_6: -1559720531
+      Ennemy3-Idle-Sheet_7: 1902250649
+      Ennemy3-Idle-Sheet_8: 709252786
+      Ennemy3-Idle-Sheet_9: -536562084
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
