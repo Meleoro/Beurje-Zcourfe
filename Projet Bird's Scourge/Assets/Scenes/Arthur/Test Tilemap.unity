@@ -139,6 +139,18 @@ PrefabInstance:
       propertyPath: worldUI
       value: 
       objectReference: {fileID: 1571350649}
+    - target: {fileID: 3004902933839461279, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: offsetPosStart.x
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3004902933839461279, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: offsetPosStart.y
+      value: -0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3004902933839461279, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: startTurnDuration
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_RootOrder
       value: 0

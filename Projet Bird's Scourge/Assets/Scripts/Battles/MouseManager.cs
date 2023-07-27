@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class MouseManager : MonoBehaviour
@@ -42,7 +43,8 @@ public class MouseManager : MonoBehaviour
     [Header("References")]
     private PathFinder pathFinder;
     private ArrowCreator arrowCreator;
-
+    private EffectMaker effectMaker;
+    
 
     private void Awake()
     {
@@ -58,6 +60,7 @@ public class MouseManager : MonoBehaviour
     {
         pathFinder = new PathFinder();
         arrowCreator = new ArrowCreator();
+        effectMaker = new EffectMaker();
     }
 
 
@@ -345,6 +348,8 @@ public class MouseManager : MonoBehaviour
 
         UIBattleManager.Instance.OpenUnitInfos(currentUnit.data, currentUnit, null);
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
+
+        StartCoroutine(effectMaker.SquishTransform(currentUnit.transform, 1.2f, 0.07f));
 
         competenceSelect = false;
         unitSelect = true;
