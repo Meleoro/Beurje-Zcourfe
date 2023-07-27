@@ -65,7 +65,7 @@ public class MouseManager : MonoBehaviour
     {
         if (!noControl)
         {
-            OverlayTile currentTile = GetFocusedTile();
+            OverlayTile currentTile = GetFocusedElement();
 
             if(currentTile is not null)
                 transform.position = currentTile.transform.position;
@@ -87,6 +87,8 @@ public class MouseManager : MonoBehaviour
         }
     }
 
+    
+    // ---------------- SELECTION PART ----------------
 
     // SEEK ON WHICH ELEMENT THE CHARACTER CLICKED
     private void VerifyClickedElement()
@@ -110,15 +112,7 @@ public class MouseManager : MonoBehaviour
                         break;
                     }
                     
-                    Unit currentUnit = clickedObject.GetComponent<Unit>();
-
-                    ManageOverlayUnit(currentUnit, null, true);
-
-                    UIBattleManager.Instance.OpenUnitInfos(currentUnit.data, currentUnit, null);
-                    UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
-
-                    competenceSelect = false;
-                    unitSelect = true;
+                    SelectUnit(clickedObject.GetComponent<Unit>());
 
                     break;
                 }
@@ -158,21 +152,10 @@ public class MouseManager : MonoBehaviour
             StopSelection();
         }
     }
-
     
-    // WHEN THE PLAYER DESELECT A CHARACTER
-    private void StopSelection()
-    {
-        competenceSelect = false;
-        unitSelect = false;
-        selectedUnit = null;
-        UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
-        ManageOverlayTiles();
-    }
     
-
-    // SEEK ON WHICH TILE IS THE MOUSE
-    private OverlayTile GetFocusedTile()
+    // SEEK ON WHICH ELEMENT IS THE MOUSE
+    private OverlayTile GetFocusedElement()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -238,6 +221,21 @@ public class MouseManager : MonoBehaviour
         return null;
     }
 
+    
+    // WHEN THE PLAYER DESELECT A CHARACTER
+    private void StopSelection()
+    {
+        competenceSelect = false;
+        unitSelect = false;
+        selectedUnit = null;
+        UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
+        ManageOverlayTiles();
+    }
+
+    
+    
+    // ---------------- SELECTED UNIT PART ----------------
+    
 
     // MANAGES WHAT HAS TO BE OUTLINED 
     public void ManageOverlayUnit(Unit currentUnit, Ennemy currentEnnemy, bool click)
@@ -338,36 +336,23 @@ public class MouseManager : MonoBehaviour
             }
         }
     }
-    
-   
-    
-    // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
-    private void DisplayArrow(OverlayTile focusedTile)
-    {
-        if (unitSelect && !competenceSelect)
-        {
-            if (tilesAtRangeDisplayed.Contains(focusedTile))
-            {
-                for (int i = 0; i < currentPath.Count; i++)
-                {
-                    currentPath[i].HideArrow();
-                }
-                
-                currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile, false);
 
-                for (int i = 0; i < currentPath.Count; i++)
-                {
-                    OverlayTile previousTile = i > 0 ? currentPath[i - 1] : selectedUnit.currentTile;
-                    OverlayTile nextTile = i < currentPath.Count - 1 ? currentPath[i + 1] : null;
-                    
-                    currentPath[i].DisplayArrow(arrowCreator.CreateArrow(previousTile, currentPath[i], nextTile));
-                }
-            }
-        }
+
+    // SETUP EVERYTHING WHEN WE WANT TO SELECT AN UNIT
+    public void SelectUnit(Unit currentUnit)
+    {
+        ManageOverlayUnit(currentUnit, null, true);
+
+        UIBattleManager.Instance.OpenUnitInfos(currentUnit.data, currentUnit, null);
+        UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
+
+        competenceSelect = false;
+        unitSelect = true;
     }
 
     
     
+    // ---------------- TILES PART ----------------
 
     // MANAGE WHICH COLOR HAS TO HAVE EVERYTILES DEPENDING ON THE SITUATION
     public void ManageOverlayTiles()
@@ -449,6 +434,10 @@ public class MouseManager : MonoBehaviour
     }
     
     
+    
+    // ---------------- OTHER PART ----------------
+    
+    
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
     public void ChangeSelectedCompetence(int index)
     {
@@ -496,5 +485,31 @@ public class MouseManager : MonoBehaviour
 
 
         ManageOverlayTiles();
+    }
+    
+    
+    // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
+    private void DisplayArrow(OverlayTile focusedTile)
+    {
+        if (unitSelect && !competenceSelect)
+        {
+            if (tilesAtRangeDisplayed.Contains(focusedTile))
+            {
+                for (int i = 0; i < currentPath.Count; i++)
+                {
+                    currentPath[i].HideArrow();
+                }
+                
+                currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile, false);
+
+                for (int i = 0; i < currentPath.Count; i++)
+                {
+                    OverlayTile previousTile = i > 0 ? currentPath[i - 1] : selectedUnit.currentTile;
+                    OverlayTile nextTile = i < currentPath.Count - 1 ? currentPath[i + 1] : null;
+                    
+                    currentPath[i].DisplayArrow(arrowCreator.CreateArrow(previousTile, currentPath[i], nextTile));
+                }
+            }
+        }
     }
 }

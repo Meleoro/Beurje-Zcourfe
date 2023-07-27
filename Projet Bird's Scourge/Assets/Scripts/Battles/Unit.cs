@@ -304,6 +304,7 @@ public class Unit : MonoBehaviour
         UIBattleManager.Instance.UpdateMovePointsUI(this);
         FindTilesAtRange();
         
+        MouseManager.Instance.SelectUnit(this);
         CameraManager.Instance.StartTurnUnit(this);
     }
 }

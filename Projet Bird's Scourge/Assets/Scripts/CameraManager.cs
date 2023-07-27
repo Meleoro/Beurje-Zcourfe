@@ -68,7 +68,7 @@ public class CameraManager : MonoBehaviour
     {
         if (canMove)
         {
-            Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal")*moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed,0);
+            Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed, 0);
             transform.localPosition = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
         }
     }
@@ -81,7 +81,7 @@ public class CameraManager : MonoBehaviour
             float scroll = Input.GetAxis("Mouse ScrollWheel");
             zoom -= scroll * zoomSpeed;
             zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
-            _camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, zoom,ref zoomVelocity,smoothZoomFactor);
+            _camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, zoom, ref zoomVelocity, smoothZoomFactor);
         }
     }
 
@@ -91,10 +91,12 @@ public class CameraManager : MonoBehaviour
         canMove = false;
         
         Vector2 newPos = (Vector2)unit.transform.position + offsetPosStart;
-        float newSize = unit.data.levels[unit.CurrentLevel].PM * 0.2f + 2;
+        float newSize = unit.data.levels[unit.CurrentLevel].PM * 0.2f + 2.5f;
 
-        transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), startTurnDuration);
+        transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), startTurnDuration).OnComplete((() => canMove = true));
         _camera.DOOrthoSize(newSize, startTurnDuration);
+
+        zoom = newSize;
     }
     
     
@@ -118,6 +120,7 @@ public class CameraManager : MonoBehaviour
 
         transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), duration);
         _camera.DOOrthoSize(newSize, duration);
+        
     }
 
     
