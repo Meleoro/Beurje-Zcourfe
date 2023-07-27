@@ -8,6 +8,16 @@ using TMPro;
 
 public class UIBattleAttack : MonoBehaviour
 {
+    [Header("Start")] 
+    public float apparitionFadeDuration;
+
+    [Header("Shake")] 
+    public bool unifiedShake;   // If true, the parent transform also shakes
+    [Range(0f, 5f)] public float attackerShakeDuration;
+    [Range(0f, 15f)] public float attackerShakeAmplitude;
+    [Range(0f, 5f)] public float attackedShakeDuration;
+    [Range(0f, 15f)] public float attackedShakeAmplitude;
+
     [Header("ParametersText")] 
     public Color colorNormalAttack;
     public Color colorMissAttack;
@@ -48,7 +58,7 @@ public class UIBattleAttack : MonoBehaviour
     {
         SetupFeel(leftSprite, rightSprite);
         
-        CharacterFeel(false);
+        CharacterFeel(leftOrigin);
 
         TextFeel(leftOrigin, miss, crit, damage, false, true);
 
@@ -102,10 +112,10 @@ public class UIBattleAttack : MonoBehaviour
         leftChara.sprite = leftSprite;
         rightChara.sprite = rightSprite;
 
-        attackFond.DOFade(0.8f, 0.07f);
+        attackFond.DOFade(0.8f, apparitionFadeDuration);
         
-        leftChara.DOFade(1, 0.07f);
-        rightChara.DOFade(1, 0.07f);
+        leftChara.DOFade(1, apparitionFadeDuration);
+        rightChara.DOFade(1, apparitionFadeDuration);
     }
 
 
@@ -114,20 +124,34 @@ public class UIBattleAttack : MonoBehaviour
     {
         if (leftOrigin)
         {
-            leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 30, 0.5f);
-            rightChara.rectTransform.DOMoveX(rightChara.rectTransform.position.x - 15, 0.5f);
+            /*leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 30, 0.5f);
+            rightChara.rectTransform.DOMoveX(rightChara.rectTransform.position.x - 15, 0.5f);*/
 
-            attackUI.DOShakePosition(1f, 10f);
+            leftChara.rectTransform.DOShakePosition(attackerShakeDuration, attackerShakeAmplitude);
+            rightChara.rectTransform.DOShakePosition(attackedShakeDuration, attackedShakeAmplitude);
+
+            if (unifiedShake)
+            {
+                attackUI.DOShakePosition(1f, 10f);
+            }
+
             attackUI.DOScale(attackUI.localScale * 1.1f, 0.2f);
             attackUI.DORotate(new Vector3(0, 0, -5), 0.1f);
         }
 
         else
         {
-            rightChara.rectTransform.DOMoveX(rightChara.rectTransform.position.x - 30, 0.5f);
-            leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 15, 0.5f);
+            /*rightChara.rectTransform.DOMoveX(rightChara.rectTransform.position.x - 30, 0.5f);
+            leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 15, 0.5f);*/
+            
+            rightChara.rectTransform.DOShakePosition(attackerShakeDuration, attackerShakeAmplitude);
+            leftChara.rectTransform.DOShakePosition(attackedShakeDuration, attackedShakeAmplitude);
 
-            attackUI.DOShakePosition(1f, 10f);
+            if (unifiedShake)
+            {
+                attackUI.DOShakePosition(1f, 10f);
+            }
+            
             attackUI.DOScale(attackUI.localScale * 1.1f, 0.2f);
             attackUI.DORotate(new Vector3(0, 0, -5), 0.1f);
         }

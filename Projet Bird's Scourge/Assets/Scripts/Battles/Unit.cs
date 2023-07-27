@@ -139,12 +139,12 @@ public class Unit : MonoBehaviour
                         clickedEnnemy.TakeDamages(attackDamage);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
             
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,attackDamage,false,false)); 
+                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true, attackDamage,false,false)); 
                     }
                 }
                 else // Si c'est un miss
                 {
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,0,true,false));
+                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true, 0,true,false));
                 }
                 
                 UIBattleManager.Instance.UpdateTurnUI();
