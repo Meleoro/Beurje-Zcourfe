@@ -17,6 +17,10 @@ public class CameraManager : MonoBehaviour
     private Vector3 savePos;
     private float saveSize;
 
+    [Header("StartTurn")] 
+    public float startTurnDuration;
+    public Vector2 offsetPosStart;
+
     [Header("Movement")] 
     public bool canMove;
     public float moveSpeed;
@@ -34,6 +38,9 @@ public class CameraManager : MonoBehaviour
     [Header("References")] 
     private Camera _camera;
     public RectTransform worldUI;
+
+    [Header("Other")] 
+    private float screenWidth;
 
 
     private void Awake()
@@ -77,6 +84,20 @@ public class CameraManager : MonoBehaviour
             _camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, zoom,ref zoomVelocity,smoothZoomFactor);
         }
     }
+
+
+    public void StartTurnUnit(Unit unit)
+    {
+        canMove = false;
+        
+        Vector2 newPos = (Vector2)unit.transform.position + offsetPosStart;
+        float newSize = unit.data.levels[unit.CurrentLevel].PM * 0.2f + 2;
+
+        transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), startTurnDuration);
+        _camera.DOOrthoSize(newSize, startTurnDuration);
+    }
+    
+    
     
     // MOVE THE CAMERA TO ZOOM ON ALL THE UNITS CONCERNED BY THE ATTACK
     public void EnterCameraBattle(List<Vector2> unitsPositions, float duration)

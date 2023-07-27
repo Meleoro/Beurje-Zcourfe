@@ -303,5 +303,7 @@ public class Unit : MonoBehaviour
         PM = data.levels[CurrentLevel].PM;
         UIBattleManager.Instance.UpdateMovePointsUI(this);
         FindTilesAtRange();
+        
+        CameraManager.Instance.StartTurnUnit(this);
     }
 }

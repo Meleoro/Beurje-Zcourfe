@@ -2044,7 +2044,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   haste: 0
-  PM: 4
+  PM: 5
   currentHealth: 10
   currentLevel: 1
   attackLevel: 1

@@ -22,6 +22,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("Order")] 
     public List<GameObject> order;
+    private bool isChangingTurn;
 
     [Header("Mana")] 
     public int manaMax = 5;
@@ -299,6 +300,8 @@ public class BattleManager : MonoBehaviour
     // Go to the next turn and actualise the order
     public IEnumerator NextTurn()
     {
+        isChangingTurn = true;
+        
         order.RemoveAt(0);
         
         GainMana(1);
@@ -321,12 +324,15 @@ public class BattleManager : MonoBehaviour
             order[0].GetComponent<Ennemy>().DoTurn();
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         }
+
+        isChangingTurn = false;
     }
 
     // Exist because stupid buttons can't launch coroutines
     public void NextTurnButton()
     {
-        StartCoroutine(NextTurn());
+        if(!isChangingTurn)
+            StartCoroutine(NextTurn());
     }
     
     
