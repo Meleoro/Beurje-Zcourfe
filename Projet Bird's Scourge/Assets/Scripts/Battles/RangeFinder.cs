@@ -29,7 +29,10 @@ public class RangeFinder
         {
             if (MapManager.Instance.map.ContainsKey(coordinates[i]))
             {
-                moveTiles.Add(MapManager.Instance.map[coordinates[i]]);
+                if (!MapManager.Instance.map[coordinates[i]].isBlocked)
+                {
+                    moveTiles.Add(MapManager.Instance.map[coordinates[i]]);
+                }
             }
         }
 

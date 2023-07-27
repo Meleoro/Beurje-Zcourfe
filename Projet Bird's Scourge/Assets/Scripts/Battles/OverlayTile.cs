@@ -14,7 +14,7 @@ public class OverlayTile : MonoBehaviour
     [HideInInspector] public int costH;
     public int costF { get { return costG + costH; } }
     [HideInInspector] public OverlayTile previous;
-    [HideInInspector] public bool isBlocked;
+    public bool isBlocked;
     [HideInInspector] public Vector3Int posOverlayTile;
     
 
