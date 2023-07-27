@@ -91,7 +91,7 @@ public class Ennemy : MonoBehaviour
                 break;
         }
 
-        List<OverlayTile> movePath = pathFinder.FindPath(currentTile, moveTileAttackTile[0]);
+        List<OverlayTile> movePath = pathFinder.FindPath(currentTile, moveTileAttackTile[0], data.levels[CurrentLevel].moveDiagonal);
 
         // If the ennemy move then attack
         if (moveTileAttackTile.Count == 2)

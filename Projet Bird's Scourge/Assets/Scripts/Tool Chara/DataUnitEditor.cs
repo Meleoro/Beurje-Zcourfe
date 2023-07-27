@@ -150,6 +150,7 @@ public class DataUnitEditor : Editor
                 SerializedProperty PM = MyListRef.FindPropertyRelative("PM");
                 SerializedProperty movePatern = MyListRef.FindPropertyRelative("movePatern");
                 SerializedProperty shyBehavior = MyListRef.FindPropertyRelative("shyBehavior");
+                SerializedProperty moveDiagonal = MyListRef.FindPropertyRelative("moveDiagonal");
                 
                 SerializedProperty force = MyListRef.FindPropertyRelative("force");
                 SerializedProperty defense = MyListRef.FindPropertyRelative("defense");
@@ -157,6 +158,7 @@ public class DataUnitEditor : Editor
                 SerializedProperty agilite = MyListRef.FindPropertyRelative("agilite");
                 SerializedProperty chance = MyListRef.FindPropertyRelative("chance");
                 
+
                 using (new GUILayout.VerticalScope(EditorStyles.helpBox))
                 {
                     GUILayout.Label("Level " + (i + 1), moduleNameStyle);
@@ -221,6 +223,7 @@ public class DataUnitEditor : Editor
                         }
 
                         EditorGUILayout.PropertyField(shyBehavior);
+                        EditorGUILayout.PropertyField(moveDiagonal);
                     }
 
                     GUILayout.Space(10);

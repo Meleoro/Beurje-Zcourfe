@@ -353,7 +353,7 @@ public class MouseManager : MonoBehaviour
                     currentPath[i].HideArrow();
                 }
                 
-                currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile);
+                currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile, false);
 
                 for (int i = 0; i < currentPath.Count; i++)
                 {

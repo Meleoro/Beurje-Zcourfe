@@ -153,11 +153,9 @@ public class RangeFinder
         List<OverlayTile> result = new List<OverlayTile>();
         List<Vector2Int> tilesAllies = BattleManager.Instance.activeEnnemies.Keys.ToList();
         List<Vector2Int> tilesEnnemies = BattleManager.Instance.activeUnits.Keys.ToList();
-
-        int greaterDistanceUnit = 0;
+        
         int greaterDistanceEnnemy = 0;    // FINDS THE POSITION FAREST FROM THE PLAYER UNITS
         int nearestDistanceUnit = 100;
-        int smallerMoveDistance = 100;
 
         OverlayTile currentMoveTile = null;
         OverlayTile currentAttackTile = null;
@@ -174,10 +172,6 @@ public class RangeFinder
                 // If the attack hits an unit
                 if (!isBuff || tilesAllies.Contains(currentAttackCoordinates))
                 {
-                    // Distance between the attack spot and the attacked spot
-                    int currentDistance = CalculateDistance(currentMoveCoordinates, currentAttackCoordinates);
-                    int currentMoveDistance = CalculateDistance((Vector2Int)currentTile.posOverlayTile, currentMoveCoordinates);
-
                     // If the ennemy wants to go as near as possible
                     if (!shyBehavior)
                     {

@@ -7,7 +7,7 @@ using UnityEngine;
 public class PathFinder
 {
     // RENVOIE UNE LISTE QUI EST LE CHEMIN ENTRE DEUX POINTS
-    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end)
+    public List<OverlayTile> FindPath(OverlayTile start, OverlayTile end, bool moveDiagonal)
     {
         List<OverlayTile> openList = new List<OverlayTile>();
         List<OverlayTile> closeList = new List<OverlayTile>();
@@ -17,6 +17,7 @@ public class PathFinder
         while (openList.Count >= 0)
         {
             int indexNearestTile = FindNearestTile(openList);
+
             OverlayTile currentTile = openList[indexNearestTile];
             
             openList.RemoveAt(indexNearestTile);
@@ -27,8 +28,15 @@ public class PathFinder
                 return FindFinalPath(start, end);
             }
 
-            List<OverlayTile> neighbors = FindNeighbors(currentTile);
+            List<OverlayTile> neighbors = new List<OverlayTile>();
+            
+            if(moveDiagonal)
+                neighbors = FindNeighborsDiagonal(currentTile);
+            
+            else
+                neighbors = FindNeighbors(currentTile);
 
+            
             for (int i = 0; i < neighbors.Count; i++)
             {
                 if (neighbors[i].isBlocked || closeList.Contains(neighbors[i]) || openList.Contains(neighbors[i]))
@@ -127,6 +135,49 @@ public class PathFinder
         
         // Right
         newPos = new Vector2Int(currentPos.x - 1, currentPos.y);
+        
+        if (currentMap.ContainsKey(newPos))
+        {
+            neighbors.Add(currentMap[newPos]);
+        }
+
+        return neighbors;
+    }
+    
+    
+    // RENVOIE UNE LISTE DE TOUS LES VOISINS EN DIAGONAL DE LA CASE EN PARAMETRES (SI CASE NON VIDE)
+    private List<OverlayTile> FindNeighborsDiagonal(OverlayTile currentTile)
+    {
+        Vector2Int currentPos = new Vector2Int(currentTile.posOverlayTile.x, currentTile.posOverlayTile.y);
+        List<OverlayTile> neighbors = new List<OverlayTile>();
+        Dictionary<Vector2Int, OverlayTile> currentMap = MapManager.Instance.map;
+
+        // Up
+        Vector2Int newPos = new Vector2Int(currentPos.x + 1, currentPos.y + 1);
+        
+        if (currentMap.ContainsKey(newPos))
+        {
+            neighbors.Add(currentMap[newPos]);
+        }
+        
+        // Down
+        newPos = new Vector2Int(currentPos.x + 1, currentPos.y - 1);
+        
+        if (currentMap.ContainsKey(newPos))
+        {
+            neighbors.Add(currentMap[newPos]);
+        }
+        
+        // Left
+        newPos = new Vector2Int(currentPos.x - 1, currentPos.y + 1);
+        
+        if (currentMap.ContainsKey(newPos))
+        {
+            neighbors.Add(currentMap[newPos]);
+        }
+        
+        // Right
+        newPos = new Vector2Int(currentPos.x - 1, currentPos.y - 1);
         
         if (currentMap.ContainsKey(newPos))
         {

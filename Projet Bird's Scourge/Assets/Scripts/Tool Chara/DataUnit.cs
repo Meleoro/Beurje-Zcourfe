@@ -43,6 +43,7 @@ public class UnitLevel
     public int PM;
     public List<ListBool> movePatern = new List<ListBool>();
     public bool shyBehavior;
+    public bool moveDiagonal;
 
     //[Header("Stats")] 
     public int force;
