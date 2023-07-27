@@ -33,4 +33,6 @@ MonoBehaviour:
     newPaternePrefab: 0
     newPortee: 0
     newEffet: 0
+    summonedUnit: {fileID: 0}
+    healedPV: 0
     newAlteration: 0

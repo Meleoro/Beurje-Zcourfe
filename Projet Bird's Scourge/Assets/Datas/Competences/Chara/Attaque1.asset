@@ -33,6 +33,8 @@ MonoBehaviour:
     newPaternePrefab: 0
     newPortee: 0
     newEffet: 0
+    summonedUnit: {fileID: 0}
+    healedPV: 0
     newAlteration: 0
   - competenceDescription: Reduces the target's defense for 3 turns.
     competenceManaCost: 0
@@ -62,4 +64,6 @@ MonoBehaviour:
     newPaternePrefab: 0
     newPortee: 0
     newEffet: 0
+    summonedUnit: {fileID: 0}
+    healedPV: 0
     newAlteration: 0

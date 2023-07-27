@@ -34,6 +34,8 @@ MonoBehaviour:
     newPaternePrefab: 0
     newPortee: 0
     newEffet: 0
+    summonedUnit: {fileID: 0}
+    healedPV: 0
     newAlteration: 0
   - competenceDescription: Increases the caster's critical chance for 2 turns. Mana
       +1 if target dies.
@@ -64,4 +66,6 @@ MonoBehaviour:
     newPaternePrefab: 0
     newPortee: 0
     newEffet: 0
+    summonedUnit: {fileID: 0}
+    healedPV: 0
     newAlteration: 0
