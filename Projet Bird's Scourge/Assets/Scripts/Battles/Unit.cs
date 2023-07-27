@@ -87,6 +87,21 @@ public class Unit : MonoBehaviour
 
     //--------------------------ATTACK PART------------------------------
 
+    public void LaunchAttack(Ennemy clickedEnnemy, Unit clickedUnit, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
+    {
+        switch (competenceUsed.levels[competenceLevel].newEffet)
+        {
+            case DataCompetence.Effets.none :
+                StartCoroutine(AttackEnnemies(clickedEnnemy, competenceTiles, competenceUsed, competenceLevel));
+                break;
+            
+            case DataCompetence.Effets.soin :
+                StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
+                break;
+        }
+    }
+    
+    
     // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
     public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
@@ -131,6 +146,37 @@ public class Unit : MonoBehaviour
                 {
                     StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,0,true,false));
                 }
+                
+                UIBattleManager.Instance.UpdateTurnUI();
+                //StartCoroutine(BattleManager.Instance.NextTurn());
+            }
+        }
+    }
+    
+    
+    // VERIFY IF WE CAN BUFF / HEAL / SUMMON AN ALLY
+    public IEnumerator UseCompetence(Unit clickedUnit, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
+    {
+        MouseManager.Instance.noControl = true;
+        CameraManager.Instance.canMove = false;
+        
+        if (competenceTiles.Contains(clickedUnit.currentTile))
+        {
+            if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
+            {
+                List<Vector2> positions = new List<Vector2>();
+
+                positions.Add(transform.position);
+                positions.Add(clickedUnit.transform.position);
+
+                CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+
+                yield return new WaitForSeconds(1f);
+
+                int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
+                
+                clickedUnit.currentHealth += addedPV;
+                StartCoroutine(UIBattleManager.Instance.attackScript.BuffHealUIFeel(data.attackSprite, clickedUnit.data.attackSprite, true, addedPV, false, false));
                 
                 UIBattleManager.Instance.UpdateTurnUI();
                 //StartCoroutine(BattleManager.Instance.NextTurn());

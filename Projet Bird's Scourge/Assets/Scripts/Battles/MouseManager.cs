@@ -103,6 +103,13 @@ public class MouseManager : MonoBehaviour
 
                 if (clickedObject.CompareTag("Unit"))
                 {
+                    if (competenceSelect)
+                    {
+                        selectedUnit.LaunchAttack(null, clickedObject.GetComponent<Unit>(), tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+
+                        break;
+                    }
+                    
                     Unit currentUnit = clickedObject.GetComponent<Unit>();
 
                     ManageOverlayUnit(currentUnit, null, true);
@@ -120,7 +127,7 @@ public class MouseManager : MonoBehaviour
                 {
                     if (competenceSelect)
                     {
-                        StartCoroutine(selectedUnit.AttackEnnemies(clickedObject.GetComponent<Ennemy>(), tilesCompetenceDisplayed, competenceUsed, competenceLevel));
+                        selectedUnit.LaunchAttack(clickedObject.GetComponent<Ennemy>(), null, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
 
                         break;
                     }

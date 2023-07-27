@@ -151,6 +151,7 @@ public class DataCompetenceEditor : Editor
                 
                 SerializedProperty newEffet = MyListRef.FindPropertyRelative("newEffet");
                 SerializedProperty summonedUnit = MyListRef.FindPropertyRelative("summonedUnit");
+                SerializedProperty healedPV = MyListRef.FindPropertyRelative("healedPV");
                 
                 SerializedProperty newAlteration = MyListRef.FindPropertyRelative("newAlteration");
 
@@ -219,12 +220,18 @@ public class DataCompetenceEditor : Editor
                     
                     EditorGUILayout.PropertyField(newEffet);
 
-                    if (currentScript.levels[i].newEffet == DataCompetence.Effets.invocation)
+                    switch (currentScript.levels[i].newEffet)
                     {
-                        EditorGUILayout.PropertyField(summonedUnit);
+                        case DataCompetence.Effets.invocation : 
+                            EditorGUILayout.PropertyField(summonedUnit);
+                            break;
+                        
+                        case DataCompetence.Effets.soin :
+                            EditorGUILayout.PropertyField(healedPV);
+                            break;
                     }
-                    
-                    
+
+
                     GUILayout.Space(5);
                     
                     EditorGUILayout.PropertyField(newAlteration);

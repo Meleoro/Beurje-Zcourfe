@@ -73,6 +73,7 @@ public class CompetenceLevel
     
     public DataCompetence.Effets newEffet;
     public GameObject summonedUnit;
+    public int healedPV;
     
     public DataCompetence.Alterations newAlteration;
 }
