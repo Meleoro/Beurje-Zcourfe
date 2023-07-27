@@ -273,10 +273,7 @@ public class RangeFinder
         {
             if (MapManager.Instance.map.ContainsKey(coordinates[i]))
             {
-                if (!MapManager.Instance.map[coordinates[i]].isBlocked)
-                {
-                    tilesToColor.Add(MapManager.Instance.map[coordinates[i]]);
-                }
+                tilesToColor.Add(MapManager.Instance.map[coordinates[i]]);
             }
         }
         

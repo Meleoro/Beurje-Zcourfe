@@ -96,6 +96,8 @@ public class Ennemy : MonoBehaviour
         // If the ennemy move then attack
         if (moveTileAttackTile.Count == 2)
         {
+            Debug.Log(12);
+            
             if (!isSummon)
             {
                 Unit attackedUnit = BattleManager.Instance.activeUnits[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
