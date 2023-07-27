@@ -227,7 +227,7 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE BUFF / HEAL UI HAS TO APPEAR
-    public IEnumerator BuffHealUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftOrigin, int healValue, bool miss, bool crit)
+    public IEnumerator HealUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftOrigin, int healValue, bool miss, bool crit)
     {
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);

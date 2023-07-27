@@ -176,7 +176,7 @@ public class Unit : MonoBehaviour
                 int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
                 
                 clickedUnit.currentHealth += addedPV;
-                StartCoroutine(UIBattleManager.Instance.attackScript.BuffHealUIFeel(data.attackSprite, clickedUnit.data.attackSprite, true, addedPV, false, false));
+                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data.attackSprite, clickedUnit.data.attackSprite, true, addedPV, false, false));
                 
                 UIBattleManager.Instance.UpdateTurnUI();
                 //StartCoroutine(BattleManager.Instance.NextTurn());
