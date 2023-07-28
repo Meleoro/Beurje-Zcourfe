@@ -25,11 +25,15 @@ public class EffectMaker
     {
         List<OverlayTile> openList = new List<OverlayTile>();
         List<OverlayTile> closeList = new List<OverlayTile>();
+
+        int limit = 10;
         
         openList.Add(center);
 
-        while (closeList.Count < tiles.Count)
+        while (closeList.Count < tiles.Count && tiles == MouseManager.Instance.tilesAtRangeDisplayed)
         {
+            limit -= 1;
+            
             List<OverlayTile> tilesToAppear = new List<OverlayTile>();
             List<OverlayTile> finalTilesToAppear = new List<OverlayTile>();
             
@@ -54,7 +58,7 @@ public class EffectMaker
             // We make them appear
             for (int i = 0; i < finalTilesToAppear.Count; i++)
             {
-                finalTilesToAppear[i].AppearEffect(0.1f);
+                finalTilesToAppear[i].AppearEffectLauncher(0.1f);
                 
                 closeList.Add(finalTilesToAppear[i]);
                 openList.Add(finalTilesToAppear[i]);

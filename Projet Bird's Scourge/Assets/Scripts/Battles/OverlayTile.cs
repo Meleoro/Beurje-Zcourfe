@@ -21,6 +21,8 @@ public class OverlayTile : MonoBehaviour
     [HideInInspector] public OverlayTile previous;
     public bool isBlocked;
     [HideInInspector] public Vector3Int posOverlayTile;
+
+    [Header("Other")] private Vector3 originalPos;
     
 
 
@@ -28,6 +30,8 @@ public class OverlayTile : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _arrowSpriteRenderer = GetComponentsInChildren<SpriteRenderer>()[1];
+
+        originalPos = transform.position;
         
         HideTile();
     }
@@ -45,13 +49,32 @@ public class OverlayTile : MonoBehaviour
         HideArrow();
     }
 
-    public void AppearEffect(float effectDuration)
+    public IEnumerator AppearEffect(float effectDuration)
     {
         _spriteRenderer.DOFade(wantedTransparency, effectDuration);
 
-        transform.DOMoveY(transform.position.y + strengthApparitionEffect, effectDuration * 0.8f).OnComplete(() =>
-            transform.DOMoveY(transform.position.y - strengthApparitionEffect, effectDuration * 0.5f));
+        transform.DOMoveY(transform.position.y + strengthApparitionEffect, effectDuration * 0.8f);
+
+        yield return new WaitForSeconds(effectDuration * 0.8f);
+        
+        transform.DOMoveY(transform.position.y - strengthApparitionEffect, effectDuration * 0.5f);
     }
+
+    public void AppearEffectLauncher(float effectDuration)
+    {
+        StartCoroutine(AppearEffect(effectDuration));
+    }
+    
+    public void ResetTile()
+    {
+        DOTween.KillAll();
+        StopAllCoroutines();
+
+        transform.position = originalPos;
+        HideTile();
+    }
+
+    
 
     public void ChangeColor(Color newColor)
     {

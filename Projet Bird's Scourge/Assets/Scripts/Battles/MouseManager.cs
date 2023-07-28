@@ -21,8 +21,8 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private Color tilesAttackColor;
 
     [Header("OverlayTiles")]
-    private List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
-    private List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
+    [HideInInspector] public List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
+    [HideInInspector] public List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
     private int indexCompetence;
     private int competenceLevel;
     [HideInInspector] public DataCompetence competenceUsed;
@@ -84,8 +84,8 @@ public class MouseManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 VerifyClickedElement();
-
-                ManageOverlayTiles();
+                
+                //ManageOverlayTiles();
             }
         }
     }
@@ -185,18 +185,20 @@ public class MouseManager : MonoBehaviour
             }
 
             // Overlay of an unit
-            else if (hits[i].collider.gameObject.CompareTag("Unit"))
+            if (hits[i].collider.gameObject.CompareTag("Unit"))
             {
                 Unit currentUnit = hits[i].collider.GetComponent<Unit>();
+                
                 ManageOverlayUnit(currentUnit, null, false);
 
                 UIBattleManager.Instance.OpenUnitInfos(currentUnit.data, currentUnit, null);
-
+                
                 return currentUnit.currentTile;
             }
 
+            
             // Shows the infos of the currently playing unit
-            else if (BattleManager.Instance.order[0].CompareTag("Unit"))
+            if (BattleManager.Instance.order[0].CompareTag("Unit"))
             {
                 UIBattleManager.Instance.OpenUnitInfos(BattleManager.Instance.order[0].GetComponent<Unit>().data,
                     BattleManager.Instance.order[0].GetComponent<Unit>(), null);
@@ -224,22 +226,10 @@ public class MouseManager : MonoBehaviour
         return null;
     }
 
-    
-    // WHEN THE PLAYER DESELECT A CHARACTER
-    private void StopSelection()
-    {
-        competenceSelect = false;
-        unitSelect = false;
-        selectedUnit = null;
-        UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
-        ManageOverlayTiles();
-    }
 
-    
-    
+
     // ---------------- SELECTED UNIT PART ----------------
     
-
     // MANAGES WHAT HAS TO BE OUTLINED 
     public void ManageOverlayUnit(Unit currentUnit, Ennemy currentEnnemy, bool click)
     {
@@ -248,29 +238,30 @@ public class MouseManager : MonoBehaviour
             // If nothing is selected
             if (currentUnit == null && currentEnnemy == null)
             {
-                if (currentOverlayedEnnemy != null)
+                if (!unitSelect)
                 {
-                    if (outlineWhenOver)
-                        currentOverlayedEnnemy.DesactivateOutline();
+                    if (currentOverlayedEnnemy != null)
+                    {
+                        if (outlineWhenOver)
+                            currentOverlayedEnnemy.DesactivateOutline();
 
-                    currentOverlayedEnnemy = null;
+                        currentOverlayedEnnemy = null;
+                    }
 
-                    ManageOverlayTiles();
-                }
+                    else if (currentOverlayedUnit != null)
+                    {
+                        if (outlineWhenOver)
+                            currentOverlayedUnit.DesactivateOutline();
 
-                else if (currentOverlayedUnit != null)
-                {
-                    if (outlineWhenOver)
-                        currentOverlayedUnit.DesactivateOutline();
-
-                    currentOverlayedUnit = null;
-
+                        currentOverlayedUnit = null;
+                    }
+                    
                     ManageOverlayTiles();
                 }
             }
 
             // If it's an unit
-            if (currentEnnemy == null)
+            else if (currentEnnemy == null)
             {
                 if (currentUnit != currentOverlayedUnit)
                 {
@@ -279,7 +270,7 @@ public class MouseManager : MonoBehaviour
 
                     currentUnit.FindTilesAtRange();
                     currentOverlayedUnit = currentUnit;
-
+                    
                     ManageOverlayTiles();
                 }
             }
@@ -293,7 +284,7 @@ public class MouseManager : MonoBehaviour
                         currentOverlayedEnnemy.ActivateOutline(outlineSelectedEnnemy);
 
                     currentOverlayedEnnemy = currentEnnemy;
-
+                    
                     ManageOverlayTiles();
                 }
             }
@@ -355,24 +346,26 @@ public class MouseManager : MonoBehaviour
         competenceSelect = false;
         unitSelect = true;
     }
+    
+        
+    // WHEN THE PLAYER DESELECT A CHARACTER
+    private void StopSelection()
+    {
+        competenceSelect = false;
+        unitSelect = false;
+        selectedUnit = null;
+        UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
+        ManageOverlayTiles();
+    }
 
     
     
     // ---------------- TILES PART ----------------
 
     // MANAGE WHICH COLOR HAS TO HAVE EVERYTILES DEPENDING ON THE SITUATION
-    public void ManageOverlayTiles()
+    public void ManageOverlayTiles(bool forceReset = false)
     {
-        for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
-        {
-            tilesAtRangeDisplayed[i].HideTile();
-        }
-
-        for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
-        {
-            tilesCompetenceDisplayed[i].HideTile();
-        }
-
+        ResetOverlayTiles(forceReset);
         
         // If a competence is selected
         if (competenceSelect) 
@@ -393,22 +386,42 @@ public class MouseManager : MonoBehaviour
             }
         }
     }
-    
-    
+
+
+    private void ResetOverlayTiles(bool forceReset)
+    {
+        if ((!unitSelect && !competenceSelect) || forceReset)
+        {
+            for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+            {
+                tilesAtRangeDisplayed[i].ResetTile();
+            }
+
+            for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
+            {
+                tilesCompetenceDisplayed[i].ResetTile();
+            }
+        }
+    }
+
+
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
     private void DisplayTilesAtRange(Unit currentUnit, Ennemy currentEnnemy)
     {
-        if (currentUnit != null && currentUnit != selectedUnit)
+        if (currentUnit != null)
         {
-            tilesAtRangeDisplayed = currentUnit.currentTilesAtRange;
-
-            StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f));
-
-            for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+            if (currentUnit != selectedUnit && currentUnit.currentTilesAtRange != tilesAtRangeDisplayed)
             {
-                //tilesAtRangeDisplayed[i].ShowTile();
+                tilesAtRangeDisplayed = currentUnit.currentTilesAtRange;
 
-                tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
+                StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f));
+
+                for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+                {
+                    //tilesAtRangeDisplayed[i].ShowTile();
+
+                    tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
+                }
             }
         }
         else if(currentEnnemy != null)
@@ -492,7 +505,7 @@ public class MouseManager : MonoBehaviour
         unitSelect = true;
 
 
-        ManageOverlayTiles();
+        ManageOverlayTiles(false);
     }
     
     
