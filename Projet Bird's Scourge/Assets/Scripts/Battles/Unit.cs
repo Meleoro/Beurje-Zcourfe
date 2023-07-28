@@ -55,6 +55,8 @@ public class Unit : MonoBehaviour
     {
         rangeFinder = new RangeFinder();
         statsCalculator = new StatsCalculator();
+        
+        BattleManager.Instance.AddUnitList(this);
     }
 
     private void Update()

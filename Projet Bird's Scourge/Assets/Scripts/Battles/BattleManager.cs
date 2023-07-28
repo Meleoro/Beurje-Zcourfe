@@ -14,11 +14,14 @@ public class BattleManager : MonoBehaviour
         get { return _instance; }
     }
     
+    [Header("Start")]
+    private List<Unit> currentUnits = new List<Unit>();
+    private List<Ennemy> currentEnnemies = new List<Ennemy>();
+    private int numberCharas;
+
     [Header("Units/Ennemies")]
     public Dictionary<Vector2Int, Unit> activeUnits = new Dictionary<Vector2Int, Unit>();
     public Dictionary<Vector2Int, Ennemy> activeEnnemies = new Dictionary<Vector2Int, Ennemy>();
-    private List<Unit> currentUnits = new List<Unit>();
-    private List<Ennemy> currentEnnemies = new List<Ennemy>();
 
     [Header("Order")] 
     public List<GameObject> order;
@@ -44,8 +47,6 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         UIBattle.gameObject.SetActive(true);
-
-        StartCoroutine(FirstTurn());
     }
 
 
@@ -54,19 +55,40 @@ public class BattleManager : MonoBehaviour
     public void AddUnit(Unit newUnit, bool summoned)
     {
         activeUnits.Add(new Vector2Int(newUnit.currentTile.posOverlayTile.x, newUnit.currentTile.posOverlayTile.y), newUnit);
-        currentUnits.Add(newUnit);
         
-        if(!summoned)
+        if(!currentUnits.Contains(newUnit))
+            currentUnits.Add(newUnit);
+        
+        if(!summoned && activeUnits.Count + activeEnnemies.Count >= numberCharas)
             CalculateOrder();
     }
-    
+
     public void AddEnnemy(Ennemy newEnnemy, bool summoned)
     {
         activeEnnemies.Add(new Vector2Int(newEnnemy.currentTile.posOverlayTile.x, newEnnemy.currentTile.posOverlayTile.y), newEnnemy);
+        
+        if(!currentEnnemies.Contains(newEnnemy))
+            currentEnnemies.Add(newEnnemy);
+        
+        if(!summoned && activeUnits.Count + activeEnnemies.Count >= numberCharas)
+            CalculateOrder();
+    }
+    
+    
+    // IS NEEDED FOR THE START OF THE GAME (en gros les frames sur les objets instatiés au start c'est le giga bordel donc il me faut ça)
+    public void AddUnitList(Unit newUnit)
+    {
+        currentUnits.Add(newUnit);
+
+        numberCharas += 1;
+    }
+    
+    // IS NEEDED FOR THE START OF THE GAME 
+    public void AddEnnemyList(Ennemy newEnnemy)
+    {
         currentEnnemies.Add(newEnnemy);
         
-        if(!summoned)
-            CalculateOrder();
+        numberCharas += 1;
     }
     
     
@@ -201,6 +223,7 @@ public class BattleManager : MonoBehaviour
         }
 
         UIBattleManager.Instance.UpdateTurnUI();
+        StartCoroutine(FirstTurn());
     }
 
     

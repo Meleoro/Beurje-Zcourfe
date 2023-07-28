@@ -35,6 +35,8 @@ public class Ennemy : MonoBehaviour
         statsCalculator = new StatsCalculator();
 
         currentHealth = data.levels[CurrentLevel].PV;
+        
+        BattleManager.Instance.AddEnnemyList(this);
     }
     
 
