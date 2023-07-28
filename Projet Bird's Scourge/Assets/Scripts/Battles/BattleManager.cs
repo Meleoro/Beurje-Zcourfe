@@ -44,6 +44,8 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         UIBattle.gameObject.SetActive(true);
+
+        StartCoroutine(FirstTurn());
     }
 
 
@@ -294,6 +296,31 @@ public class BattleManager : MonoBehaviour
                 currentEnnemies[i].haste += currentEnnemies[i].data.levels[currentEnnemies[i].CurrentLevel].vitesse;
             }
         }
+    }
+
+
+
+    public IEnumerator FirstTurn()
+    {
+        isChangingTurn = true;
+        
+        StartCoroutine(UIBattleManager.Instance.NewTurnAnimation());
+
+        yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimTour);
+        
+        if (order[0].CompareTag("Unit"))
+        {
+            order[0].GetComponent<Unit>().InitialiseTurn();
+            UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(true);
+        }
+        
+        else if (order[0].CompareTag("Ennemy"))
+        {
+            order[0].GetComponent<Ennemy>().DoTurn();
+            UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
+        }
+
+        isChangingTurn = false;
     }
 
 

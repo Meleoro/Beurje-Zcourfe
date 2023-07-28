@@ -298,11 +298,19 @@ public class MouseManager : MonoBehaviour
                 {
                     selectedUnit.DesactivateOutline();
                 }
-
+                
                 currentUnit.ActivateOutline(outlineSelectedUnit);
 
                 selectedUnit = currentUnit;
                 selectedEnnemy = null;
+                
+                // If it's an automatic selection
+                if (currentUnit != currentOverlayedUnit)
+                {
+                    ManageOverlayTiles(true, true);
+
+                    currentOverlayedUnit = currentUnit;
+                }
             }
 
             else if(currentEnnemy != null)
@@ -363,7 +371,7 @@ public class MouseManager : MonoBehaviour
     // ---------------- TILES PART ----------------
 
     // MANAGE WHICH COLOR HAS TO HAVE EVERYTILES DEPENDING ON THE SITUATION
-    public void ManageOverlayTiles(bool forceReset = false)
+    public void ManageOverlayTiles(bool forceReset = false, bool forceChange = false)
     {
         ResetOverlayTiles(forceReset);
         
@@ -378,11 +386,11 @@ public class MouseManager : MonoBehaviour
         {
             if(selectedUnit == null && selectedEnnemy == null)
             {
-                DisplayTilesAtRange(currentOverlayedUnit, currentOverlayedEnnemy);
+                DisplayTilesAtRange(currentOverlayedUnit, currentOverlayedEnnemy, forceChange);
             }
             else
             {
-                DisplayTilesAtRange(selectedUnit, selectedEnnemy);
+                DisplayTilesAtRange(selectedUnit, selectedEnnemy, forceChange);
             }
         }
     }
@@ -392,6 +400,8 @@ public class MouseManager : MonoBehaviour
     {
         if ((!unitSelect && !competenceSelect) || forceReset)
         {
+            Debug.Log(forceReset);
+            
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
                 tilesAtRangeDisplayed[i].ResetTile();
@@ -406,11 +416,11 @@ public class MouseManager : MonoBehaviour
 
 
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
-    private void DisplayTilesAtRange(Unit currentUnit, Ennemy currentEnnemy)
+    private void DisplayTilesAtRange(Unit currentUnit, Ennemy currentEnnemy, bool forceChange)
     {
         if (currentUnit != null)
         {
-            if (currentUnit != selectedUnit && currentUnit.currentTilesAtRange != tilesAtRangeDisplayed)
+            if (currentUnit.currentTilesAtRange != tilesAtRangeDisplayed && (currentUnit != selectedUnit || forceChange))
             {
                 tilesAtRangeDisplayed = currentUnit.currentTilesAtRange;
 
