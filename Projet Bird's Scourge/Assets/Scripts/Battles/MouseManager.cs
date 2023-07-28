@@ -277,6 +277,7 @@ public class MouseManager : MonoBehaviour
                     if (outlineWhenOver)
                         currentOverlayedUnit.ActivateOutline(outlineSelectedUnit);
 
+                    currentUnit.FindTilesAtRange();
                     currentOverlayedUnit = currentUnit;
 
                     ManageOverlayTiles();
