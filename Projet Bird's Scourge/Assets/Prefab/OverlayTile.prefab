@@ -183,6 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ca65ecb39ff384408df5c315c83f994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wantedTransparency: 0.7
+  strengthApparitionEffect: 0.1
   arrows:
   - {fileID: 21300000, guid: 3675c2fccdd9cb046be3cad8222b493b, type: 3}
   - {fileID: 21300000, guid: 3675c2fccdd9cb046be3cad8222b493b, type: 3}
@@ -200,7 +202,7 @@ MonoBehaviour:
   costG: 0
   costH: 0
   previous: {fileID: 0}
-  isBlocked: {fileID: 0}
+  isBlocked: 0
   posOverlayTile: {x: 0, y: 0, z: 0}
 --- !u!60 &6670072259211808969
 PolygonCollider2D:

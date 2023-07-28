@@ -1,12 +1,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class OverlayTile : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private SpriteRenderer _arrowSpriteRenderer;
+
+    [Header("Parameters")] 
+    [Range(0, 1)] public float wantedTransparency;
+    [Range(0, 1)] public float strengthApparitionEffect;
 
     [Header("Pathfinding")] 
     public List<Sprite> arrows;
@@ -30,7 +35,7 @@ public class OverlayTile : MonoBehaviour
 
     public void ShowTile()
     {
-        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, 0.8f);
+        _spriteRenderer.color = new Color(_spriteRenderer.color.r, _spriteRenderer.color.g, _spriteRenderer.color.b, wantedTransparency);
     }
 
     public void HideTile()
@@ -40,10 +45,22 @@ public class OverlayTile : MonoBehaviour
         HideArrow();
     }
 
+    public void AppearEffect(float effectDuration)
+    {
+        _spriteRenderer.DOFade(wantedTransparency, effectDuration);
+
+        transform.DOMoveY(transform.position.y + strengthApparitionEffect, effectDuration * 0.8f).OnComplete(() =>
+            transform.DOMoveY(transform.position.y - strengthApparitionEffect, effectDuration * 0.5f));
+    }
+
     public void ChangeColor(Color newColor)
     {
         _spriteRenderer.color = new Color(newColor.r, newColor.g, newColor.b, _spriteRenderer.color.a);
     }
+    
+    
+    
+    
 
     public void HideArrow()
     {

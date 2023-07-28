@@ -398,13 +398,15 @@ public class MouseManager : MonoBehaviour
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
     private void DisplayTilesAtRange(Unit currentUnit, Ennemy currentEnnemy)
     {
-        if (currentUnit != null)
+        if (currentUnit != null && currentUnit != selectedUnit)
         {
             tilesAtRangeDisplayed = currentUnit.currentTilesAtRange;
 
+            StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f));
+
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
-                tilesAtRangeDisplayed[i].ShowTile();
+                //tilesAtRangeDisplayed[i].ShowTile();
 
                 tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
             }
