@@ -264,7 +264,7 @@ public class MouseManager : MonoBehaviour
             }
 
             // If it's an unit
-            else if (currentEnnemy == null)
+            else if (currentUnit is not null)
             {
                 if (currentUnit != currentOverlayedUnit)
                 {
@@ -286,6 +286,7 @@ public class MouseManager : MonoBehaviour
                     if (outlineWhenOver)
                         currentOverlayedEnnemy.ActivateOutline(outlineSelectedEnnemy);
 
+                    currentEnnemy.FindTilesAtRange();
                     currentOverlayedEnnemy = currentEnnemy;
                     
                     ManageOverlayTiles();
@@ -453,24 +454,31 @@ public class MouseManager : MonoBehaviour
                 else
                     StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColorSelected));
 
-                for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+                /*for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
                 {
                     //tilesAtRangeDisplayed[i].ShowTile();
 
                     tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
-                }
+                }*/
             }
         }
+        
         else if(currentEnnemy != null)
         {
             tilesAtRangeDisplayed = currentEnnemy.currentMoveTiles;
+            
+            if(selectedEnnemy is null)
+                StartCoroutine(effectMaker.MoveTilesAppear(currentEnnemy.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColor));
+                
+            else
+                StartCoroutine(effectMaker.MoveTilesAppear(currentEnnemy.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColorSelected));
 
-            for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+            /*for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
-                tilesAtRangeDisplayed[i].ShowTile();
+                //tilesAtRangeDisplayed[i].ShowTile();
 
                 tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
-            }
+            }*/
         }
 
         else
