@@ -355,6 +355,7 @@ public class MouseManager : MonoBehaviour
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
 
         StartCoroutine(effectMaker.SquishTransform(currentUnit.transform, 1.2f, 0.07f));
+        CameraManager.Instance.SelectUnit(currentUnit);
 
         competenceSelect = false;
         unitSelect = true;

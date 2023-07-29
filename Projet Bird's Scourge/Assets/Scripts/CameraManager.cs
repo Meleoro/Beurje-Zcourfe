@@ -86,7 +86,7 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    public void StartTurnUnit(Unit unit)
+    public void SelectUnit(Unit unit)
     {
         canMove = false;
         

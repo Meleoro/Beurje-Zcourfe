@@ -307,6 +307,6 @@ public class Unit : MonoBehaviour
         FindTilesAtRange();
         
         MouseManager.Instance.SelectUnit(this);
-        CameraManager.Instance.StartTurnUnit(this);
+        //CameraManager.Instance.SelectUnit(this);
     }
 }

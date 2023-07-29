@@ -68,7 +68,8 @@ public class OverlayTile : MonoBehaviour
     
     public void ResetTile()
     {
-        DOTween.KillAll();
+        DOTween.Kill(transform);
+        DOTween.Kill(_spriteRenderer);
         StopAllCoroutines();
 
         transform.position = originalPos;
