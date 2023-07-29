@@ -300,14 +300,19 @@ public class MouseManager : MonoBehaviour
                 if (selectedUnit != currentUnit && selectedUnit != null)
                 {
                     selectedUnit.DesactivateOutline();
+                    
+                    selectedUnit = currentUnit;
+                    selectedEnnemy = null;
+
+                    ManageOverlayTiles(true, true);
                 }
                 
-                currentUnit.ActivateOutline(outlineSelectedUnit);
-
-
                 // If it's an automatic selection
-                if (currentUnit != currentOverlayedUnit)
+                else if (currentUnit != currentOverlayedUnit)
                 {
+                    selectedUnit = currentUnit;
+                    selectedEnnemy = null;
+                    
                     ManageOverlayTiles(true, true);
 
                     currentOverlayedUnit = currentUnit;
@@ -315,8 +320,13 @@ public class MouseManager : MonoBehaviour
 
                 else
                 {
+                    selectedUnit = currentUnit;
+                    selectedEnnemy = null;
+                    
                     ManageOverlayTiles(false, true);
                 }
+                
+                currentUnit.ActivateOutline(outlineSelectedUnit);
             }
 
             else if(currentEnnemy != null)
@@ -365,10 +375,7 @@ public class MouseManager : MonoBehaviour
 
         competenceSelect = false;
         unitSelect = true;
-        
-        selectedUnit = currentUnit;
-        selectedEnnemy = null;
-        
+
         ManageOverlayUnit(currentUnit, null, true);
     }
     
@@ -415,7 +422,7 @@ public class MouseManager : MonoBehaviour
 
     private void ResetOverlayTiles(bool forceReset)
     {
-        if ((!unitSelect && !competenceSelect) || forceReset)
+        if ((!unitSelect || competenceSelect) || forceReset)
         {
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {

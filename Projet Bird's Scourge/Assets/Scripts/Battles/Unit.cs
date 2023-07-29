@@ -314,6 +314,8 @@ public class Unit : MonoBehaviour
     public void SelectUnit()
     {
         isSelected = true;
+        
+        ManageFlickerOutline();
     }
 
     public void DeselectUnit()

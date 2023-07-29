@@ -301,6 +301,7 @@ MonoBehaviour:
   tilesCompetence2: []
   haste: 0
   PM: 0
+  mustBeSelected: 0
   currentHealth: 10
   currentLevel: 1
   attackLevel: 1
@@ -552,6 +553,54 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: turnOutlineSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesMovementColor.b
+      value: 0.7169812
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesMovementColor.g
+      value: 0.70580345
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesMovementColor.r
+      value: 0.58508366
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: unitTurnOutlineColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: unitTurnOutlineColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: unitTurnOutlineColor.g
+      value: 0.7666348
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: unitTurnOutlineColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesMovementColorSelected.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesMovementColorSelected.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesMovementColorSelected.g
+      value: 0.962693
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesMovementColorSelected.r
+      value: 0.5896226
+      objectReference: {fileID: 0}
     - target: {fileID: 2026886303022342793, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_RootOrder
       value: 4
