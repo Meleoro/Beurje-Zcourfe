@@ -352,6 +352,9 @@ public class BattleManager : MonoBehaviour
     {
         isChangingTurn = true;
         
+        MouseManager.Instance.noControl = true;
+
+        
         if (order[0].CompareTag("Unit"))
         {
             order[0].GetComponent<Unit>().EndTurn();
@@ -377,6 +380,8 @@ public class BattleManager : MonoBehaviour
         {
             order[0].GetComponent<Unit>().InitialiseTurn();
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(true);
+            
+            MouseManager.Instance.noControl = false;
         }
         
         else if (order[0].CompareTag("Ennemy"))
