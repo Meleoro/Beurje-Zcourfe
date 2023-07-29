@@ -21,7 +21,7 @@ public class EffectMaker
 
 
     // MAKE THE TILES APPEAR PROGRESSIVELY 
-    public IEnumerator MoveTilesAppear(OverlayTile center, List<OverlayTile> tiles, float effectSpeed)
+    public IEnumerator MoveTilesAppear(OverlayTile center, List<OverlayTile> tiles, float effectSpeed, Color wantedColor)
     {
         List<OverlayTile> openList = new List<OverlayTile>();
         List<OverlayTile> closeList = new List<OverlayTile>();
@@ -58,7 +58,8 @@ public class EffectMaker
             // We make them appear
             for (int i = 0; i < finalTilesToAppear.Count; i++)
             {
-                finalTilesToAppear[i].AppearEffectLauncher(0.1f);
+                //finalTilesToAppear[i].ChangeColor(wantedColor);
+                finalTilesToAppear[i].AppearEffectLauncher(0.1f, wantedColor);
                 
                 closeList.Add(finalTilesToAppear[i]);
                 openList.Add(finalTilesToAppear[i]);

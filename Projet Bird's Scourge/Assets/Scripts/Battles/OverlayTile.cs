@@ -49,8 +49,9 @@ public class OverlayTile : MonoBehaviour
         HideArrow();
     }
 
-    public IEnumerator AppearEffect(float effectDuration)
+    public IEnumerator AppearEffect(float effectDuration, Color newColor)
     {
+        _spriteRenderer.DOColor(new Color(newColor.r, newColor.g, newColor.b, _spriteRenderer.color.a), 0);
         _spriteRenderer.DOFade(wantedTransparency, effectDuration);
 
         transform.DOMoveY(transform.position.y + strengthApparitionEffect, effectDuration * 0.8f);
@@ -60,9 +61,9 @@ public class OverlayTile : MonoBehaviour
         transform.DOMoveY(transform.position.y - strengthApparitionEffect, effectDuration * 0.5f);
     }
 
-    public void AppearEffectLauncher(float effectDuration)
+    public void AppearEffectLauncher(float effectDuration, Color newColor)
     {
-        StartCoroutine(AppearEffect(effectDuration));
+        StartCoroutine(AppearEffect(effectDuration, newColor));
     }
     
     public void ResetTile()

@@ -234,11 +234,11 @@ public class Unit : MonoBehaviour
     
     
     // FIND ALL AVAILABLE TILES AT RANGE
-    public void FindTilesAtRange()
+    public void FindTilesAtRange(bool forceReset = false, bool forceChange = false)
     {
         currentTilesAtRange = rangeFinder.FindTilesInRange(currentTile, PM);
         
-        //MouseManager.Instance.ManageOverlayTiles(true);
+        MouseManager.Instance.ManageOverlayTiles(forceReset, forceChange);
     }
 
     
@@ -293,7 +293,7 @@ public class Unit : MonoBehaviour
 
         MouseManager.Instance.noControl = false;
         
-        FindTilesAtRange();
+        FindTilesAtRange(true, true);
         FindTilesCompetences();
         
         BattleManager.Instance.ActualiseUnits();

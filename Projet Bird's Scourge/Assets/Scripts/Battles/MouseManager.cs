@@ -18,6 +18,7 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private Color outlineSelectedUnit;
     [SerializeField] private Color outlineSelectedEnnemy;
     [SerializeField] private Color tilesMovementColor;
+    [SerializeField] private Color tilesMovementColorSelected;
     [SerializeField] private Color tilesAttackColor;
 
     [Header("OverlayTiles")]
@@ -304,12 +305,18 @@ public class MouseManager : MonoBehaviour
                 selectedUnit = currentUnit;
                 selectedEnnemy = null;
                 
+                
                 // If it's an automatic selection
                 if (currentUnit != currentOverlayedUnit)
                 {
                     ManageOverlayTiles(true, true);
 
                     currentOverlayedUnit = currentUnit;
+                }
+
+                else
+                {
+                    ManageOverlayTiles(false, true);
                 }
             }
 
@@ -344,8 +351,6 @@ public class MouseManager : MonoBehaviour
     // SETUP EVERYTHING WHEN WE WANT TO SELECT AN UNIT
     public void SelectUnit(Unit currentUnit)
     {
-        ManageOverlayUnit(currentUnit, null, true);
-
         UIBattleManager.Instance.OpenUnitInfos(currentUnit.data, currentUnit, null);
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
 
@@ -353,6 +358,8 @@ public class MouseManager : MonoBehaviour
 
         competenceSelect = false;
         unitSelect = true;
+        
+        ManageOverlayUnit(currentUnit, null, true);
     }
     
         
@@ -400,8 +407,6 @@ public class MouseManager : MonoBehaviour
     {
         if ((!unitSelect && !competenceSelect) || forceReset)
         {
-            Debug.Log(forceReset);
-            
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
                 tilesAtRangeDisplayed[i].ResetTile();
@@ -420,11 +425,16 @@ public class MouseManager : MonoBehaviour
     {
         if (currentUnit != null)
         {
-            if (currentUnit.currentTilesAtRange != tilesAtRangeDisplayed && (currentUnit != selectedUnit || forceChange))
+            //currentUnit.currentTilesAtRange != tilesAtRangeDisplayed
+            if ((currentUnit != selectedUnit || forceChange))
             {
                 tilesAtRangeDisplayed = currentUnit.currentTilesAtRange;
 
-                StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f));
+                if(selectedUnit is null)
+                    StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColor));
+                
+                else
+                    StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColorSelected));
 
                 for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
                 {
