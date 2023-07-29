@@ -352,6 +352,16 @@ public class BattleManager : MonoBehaviour
     {
         isChangingTurn = true;
         
+        if (order[0].CompareTag("Unit"))
+        {
+            order[0].GetComponent<Unit>().EndTurn();
+        }
+        
+        else if (order[0].CompareTag("Ennemy"))
+        {
+            
+        }
+        
         order.RemoveAt(0);
         
         GainMana(1);

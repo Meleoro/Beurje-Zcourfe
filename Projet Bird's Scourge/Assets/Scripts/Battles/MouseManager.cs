@@ -20,6 +20,8 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private Color tilesMovementColor;
     [SerializeField] private Color tilesMovementColorSelected;
     [SerializeField] private Color tilesAttackColor;
+    public Color unitTurnOutlineColor;
+    public float turnOutlineSpeed;
 
     [Header("OverlayTiles")]
     [HideInInspector] public List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
@@ -302,10 +304,7 @@ public class MouseManager : MonoBehaviour
                 
                 currentUnit.ActivateOutline(outlineSelectedUnit);
 
-                selectedUnit = currentUnit;
-                selectedEnnemy = null;
-                
-                
+
                 // If it's an automatic selection
                 if (currentUnit != currentOverlayedUnit)
                 {
@@ -336,10 +335,15 @@ public class MouseManager : MonoBehaviour
             else
             {
                 if (selectedUnit != null)
+                {
                     selectedUnit.DesactivateOutline();
+                    selectedUnit.DeselectUnit();
+                }
 
                 else if (selectedEnnemy != null)
+                {
                     selectedEnnemy.DesactivateOutline();
+                }
 
                 selectedUnit = null;
                 selectedEnnemy = null;
@@ -356,9 +360,14 @@ public class MouseManager : MonoBehaviour
 
         StartCoroutine(effectMaker.SquishTransform(currentUnit.transform, 1.2f, 0.07f));
         CameraManager.Instance.SelectUnit(currentUnit);
+        
+        currentUnit.SelectUnit();
 
         competenceSelect = false;
         unitSelect = true;
+        
+        selectedUnit = currentUnit;
+        selectedEnnemy = null;
         
         ManageOverlayUnit(currentUnit, null, true);
     }

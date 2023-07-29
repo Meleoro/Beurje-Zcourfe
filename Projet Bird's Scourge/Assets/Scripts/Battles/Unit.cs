@@ -18,11 +18,13 @@ public class Unit : MonoBehaviour
     [HideInInspector] public List<OverlayTile> tilesAttack = new List<OverlayTile>();
     [HideInInspector] public List<OverlayTile> tilesCompetence1 = new List<OverlayTile>();
     [HideInInspector] public List<OverlayTile> tilesCompetence2 = new List<OverlayTile>();
-    private bool isSelected;
     [HideInInspector] public int haste;
     public int PM;
+    private bool isSelected;
+    private bool outlineTurnLauched;
+    public bool mustBeSelected;
 
-    
+
     [Header("ElementsToSave")] 
     public int currentHealth;
     [SerializeField] private int currentLevel;
@@ -49,12 +51,15 @@ public class Unit : MonoBehaviour
     [Header("References")]
     private RangeFinder rangeFinder;
     private StatsCalculator statsCalculator;
+    private SpriteRenderer spriteRenderer;
 
 
     private void Start()
     {
         rangeFinder = new RangeFinder();
         statsCalculator = new StatsCalculator();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
         
         BattleManager.Instance.AddUnitList(this);
     }
@@ -66,26 +71,12 @@ public class Unit : MonoBehaviour
             FindCurrentTile();
             
             BattleManager.Instance.AddUnit(this, false);
-            InitialiseTurn();
+            //InitialiseTurn();
         }
+
+        ManageFlickerOutline();
     }
-
-
-    public void ActivateOutline(Color newColor)
-    {
-        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
-
-        if(newColor != null)
-        {
-            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", newColor);
-        }
-    }
-
-    public void DesactivateOutline()
-    {
-        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
-    }
-
+    
 
     //--------------------------ATTACK PART------------------------------
 
@@ -299,14 +290,111 @@ public class Unit : MonoBehaviour
         BattleManager.Instance.ActualiseUnits();
     }
 
+    
+    //-------------------------- SELECTION PART ------------------------------
 
     public void InitialiseTurn()
     {
         PM = data.levels[CurrentLevel].PM;
+
+        mustBeSelected = true;
+        
         UIBattleManager.Instance.UpdateMovePointsUI(this);
         FindTilesAtRange();
         
         MouseManager.Instance.SelectUnit(this);
         //CameraManager.Instance.SelectUnit(this);
     }
+
+    public void EndTurn()
+    {
+        mustBeSelected = false;
+    }
+
+    public void SelectUnit()
+    {
+        isSelected = true;
+    }
+
+    public void DeselectUnit()
+    {
+        isSelected = false;
+    }
+    
+    public void ActivateOutline(Color newColor)
+    {
+        spriteRenderer.material.SetFloat("_DoOutline", 1);
+
+        if(newColor != null)
+        {
+            spriteRenderer.material.SetColor("_OutlineColor", newColor);
+        }
+    }
+
+    public void DesactivateOutline()
+    {
+        spriteRenderer.material.SetFloat("_DoOutline", 0);
+    }
+
+
+    // MANAGES WHEN AN UNIT NEEDS ITS OUTLINE TO FLICKER
+    private void ManageFlickerOutline()
+    {
+        if (mustBeSelected)
+        {
+            if (!isSelected && !outlineTurnLauched)
+            {
+                outlineTurnLauched = true;
+                StartCoroutine(OutlineTurn(MouseManager.Instance.unitTurnOutlineColor, MouseManager.Instance.turnOutlineSpeed));
+            }
+
+            else if (isSelected && outlineTurnLauched)
+            {
+                StopAllCoroutines();
+                outlineTurnLauched = false;
+            }
+        }
+
+        else if(outlineTurnLauched)
+        {
+            StopAllCoroutines();
+            outlineTurnLauched = false;
+
+            DesactivateOutline();
+        }
+    }
+    
+
+    // OUTLINE WHICH INDICATE THAT A UNIT MUST BE SELECTED
+    private IEnumerator OutlineTurn(Color outlineColor, float flickerSpeed)
+    {
+        float outlineValue = 0;
+        DOTween.To(() => outlineValue, x => outlineValue = x, 1, 1 / flickerSpeed);
+        
+        if(outlineColor != null)
+        {
+            spriteRenderer.material.SetColor("_OutlineColor", outlineColor);
+        }
+        
+        while (outlineValue < 1)
+        {
+            spriteRenderer.material.SetFloat("_DoOutline", outlineValue);
+        
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(1 / flickerSpeed * 0.3f);
+        
+        DOTween.To(() => outlineValue, x => outlineValue = x, 0, 1 / flickerSpeed);
+        
+        while (outlineValue > 0)
+        {
+            spriteRenderer.material.SetFloat("_DoOutline", outlineValue);
+        
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        StartCoroutine(OutlineTurn(outlineColor, flickerSpeed));
+    }
+
 }
