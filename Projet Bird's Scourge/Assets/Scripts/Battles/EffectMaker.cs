@@ -32,6 +32,63 @@ public class EffectMaker
 
         while (closeList.Count < tiles.Count - 1 && tiles == MouseManager.Instance.tilesAtRangeDisplayed && limit > 0)
         {
+            Debug.Log(limit);
+            
+            limit -= 1;
+            
+            List<OverlayTile> tilesToAppear = new List<OverlayTile>();
+            List<OverlayTile> finalTilesToAppear = new List<OverlayTile>();
+            
+            
+            for(int i = openList.Count - 1; i > -1; i--)
+            {
+                tilesToAppear.AddRange(FindNeighbors(openList[i]));
+
+                openList.RemoveAt(i);
+            }
+
+            // We sort all the elements
+            tilesToAppear = tilesToAppear.Distinct().ToList();
+            for (int i = 0; i < tilesToAppear.Count; i++)
+            {
+                if (!closeList.Contains(tilesToAppear[i]) && tiles.Contains(tilesToAppear[i]))
+                {
+                    finalTilesToAppear.Add(tilesToAppear[i]);
+                }
+                else
+                {
+                    openList.Add(tilesToAppear[i]);
+                }
+            }
+
+            // We make them appear
+            for (int i = 0; i < finalTilesToAppear.Count; i++)
+            {
+                //finalTilesToAppear[i].ChangeColor(wantedColor);
+                finalTilesToAppear[i].AppearEffectLauncher(0.1f, wantedColor);
+                
+                closeList.Add(finalTilesToAppear[i]);
+                openList.Add(finalTilesToAppear[i]);
+            }
+
+            yield return new WaitForSeconds(effectSpeed);
+        }
+    }
+    
+    // ATTACK TILES APPEAR PROGRESSIVELY
+    public IEnumerator AttackTilesAppear(OverlayTile center, List<OverlayTile> tiles, float effectSpeed, Color wantedColor)
+    {
+        List<OverlayTile> openList = new List<OverlayTile>();
+        List<OverlayTile> closeList = new List<OverlayTile>();
+
+        int limit = 10;
+        
+        openList.Add(center);
+
+        while (closeList.Count < tiles.Count - 1 && limit > 0)
+        {
+            Debug.Log(limit);
+            
             limit -= 1;
             
             List<OverlayTile> tilesToAppear = new List<OverlayTile>();

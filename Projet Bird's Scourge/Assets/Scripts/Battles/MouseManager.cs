@@ -31,6 +31,7 @@ public class MouseManager : MonoBehaviour
     [HideInInspector] public DataCompetence competenceUsed;
     private bool competenceSelect;
     private bool unitSelect;
+    private bool competenceDisplayed;
 
     [Header("OverlayUnit")]
     private Unit currentOverlayedUnit; 
@@ -385,6 +386,7 @@ public class MouseManager : MonoBehaviour
     private void StopSelection()
     {
         competenceSelect = false;
+        competenceDisplayed = false;
         unitSelect = false;
         selectedUnit = null;
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
@@ -423,7 +425,7 @@ public class MouseManager : MonoBehaviour
 
     private void ResetOverlayTiles(bool forceReset)
     {
-        if ((!unitSelect || competenceSelect) || forceReset)
+        if (!unitSelect || competenceSelect || forceReset && !competenceDisplayed)
         {
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
@@ -444,7 +446,7 @@ public class MouseManager : MonoBehaviour
         if (currentUnit != null)
         {
             //currentUnit.currentTilesAtRange != tilesAtRangeDisplayed
-            if ((currentUnit != selectedUnit || forceChange))
+            if (currentUnit != selectedUnit || forceChange)
             {
                 tilesAtRangeDisplayed = currentUnit.currentTilesAtRange;
 
@@ -453,13 +455,6 @@ public class MouseManager : MonoBehaviour
                 
                 else
                     StartCoroutine(effectMaker.MoveTilesAppear(currentUnit.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColorSelected));
-
-                /*for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
-                {
-                    //tilesAtRangeDisplayed[i].ShowTile();
-
-                    tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
-                }*/
             }
         }
         
@@ -491,12 +486,24 @@ public class MouseManager : MonoBehaviour
     // DISPLAY ALL TILES AT RANGE OF THE SELECTED CHARACTER OR ERASE IF NO CHARACTER IS SELECTED
     private void DisplayTilesCompetence(int index)
     {
-        for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
+        if (!competenceDisplayed)
+        {
+            if (selectedUnit is not null)
+            {
+                StartCoroutine(effectMaker.AttackTilesAppear(selectedUnit.currentTile, tilesCompetenceDisplayed, 0.05f, tilesAttackColor));
+            }
+            else
+            {
+                StartCoroutine(effectMaker.AttackTilesAppear(selectedEnnemy.currentTile, tilesCompetenceDisplayed, 0.05f, tilesAttackColor));
+            }
+        }
+
+        /*for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
         {
             tilesCompetenceDisplayed[i].ShowTile();
 
             tilesCompetenceDisplayed[i].ChangeColor(tilesAttackColor);
-        }
+        }*/
     }
     
     
@@ -548,6 +555,7 @@ public class MouseManager : MonoBehaviour
         
         
         unitSelect = true;
+        competenceDisplayed = false;
 
 
         ManageOverlayTiles(false);
