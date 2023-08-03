@@ -425,7 +425,7 @@ public class MouseManager : MonoBehaviour
 
     private void ResetOverlayTiles(bool forceReset)
     {
-        if (!unitSelect || competenceSelect || forceReset && !competenceDisplayed)
+        if ((!unitSelect || competenceSelect || forceReset) && !competenceDisplayed)
         {
             for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
             {
@@ -488,6 +488,8 @@ public class MouseManager : MonoBehaviour
     {
         if (!competenceDisplayed)
         {
+            competenceDisplayed = true;
+            
             if (selectedUnit is not null)
             {
                 StartCoroutine(effectMaker.AttackTilesAppear(selectedUnit.currentTile, tilesCompetenceDisplayed, 0.05f, tilesAttackColor));
@@ -523,12 +525,6 @@ public class MouseManager : MonoBehaviour
         {
             indexCompetence = index;
             competenceSelect = true;
-            
-            for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
-            {
-                tilesCompetenceDisplayed[i].HideTile();
-            }
-
         }
         
         
@@ -558,7 +554,7 @@ public class MouseManager : MonoBehaviour
         competenceDisplayed = false;
 
 
-        ManageOverlayTiles(false);
+        ManageOverlayTiles(true, true);
     }
     
     

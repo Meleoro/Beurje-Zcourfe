@@ -42,7 +42,7 @@ public class EffectMaker
             
             for(int i = openList.Count - 1; i > -1; i--)
             {
-                tilesToAppear.AddRange(FindNeighbors(openList[i]));
+                tilesToAppear.AddRange(FindNeighbors(openList[i], false));
 
                 openList.RemoveAt(i);
             }
@@ -87,8 +87,6 @@ public class EffectMaker
 
         while (closeList.Count < tiles.Count - 1 && limit > 0)
         {
-            Debug.Log(limit);
-            
             limit -= 1;
             
             List<OverlayTile> tilesToAppear = new List<OverlayTile>();
@@ -97,7 +95,7 @@ public class EffectMaker
             
             for(int i = openList.Count - 1; i > -1; i--)
             {
-                tilesToAppear.AddRange(FindNeighbors(openList[i]));
+                tilesToAppear.AddRange(FindNeighbors(openList[i], true));
 
                 openList.RemoveAt(i);
             }
@@ -132,7 +130,7 @@ public class EffectMaker
 
     
     // RETURN ALL THE NEIGHBOR TILES OF THE CASE TILE PUT IN PARAMETER
-    private List<OverlayTile> FindNeighbors(OverlayTile currentTile)
+    private List<OverlayTile> FindNeighbors(OverlayTile currentTile, bool takeBlocked)
     {
         Vector2Int currentPos = new Vector2Int(currentTile.posOverlayTile.x, currentTile.posOverlayTile.y);
         List<OverlayTile> neighbors = new List<OverlayTile>();
@@ -143,7 +141,7 @@ public class EffectMaker
         
         if (currentMap.ContainsKey(newPos))
         {
-            if(!currentMap[newPos].isBlocked)
+            if(!currentMap[newPos].isBlocked || takeBlocked)
                 neighbors.Add(currentMap[newPos]);
         }
         
@@ -152,7 +150,7 @@ public class EffectMaker
         
         if (currentMap.ContainsKey(newPos))
         {
-            if(!currentMap[newPos].isBlocked)
+            if(!currentMap[newPos].isBlocked || takeBlocked)
                 neighbors.Add(currentMap[newPos]);
         }
         
@@ -161,7 +159,7 @@ public class EffectMaker
         
         if (currentMap.ContainsKey(newPos))
         {
-            if(!currentMap[newPos].isBlocked)
+            if(!currentMap[newPos].isBlocked || takeBlocked)
                 neighbors.Add(currentMap[newPos]);
         }
         
@@ -170,7 +168,7 @@ public class EffectMaker
         
         if (currentMap.ContainsKey(newPos))
         {
-            if(!currentMap[newPos].isBlocked)
+            if(!currentMap[newPos].isBlocked || takeBlocked)
                 neighbors.Add(currentMap[newPos]);
         }
 
