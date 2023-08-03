@@ -32,6 +32,7 @@ public class MouseManager : MonoBehaviour
     private bool competenceSelect;
     private bool unitSelect;
     private bool competenceDisplayed;
+    private OverlayTile currentSelectedTile;
 
     [Header("OverlayUnit")]
     private Unit currentOverlayedUnit; 
@@ -219,6 +220,11 @@ public class MouseManager : MonoBehaviour
             {
                 ManageOverlayUnit(null, null, false);
 
+                if (competenceSelect)
+                {
+                    DisplaySelectedTile(hits[i].collider.gameObject.GetComponent<OverlayTile>());
+                }
+
                 UIBattleManager.Instance.CloseAttackPreview();
                 
                 return hits[i].collider.gameObject.GetComponent<OverlayTile>();
@@ -387,8 +393,10 @@ public class MouseManager : MonoBehaviour
     {
         competenceSelect = false;
         competenceDisplayed = false;
+        
         unitSelect = false;
         selectedUnit = null;
+        
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
         ManageOverlayTiles();
     }
@@ -499,13 +507,24 @@ public class MouseManager : MonoBehaviour
                 StartCoroutine(effectMaker.AttackTilesAppear(selectedEnnemy.currentTile, tilesCompetenceDisplayed, 0.05f, tilesAttackColor));
             }
         }
+    }
 
-        /*for (int i = 0; i < tilesCompetenceDisplayed.Count; i++)
+    private void DisplaySelectedTile(OverlayTile currentTile)
+    {
+        if (currentSelectedTile != currentTile && tilesCompetenceDisplayed.Contains(currentTile))
         {
-            tilesCompetenceDisplayed[i].ShowTile();
+            if (currentSelectedTile is not null)
+            {
+                currentSelectedTile.DeselectEffect(0.05f, tilesAttackColor);
+            }
 
-            tilesCompetenceDisplayed[i].ChangeColor(tilesAttackColor);
-        }*/
+            if (currentTile is not null)
+            {
+                currentSelectedTile = currentTile;
+                
+                StartCoroutine(currentSelectedTile.SelectEffect(0.05f, tilesMovementColor));
+            }
+        }
     }
     
     

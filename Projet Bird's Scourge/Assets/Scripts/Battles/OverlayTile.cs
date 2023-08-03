@@ -60,6 +60,31 @@ public class OverlayTile : MonoBehaviour
         
         transform.DOMoveY(transform.position.y - strengthApparitionEffect, effectDuration * 0.5f);
     }
+    
+    public IEnumerator SelectEffect(float effectDuration, Color newColor)
+    {
+        _spriteRenderer.DOColor(new Color(newColor.r, newColor.g, newColor.b, _spriteRenderer.color.a), 0);
+        _spriteRenderer.DOFade(wantedTransparency, effectDuration);
+
+        transform.DOMoveY(transform.position.y + strengthApparitionEffect * 0.5f, effectDuration * 0.8f);
+
+        yield return new WaitForSeconds(effectDuration * 0.8f);
+        
+        transform.DOMoveY(transform.position.y - strengthApparitionEffect * 0.5f, effectDuration * 0.5f);
+    }
+    
+    public void DeselectEffect(float effectDuration, Color newColor)
+    {
+        DOTween.Kill(transform);
+        DOTween.Kill(_spriteRenderer);
+        StopAllCoroutines();
+        
+        _spriteRenderer.DOColor(new Color(newColor.r, newColor.g, newColor.b, _spriteRenderer.color.a), 0);
+        _spriteRenderer.DOFade(wantedTransparency, 0);
+
+        transform.position = originalPos;
+    } 
+
 
     public void AppearEffectLauncher(float effectDuration, Color newColor)
     {
