@@ -541,6 +541,18 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesAttackColor.b
+      value: 0.21226418
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesAttackColor.g
+      value: 0.2550759
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesAttackColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: tilesMovementColor.b
       value: 0.7169812
       objectReference: {fileID: 0}

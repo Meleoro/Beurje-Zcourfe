@@ -70,7 +70,7 @@ public class OverlayTile : MonoBehaviour
 
         yield return new WaitForSeconds(effectDuration * 0.8f);
         
-        transform.DOMoveY(transform.position.y - strengthApparitionEffect * 0.5f, effectDuration * 0.5f);
+        transform.DOMoveY(originalPos.y, effectDuration * 0.5f);
     }
     
     public void DeselectEffect(float effectDuration, Color newColor)
