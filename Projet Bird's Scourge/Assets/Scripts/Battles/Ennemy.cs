@@ -112,14 +112,9 @@ public class Ennemy : MonoBehaviour
     // ATTACK ONE PLAYER'S UNIT
     public IEnumerator AttackUnit(Unit attackedUnit, DataCompetence competenceUsed)
     {
-        List<Vector2> positions = new List<Vector2>();
+        IntroCompetence(attackedUnit.currentTile);
 
-        positions.Add(transform.position);
-        positions.Add(attackedUnit.transform.position);
-
-        CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
-
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
                 
         int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[0].baseHitRate,attackedUnit.data.levels[attackedUnit.CurrentLevel].agilite);
         int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[0].damageMultiplier, attackedUnit.data.levels[attackedUnit.CurrentLevel].defense);
@@ -149,24 +144,14 @@ public class Ennemy : MonoBehaviour
 
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
         
-        UIBattleManager.Instance.UpdateTurnUI();
-        StartCoroutine(BattleManager.Instance.NextTurn());
+        EndCompetence(attackedUnit.currentTile);
     }
 
 
     // SUMMONS ANOTHER ENNEMY
-    public IEnumerator SummonUnit(DataCompetence currentCompetence, OverlayTile currentTile)
+    public IEnumerator SummonUnit(DataCompetence currentCompetence, OverlayTile currentCompetenceTile)
     {
-        // Camera
-        List<Vector2> positions = new List<Vector2>();
-        
-        positions.Add(transform.position);
-        positions.Add(currentTile.transform.position);
-        
-        CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
-        
-        // Tile
-        currentTile.LaunchFlicker(0.5f, MouseManager.Instance.tilesAttackColorOver);
+        IntroCompetence(currentCompetenceTile);
         
         yield return new WaitForSeconds(1.5f);
 
@@ -176,14 +161,33 @@ public class Ennemy : MonoBehaviour
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
         
         GameObject summonedEnnemy = currentCompetence.levels[0].summonedUnit;
-        Vector2 spawnPos = currentTile.transform.position + Vector3.up * 0.5f;
+        Vector2 spawnPos = currentCompetenceTile.transform.position + Vector3.up * 0.5f;
 
         GameObject currentEnnemy = Instantiate(summonedEnnemy, spawnPos, Quaternion.identity);
         currentEnnemy.GetComponent<Ennemy>().isSummoned = true;
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
         
-        currentTile.StopFlicker();
+        EndCompetence(currentCompetenceTile);
+    }
+
+    public void IntroCompetence(OverlayTile currentCompetenceTile)
+    {
+        // Camera
+        List<Vector2> positions = new List<Vector2>();
+        
+        positions.Add(transform.position);
+        positions.Add(currentCompetenceTile.transform.position);
+        
+        CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+        
+        // Tile
+        currentCompetenceTile.LaunchFlicker(0.5f, MouseManager.Instance.tilesAttackColorOver);
+    }
+
+    public void EndCompetence(OverlayTile currentCompetenceTile)
+    {
+        currentCompetenceTile.StopFlicker();
         
         UIBattleManager.Instance.UpdateTurnUI();
         StartCoroutine(BattleManager.Instance.NextTurn());
