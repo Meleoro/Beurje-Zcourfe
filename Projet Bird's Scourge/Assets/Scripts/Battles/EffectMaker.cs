@@ -32,8 +32,6 @@ public class EffectMaker
 
         while (closeList.Count < tiles.Count - 1 && tiles == MouseManager.Instance.tilesAtRangeDisplayed && limit > 0)
         {
-            Debug.Log(limit);
-            
             limit -= 1;
             
             List<OverlayTile> tilesToAppear = new List<OverlayTile>();

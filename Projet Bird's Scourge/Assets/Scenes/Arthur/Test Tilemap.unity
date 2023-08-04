@@ -542,11 +542,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: tilesAttackColor.b
-      value: 0.21226418
+      value: 0.397
       objectReference: {fileID: 0}
     - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: tilesAttackColor.g
-      value: 0.2550759
+      value: 0.42972097
       objectReference: {fileID: 0}
     - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: tilesAttackColor.r
@@ -563,6 +563,22 @@ PrefabInstance:
     - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: tilesMovementColor.r
       value: 0.58508366
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesAttackColorOver.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesAttackColorOver.b
+      value: 0.033018887
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesAttackColorOver.g
+      value: 0.08724213
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: tilesAttackColorOver.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1789948722559518678, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: unitTurnOutlineColor.a

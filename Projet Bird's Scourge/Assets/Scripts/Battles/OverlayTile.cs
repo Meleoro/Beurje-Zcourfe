@@ -22,7 +22,9 @@ public class OverlayTile : MonoBehaviour
     public bool isBlocked;
     [HideInInspector] public Vector3Int posOverlayTile;
 
-    [Header("Other")] private Vector3 originalPos;
+    [Header("Other")] 
+    private Vector3 originalPos;
+    private bool isFlickering;
     
 
 
@@ -101,11 +103,41 @@ public class OverlayTile : MonoBehaviour
         HideTile();
     }
 
-    
 
-    public void ChangeColor(Color newColor)
+    public void LaunchFlicker(float flickerSpeed, Color flickerColor)
     {
-        _spriteRenderer.color = new Color(newColor.r, newColor.g, newColor.b, _spriteRenderer.color.a);
+        if (!isFlickering)
+        {
+            isFlickering = true;
+            StartCoroutine(Flicker(flickerSpeed, flickerColor));
+        }
+    }
+
+    public void StopFlicker()
+    {
+        isFlickering = false;
+        StopAllCoroutines();
+        DOTween.Kill(_spriteRenderer);
+        
+        _spriteRenderer.DOFade(0, 0);
+    }
+
+    private IEnumerator Flicker(float flickerSpeed, Color flickerColor)
+    {
+        if (flickerColor != null)
+        {
+            _spriteRenderer.color = new Color(flickerColor.r, flickerColor.g, flickerColor.b, _spriteRenderer.color.a);
+        }
+        
+        _spriteRenderer.DOFade(1, flickerSpeed);
+
+        yield return new WaitForSeconds(flickerSpeed + 0.01f);
+        
+        _spriteRenderer.DOFade(0, flickerSpeed);
+        
+        yield return new WaitForSeconds(flickerSpeed + 0.01f);
+
+        StartCoroutine(Flicker(flickerSpeed, flickerColor));
     }
     
     

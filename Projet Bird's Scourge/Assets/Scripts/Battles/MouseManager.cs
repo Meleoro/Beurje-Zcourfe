@@ -20,6 +20,7 @@ public class MouseManager : MonoBehaviour
     [SerializeField] private Color tilesMovementColor;
     [SerializeField] private Color tilesMovementColorSelected;
     [SerializeField] private Color tilesAttackColor;
+    public Color tilesAttackColorOver;
     public Color unitTurnOutlineColor;
     public float turnOutlineSpeed;
 
@@ -180,6 +181,9 @@ public class MouseManager : MonoBehaviour
                 if (competenceSelect)
                 {
                     selectedUnit.DisplayBattleStats(currentEnnemy, competenceUsed, competenceLevel);
+
+                    currentOverlayedEnnemy = currentEnnemy;
+                    currentOverlayedEnnemy.ActivateFlicker();
                 }
                 else
                 {
@@ -187,6 +191,11 @@ public class MouseManager : MonoBehaviour
                 }
 
                 return currentEnnemy.currentTile;
+            }
+            else if (currentOverlayedEnnemy is not null)
+            {
+                currentOverlayedEnnemy.DesactivateFlicker();
+                currentOverlayedEnnemy = null;
             }
 
             // Overlay of an unit
@@ -511,18 +520,18 @@ public class MouseManager : MonoBehaviour
 
     private void DisplaySelectedTile(OverlayTile currentTile)
     {
-        if (currentSelectedTile != currentTile && tilesCompetenceDisplayed.Contains(currentTile))
+        if (currentSelectedTile != currentTile)
         {
             if (currentSelectedTile is not null)
             {
                 currentSelectedTile.DeselectEffect(0.05f, tilesAttackColor);
             }
 
-            if (currentTile is not null)
+            if (currentTile is not null && tilesCompetenceDisplayed.Contains(currentTile))
             {
                 currentSelectedTile = currentTile;
                 
-                StartCoroutine(currentSelectedTile.SelectEffect(0.05f, tilesMovementColor));
+                StartCoroutine(currentSelectedTile.SelectEffect(0.05f, tilesAttackColorOver));
             }
         }
     }

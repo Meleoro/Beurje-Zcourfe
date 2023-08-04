@@ -21,11 +21,14 @@ public class Ennemy : MonoBehaviour
     private bool isSelected;
     [HideInInspector] public int haste;
     public int currentHealth;
+    private bool outlineMustFlicker;
+    private bool outlineFlickerLauched;
     
     [Header("References")]
     private RangeFinder rangeFinder;
     private PathFinder pathFinder;
     private StatsCalculator statsCalculator;
+    private SpriteRenderer spriteRenderer;
     
 
     private void Start()
@@ -33,6 +36,8 @@ public class Ennemy : MonoBehaviour
         rangeFinder = new RangeFinder();
         pathFinder = new PathFinder();
         statsCalculator = new StatsCalculator();
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         currentHealth = data.levels[CurrentLevel].PV;
         
@@ -42,7 +47,7 @@ public class Ennemy : MonoBehaviour
 
     private void Update()
     {
-        if (currentTile == null)
+        if (currentTile is null)
         {
             FindCurrentTile();
             
@@ -51,22 +56,7 @@ public class Ennemy : MonoBehaviour
             FindTilesAtRange();
         }
     }
-
-
-    public void ActivateOutline(Color newColor)
-    {
-        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
-
-        if (newColor != null)
-        {
-            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", newColor);
-        }
-    }
-
-    public void DesactivateOutline()
-    {
-        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
-    }
+    
 
 
     // EXECUTE THE ENNEMY'S TURN
@@ -167,12 +157,18 @@ public class Ennemy : MonoBehaviour
     // SUMMONS ANOTHER ENNEMY
     public IEnumerator SummonUnit(DataCompetence currentCompetence, OverlayTile currentTile)
     {
+        // Camera
         List<Vector2> positions = new List<Vector2>();
-
+        
         positions.Add(transform.position);
         positions.Add(currentTile.transform.position);
-
+        
         CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+        
+        // Tile
+        currentTile.LaunchFlicker(0.5f, MouseManager.Instance.tilesAttackColorOver);
+        
+        yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(UIBattleManager.Instance.attackScript.SummonUIFeel(
             currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data.damageSprite, data.attackSprite));
@@ -186,6 +182,8 @@ public class Ennemy : MonoBehaviour
         currentEnnemy.GetComponent<Ennemy>().isSummoned = true;
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
+        
+        currentTile.StopFlicker();
         
         UIBattleManager.Instance.UpdateTurnUI();
         StartCoroutine(BattleManager.Instance.NextTurn());
@@ -326,5 +324,90 @@ public class Ennemy : MonoBehaviour
     public void FindTilesAtRange()
     {
         currentMoveTiles = rangeFinder.FindMoveTilesEnnemy(currentTile, data.levels[CurrentLevel].movePatern);
+    }
+    
+    
+    //--------------------------SELECTION PART------------------------------
+    
+    public void ActivateOutline(Color newColor)
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
+
+        if (newColor != null)
+        {
+            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", newColor);
+        }
+    }
+
+    public void DesactivateOutline()
+    {
+        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
+    }
+
+    public void ActivateFlicker()
+    {
+        outlineMustFlicker = true;
+        
+        ManageFlickerOutline();
+    }
+
+    public void DesactivateFlicker()
+    {
+        outlineMustFlicker = false;
+        
+        ManageFlickerOutline();
+    }
+
+    // MANAGES WHEN AN UNIT NEEDS ITS OUTLINE TO FLICKER
+    private void ManageFlickerOutline()
+    {
+        if (outlineMustFlicker)
+        {
+            if (!outlineFlickerLauched)
+            {
+                outlineFlickerLauched = true;
+                StartCoroutine(OutlineTurn(MouseManager.Instance.tilesAttackColorOver, MouseManager.Instance.turnOutlineSpeed));
+            }
+        }
+
+        else if(outlineFlickerLauched)
+        {
+            StopAllCoroutines();
+            outlineFlickerLauched = false;
+
+            DesactivateOutline();
+        }
+    }
+
+    // OUTLINE WHICH INDICATE THAT A UNIT MUST BE SELECTED
+    private IEnumerator OutlineTurn(Color outlineColor, float flickerSpeed)
+    {
+        float outlineValue = 0;
+        DOTween.To(() => outlineValue, x => outlineValue = x, 1, 1 / flickerSpeed);
+        
+        if(outlineColor != null)
+        {
+            spriteRenderer.material.SetColor("_OutlineColor", outlineColor);
+        }
+        
+        while (outlineValue < 1)
+        {
+            spriteRenderer.material.SetFloat("_DoOutline", outlineValue);
+        
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        yield return new WaitForSeconds(1 / flickerSpeed * 0.3f);
+        
+        DOTween.To(() => outlineValue, x => outlineValue = x, 0, 1 / flickerSpeed);
+        
+        while (outlineValue > 0)
+        {
+            spriteRenderer.material.SetFloat("_DoOutline", outlineValue);
+        
+            yield return new WaitForSeconds(Time.deltaTime);
+        }
+
+        StartCoroutine(OutlineTurn(outlineColor, flickerSpeed));
     }
 }
