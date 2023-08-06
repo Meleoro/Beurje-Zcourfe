@@ -37,12 +37,11 @@ public class AventureCreator : MonoBehaviour
         GeneratePaths();
 
         // Finally we initiate every nods with their functions
-
+        
     }
 
-    
-    
-    
+
+
     // --------------- TO FIND THE POSSIBLE SPOTS --------------- 
     
     // GENERATES THE POSSIBLE POSITIONS INTO WORLD SPACE FOR THE SPOTS
@@ -98,6 +97,8 @@ public class AventureCreator : MonoBehaviour
     {
         int counterCamp = 0;
         int currentElementsInRaw = 0;
+
+        map = new List<ListSpots>();
 
         int i = 0;
 
@@ -161,6 +162,7 @@ public class AventureCreator : MonoBehaviour
                 
                 y -= 1;
                 i -= columnsNbr;
+                currentElementsInRaw = 0;
             }
             
             // If we can go on
