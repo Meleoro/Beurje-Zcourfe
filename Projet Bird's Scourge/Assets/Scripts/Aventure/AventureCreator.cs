@@ -108,7 +108,7 @@ public class AventureCreator : MonoBehaviour
             // We go across every column in on line
             for (int x = 0; x < columnsNbr; x++)
             {
-                if (VerifySpot(x, currentElementsInRaw, counterCamp <= 1))
+                if (VerifySpot(new Vector2Int(x, y), currentElementsInRaw, counterCamp <= 1))
                 {
                     Nod newSpot = Instantiate(spot, possibleSpots[i], Quaternion.identity, parentSpot).GetComponent<Nod>();
                     
@@ -155,11 +155,11 @@ public class AventureCreator : MonoBehaviour
     
     
     // SAYS IF AN ELEMENT CAN SPAWN WITH A BIT OF RANDOM 
-    private bool VerifySpot(int currentColumn, int currentElementsInRaw, bool isCamp)
+    private bool VerifySpot(Vector2Int coordinates, int currentElementsInRaw, bool isCamp)
     {
         if (isCamp)
         {
-            if (currentColumn == (int)(columnsNbr * 0.5f))
+            if (coordinates.x == (int)(columnsNbr * 0.5f))
             {
                 return true;
             }
@@ -168,11 +168,37 @@ public class AventureCreator : MonoBehaviour
         {
             if (currentElementsInRaw < maxElementsPerRaw)
             {
-                int tirage = Random.Range(0, 100);
-
-                if (tirage < probaSpotSpawn)
+                bool hasPrecedent = false;
+                
+                if (coordinates.x - 1 >= 0)
                 {
-                    return true;
+                    if (map[coordinates.y - 1].list[coordinates.x - 1] is not null)
+                    {
+                        hasPrecedent = true;
+                    }
+                }
+
+                if (map[coordinates.y - 1].list[coordinates.x])
+                {
+                    hasPrecedent = true;
+                }
+
+                if (coordinates.x + 1 < maxElementsPerRaw)
+                {
+                    if (map[coordinates.y - 1].list[coordinates.x + 1] is not null)
+                    {
+                        hasPrecedent = true;
+                    }
+                }
+                
+                if (hasPrecedent)
+                {
+                    int tirage = Random.Range(0, 100);
+
+                    if (tirage < probaSpotSpawn)
+                    {
+                        return true;
+                    }
                 }
             }
         }
@@ -217,6 +243,7 @@ public class AventureCreator : MonoBehaviour
             nextIsCamp = map[coordinates.y + 1].list[(int)(columnsNbr * 0.5f)].isCamp;
         }
 
+        
         if (!nextIsCamp && !isCamp)
         {
             if (map[coordinates.y + 1].list[coordinates.x] is not null)
@@ -236,7 +263,10 @@ public class AventureCreator : MonoBehaviour
             {
                 if (map[coordinates.y + 1].list[coordinates.x - 1] is not null)
                 {
-                    linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x - 1]);
+                    if (map[coordinates.y + 1].list[coordinates.x - 1].connectedNods.Count == 0)
+                    {
+                        linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x - 1]);
+                    }
                 }
             }
 
