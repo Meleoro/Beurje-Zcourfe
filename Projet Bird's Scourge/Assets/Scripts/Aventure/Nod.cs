@@ -5,5 +5,6 @@ using UnityEngine;
 public class Nod : MonoBehaviour
 {
     public List<Nod> connectedNods = new List<Nod>();
+    public bool isCamp;
 }
 

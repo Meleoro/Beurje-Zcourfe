@@ -114,6 +114,7 @@ public class AventureCreator : MonoBehaviour
                     
                     map[y].list.Add(newSpot);
                     newSpot.GetComponent<Image>().rectTransform.localPosition = possibleSpots[i];
+                    newSpot.isCamp = counterCamp <= 1;
 
                     currentElementsInRaw += 1;
                 }
@@ -192,7 +193,7 @@ public class AventureCreator : MonoBehaviour
                 if (map[y].list[x] is not null)
                 {
                     Nod currentNod = map[y].list[x];
-                    List<Nod> connectedNodes = VerifyLink(new Vector2Int(x, y));
+                    List<Nod> connectedNodes = VerifyLink(new Vector2Int(x, y), currentNod.isCamp);
 
                     for (int i = 0; i < connectedNodes.Count; i++)
                     {
@@ -206,38 +207,64 @@ public class AventureCreator : MonoBehaviour
         }
     }
 
-    private List<Nod> VerifyLink(Vector2Int coordinates)
+    private List<Nod> VerifyLink(Vector2Int coordinates, bool isCamp)
     {
         List<Nod> linkedNodes = new List<Nod>();
+        bool nextIsCamp = false;
 
-        if (map[coordinates.y + 1].list[coordinates.x] is not null)
+        if (map[coordinates.y + 1].list[(int)(columnsNbr * 0.5f)] is not null)
         {
-            linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x]);
+            nextIsCamp = map[coordinates.y + 1].list[(int)(columnsNbr * 0.5f)].isCamp;
         }
 
-        if (coordinates.x + 1 < map[coordinates.y + 1].list.Count)
+        if (!nextIsCamp && !isCamp)
         {
-            if (map[coordinates.y + 1].list[coordinates.x + 1] is not null)
+            if (map[coordinates.y + 1].list[coordinates.x] is not null)
             {
-                linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x + 1]);
+                linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x]);
+            }
+
+            if (coordinates.x + 1 < map[coordinates.y + 1].list.Count)
+            {
+                if (map[coordinates.y + 1].list[coordinates.x + 1] is not null)
+                {
+                    linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x + 1]);
+                }
+            }
+
+            if (coordinates.x - 1 >= 0)
+            {
+                if (map[coordinates.y + 1].list[coordinates.x - 1] is not null)
+                {
+                    linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x - 1]);
+                }
+            }
+
+            if (coordinates.y + 2 < map.Count)
+            {
+                if (map[coordinates.y + 2].list[coordinates.x] is not null && map[coordinates.y + 1].list[coordinates.x] is null)
+                {
+                    linkedNodes.Add(map[coordinates.y + 2].list[coordinates.x]);
+                }
             }
         }
 
-        if (coordinates.x - 1 >= 0)
+        else if (!isCamp)
         {
-            if (map[coordinates.y + 1].list[coordinates.x - 1] is not null)
-            {
-                linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x - 1]);
-            }
+            linkedNodes.Add(map[coordinates.y + 1].list[(int)(columnsNbr * 0.5f)]);
         }
 
-        if (coordinates.y + 2 < map.Count)
+        else
         {
-            if (map[coordinates.y + 2].list[coordinates.x] is not null && map[coordinates.y + 1].list[coordinates.x] is null)
+            for (int i = 0; i < map[coordinates.y + 1].list.Count; i++)
             {
-                linkedNodes.Add(map[coordinates.y + 2].list[coordinates.x]);
+                if (map[coordinates.y + 1].list[i] is not null)
+                {
+                    linkedNodes.Add(map[coordinates.y + 1].list[i]);
+                }
             }
         }
+        
 
         return linkedNodes;
     }
