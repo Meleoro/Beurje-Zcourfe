@@ -88,9 +88,9 @@ public class AventureCreator : MonoBehaviour
         
         return finalBounds;
     }
-    
-    
-    
+
+
+
     // --------------- TO CHOSE WHICH SPOTS TO USE ---------------
 
     // SELECTS AND RETURNS EVERY SPOTS LOCATIONS 
@@ -127,9 +127,36 @@ public class AventureCreator : MonoBehaviour
                 i += 1;
             }
             
-            // If no element has been added
-            if (currentElementsInRaw == 0)
+            // We check if there is no dead-end 
+            bool canContinue = true;
+
+            if (y - 1 >= 0)
             {
+                for (int k = 0; k < map[y - 1].list.Count; k++)
+                {
+                    if (map[y - 1].list[k] is not null)
+                    {
+                        List<Nod> possibleLinks = VerifyLink(new Vector2Int(k, y - 1), map[y - 1].list[k].isCamp);
+
+                        if (possibleLinks.Count == 0)
+                        {
+                            canContinue = false;
+                        }
+                    }
+                }
+            }
+
+            // If there is a dead-end or another problem
+            if (!canContinue)
+            {
+                for (int k = 0; k < map[y].list.Count; k++)
+                {
+                    if (map[y].list[k] is not null)
+                    {
+                        Destroy(map[y].list[k].gameObject);
+                    }
+                }
+                
                 map.RemoveAt(y);
                 
                 y -= 1;
@@ -263,7 +290,14 @@ public class AventureCreator : MonoBehaviour
             {
                 if (map[coordinates.y + 1].list[coordinates.x - 1] is not null)
                 {
-                    if (map[coordinates.y + 1].list[coordinates.x - 1].connectedNods.Count == 0)
+                    if (map[coordinates.y + 1].list[coordinates.x] is not null)
+                    {
+                        if (map[coordinates.y + 1].list[coordinates.x].connectedNods.Count == 0)
+                        {
+                            linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x - 1]);
+                        }
+                    }
+                    else
                     {
                         linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x - 1]);
                     }
