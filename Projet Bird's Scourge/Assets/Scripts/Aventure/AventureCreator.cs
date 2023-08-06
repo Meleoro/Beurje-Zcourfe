@@ -23,31 +23,21 @@ public class AventureCreator : MonoBehaviour
     public GameObject spot;
     public Transform parentSpot;
     
+    
+    // THE WHOLE PROCESS TO GENERATE THE MAP
     public void GenerateMap()
     {
         // First we find the bounds and generate the possible spots
         List<Vector2> possibleSpots = FindPossibleSpots();
 
-        /*for (int i = 0; i < possibleSpots.Count; i++)
-        {
-            Image newSpot = Instantiate(test, possibleSpots[i], Quaternion.identity, parentTest);
-            newSpot.rectTransform.localPosition = possibleSpots[i];
-        }*/
-
         // Then we select which spots we will use and create the map list
-        List<Vector2Int> chosenSpots = ChoseSpots(possibleSpots);
+        ChoseSpots(possibleSpots);
         
-        /*for (int i = 0; i < chosenSpots.Count; i++)
-        {
-            Image newSpot = Instantiate(test, (Vector2)chosenSpots[i], Quaternion.identity, parentTest);
-            newSpot.rectTransform.localPosition = (Vector2)chosenSpots[i] * 20;
-        }*/
-        
-        // Next we combine the two precedent lists into one map that we generate on screen
-        
-        
+        // Next we generate the lines on the map
+        GeneratePaths();
 
-        // Finally we generate the lines on the map
+        // Finally we initiate every nods with their functions
+
     }
 
     
@@ -104,14 +94,12 @@ public class AventureCreator : MonoBehaviour
     // --------------- TO CHOSE WHICH SPOTS TO USE ---------------
 
     // SELECTS AND RETURNS EVERY SPOTS LOCATIONS 
-    private List<Vector2Int> ChoseSpots(List<Vector2> possibleSpots)
+    private void ChoseSpots(List<Vector2> possibleSpots)
     {
         int counterCamp = 0;
         int currentElementsInRaw = 0;
 
         int i = 0;
-
-        List<Vector2Int> finalSpots = new List<Vector2Int>();
 
         for (int y = 0; y < wantedMapLength; y++)
         {
@@ -122,13 +110,11 @@ public class AventureCreator : MonoBehaviour
             {
                 if (VerifySpot(x, currentElementsInRaw, counterCamp <= 1))
                 {
-                    finalSpots.Add(new Vector2Int(x, y));
-
-                    Spot newSpot = Instantiate(spot, possibleSpots[i], Quaternion.identity, parentSpot).GetComponent<Spot>();
+                    Nod newSpot = Instantiate(spot, possibleSpots[i], Quaternion.identity, parentSpot).GetComponent<Nod>();
                     
                     map[y].list.Add(newSpot);
                     newSpot.GetComponent<Image>().rectTransform.localPosition = possibleSpots[i];
-                    
+
                     currentElementsInRaw += 1;
                 }
 
@@ -164,8 +150,6 @@ public class AventureCreator : MonoBehaviour
                 currentElementsInRaw = 0;
             }
         }
-        
-        return finalSpots;
     }
     
     
@@ -198,29 +182,64 @@ public class AventureCreator : MonoBehaviour
     
     // --------------- TO CREATE THE MAP ---------------
 
-    private void GenerateMapList(List<Vector2> positions, List<Vector2Int> validSpots)
+    private void GeneratePaths()
     {
-        int index = 0;
-        
-        for (int y = 0; y < wantedMapLength; y++)
+        // Go through the whole map
+        for (int y = 0; y < map.Count - 1; y++)
         {
-            for (int x = 0; x < columnsNbr; x++)
+            for (int x = 0; x < map[y].list.Count; x++)
             {
-                if(validSpots.Contains(new Vector2Int(x, y)))
+                if (map[y].list[x] is not null)
                 {
-                    validSpots.Remove(new Vector2Int(x, y));
-                    
-                    map[y].list.Add(new Spot());
-                }
+                    Nod currentNod = map[y].list[x];
+                    List<Nod> connectedNodes = VerifyLink(new Vector2Int(x, y));
 
-                else
-                {
-                    map[y].list.Add(null);
+                    for (int i = 0; i < connectedNodes.Count; i++)
+                    {
+                        currentNod.connectedNods.Add(connectedNodes[i]);
+                        connectedNodes[i].connectedNods.Add(currentNod);
+                    
+                        Debug.DrawLine(currentNod.GetComponent<RectTransform>().position, connectedNodes[i].GetComponent<RectTransform>().position, Color.blue, 30);
+                    }
                 }
-                
-                index += 1;
             }
         }
+    }
+
+    private List<Nod> VerifyLink(Vector2Int coordinates)
+    {
+        List<Nod> linkedNodes = new List<Nod>();
+
+        if (map[coordinates.y + 1].list[coordinates.x] is not null)
+        {
+            linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x]);
+        }
+
+        if (coordinates.x + 1 < map[coordinates.y + 1].list.Count)
+        {
+            if (map[coordinates.y + 1].list[coordinates.x + 1] is not null)
+            {
+                linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x + 1]);
+            }
+        }
+
+        if (coordinates.x - 1 >= 0)
+        {
+            if (map[coordinates.y + 1].list[coordinates.x - 1] is not null)
+            {
+                linkedNodes.Add(map[coordinates.y + 1].list[coordinates.x - 1]);
+            }
+        }
+
+        if (coordinates.y + 2 < map.Count)
+        {
+            if (map[coordinates.y + 2].list[coordinates.x] is not null && map[coordinates.y + 1].list[coordinates.x] is null)
+            {
+                linkedNodes.Add(map[coordinates.y + 2].list[coordinates.x]);
+            }
+        }
+
+        return linkedNodes;
     }
     
 }
@@ -229,5 +248,5 @@ public class AventureCreator : MonoBehaviour
 [Serializable]
 public class ListSpots
 {
-    public List<Spot> list = new List<Spot>();
+    public List<Nod> list = new List<Nod>();
 }

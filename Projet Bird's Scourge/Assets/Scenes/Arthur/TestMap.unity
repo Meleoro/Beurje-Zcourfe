@@ -493,7 +493,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: []
   wantedMapLength: 15
-  columnsNbr: 11
+  columnsNbr: 5
   distanceBetweenRaws: 80
   stepsBetweenCamp: 5
   probaSpotSpawn: 50
