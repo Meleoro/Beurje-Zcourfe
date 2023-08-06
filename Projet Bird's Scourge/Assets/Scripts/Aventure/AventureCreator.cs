@@ -20,8 +20,8 @@ public class AventureCreator : MonoBehaviour
     
     [Header("Références")]
     public Image fond;
-    public Image test;
-    public Transform parentTest;
+    public GameObject spot;
+    public Transform parentSpot;
     
     public void GenerateMap()
     {
@@ -121,8 +121,11 @@ public class AventureCreator : MonoBehaviour
                 if (VerifySpot(x, currentElementsInRaw, counterCamp <= 1))
                 {
                     finalSpots.Add(new Vector2Int(x, y));
+
+                    Spot newSpot = Instantiate(spot, possibleSpots[i], Quaternion.identity, parentSpot).GetComponent<Spot>();
                     
-                    map[y].list.Add(new Spot());
+                    map[y].list.Add(newSpot);
+                    newSpot.GetComponent<Image>().rectTransform.localPosition = possibleSpots[i];
                     
                     currentElementsInRaw += 1;
                 }
