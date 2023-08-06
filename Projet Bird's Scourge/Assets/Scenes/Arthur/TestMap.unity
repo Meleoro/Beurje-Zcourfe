@@ -572,8 +572,9 @@ MonoBehaviour:
   wantedSpotsLength: 15
   columnsNbr: 5
   distanceBetweenRaws: 100
-  stepsBetweenCamp: 0
-  maxElementsPerRaw: 0
+  stepsBetweenCamp: 5
+  probaSpotSpawn: 50
+  maxElementsPerRaw: 2
   fond: {fileID: 1793386384}
   test: {fileID: 214183343}
   parentTest: {fileID: 822590554}
