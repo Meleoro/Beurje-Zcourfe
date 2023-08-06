@@ -62,10 +62,8 @@ public class AventureCreator : MonoBehaviour
 
         Vector2 boundsX = new Vector2(-maxBounds.x, maxBounds.x);
         Vector2 boundsY = new Vector2(-maxBounds.y, maxBounds.y);
-        
-        Debug.Log(boundsX);
-        
-        
+
+
         List<Vector2> possibleSpots = new List<Vector2>();
 
         for (int y = 0; y < wantedMapLength; y++)
@@ -74,6 +72,10 @@ public class AventureCreator : MonoBehaviour
             {
                 float posX = Mathf.Lerp(boundsX.x, boundsX.y, ((float)x / columnsNbr) + (1f / columnsNbr) * 0.5f);
                 float posY = boundsY.x + distanceBetweenRaws * y;
+
+                float posModificator = 10f;
+                posX += Random.Range(-posModificator, posModificator);
+                posY += Random.Range(-posModificator, posModificator);
                 
                 possibleSpots.Add(new Vector2(posX, posY));
             }
@@ -92,7 +94,7 @@ public class AventureCreator : MonoBehaviour
         float currentHeight = currentTransform.rect.height;
         Vector2 center = currentTransform.localPosition;
 
-        finalBounds = new Vector2(center.x + currentWidth * 0.5f, center.y + currentHeight * 0.5f);
+        finalBounds = new Vector2(center.x + currentWidth * 0.35f, center.y + currentHeight * 0.4f);
         
         return finalBounds;
     }

@@ -493,11 +493,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map: []
   wantedMapLength: 15
-  columnsNbr: 5
-  distanceBetweenRaws: 100
+  columnsNbr: 11
+  distanceBetweenRaws: 80
   stepsBetweenCamp: 5
   probaSpotSpawn: 50
-  maxElementsPerRaw: 2
+  maxElementsPerRaw: 3
   fond: {fileID: 1793386384}
   spot: {fileID: 8439411471460647512, guid: e748210074b596142bd811ca430925d8, type: 3}
   parentSpot: {fileID: 822590554}
