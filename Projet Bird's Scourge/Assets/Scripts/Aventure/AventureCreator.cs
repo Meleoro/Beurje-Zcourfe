@@ -17,6 +17,13 @@ public class AventureCreator : MonoBehaviour
     [SerializeField] private int stepsBetweenCamp;
     [Range(0, 100)] [SerializeField] private int probaSpotSpawn;
     [SerializeField] private int maxElementsPerRaw;
+
+    [Header("Update")] 
+    [SerializeField] private int heightStartUpdate;    // Indicates from which number of movement we start ton update the map
+    private float stockageCurrentMaxY;
+    private float stockageCurrentMinX;
+    private float stockageCurrentMaxX;
+    private int currentCounterCamp;
     
     [Header("Références")]
     public Transform fond;
@@ -27,6 +34,8 @@ public class AventureCreator : MonoBehaviour
     // THE WHOLE PROCESS TO GENERATE THE MAP (RETURNS THE WHOLE MAP)
     public List<ListSpots> GenerateMap()
     {
+        map = new List<ListSpots>();
+        
         // First we find the bounds and generate the possible spots
         List<Vector2> possibleSpots = FindPossibleSpots();
 
@@ -34,7 +43,7 @@ public class AventureCreator : MonoBehaviour
         ChoseSpots(possibleSpots);
         
         // Next we generate the lines on the map
-        GeneratePaths();
+        GeneratePaths(0);
 
         // Finally we initiate every nods with their functions
 
@@ -50,18 +59,26 @@ public class AventureCreator : MonoBehaviour
     {
         Vector2 maxBounds = GetBounds(fond);
 
-        Vector2 boundsX = new Vector2(-maxBounds.x, maxBounds.x);
-        Vector2 boundsY = new Vector2(-maxBounds.y, maxBounds.y);
+        stockageCurrentMinX = -maxBounds.x;
+        stockageCurrentMaxX = maxBounds.x;
+
+        List<Vector2> possibleSpots = GeneratePossibleSpots(-maxBounds.y, wantedMapLength);
+
+        return possibleSpots;
+    }
 
 
+    // GENERATES THE POSSIBLE POSITIONS FOR A CERTAIN NUMBER OF ITERATIONS
+    private List<Vector2> GeneratePossibleSpots(float minY, int interations)
+    {
         List<Vector2> possibleSpots = new List<Vector2>();
 
-        for (int y = 0; y < wantedMapLength; y++)
+        for (int y = 0; y < interations; y++)
         {
             for (int x = 0; x < columnsNbr; x++)
             {
-                float posX = Mathf.Lerp(boundsX.x, boundsX.y, ((float)x / columnsNbr) + (1f / columnsNbr) * 0.5f);
-                float posY = boundsY.x + distanceBetweenRaws * y;
+                float posX = Mathf.Lerp(stockageCurrentMinX, stockageCurrentMaxX, ((float)x / columnsNbr) + (1f / columnsNbr) * 0.5f);
+                float posY = minY + distanceBetweenRaws * y;
 
                 float posModificator = 0.1f;
                 posX += Random.Range(-posModificator, posModificator);
@@ -69,12 +86,17 @@ public class AventureCreator : MonoBehaviour
                 
                 possibleSpots.Add(new Vector2(posX, posY));
             }
+
+            if (y == interations - 1)
+            {
+                stockageCurrentMaxY = minY + distanceBetweenRaws * y;
+            }
         }
-        
+
         return possibleSpots;
     }
 
-    
+
     // GET THE BOUNDS OF THE SPRITE ON WHICH THE SPOTS WILL BE DISPLAYED
     private Vector2 GetBounds(Transform currentTransform)
     {
@@ -96,34 +118,34 @@ public class AventureCreator : MonoBehaviour
     // SELECTS AND RETURNS EVERY SPOTS LOCATIONS 
     private void ChoseSpots(List<Vector2> possibleSpots)
     {
-        int counterCamp = 0;
         int currentElementsInRaw = 0;
 
-        map = new List<ListSpots>();
+        int rawsNumber = (int)(possibleSpots.Count / columnsNbr);
 
         int i = 0;
 
-        for (int y = 0; y < wantedMapLength; y++)
+        for (int y = 0; y < rawsNumber; y++)
         {
             map.Add(new ListSpots());
-            
+            int reelY = map.Count - 1;
+
             // We go across every column in on line
             for (int x = 0; x < columnsNbr; x++)
             {
-                if (VerifySpot(new Vector2Int(x, y), currentElementsInRaw, counterCamp <= 1))
+                if (VerifySpot(new Vector2Int(x, reelY), currentElementsInRaw, currentCounterCamp <= 1))
                 {
                     Nod newSpot = Instantiate(spot, possibleSpots[i], Quaternion.identity, parentSpot).GetComponent<Nod>();
                     
-                    map[y].list.Add(newSpot);
+                    map[reelY].list.Add(newSpot);
                     newSpot.transform.position = possibleSpots[i];
-                    newSpot.isCamp = counterCamp <= 1;
+                    newSpot.isCamp = currentCounterCamp <= 1;
 
                     currentElementsInRaw += 1;
                 }
 
                 else
                 {
-                    map[y].list.Add(null);
+                    map[reelY].list.Add(null);
                 }
 
                 i += 1;
@@ -132,13 +154,13 @@ public class AventureCreator : MonoBehaviour
             // We check if there is no dead-end 
             bool canContinue = true;
 
-            if (y - 1 >= 0)
+            if (reelY - 1 >= 0)
             {
-                for (int k = 0; k < map[y - 1].list.Count; k++)
+                for (int k = 0; k < map[reelY - 1].list.Count; k++)
                 {
-                    if (map[y - 1].list[k] is not null)
+                    if (map[reelY - 1].list[k] is not null)
                     {
-                        List<Nod> possibleLinks = VerifyLink(new Vector2Int(k, y - 1), map[y - 1].list[k].isCamp);
+                        List<Nod> possibleLinks = VerifyLink(new Vector2Int(k, reelY - 1), map[reelY - 1].list[k].isCamp);
 
                         if (possibleLinks.Count == 0)
                         {
@@ -151,15 +173,15 @@ public class AventureCreator : MonoBehaviour
             // If there is a dead-end or another problem
             if (!canContinue)
             {
-                for (int k = 0; k < map[y].list.Count; k++)
+                for (int k = 0; k < map[reelY].list.Count; k++)
                 {
-                    if (map[y].list[k] is not null)
+                    if (map[reelY].list[k] is not null)
                     {
-                        Destroy(map[y].list[k].gameObject);
+                        Destroy(map[reelY].list[k].gameObject);
                     }
                 }
                 
-                map.RemoveAt(y);
+                map.RemoveAt(reelY);
                 
                 y -= 1;
                 i -= columnsNbr;
@@ -169,13 +191,13 @@ public class AventureCreator : MonoBehaviour
             // If we can go on
             else
             {
-                if (counterCamp <= 1)
+                if (currentCounterCamp <= 1)
                 {
-                    counterCamp = stepsBetweenCamp;
+                    currentCounterCamp = stepsBetweenCamp;
                 }
                 else
                 {
-                    counterCamp -= 1;
+                    currentCounterCamp -= 1;
                 }
                     
                 currentElementsInRaw = 0;
@@ -237,12 +259,13 @@ public class AventureCreator : MonoBehaviour
     }
     
     
+    
     // --------------- TO CREATE THE MAP ---------------
 
-    private void GeneratePaths()
+    private void GeneratePaths(int startRaw)
     {
         // Go through the whole map
-        for (int y = 0; y < map.Count - 1; y++)
+        for (int y = startRaw; y < map.Count - 1; y++)
         {
             for (int x = 0; x < map[y].list.Count; x++)
             {
@@ -344,6 +367,60 @@ public class AventureCreator : MonoBehaviour
         return linkedNodes;
     }
     
+    
+    // --------------- TO UPDATE THE MAP ---------------
+
+    public void UpdateMap(Nod currentNod)
+    {
+        int playerHeight = 0;
+        
+        // We find the current height of the player
+        for (int y = 0; y < map.Count; y++)
+        {
+            for (int x = 0; x < map[y].list.Count; x++)
+            {
+                if (map[y].list[x] == currentNod)
+                {
+                    playerHeight = y;
+                    break;
+                }
+            }
+            
+            if(playerHeight != 0)
+                break;
+        }
+
+        // If we are far enough to start to update
+        if (playerHeight >= heightStartUpdate)
+        {
+            RemoveRaw();
+            AddRaw();
+        }
+    }
+
+
+    private void AddRaw()
+    {
+        // First we generate the positions for our new raw
+        List<Vector2> possiblePos = GeneratePossibleSpots(stockageCurrentMaxY + distanceBetweenRaws, 1);
+        
+        // Next we check on which positions we create nods
+        ChoseSpots(possiblePos);
+
+        // Then we add the line renderers of these elements
+        GeneratePaths(map.Count - 2);
+    }
+
+    private void RemoveRaw()
+    {
+        for (int i = 0; i < map[0].list.Count; i++)
+        {
+            if(map[0].list[i] is not null) 
+                Destroy(map[0].list[i].gameObject);
+        }
+        
+        map.RemoveAt(0);
+    }
 }
 
 

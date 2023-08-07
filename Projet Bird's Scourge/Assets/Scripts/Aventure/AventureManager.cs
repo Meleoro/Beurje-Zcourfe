@@ -9,8 +9,8 @@ public class AventureManager : MonoBehaviour
     public List<ListSpots> map;
 
     [Header("Références")]
-    private AventureCreator scriptCreator;
-    private AventureController scriptController;
+    [HideInInspector] public AventureCreator scriptCreator;
+    [HideInInspector] public AventureController scriptController;
     
     private void Start()
     {
@@ -29,7 +29,7 @@ public class AventureManager : MonoBehaviour
             scriptController.ManageOverlayedElement();
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
+            { 
                 scriptController.ManageClickedElement();
             }
         }
