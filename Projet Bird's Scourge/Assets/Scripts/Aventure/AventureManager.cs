@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,12 @@ public class AventureManager : MonoBehaviour
 {
     [Header("Datas")] 
     public List<ListSpots> map;
-    
+
     [Header("Références")]
     private AventureCreator scriptCreator;
     private AventureController scriptController;
     
-    void Start()
+    private void Start()
     {
         scriptCreator = GetComponent<AventureCreator>();
         scriptController = GetComponent<AventureController>();
@@ -19,5 +20,18 @@ public class AventureManager : MonoBehaviour
         map = scriptCreator.GenerateMap();
         scriptController.Initialise(map);
     }
-    
+
+
+    private void Update()
+    {
+        if (!scriptController.noControl)
+        {
+            scriptController.ManageOverlayedElement();
+
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                scriptController.ManageClickedElement();
+            }
+        }
+    }
 }

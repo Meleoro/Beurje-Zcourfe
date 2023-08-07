@@ -8,28 +8,16 @@ using Unity.VisualScripting;
 public class AventureController : MonoBehaviour
 {
     [Header("Other")]
-    private Nod currentNod;
-    private bool noControl;
-    
+    [HideInInspector] public bool noControl;
+    [HideInInspector] public Nod currentNod;
+
     [Header("References")]
     [SerializeField] private GameObject player;
+    [SerializeField] private Transform _camera;
+    
 
 
-    private void Update()
-    {
-        if (!noControl)
-        {
-            ManageOverlayedElement();
-
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                ManageClickedElement();
-            }
-        }
-    }
-
-
-    // INITIALISE THE CONTROLLER
+    // INITIALISE THE CONTROLLER AND RETURNS THE CURRENT NOD
     public void Initialise(List<ListSpots> currentMap)
     {
         currentNod = currentMap[0].list[(int)(currentMap[0].list.Count * 0.5f)];
@@ -75,6 +63,10 @@ public class AventureController : MonoBehaviour
     {
         if (currentNod.connectedNods.Contains(selectedNod))
         {
+            float distance = selectedNod.transform.position.y - currentNod.transform.position.y;
+
+            _camera.DOMoveY(_camera.transform.position.y + distance, 1);
+            
             player.transform.DOMove(selectedNod.transform.position, 1);
             currentNod = selectedNod;
         }
