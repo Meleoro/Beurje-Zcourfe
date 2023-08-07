@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class AventureManager : MonoBehaviour
 {
-    [SerializeField] private AventureCreator scriptCreator;
+    [Header("Datas")] 
+    public List<ListSpots> map;
+    
+    [Header("Références")]
+    private AventureCreator scriptCreator;
+    private AventureController scriptController;
     
     void Start()
     {
         scriptCreator = GetComponent<AventureCreator>();
-        scriptCreator.GenerateMap();
+        scriptController = GetComponent<AventureController>();
+        
+        map = scriptCreator.GenerateMap();
+        scriptController.Initialise(map);
     }
     
 }

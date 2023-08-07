@@ -8,24 +8,24 @@ using Random = UnityEngine.Random;
 public class AventureCreator : MonoBehaviour
 {
     [Header("General")]
-    public List<ListSpots> map = new List<ListSpots>();
-    [SerializeField] private int wantedMapLength;
+    private List<ListSpots> map = new List<ListSpots>();
 
     [Header("Parametres")] 
+    [SerializeField] private int wantedMapLength;
     [SerializeField] private int columnsNbr;
-    [Range(50, 150)] [SerializeField] private int distanceBetweenRaws;
+    [Range(1, 20)] [SerializeField] private int distanceBetweenRaws;
     [SerializeField] private int stepsBetweenCamp;
     [Range(0, 100)] [SerializeField] private int probaSpotSpawn;
     [SerializeField] private int maxElementsPerRaw;
     
     [Header("Références")]
-    public Image fond;
+    public Transform fond;
     public GameObject spot;
     public Transform parentSpot;
     
     
-    // THE WHOLE PROCESS TO GENERATE THE MAP
-    public void GenerateMap()
+    // THE WHOLE PROCESS TO GENERATE THE MAP (RETURNS THE WHOLE MAP)
+    public List<ListSpots> GenerateMap()
     {
         // First we find the bounds and generate the possible spots
         List<Vector2> possibleSpots = FindPossibleSpots();
@@ -37,7 +37,8 @@ public class AventureCreator : MonoBehaviour
         GeneratePaths();
 
         // Finally we initiate every nods with their functions
-        
+
+        return map;
     }
 
 
@@ -47,7 +48,7 @@ public class AventureCreator : MonoBehaviour
     // GENERATES THE POSSIBLE POSITIONS INTO WORLD SPACE FOR THE SPOTS
     private List<Vector2> FindPossibleSpots()
     {
-        Vector2 maxBounds = GetBounds(fond.rectTransform);
+        Vector2 maxBounds = GetBounds(fond);
 
         Vector2 boundsX = new Vector2(-maxBounds.x, maxBounds.x);
         Vector2 boundsY = new Vector2(-maxBounds.y, maxBounds.y);
@@ -62,7 +63,7 @@ public class AventureCreator : MonoBehaviour
                 float posX = Mathf.Lerp(boundsX.x, boundsX.y, ((float)x / columnsNbr) + (1f / columnsNbr) * 0.5f);
                 float posY = boundsY.x + distanceBetweenRaws * y;
 
-                float posModificator = 10f;
+                float posModificator = 0.1f;
                 posX += Random.Range(-posModificator, posModificator);
                 posY += Random.Range(-posModificator, posModificator);
                 
@@ -75,13 +76,13 @@ public class AventureCreator : MonoBehaviour
 
     
     // GET THE BOUNDS OF THE SPRITE ON WHICH THE SPOTS WILL BE DISPLAYED
-    private Vector2 GetBounds(RectTransform currentTransform)
+    private Vector2 GetBounds(Transform currentTransform)
     {
         Vector2 finalBounds;
         
-        float currentWidth = currentTransform.rect.width;
-        float currentHeight = currentTransform.rect.height;
-        Vector2 center = currentTransform.localPosition;
+        float currentWidth = currentTransform.localScale.x;
+        float currentHeight = currentTransform.localScale.y;
+        Vector2 center = currentTransform.position;
 
         finalBounds = new Vector2(center.x + currentWidth * 0.35f, center.y + currentHeight * 0.4f);
         
@@ -114,7 +115,7 @@ public class AventureCreator : MonoBehaviour
                     Nod newSpot = Instantiate(spot, possibleSpots[i], Quaternion.identity, parentSpot).GetComponent<Nod>();
                     
                     map[y].list.Add(newSpot);
-                    newSpot.GetComponent<Image>().rectTransform.localPosition = possibleSpots[i];
+                    newSpot.transform.position = possibleSpots[i];
                     newSpot.isCamp = counterCamp <= 1;
 
                     currentElementsInRaw += 1;
@@ -254,12 +255,20 @@ public class AventureCreator : MonoBehaviour
                     {
                         currentNod.connectedNods.Add(connectedNodes[i]);
                         connectedNodes[i].connectedNods.Add(currentNod);
-                    
-                        Debug.DrawLine(currentNod.GetComponent<RectTransform>().position, connectedNodes[i].GetComponent<RectTransform>().position, Color.blue, 30);
+                        
+                        AddLine(currentNod.GetComponent<LineRenderer>(), currentNod.transform.position, connectedNodes[i].transform.position);
                     }
                 }
             }
         }
+    }
+
+    private void AddLine(LineRenderer currentLineRenderer, Vector3 pos1, Vector3 pos2)
+    {
+        currentLineRenderer.positionCount += 2;
+        
+        currentLineRenderer.SetPosition(currentLineRenderer.positionCount - 2, pos1);
+        currentLineRenderer.SetPosition(currentLineRenderer.positionCount - 1, pos2);
     }
 
     private List<Nod> VerifyLink(Vector2Int coordinates, bool isCamp)
