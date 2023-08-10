@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c4cea41a4b6aca478ee31c327ea8be3, type: 3}
-  m_Name: M-Invocation
+  m_Name: Shaman S-1
   m_EditorClassIdentifier: 
   competenceName: Invocation
   levels:
   - competenceDescription: "Invoque une unit\xE9 champignon"
-    competenceManaCost: 0
+    competenceManaCost: 2
     damageMultiplier: 1.5
-    baseHitRate: 1
-    criticalMultiplier: 1
+    baseHitRate: 100
+    criticalMultiplier: 0
     isCustom: 1
     newPaterne:
     - list: 000000000000000000
@@ -34,4 +34,5 @@ MonoBehaviour:
     newPortee: 0
     newEffet: 1
     summonedUnit: {fileID: 3151643708691705637, guid: e5e5b57d75b3bb14896de80efa602e2d, type: 3}
+    healedPV: 0
     newAlteration: 0

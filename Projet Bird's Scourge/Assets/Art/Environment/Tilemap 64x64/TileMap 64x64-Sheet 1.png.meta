@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,7 +105,721 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 576
+        width: 56
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2dea188538a8c145a0dd610bfeaa042
+      internalID: 1685720897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_1
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 576
+        width: 56
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2320d00032b8aa144b9ecff709ddce7d
+      internalID: 844543293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_2
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 576
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb4ddd0af5d799444a1c04630830ac38
+      internalID: 1285966968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_3
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 576
+        width: 57
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4cf413b0c196a245985605bbb42b3ca
+      internalID: 1730357780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_4
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 576
+        width: 56
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd81337a6bbfbd24a980dd71773a5635
+      internalID: -1574602232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_5
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 576
+        width: 56
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4416c48541745194d9840152fa94debf
+      internalID: -2070384778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_6
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 576
+        width: 56
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd85f806b64c39349b6d610a2dc334dc
+      internalID: -1486384920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_7
+      rect:
+        serializedVersion: 2
+        x: 452
+        y: 576
+        width: 56
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bd5d29ebb3d64b4e96a377f55d3deb3
+      internalID: 1365785426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_8
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 576
+        width: 56
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9df96929e6fcd6445bd5cf47a03aeb67
+      internalID: -250290152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_9
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 576
+        width: 57
+        height: 49
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52588669b2c73f447a37b0a2e9da901e
+      internalID: -1404395969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_10
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 512
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ea1604fc39ea7a418caeac7d33315d1
+      internalID: -30889553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_11
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 512
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29b1c1f4c70a7c24ea3db998a2b71b3d
+      internalID: 262588378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_12
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 512
+        width: 56
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b89977ed0a161f4fb3179eeea2995c8
+      internalID: -1905917971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_15
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 448
+        width: 56
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12a564f1b44f53743b01479cd98ccf19
+      internalID: 878201572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_16
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 448
+        width: 56
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 879042cd49e9d494ab42ae48433c2034
+      internalID: 1585154138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_17
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 448
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a149e9844a9527047a003609f54dfefa
+      internalID: -357092646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_18
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 448
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8e9880a6a1960b49b5e3755e536b204
+      internalID: -2131465513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_19
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 448
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 534cc0b7b670d8a4b9866b7fbcdb407c
+      internalID: 1778040894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_20
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 384
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71f96d3d3fc05f4419bf8af504f44cf8
+      internalID: 1021819157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_21
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 384
+        width: 56
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fad094a3096b3c647b439c401db3d8d4
+      internalID: 918773041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_22
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 77
+        width: 54
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5763ab21f305d564889f9852c3167454
+      internalID: -979488678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_23
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 43
+        width: 54
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b314e3d430d1f974db887d78092ac10c
+      internalID: -1294550995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 56
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20afce6854ad2c5499da429d1db5c20b
+      internalID: 1093944211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_26
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 1
+        width: 46
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81709ec46768a324bb919537bb1416db
+      internalID: -579630126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_27
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 1
+        width: 46
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f2322d66496745429ce26b1e074aca1
+      internalID: -733934069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_28
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 1
+        width: 37
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afef88d1a7c02ea42ae4ebd9bc92cdfa
+      internalID: 1916678857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_29
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 1
+        width: 37
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97f5bf453f136644d9f53c421366ee20
+      internalID: -203518122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_30
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 6
+        width: 49
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ac7ca21f704b514db03a41190c1737d
+      internalID: 1101006888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_31
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 4
+        width: 49
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76f2ca69d66aab74a9b9689f5b636096
+      internalID: 1873357761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_32
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 5
+        width: 36
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adb8befb9783deb48b089c0223430bae
+      internalID: -1354097447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_33
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 4
+        width: 36
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10377d8d8d7394845b78b8b1e4e6452c
+      internalID: -945379750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_34
+      rect:
+        serializedVersion: 2
+        x: 475
+        y: 6
+        width: 36
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dc3b027ad922aa47b9f3c19b33601fb
+      internalID: -432465334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_35
+      rect:
+        serializedVersion: 2
+        x: 526
+        y: 6
+        width: 36
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abbf0a6974408b941bd6caf8829d3b49
+      internalID: 1324149672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TileMap 64x64-Sheet 1_24
+      rect:
+        serializedVersion: 2
+        x: 572
+        y: 6
+        width: 54
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef1b232d54332e142bd760bc2c6afb05
+      internalID: -746691661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -116,7 +830,46 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      TileMap 64x64-Sheet 1_0: 1685720897
+      TileMap 64x64-Sheet 1_1: 844543293
+      TileMap 64x64-Sheet 1_10: -30889553
+      TileMap 64x64-Sheet 1_11: 262588378
+      TileMap 64x64-Sheet 1_12: -1905917971
+      TileMap 64x64-Sheet 1_13: -181324512
+      TileMap 64x64-Sheet 1_14: 57420940
+      TileMap 64x64-Sheet 1_15: 878201572
+      TileMap 64x64-Sheet 1_16: 1585154138
+      TileMap 64x64-Sheet 1_17: -357092646
+      TileMap 64x64-Sheet 1_18: -2131465513
+      TileMap 64x64-Sheet 1_19: 1778040894
+      TileMap 64x64-Sheet 1_2: 1285966968
+      TileMap 64x64-Sheet 1_20: 1021819157
+      TileMap 64x64-Sheet 1_21: 918773041
+      TileMap 64x64-Sheet 1_22: -979488678
+      TileMap 64x64-Sheet 1_23: -1294550995
+      TileMap 64x64-Sheet 1_24: -746691661
+      TileMap 64x64-Sheet 1_25: 1093944211
+      TileMap 64x64-Sheet 1_26: -579630126
+      TileMap 64x64-Sheet 1_27: -733934069
+      TileMap 64x64-Sheet 1_28: 1916678857
+      TileMap 64x64-Sheet 1_29: -203518122
+      TileMap 64x64-Sheet 1_3: 1730357780
+      TileMap 64x64-Sheet 1_30: 1101006888
+      TileMap 64x64-Sheet 1_31: 1873357761
+      TileMap 64x64-Sheet 1_32: -1354097447
+      TileMap 64x64-Sheet 1_33: -945379750
+      TileMap 64x64-Sheet 1_34: -432465334
+      TileMap 64x64-Sheet 1_35: 1324149672
+      TileMap 64x64-Sheet 1_36: -231886791
+      TileMap 64x64-Sheet 1_37: -888625177
+      TileMap 64x64-Sheet 1_38: -163938748
+      TileMap 64x64-Sheet 1_4: -1574602232
+      TileMap 64x64-Sheet 1_5: -2070384778
+      TileMap 64x64-Sheet 1_6: -1486384920
+      TileMap 64x64-Sheet 1_7: 1365785426
+      TileMap 64x64-Sheet 1_8: -250290152
+      TileMap 64x64-Sheet 1_9: -1404395969
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

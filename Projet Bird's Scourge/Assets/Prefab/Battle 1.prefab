@@ -2045,6 +2045,7 @@ MonoBehaviour:
   - {fileID: 0}
   haste: 0
   PM: 5
+  mustBeSelected: 0
   currentHealth: 10
   currentLevel: 1
   attackLevel: 1
@@ -10940,7 +10941,13 @@ MonoBehaviour:
   outlineSelectedUnit: {r: 0.86226416, g: 1, b: 0.86334443, a: 1}
   outlineSelectedEnnemy: {r: 1, g: 0, b: 0, a: 1}
   tilesMovementColor: {r: 0.53207546, g: 0.9570014, b: 1, a: 1}
+  tilesMovementColorSelected: {r: 0, g: 0, b: 0, a: 0}
   tilesAttackColor: {r: 1, g: 0, b: 0, a: 1}
+  tilesAttackColorOver: {r: 0, g: 0, b: 0, a: 0}
+  unitTurnOutlineColor: {r: 0, g: 0, b: 0, a: 0}
+  turnOutlineSpeed: 0
+  tilesCompetenceDisplayed: []
+  tilesAtRangeDisplayed: []
   competenceUsed: {fileID: 0}
   selectedUnit: {fileID: 0}
   selectedEnnemy: {fileID: 0}
@@ -11849,16 +11856,16 @@ Transform:
   - {fileID: 1376353676186394976}
   - {fileID: 1171489425184497934}
   - {fileID: 741630602310693780}
-  - {fileID: 5892380394978447621}
   - {fileID: 644993968712508748}
-  - {fileID: 771306915107623510}
   - {fileID: 6252193068981990560}
+  - {fileID: 771306915107623510}
   - {fileID: 4330453008689667134}
   - {fileID: 7875031961736887747}
+  - {fileID: 5892380394978447621}
   - {fileID: 6336574556227035886}
   - {fileID: 6427424254243936900}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &444871648844107493
 MonoBehaviour:
@@ -14694,6 +14701,7 @@ MonoBehaviour:
   - {fileID: 0}
   haste: 0
   PM: 4
+  mustBeSelected: 0
   currentHealth: 10
   currentLevel: 1
   attackLevel: 1
@@ -18862,6 +18870,7 @@ MonoBehaviour:
   - {fileID: 0}
   haste: 0
   PM: 4
+  mustBeSelected: 0
   currentHealth: 10
   currentLevel: 1
   attackLevel: 1

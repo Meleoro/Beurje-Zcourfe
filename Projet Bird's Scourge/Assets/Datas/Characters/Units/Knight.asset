@@ -10,32 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b11e573b8e61ddc4c8f994878d654055, type: 3}
-  m_Name: Unit2
+  m_Name: Knight
   m_EditorClassIdentifier: 
   charaName: Knight
   isEnnemy: 0
   idleSprite: {fileID: 21300000, guid: 82c45ad5d08cb54408be90749c010c63, type: 3}
   attackSprite: {fileID: 21300000, guid: 519416998eeb81044ae4adcefd1a1c80, type: 3}
   damageSprite: {fileID: 21300000, guid: deb5ff6730d2f4542b6a5de9e068b305, type: 3}
-  attaqueData: {fileID: 11400000, guid: 983068a2f25cd5a4d9b31a8bbe822763, type: 2}
+  attaqueData: {fileID: 11400000, guid: f622153a2e3444249a5527d6c5713e66, type: 2}
   levelUnlockCompetence1: 0
-  competence1Data: {fileID: 0}
+  competence1Data: {fileID: 11400000, guid: 0058f5658d1709c4bade3ee3b8d5066a, type: 2}
   levelUnlockCompetence2: 0
-  competence2Data: {fileID: 0}
+  competence2Data: {fileID: 11400000, guid: ef6f8944af9135c47aff58c496ebbb1b, type: 2}
   levelUnlockPassif: 0
   passifData: {fileID: 0}
   levels:
   - level: 0
-    PV: 10
+    PV: 15
     PM: 3
     movePatern: []
     shyBehavior: 0
     moveDiagonal: 0
-    force: 10
-    defense: 10
-    vitesse: 10
-    agilite: 10
-    chance: 10
+    force: 4
+    defense: 4
+    vitesse: 2
+    agilite: 2
+    chance: 2
   - level: 0
     PV: 0
     PM: 0

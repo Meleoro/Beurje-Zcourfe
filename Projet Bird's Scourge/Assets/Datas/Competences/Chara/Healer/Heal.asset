@@ -15,10 +15,10 @@ MonoBehaviour:
   competenceName: Heal
   levels:
   - competenceDescription: Heals one ally
-    competenceManaCost: 0
-    damageMultiplier: 1
-    baseHitRate: 1
-    criticalMultiplier: 1
+    competenceManaCost: 1
+    damageMultiplier: 1.2
+    baseHitRate: 100
+    criticalMultiplier: 10
     isCustom: 1
     newPaterne:
     - list: 000000000000000000

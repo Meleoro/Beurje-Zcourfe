@@ -27,19 +27,21 @@ MonoBehaviour:
   levels:
   - level: 0
     PV: 10
-    PM: 4
+    PM: 3
     movePatern: []
     shyBehavior: 0
-    force: 10
+    moveDiagonal: 0
+    force: 5
     defense: 2
-    vitesse: 12
-    agilite: 5
-    chance: 8
+    vitesse: 4
+    agilite: 3
+    chance: 2
   - level: 0
     PV: 0
     PM: 4
     movePatern: []
     shyBehavior: 0
+    moveDiagonal: 0
     force: 0
     defense: 0
     vitesse: 0
@@ -50,6 +52,7 @@ MonoBehaviour:
     PM: 4
     movePatern: []
     shyBehavior: 0
+    moveDiagonal: 0
     force: 0
     defense: 0
     vitesse: 0
@@ -60,6 +63,7 @@ MonoBehaviour:
     PM: 4
     movePatern: []
     shyBehavior: 0
+    moveDiagonal: 0
     force: 0
     defense: 0
     vitesse: 0
@@ -70,6 +74,7 @@ MonoBehaviour:
     PM: 4
     movePatern: []
     shyBehavior: 0
+    moveDiagonal: 0
     force: 0
     defense: 0
     vitesse: 0

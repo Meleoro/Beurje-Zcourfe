@@ -10,23 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b11e573b8e61ddc4c8f994878d654055, type: 3}
-  m_Name: Ennemy3
+  m_Name: Shaman
   m_EditorClassIdentifier: 
-  charaName: Ennemy3
+  charaName: Shampignon
   isEnnemy: 1
   idleSprite: {fileID: 21300000, guid: 9e7aa71338409434e91c6a8dc9a52867, type: 3}
   attackSprite: {fileID: 21300000, guid: 9e7aa71338409434e91c6a8dc9a52867, type: 3}
   damageSprite: {fileID: 21300000, guid: db17a109af54b78488d92d0621937e6d, type: 3}
-  attaqueData: {fileID: 11400000, guid: f05f2c00d5201e14cb578a5356cab7b7, type: 2}
+  attaqueData: {fileID: 11400000, guid: 23029e8ba0aafe54f8c521988988cee5, type: 2}
   levelUnlockCompetence1: 0
-  competence1Data: {fileID: 0}
+  competence1Data: {fileID: 11400000, guid: f05f2c00d5201e14cb578a5356cab7b7, type: 2}
   levelUnlockCompetence2: 0
   competence2Data: {fileID: 0}
   levelUnlockPassif: 0
   passifData: {fileID: 0}
   levels:
   - level: 0
-    PV: 25
+    PV: 7
     PM: 0
     movePatern:
     - list: 00000000000000
@@ -37,8 +37,9 @@ MonoBehaviour:
     - list: 000100000001000000000000000000000000000000000000000000000000000000000000000000000000
     - list: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     shyBehavior: 1
-    force: 10
-    defense: 10
-    vitesse: 11
-    agilite: 10
-    chance: 10
+    moveDiagonal: 0
+    force: 2
+    defense: 1
+    vitesse: 3
+    agilite: 2
+    chance: 2

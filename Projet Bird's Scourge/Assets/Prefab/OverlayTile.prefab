@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3658135498380984840}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: c5db799f42ee2fa46b613730b2fbf61d, type: 3}
+  m_Sprite: {fileID: 1888644963, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cea3e0327b1bb2d4b8e60e06f19848a2, type: 3}
-  m_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 0.64705884}
+  m_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 0.72156864}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -186,19 +186,19 @@ MonoBehaviour:
   wantedTransparency: 0.7
   strengthApparitionEffect: 0.1
   arrows:
-  - {fileID: 21300000, guid: 3675c2fccdd9cb046be3cad8222b493b, type: 3}
-  - {fileID: 21300000, guid: 3675c2fccdd9cb046be3cad8222b493b, type: 3}
-  - {fileID: 21300000, guid: 3675c2fccdd9cb046be3cad8222b493b, type: 3}
-  - {fileID: 21300000, guid: 7ff69c2352d08c843b9d0641fa8d7b76, type: 3}
-  - {fileID: 21300000, guid: 7ff69c2352d08c843b9d0641fa8d7b76, type: 3}
-  - {fileID: 21300000, guid: 739f123ce2232a54cb985e218d2888be, type: 3}
-  - {fileID: 21300000, guid: ffe4ec8bc2fa69f4488a7a49b6aa043a, type: 3}
-  - {fileID: 21300000, guid: c8c09f557c0f3e542916803f63c64df2, type: 3}
-  - {fileID: 21300000, guid: e6778fe8c752bd54d81b0d412fddece5, type: 3}
-  - {fileID: 21300000, guid: 03e47ea2e579ccd4aaf8f97cd7bb06d9, type: 3}
-  - {fileID: 21300000, guid: 44c308c4bd15dff4f85f0e8836922635, type: 3}
-  - {fileID: 21300000, guid: d882e02f3faadf6438c355c98e6bea4b, type: 3}
-  - {fileID: 21300000, guid: c5db799f42ee2fa46b613730b2fbf61d, type: 3}
+  - {fileID: -1959484835, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: -1959484835, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: -1959484835, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: -2040335768, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: -2040335768, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: 1888644963, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: 1531291522, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: 1615730081, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: 175464085, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: 717582133, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: -919373902, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: 176690412, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
+  - {fileID: -2040371944, guid: 00ff07c4857d663479c015a05bcc1fc2, type: 3}
   costG: 0
   costH: 0
   previous: {fileID: 0}

@@ -59,8 +59,8 @@ public class AventureCreator : MonoBehaviour
     {
         Vector2 maxBounds = GetBounds(fond);
 
-        stockageCurrentMinX = -maxBounds.x;
-        stockageCurrentMaxX = maxBounds.x;
+        stockageCurrentMinX = -maxBounds.x-5;
+        stockageCurrentMaxX = maxBounds.x+5;
 
         List<Vector2> possibleSpots = GeneratePossibleSpots(-maxBounds.y, wantedMapLength);
 
