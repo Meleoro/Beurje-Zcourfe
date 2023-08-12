@@ -60,7 +60,7 @@ public class UIBattleAttack : MonoBehaviour
         
         CharacterFeel(leftOrigin);
 
-        TextFeel(leftOrigin, miss, crit, damage, false, true);
+        TextFeel(leftOrigin, miss, crit, damage, false, false);
 
         yield return new WaitForSeconds(1.5f);
 
