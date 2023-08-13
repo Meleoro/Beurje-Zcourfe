@@ -74,10 +74,15 @@ public class UIBattleAttack : MonoBehaviour
     public Image attackFond;
 
 
+    [Header("Autres")] 
+    private float currentWidthRatio;     // Used to keep the movements the same whatever the size in pixel of the screen
+
+
 
     public void Start()
     {
         attackUI.gameObject.SetActive(false);
+
     }
 
 
@@ -112,7 +117,7 @@ public class UIBattleAttack : MonoBehaviour
     {
         SetupFeel(leftSprite, rightSprite);
         
-        CharacterFeel(leftOrigin);
+        StartCoroutine(CharacterFeel(leftOrigin));
 
         TextFeel(leftOrigin, miss, crit, damage, false, false);
 
@@ -156,6 +161,8 @@ public class UIBattleAttack : MonoBehaviour
     // SETUP THE DIFFERENT ELEMENTS
     public void SetupFeel(Sprite leftSprite, Sprite rightSprite)
     {
+        currentWidthRatio = CameraManager.Instance.screenWidth / 800;
+
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         attackUI.gameObject.SetActive(true);
@@ -186,7 +193,7 @@ public class UIBattleAttack : MonoBehaviour
 
 
     // GENERATE THE MOVEMENT OF THE CHARACTERS
-    public void CharacterFeel(bool leftOrigin)
+    public IEnumerator CharacterFeel(bool leftOrigin)
     {
         RectTransform attackerParent = rightCharaParent;
         Image attackerImage = rightChara;
@@ -203,11 +210,11 @@ public class UIBattleAttack : MonoBehaviour
             attackedImage = rightChara;
         }
 
-        attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude, attackerShakeVibrato);
-        attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude, attackedShakeVibrato);
+        attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
+        attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
 
-        attackerParent.DOMoveX(attackerParent.position.x + attackerMovement, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOMoveX(attackedParent.position.x + attackedMovement, attackedMovementDuration).SetEase(attackedMovementEase);
+        attackerParent.DOMoveX(attackerParent.position.x + attackerMovement * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOMoveX(attackedParent.position.x + attackedMovement * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
 
         attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation), attackerRotationDuration).SetEase(attackerRotationEase);
         attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation), attackedRotationDuration).SetEase(attackedRotationEase);
@@ -215,16 +222,25 @@ public class UIBattleAttack : MonoBehaviour
         attackerParent.DOScale(Vector3.one * attackerScale, attackerScaleDuration);
         attackedParent.DOScale(Vector3.one * attackedScale, attackedScaleDuration);
 
-        Color colorLeft = attackerImage.material.GetColor("_Color");
-        DOTween.To(() => colorLeft, x => colorLeft = x, colorStandard, fadeColorStartDuration)
+        Color colorAttacker = attackerImage.material.GetColor("_Color");
+        DOTween.To(() => colorAttacker, x => colorAttacker = x, colorStandard, fadeColorStartDuration)
             .OnUpdate(() => {
-                attackerImage.material.SetColor("_Color", colorLeft);
+                attackerImage.material.SetColor("_Color", colorAttacker);
             });
 
-        Color colorRight = attackedImage.material.GetColor("_Color");
-        DOTween.To(() => colorRight, x => colorRight = x, colorStandard, fadeColorStartDuration)
+        attackedImage.material.SetColor("_Color", colorStandard);
+        Color colorAttacked = attackedImage.material.GetColor("_Color");
+        DOTween.To(() => colorAttacked, x => colorAttacked = x, colorDamage, flickerColorDuration)
             .OnUpdate(() => {
-                attackedImage.material.SetColor("_Color", colorRight);
+                attackedImage.material.SetColor("_Color", colorAttacked);
+            });
+
+        yield return new WaitForSeconds(flickerColorDuration);
+
+        colorAttacked = attackedImage.material.GetColor("_Color");
+        DOTween.To(() => colorAttacked, x => colorAttacked = x, colorStandard, flickerColorDuration)
+            .OnUpdate(() => {
+                attackedImage.material.SetColor("_Color", colorAttacked);
             });
     }
     
@@ -245,72 +261,49 @@ public class UIBattleAttack : MonoBehaviour
             damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
             damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up,0.2f);
         }
-        
-        else if (leftOrigin) 
+        else
         {
-            damageNumber.rectTransform.anchoredPosition = new Vector3(143, 126, 0);
-            damageNumber.rectTransform.rotation = new Quaternion(0, 0, 7,0);
-            
-            if (!miss)
+            if (leftOrigin)
             {
-                if (crit)
-                {
-                    damageNumber.text = "CRIT " + damage.ToString();
-                    
-                    if(isHeal)
-                        damageNumber.color = colorCritHeal;
-                    
-                    else
-                        damageNumber.color = colorCritAttack;
-                }
-                else
-                {
-                    damageNumber.text = damage.ToString();
-                    
-                    if(isHeal)
-                        damageNumber.color = colorNormalHeal;
-                    
-                    else
-                        damageNumber.color = colorNormalAttack;
-                }
-            }
-            else
-            {
-                damageNumber.text = "Miss";
-                damageNumber.color = colorMissAttack;
-            }
-            
+                damageNumber.rectTransform.anchoredPosition = new Vector3(143, 126, 0);
+                damageNumber.rectTransform.rotation = new Quaternion(0, 0, 7, 0);
 
-            damageNumber.DOFade(1, 0.07f);
-            damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
-            damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
-            damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up,0.2f);
-        }
-        
-        else 
-        {
-            damageNumber.rectTransform.anchoredPosition = new Vector3(-143, 126, 0);
-            damageNumber.transform.rotation = new Quaternion(0, 0, -7,0);
-            
+                damageNumber.DOFade(1, 0.07f);
+                damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
+                damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
+                damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up, 0.2f);
+            }
+
+            else
+            {
+                damageNumber.rectTransform.anchoredPosition = new Vector3(-143, 126, 0);
+                damageNumber.transform.rotation = new Quaternion(0, 0, -7, 0);
+
+                damageNumber.DOFade(1, 0.07f);
+                damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
+                damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
+                damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up, 0.2f);
+            }
+
             if (!miss)
             {
                 if (crit)
                 {
                     damageNumber.text = "CRIT " + damage.ToString();
-                    
-                    if(isHeal)
+
+                    if (isHeal)
                         damageNumber.color = colorCritHeal;
-                    
+
                     else
                         damageNumber.color = colorCritAttack;
                 }
                 else
                 {
                     damageNumber.text = damage.ToString();
-                    
-                    if(isHeal)
+
+                    if (isHeal)
                         damageNumber.color = colorNormalHeal;
-                    
+
                     else
                         damageNumber.color = colorNormalAttack;
                 }
@@ -320,12 +313,8 @@ public class UIBattleAttack : MonoBehaviour
                 damageNumber.text = "Miss";
                 damageNumber.color = colorMissAttack;
             }
-            
-            damageNumber.DOFade(1, 0.07f);
-            damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
-            damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
-            damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up,0.2f);
         }
+       
     }
 
 

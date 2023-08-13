@@ -36,11 +36,12 @@ public class CameraManager : MonoBehaviour
     private float zoom;
     
     [Header("References")] 
-    private Camera _camera;
+    [HideInInspector] public Camera _camera;
     public RectTransform worldUI;
 
-    [Header("Other")] 
-    private float screenWidth;
+    [Header("Other")]
+    [HideInInspector] public float screenWidth;
+    [HideInInspector] public float screenHeight;
 
 
     private void Awake()
@@ -56,10 +57,16 @@ public class CameraManager : MonoBehaviour
     {
         _camera = GetComponent<Camera>();
         zoom = _camera.orthographicSize;
+
+        screenHeight = _camera.pixelHeight;
+        screenWidth = _camera.pixelWidth;
     }
 
     private void Update()
     {
+        screenHeight = _camera.pixelHeight;
+        screenWidth = _camera.pixelWidth;
+
         Move();
         Zoom();
     }
