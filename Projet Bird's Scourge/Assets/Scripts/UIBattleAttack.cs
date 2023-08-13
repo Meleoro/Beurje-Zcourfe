@@ -44,7 +44,7 @@ public class UIBattleAttack : MonoBehaviour
     [Range(0f, 2f)] public float attackedScale = 1;
     [Range(0f, 2f)] public float attackedScaleDuration = 0;
 
-    [Header("Colors")]
+    [Header("Sprites Colors")]
     public Color colorStart;
     public Color colorStandard;
     public Color colorEnd;
@@ -56,14 +56,28 @@ public class UIBattleAttack : MonoBehaviour
     [Range(0f, 2f)] public float flickerColorDuration = 0.3f;
 
 
-    [Header("ParametersText")] 
+    [Header("Text Colors")] 
     public Color colorNormalAttack;
     public Color colorMissAttack;
     public Color colorCritAttack;
     public Color colorNormalHeal;
     public Color colorCritHeal;
     public Color colorSummonText;
-    
+
+    [Header("Text Feel")]
+    [Range(0, 800)] public float textXOrigin;
+    [Range(0, 800)] public float textXEnd;
+    [Range(0, 300)] public float textYOrigin;
+    [Range(0, 300)] public float textYEnd;
+    [Range(0f, 3f)] public float textOriginalSize;
+    [Range(0f, 3f)] public float textEndSize;
+    [Range(0, 360)] public float textOriginalRot;
+    [Range(0, 360)] public float textEndRot;
+    [Range(0f, 1f)] public float textMoveDuration;
+    public Ease textMoveEase;
+    public Ease textRotateEase;
+
+
     [Header("References")] 
     public TextMeshProUGUI damageNumber;
     public RectTransform attackUI;
@@ -76,7 +90,7 @@ public class UIBattleAttack : MonoBehaviour
 
     [Header("Autres")] 
     private float currentWidthRatio;     // Used to keep the movements the same whatever the size in pixel of the screen
-
+    private float currentHeightRatio;
 
 
     public void Start()
@@ -108,7 +122,9 @@ public class UIBattleAttack : MonoBehaviour
         rightCharaParent.DOScale(Vector3.one, 0);
 
         attackUI.localScale = Vector3.one;
-        damageNumber.rectTransform.localScale = Vector3.one;
+
+
+        damageNumber.rectTransform.localScale = Vector3.one * textOriginalRot;
     }
     
     
@@ -162,6 +178,7 @@ public class UIBattleAttack : MonoBehaviour
     public void SetupFeel(Sprite leftSprite, Sprite rightSprite)
     {
         currentWidthRatio = CameraManager.Instance.screenWidth / 800;
+        currentHeightRatio = CameraManager.Instance.screenHeight / 300;
 
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
@@ -174,9 +191,6 @@ public class UIBattleAttack : MonoBehaviour
         rightChara.sprite = rightSprite;
 
         attackFond.DOFade(0.8f, apparitionFadeDuration);
-        
-        /*leftChara.DOFade(1, apparitionFadeDuration);
-        rightChara.DOFade(1, apparitionFadeDuration);*/
 
         float fadeLeft = leftChara.material.GetFloat("_Alpha");
         DOTween.To(() => fadeLeft, x => fadeLeft = x, 1, fadeColorStartDuration)
@@ -248,43 +262,41 @@ public class UIBattleAttack : MonoBehaviour
     // MANAGE THE DAMAGE TEXT
     public void TextFeel(bool leftOrigin, bool miss, bool crit, int damage, bool isSummon, bool isHeal)
     {
-        if (isSummon)
+        if (leftOrigin)
         {
-            damageNumber.rectTransform.anchoredPosition = new Vector3(-143, 126, 0);
-            damageNumber.transform.rotation = new Quaternion(0, 0, -7,0);
-        
-            damageNumber.text = "Summoned";
-            damageNumber.color = colorSummonText;
-            
-            damageNumber.DOFade(1, 0.07f);
-            damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
-            damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
-            damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up,0.2f);
+            damageNumber.rectTransform.position = new Vector3(textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
+            damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, -textOriginalRot);
+            damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
+
+            damageNumber.rectTransform.DOMoveX(textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
+
+            damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
+
+            damageNumber.rectTransform.DORotate(new Vector3(0, 0, -textEndRot), textMoveDuration).SetEase(textRotateEase);
         }
         else
         {
-            if (leftOrigin)
-            {
-                damageNumber.rectTransform.anchoredPosition = new Vector3(143, 126, 0);
-                damageNumber.rectTransform.rotation = new Quaternion(0, 0, 7, 0);
+            damageNumber.rectTransform.position = new Vector3(800 - textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
+            damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, textOriginalRot);
+            damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
 
-                damageNumber.DOFade(1, 0.07f);
-                damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
-                damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
-                damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up, 0.2f);
-            }
+            damageNumber.rectTransform.DOMoveX(800 - textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
 
-            else
-            {
-                damageNumber.rectTransform.anchoredPosition = new Vector3(-143, 126, 0);
-                damageNumber.transform.rotation = new Quaternion(0, 0, -7, 0);
+            damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
-                damageNumber.DOFade(1, 0.07f);
-                damageNumber.transform.DOScale(damageNumber.transform.localScale * 1.1f, 0.2f);
-                damageNumber.transform.DORotate(new Vector3(0, 0, -5), 0.1f);
-                damageNumber.transform.DOMove(damageNumber.transform.position + Vector3.up, 0.2f);
-            }
+            damageNumber.rectTransform.DORotate(new Vector3(0, 0, textEndRot), textMoveDuration).SetEase(textRotateEase);
+        }
 
+
+        if (isSummon)
+        {
+            damageNumber.text = "Summoned";
+            damageNumber.color = colorSummonText;
+        }
+        else
+        {
             if (!miss)
             {
                 if (crit)

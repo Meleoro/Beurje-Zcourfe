@@ -795,8 +795,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textXEnd
+      value: 723
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textYEnd
+      value: 218
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: colorEnd.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textEndRot
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: colorHeal.a
@@ -815,8 +827,24 @@ PrefabInstance:
       value: 0.0010937452
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textEndSize
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textXOrigin
+      value: 570
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textYOrigin
+      value: 194
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: colorStart.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textMoveEase
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedScale
@@ -843,6 +871,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textRotateEase
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: colorStandard.a
       value: 1
       objectReference: {fileID: 0}
@@ -863,6 +895,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 773587490}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textOriginalRot
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedMovement
       value: 50
       objectReference: {fileID: 0}
@@ -882,6 +918,14 @@ PrefabInstance:
       propertyPath: rightCharaParent
       value: 
       objectReference: {fileID: 2041086250}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textMoveDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textOriginalSize
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: colorSummonText.a
       value: 1

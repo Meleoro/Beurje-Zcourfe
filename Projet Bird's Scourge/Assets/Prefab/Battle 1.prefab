@@ -1082,20 +1082,50 @@ MonoBehaviour:
   unifiedShake: 0
   attackerShakeDuration: 0.8
   attackerShakeAmplitude: 6
+  attackerShakeVibrato: 0
   attackedShakeDuration: 1.1
   attackedShakeAmplitude: 15
-  attackerRotation: 4
+  attackedShakeVibrato: 0
   attackerMovement: 10
   attackerMovementDuration: 1
-  attackedRotation: 3
+  attackerMovementEase: 0
   attackedMovement: 5
   attackedMovementDuration: 1
+  attackedMovementEase: 0
+  attackerRotation: 4
+  attackerRotationDuration: 0
+  attackerRotationEase: 0
+  attackedRotation: 3
+  attackedRotationDuration: 0
+  attackedRotationEase: 0
+  attackerScale: 1
+  attackerScaleDuration: 0
+  attackedScale: 1
+  attackedScaleDuration: 0
+  colorStart: {r: 0, g: 0, b: 0, a: 0}
+  colorStandard: {r: 0, g: 0, b: 0, a: 0}
+  colorEnd: {r: 0, g: 0, b: 0, a: 0}
+  colorDamage: {r: 0, g: 0, b: 0, a: 0}
+  colorHeal: {r: 0, g: 0, b: 0, a: 0}
+  colorSummon: {r: 0.63198185, g: 0, b: 1, a: 1}
+  fadeColorStartDuration: 0.2
+  fadeColorEndDuration: 0.1
+  flickerColorDuration: 0.3
   colorNormalAttack: {r: 1, g: 0, b: 0, a: 1}
   colorMissAttack: {r: 0, g: 0.36626983, b: 1, a: 1}
   colorCritAttack: {r: 1, g: 0.49922678, b: 0, a: 1}
   colorNormalHeal: {r: 0.043376923, g: 1, b: 0, a: 1}
   colorCritHeal: {r: 1, g: 0.9635534, b: 0, a: 1}
-  colorSummon: {r: 0.63198185, g: 0, b: 1, a: 1}
+  colorSummonText: {r: 0, g: 0, b: 0, a: 0}
+  textXOrigin: 0
+  textXEnd: 0
+  textYOrigin: 0
+  textYEnd: 0
+  textOriginalSize: 0
+  textEndSize: 0
+  textOriginalRot: 0
+  textEndRot: 0
+  textMoveDuration: 0
   damageNumber: {fileID: 1191027423845377578}
   attackUI: {fileID: 8346734038773744536}
   leftCharaParent: {fileID: 0}
@@ -2125,9 +2155,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4260193661196227922}
-  - {fileID: 414708392638578885}
   - {fileID: 7850210266704907563}
   - {fileID: 5141649329702234183}
+  - {fileID: 414708392638578885}
   m_Father: {fileID: 2250659786296942425}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
