@@ -88,6 +88,9 @@ public class UIBattleAttack : MonoBehaviour
     public Image leftChara;
     public Image rightChara;
     public Image attackFond;
+    public GameObject ghostPrefab;
+    public Transform ghostParentLeft;
+    public Transform ghostParentRight;
 
 
     [Header("Autres")] 
@@ -138,6 +141,8 @@ public class UIBattleAttack : MonoBehaviour
         StartCoroutine(CharacterFeel(leftOrigin));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
+
+        StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin));
 
         yield return new WaitForSeconds(1.3f);
 
@@ -372,6 +377,39 @@ public class UIBattleAttack : MonoBehaviour
         else if (BattleManager.Instance.order[0].CompareTag("Ennemy"))
         {
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
+        }
+    }
+
+
+    // CREATES THE GHOST TRAIL
+    public IEnumerator GhostTrail(int iterations, float durationBetween, float ghostDuration, bool leftOrigin)
+    {
+        while (iterations > 0)
+        {
+            iterations -= 1;
+
+            GameObject currentPrefab = null;
+            Image currentGhost = null;
+
+            if (leftOrigin)
+            {
+                currentPrefab = Instantiate(ghostPrefab, rightChara.rectTransform.position, Quaternion.identity, ghostParentRight);
+
+                currentGhost = currentPrefab.GetComponent<Image>();
+                currentGhost.sprite = rightChara.sprite;
+            }
+            else
+            {
+                currentPrefab = Instantiate(ghostPrefab, leftChara.rectTransform.position, Quaternion.identity, ghostParentLeft);
+
+                currentGhost = currentPrefab.GetComponent<Image>();
+                currentGhost.sprite = leftChara.sprite;
+            }
+
+            currentGhost.DOFade(1, ghostDuration).OnComplete(() => { currentGhost.DOFade(0, 0.2f); });
+            currentGhost.material.SetColor("_Color", colorDamage);
+
+            yield return new WaitForSeconds(durationBetween);
         }
     }
 }
