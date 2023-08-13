@@ -15,22 +15,28 @@ public class UIBattleAttack : MonoBehaviour
     public bool unifiedShake;   // If true, the parent transform also shakes
     [Range(0f, 5f)] public float attackerShakeDuration;
     [Range(0f, 15f)] public float attackerShakeAmplitude;
+    [Range(0, 25)] public int attackerShakeVibrato;
     [Range(0f, 5f)] public float attackedShakeDuration;
     [Range(0f, 15f)] public float attackedShakeAmplitude;
+    [Range(0, 25)] public int attackedShakeVibrato;
 
     [Header("Movement")]
     [Range(-150f, 150f)] public float attackerMovement = 0;
     [Range(0f, 2f)] public float attackerMovementDuration = 0;
+    public Ease attackerMovementEase;
     [Range(-150f, 150f)] public float attackedMovement = 0;
     [Range(0f, 2f)] public float attackedMovementDuration = 0;
+    public Ease attackedMovementEase;
     private float originalXLeft;
     private float originalXRight;
 
     [Header("Rotation")]
     [Range(-20f, 20f)] public float attackerRotation = 0;
     [Range(0f, 2f)] public float attackerRotationDuration = 0;
+    public Ease attackerRotationEase;
     [Range(-20f, 20f)] public float attackedRotation = 0;
     [Range(0f, 2f)] public float attackedRotationDuration = 0;
+    public Ease attackedRotationEase;
 
     [Header("Scale")]
     [Range(0f, 2f)] public float attackerScale = 1;
@@ -182,46 +188,44 @@ public class UIBattleAttack : MonoBehaviour
     // GENERATE THE MOVEMENT OF THE CHARACTERS
     public void CharacterFeel(bool leftOrigin)
     {
+        RectTransform attackerParent = rightCharaParent;
+        Image attackerImage = rightChara;
+
+        RectTransform attackedParent = leftCharaParent;
+        Image attackedImage = leftChara;
+
         if (leftOrigin)
         {
-            leftChara.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackerShakeAmplitude);
-            rightChara.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude);
+            attackerParent = leftCharaParent;
+            attackerImage = leftChara;
 
-            leftCharaParent.DOMoveX(leftCharaParent.position.x + attackerMovement, attackerMovementDuration).SetEase(Ease.OutQuint);
-            rightCharaParent.DOMoveX(rightCharaParent.position.x + attackedMovement, attackedMovementDuration);
-
-            leftCharaParent.DORotate(leftCharaParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation), attackerRotationDuration);
-            rightCharaParent.DORotate(rightCharaParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation), attackedRotationDuration);
-
-            leftCharaParent.DOScale(Vector3.one * attackerScale, attackerScaleDuration);
-            rightCharaParent.DOScale(Vector3.one * attackedScale, attackedScaleDuration);
-
-            Color colorLeft = leftChara.material.GetColor("_Color");
-            DOTween.To(() => colorLeft, x => colorLeft = x, colorStandard, fadeColorStartDuration)
-                .OnUpdate(() => {
-                    leftChara.material.SetColor("_Color", colorLeft);
-                });
-
-            Color colorRight = rightChara.material.GetColor("_Color");
-            DOTween.To(() => colorRight, x => colorRight = x, colorStandard, fadeColorStartDuration)
-                .OnUpdate(() => {
-                    rightChara.material.SetColor("_Color", colorRight);
-                });
+            attackedParent = rightCharaParent;
+            attackedImage = rightChara;
         }
 
-        else
-        {
-            /*rightChara.rectTransform.DOMoveX(rightChara.rectTransform.position.x - 30, 0.5f);
-            leftChara.rectTransform.DOMoveX(leftChara.rectTransform.position.x + 15, 0.5f);*/
-            
-            rightChara.rectTransform.DOShakePosition(attackerShakeDuration, attackerShakeAmplitude);
-            leftChara.rectTransform.DOShakePosition(attackedShakeDuration, attackedShakeAmplitude);
+        attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude, attackerShakeVibrato);
+        attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude, attackedShakeVibrato);
 
+        attackerParent.DOMoveX(attackerParent.position.x + attackerMovement, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOMoveX(attackedParent.position.x + attackedMovement, attackedMovementDuration).SetEase(attackedMovementEase);
 
-            /*attackUI.DOShakePosition(1f, 10f);
-            attackUI.DOScale(attackUI.localScale * 1.1f, 0.2f);
-            attackUI.DORotate(new Vector3(0, 0, -5), 0.1f); */
-        }
+        attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation), attackerRotationDuration).SetEase(attackerRotationEase);
+        attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation), attackedRotationDuration).SetEase(attackedRotationEase);
+
+        attackerParent.DOScale(Vector3.one * attackerScale, attackerScaleDuration);
+        attackedParent.DOScale(Vector3.one * attackedScale, attackedScaleDuration);
+
+        Color colorLeft = attackerImage.material.GetColor("_Color");
+        DOTween.To(() => colorLeft, x => colorLeft = x, colorStandard, fadeColorStartDuration)
+            .OnUpdate(() => {
+                attackerImage.material.SetColor("_Color", colorLeft);
+            });
+
+        Color colorRight = attackedImage.material.GetColor("_Color");
+        DOTween.To(() => colorRight, x => colorRight = x, colorStandard, fadeColorStartDuration)
+            .OnUpdate(() => {
+                attackedImage.material.SetColor("_Color", colorRight);
+            });
     }
     
     
@@ -347,8 +351,8 @@ public class UIBattleAttack : MonoBehaviour
         
         yield return new WaitForSeconds(0.1f);
 
-        leftCharaParent.DOMoveX(originalXLeft, 0);
-        rightCharaParent.DOMoveX(originalXRight, 0);
+        leftCharaParent.position = new Vector3(originalXLeft, leftCharaParent.position.y, leftCharaParent.position.z);
+        rightCharaParent.position = new Vector3(originalXRight, rightCharaParent.position.y, rightCharaParent.position.z);
 
         AttackUISetup();
         attackUI.gameObject.SetActive(false);

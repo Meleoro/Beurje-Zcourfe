@@ -816,19 +816,19 @@ PrefabInstance:
       objectReference: {fileID: 773587490}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedMovement
-      value: 13.2
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedRotation
-      value: 2.1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackerMovement
-      value: 150
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackerRotation
-      value: -11.2
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: rightCharaParent
@@ -847,12 +847,52 @@ PrefabInstance:
       value: 0.6313726
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackedMovementEase
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackedRotationEase
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackedShakeVibrato
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackerMovementEase
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackerRotationEase
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackerShakeVibrato
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedScaleDuration
       value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackedShakeDuration
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackerScaleDuration
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackerShakeDuration
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackedShakeAmplitude
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: attackerShakeAmplitude
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: fadeColorStartDuration
@@ -864,15 +904,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedRotationDuration
-      value: 0.15
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackerMovementDuration
-      value: 1
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackerRotationDuration
-      value: 0.15
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5126082985376314701, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_AnchorMax.y
@@ -901,6 +941,10 @@ PrefabInstance:
     - target: {fileID: 5141649329702234183, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 5141649329702234183, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 5745179788667139426, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -945,6 +989,10 @@ PrefabInstance:
     - target: {fileID: 7850210266704907563, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -250
+      objectReference: {fileID: 0}
+    - target: {fileID: 7850210266704907563, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 8273937336626556995, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_AnchorMax.x
