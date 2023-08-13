@@ -871,8 +871,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textFadeStart
+      value: 0.495
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: textRotateEase
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: colorStandard.a
@@ -900,7 +904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedMovement
-      value: 50
+      value: 76
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedRotation
@@ -919,8 +923,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2041086250}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: textFadeDuration
+      value: 0.203
+      objectReference: {fileID: 0}
+    - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: textMoveDuration
-      value: 0.5
+      value: 0.747
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: textOriginalSize
@@ -996,7 +1004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedMovementDuration
-      value: 0.2
+      value: 0.397
       objectReference: {fileID: 0}
     - target: {fileID: 5073459675851280951, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: attackedRotationDuration

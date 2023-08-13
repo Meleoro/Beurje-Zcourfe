@@ -74,6 +74,8 @@ public class UIBattleAttack : MonoBehaviour
     [Range(0, 360)] public float textOriginalRot;
     [Range(0, 360)] public float textEndRot;
     [Range(0f, 1f)] public float textMoveDuration;
+    [Range(0f, 1f)] public float textFadeStart;    // Time before the fade out start
+    [Range(0f, 1f)] public float textFadeDuration;
     public Ease textMoveEase;
     public Ease textRotateEase;
 
@@ -135,7 +137,7 @@ public class UIBattleAttack : MonoBehaviour
         
         StartCoroutine(CharacterFeel(leftOrigin));
 
-        TextFeel(leftOrigin, miss, crit, damage, false, false);
+        StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
 
         yield return new WaitForSeconds(1.3f);
 
@@ -260,7 +262,7 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // MANAGE THE DAMAGE TEXT
-    public void TextFeel(bool leftOrigin, bool miss, bool crit, int damage, bool isSummon, bool isHeal)
+    public IEnumerator TextFeel(bool leftOrigin, bool miss, bool crit, int damage, bool isSummon, bool isHeal)
     {
         if (leftOrigin)
         {
@@ -326,7 +328,10 @@ public class UIBattleAttack : MonoBehaviour
                 damageNumber.color = colorMissAttack;
             }
         }
-       
+
+        yield return new WaitForSeconds(textFadeStart);
+
+        damageNumber.DOFade(0, textFadeDuration);
     }
 
 
