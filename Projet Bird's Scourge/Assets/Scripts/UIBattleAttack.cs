@@ -274,6 +274,8 @@ public class UIBattleAttack : MonoBehaviour
         Image attackedImage = leftChara;
         DataUnit attackedData = leftData;
 
+        int rightModificator = -1;
+
 
         if (leftOrigin)
         {
@@ -284,6 +286,8 @@ public class UIBattleAttack : MonoBehaviour
             attackedParent = rightCharaParent;
             attackedImage = rightChara;
             attackedData = rightData;
+
+            rightModificator = 1;
         }
 
         if (CompetenceType.miss != currentCompetenceType)
@@ -300,11 +304,11 @@ public class UIBattleAttack : MonoBehaviour
             }
         }
 
-        attackerParent.DOMoveX(attackerParent.position.x + attackerMovement + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOMoveX(attackedParent.position.x + attackedMovement + rightWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
+        attackerParent.DOMoveX(attackerParent.position.x + (attackerMovement * rightModificator) + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOMoveX(attackedParent.position.x + (attackedMovement * rightModificator) + rightWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
 
-        attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation), attackerRotationDuration).SetEase(attackerRotationEase);
-        attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation), attackedRotationDuration).SetEase(attackedRotationEase);
+        attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
+        attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
 
         attackerParent.DOScale(Vector3.one * (attackerScale * attackerData.attackSpriteSize), attackerScaleDuration);
         attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration);
