@@ -90,6 +90,16 @@ public class UIBattleAttack : MonoBehaviour
     float rightWidthOffset;
     float rightHeightOffset;
 
+    public enum CompetenceType
+    {
+        attack,
+        attackCrit,
+        miss,
+        heal,
+        summon,
+        buff
+    }
+
 
     [Header("References")] 
     public TextMeshProUGUI damageNumber;
@@ -144,17 +154,24 @@ public class UIBattleAttack : MonoBehaviour
     // WHEN THE ATTACK UI HAS TO APPEAR
     public IEnumerator AttackUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int damage, bool miss, bool crit)
     {
+        CompetenceType currentCompetenceType = CompetenceType.attack;
+
+        if (miss) currentCompetenceType = CompetenceType.miss;
+
+        else if (crit) currentCompetenceType = CompetenceType.attackCrit;
+
+
         if (leftOrigin)
             SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData);
         
         else
             SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
         
-        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, miss));
+        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
 
-        StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin));
+        StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin, currentCompetenceType));
 
         yield return new WaitForSeconds(1.3f);
 
@@ -165,11 +182,13 @@ public class UIBattleAttack : MonoBehaviour
     // WHEN THE SUMMON UI HAS TO APPEAR
     public IEnumerator SummonUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin)
     {
+        CompetenceType currentCompetenceType = CompetenceType.summon;
+
         SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData);
 
-        CharacterFeel(false, leftData, rightData, false);
-        
-        TextFeel(false, false, false, 0, true, false);
+        StartCoroutine(CharacterFeel(false, leftData, rightData, currentCompetenceType));
+
+        StartCoroutine(TextFeel(false, false, false, 0, true, false));
         
         yield return new WaitForSeconds(1.5f);
 
@@ -180,15 +199,17 @@ public class UIBattleAttack : MonoBehaviour
     // WHEN THE BUFF / HEAL UI HAS TO APPEAR
     public IEnumerator HealUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit)
     {
+        CompetenceType currentCompetenceType = CompetenceType.heal;
+
         if (leftOrigin)
             SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData);
 
         else
             SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
 
-        CharacterFeel(leftOrigin, leftData, rightData, miss);
+        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType));
 
-        TextFeel(leftOrigin, miss, crit, healValue, false, true);
+        StartCoroutine(TextFeel(leftOrigin, miss, crit, healValue, false, true));
 
         yield return new WaitForSeconds(1.5f);
 
@@ -243,7 +264,7 @@ public class UIBattleAttack : MonoBehaviour
 
 
     // GENERATE THE MOVEMENT OF THE CHARACTERS
-    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData, bool miss)
+    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData, CompetenceType currentCompetenceType)
     {
         RectTransform attackerParent = rightCharaParent;
         Image attackerImage = rightChara;
@@ -265,10 +286,18 @@ public class UIBattleAttack : MonoBehaviour
             attackedData = rightData;
         }
 
-        if (!miss)
+        if (CompetenceType.miss != currentCompetenceType)
         {
-            attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
-            attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
+            if(CompetenceType.attackCrit == currentCompetenceType)
+            {
+                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1.2f, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
+                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1.2f, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
+            }
+            else
+            {
+                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
+                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
+            }
         }
 
         attackerParent.DOMoveX(attackerParent.position.x + attackerMovement + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
@@ -288,8 +317,12 @@ public class UIBattleAttack : MonoBehaviour
 
 
         Color wantedColor = colorDamage;
-        if (miss)
+
+        if (CompetenceType.miss == currentCompetenceType)
             wantedColor = colorMissAttack;
+
+        else if (CompetenceType.attackCrit == currentCompetenceType)
+            wantedColor = colorCritAttack;
 
 
         attackedImage.material.SetColor("_Color", colorStandard);
@@ -422,7 +455,7 @@ public class UIBattleAttack : MonoBehaviour
 
 
     // CREATES THE GHOST TRAIL ON THE ATTACKED UNIT
-    public IEnumerator GhostTrail(int iterations, float durationBetween, float ghostDuration, bool leftOrigin)
+    public IEnumerator GhostTrail(int iterations, float durationBetween, float ghostDuration, bool leftOrigin, CompetenceType currentCompetenceType)
     {
         while (iterations > 0)
         {
@@ -446,8 +479,16 @@ public class UIBattleAttack : MonoBehaviour
                 currentGhost.sprite = leftChara.sprite;
             }
 
+            Color wantedColor = colorDamage;
+
+            if (currentCompetenceType == CompetenceType.miss)
+                wantedColor = colorMissAttack;
+
+            if (currentCompetenceType == CompetenceType.attackCrit)
+                wantedColor = colorCritAttack;
+
             currentGhost.DOFade(1, ghostDuration).OnComplete(() => { currentGhost.DOFade(0, 0.2f); });
-            currentGhost.material.SetColor("_Color", colorDamage);
+            currentGhost.material.SetColor("_Color", wantedColor);
 
             yield return new WaitForSeconds(durationBetween);
         }
