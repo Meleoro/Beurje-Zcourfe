@@ -29,6 +29,8 @@ public class UIBattleAttack : MonoBehaviour
     public Ease attackedMovementEase;
     private float originalXLeft;
     private float originalXRight;
+    private float originalYLeft;
+    private float originalYRight;
 
     [Header("Rotation")]
     [Range(-20f, 20f)] public float attackerRotation = 0;
@@ -106,15 +108,17 @@ public class UIBattleAttack : MonoBehaviour
     {
         attackUI.gameObject.SetActive(false);
 
+        originalXLeft = leftCharaParent.transform.position.x;
+        originalXRight = rightCharaParent.transform.position.x;
+
+        originalYLeft = leftCharaParent.transform.position.y;
+        originalYRight = rightCharaParent.transform.position.y;
     }
 
 
     // SETUP EVERY ALPHAS WHEN THE SCENE START
     public void AttackUISetup()
     {
-        originalXLeft = leftCharaParent.transform.position.x;
-        originalXRight = rightCharaParent.transform.position.x;
-
         attackFond.DOFade(0, 0);
 
         leftChara.material.SetFloat("_Alpha", 0);
@@ -146,7 +150,7 @@ public class UIBattleAttack : MonoBehaviour
         else
             SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
         
-        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData));
+        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, miss));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
 
@@ -163,7 +167,7 @@ public class UIBattleAttack : MonoBehaviour
     {
         SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData);
 
-        CharacterFeel(false, leftData, rightData);
+        CharacterFeel(false, leftData, rightData, false);
         
         TextFeel(false, false, false, 0, true, false);
         
@@ -182,7 +186,7 @@ public class UIBattleAttack : MonoBehaviour
         else
             SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
 
-        CharacterFeel(leftOrigin, leftData, rightData);
+        CharacterFeel(leftOrigin, leftData, rightData, miss);
 
         TextFeel(leftOrigin, miss, crit, healValue, false, true);
 
@@ -219,8 +223,8 @@ public class UIBattleAttack : MonoBehaviour
         leftCharaParent.localScale = Vector3.one * leftData.attackSpriteSize;
         rightCharaParent.localScale = Vector3.one * rightData.attackSpriteSize;
 
-        leftCharaParent.position = new Vector3(originalXLeft + leftWidthOffset, leftCharaParent.position.y + leftHeightOffset, leftCharaParent.position.z);
-        rightCharaParent.position = new Vector3(originalXRight + rightWidthOffset, rightCharaParent.position.y + rightHeightOffset, rightCharaParent.position.z);
+        leftCharaParent.position = new Vector3(originalXLeft + leftWidthOffset, originalYLeft + leftHeightOffset, leftCharaParent.position.z);
+        rightCharaParent.position = new Vector3(originalXRight + rightWidthOffset, originalYRight + rightHeightOffset, rightCharaParent.position.z);
 
         attackFond.DOFade(0.8f, apparitionFadeDuration);
 
@@ -239,7 +243,7 @@ public class UIBattleAttack : MonoBehaviour
 
 
     // GENERATE THE MOVEMENT OF THE CHARACTERS
-    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData)
+    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData, bool miss)
     {
         RectTransform attackerParent = rightCharaParent;
         Image attackerImage = rightChara;
@@ -261,8 +265,11 @@ public class UIBattleAttack : MonoBehaviour
             attackedData = rightData;
         }
 
-        attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
-        attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
+        if (!miss)
+        {
+            attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
+            attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
+        }
 
         attackerParent.DOMoveX(attackerParent.position.x + attackerMovement + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
         attackedParent.DOMoveX(attackedParent.position.x + attackedMovement + rightWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
@@ -279,9 +286,15 @@ public class UIBattleAttack : MonoBehaviour
                 attackerImage.material.SetColor("_Color", colorAttacker);
             });
 
+
+        Color wantedColor = colorDamage;
+        if (miss)
+            wantedColor = colorMissAttack;
+
+
         attackedImage.material.SetColor("_Color", colorStandard);
         Color colorAttacked = attackedImage.material.GetColor("_Color");
-        DOTween.To(() => colorAttacked, x => colorAttacked = x, colorDamage, flickerColorDuration)
+        DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
             .OnUpdate(() => {
                 attackedImage.material.SetColor("_Color", colorAttacked);
             });
@@ -391,9 +404,6 @@ public class UIBattleAttack : MonoBehaviour
         CameraManager.Instance.ExitCameraBattle();
         
         yield return new WaitForSeconds(0.1f);
-
-        leftCharaParent.position = new Vector3(originalXLeft, leftCharaParent.position.y, leftCharaParent.position.z);
-        rightCharaParent.position = new Vector3(originalXRight, rightCharaParent.position.y, rightCharaParent.position.z);
 
         AttackUISetup();
         attackUI.gameObject.SetActive(false);
