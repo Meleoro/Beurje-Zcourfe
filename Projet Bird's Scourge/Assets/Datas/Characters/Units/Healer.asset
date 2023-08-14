@@ -24,6 +24,7 @@ MonoBehaviour:
   competence2Data: {fileID: 11400000, guid: e85f4681074c6f94ba97d1dd1bad5968, type: 2}
   levelUnlockPassif: 0
   passifData: {fileID: 0}
+  attackSpriteSize: 1
   levels:
   - level: 0
     PV: 7

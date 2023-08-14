@@ -127,19 +127,19 @@ public class Ennemy : MonoBehaviour
             if (Random.Range(0, 100) <= attackCriticalRate) 
             {
                 attackedUnit.TakeDamages(attackDamage * 2);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data.damageSprite, data.attackSprite, false,attackDamage * 2,false,true));
+                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage * 2,false,true));
             }
             // si ce n'est pas un critique
             else 
             {
                 attackedUnit.TakeDamages(attackDamage);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data.damageSprite, data.attackSprite, false,attackDamage,false,false)); 
+                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage,false,false)); 
             }
         }
         // Si c'est un miss
         else 
         { 
-            StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data.damageSprite, data.attackSprite, false,0,true,false));
+            StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,0,true,false));
         }
 
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
@@ -156,7 +156,7 @@ public class Ennemy : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(UIBattleManager.Instance.attackScript.SummonUIFeel(
-            currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data.damageSprite, data.attackSprite));
+            currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data, data, false));
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
         

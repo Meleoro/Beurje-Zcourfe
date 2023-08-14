@@ -80,6 +80,15 @@ public class UIBattleAttack : MonoBehaviour
     public Ease textRotateEase;
 
 
+    [Header("Other")]
+    float currentWidthRatio;
+    float currentHeightRatio;
+    float leftWidthOffset;
+    float leftHeightOffset;
+    float rightWidthOffset;
+    float rightHeightOffset;
+
+
     [Header("References")] 
     public TextMeshProUGUI damageNumber;
     public RectTransform attackUI;
@@ -91,11 +100,6 @@ public class UIBattleAttack : MonoBehaviour
     public GameObject ghostPrefab;
     public Transform ghostParentLeft;
     public Transform ghostParentRight;
-
-
-    [Header("Autres")] 
-    private float currentWidthRatio;     // Used to keep the movements the same whatever the size in pixel of the screen
-    private float currentHeightRatio;
 
 
     public void Start()
@@ -134,11 +138,15 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE ATTACK UI HAS TO APPEAR
-    public IEnumerator AttackUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftOrigin, int damage, bool miss, bool crit)
+    public IEnumerator AttackUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int damage, bool miss, bool crit)
     {
-        SetupFeel(leftSprite, rightSprite);
+        if (leftOrigin)
+            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData);
         
-        StartCoroutine(CharacterFeel(leftOrigin));
+        else
+            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
+        
+        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
 
@@ -151,11 +159,11 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE SUMMON UI HAS TO APPEAR
-    public IEnumerator SummonUIFeel(Sprite leftSprite, Sprite rightSprite)
+    public IEnumerator SummonUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin)
     {
-        SetupFeel(leftSprite, rightSprite);
+        SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData);
 
-        CharacterFeel(false);
+        CharacterFeel(false, leftData, rightData);
         
         TextFeel(false, false, false, 0, true, false);
         
@@ -166,11 +174,15 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE BUFF / HEAL UI HAS TO APPEAR
-    public IEnumerator HealUIFeel(Sprite leftSprite, Sprite rightSprite, bool leftOrigin, int healValue, bool miss, bool crit)
+    public IEnumerator HealUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit)
     {
-        SetupFeel(leftSprite, rightSprite);
-        
-        CharacterFeel(leftOrigin);
+        if (leftOrigin)
+            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData);
+
+        else
+            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
+
+        CharacterFeel(leftOrigin, leftData, rightData);
 
         TextFeel(leftOrigin, miss, crit, healValue, false, true);
 
@@ -182,10 +194,17 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // SETUP THE DIFFERENT ELEMENTS
-    public void SetupFeel(Sprite leftSprite, Sprite rightSprite)
+    public void SetupFeel(Sprite leftSprite, Sprite rightSprite, DataUnit leftData, DataUnit rightData)
     {
         currentWidthRatio = CameraManager.Instance.screenWidth / 800;
         currentHeightRatio = CameraManager.Instance.screenHeight / 300;
+
+        leftWidthOffset = 800 * leftData.XPosModificator;
+        leftHeightOffset = 300 * leftData.YPosModificator;
+
+        rightWidthOffset = 800 * rightData.XPosModificator;
+        rightHeightOffset = 300 * rightData.YPosModificator;
+
 
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
@@ -196,6 +215,12 @@ public class UIBattleAttack : MonoBehaviour
 
         leftChara.sprite = leftSprite;
         rightChara.sprite = rightSprite;
+
+        leftCharaParent.localScale = Vector3.one * leftData.attackSpriteSize;
+        rightCharaParent.localScale = Vector3.one * rightData.attackSpriteSize;
+
+        leftCharaParent.position = new Vector3(originalXLeft + leftWidthOffset, leftCharaParent.position.y + leftHeightOffset, leftCharaParent.position.z);
+        rightCharaParent.position = new Vector3(originalXRight + rightWidthOffset, rightCharaParent.position.y + rightHeightOffset, rightCharaParent.position.z);
 
         attackFond.DOFade(0.8f, apparitionFadeDuration);
 
@@ -214,34 +239,39 @@ public class UIBattleAttack : MonoBehaviour
 
 
     // GENERATE THE MOVEMENT OF THE CHARACTERS
-    public IEnumerator CharacterFeel(bool leftOrigin)
+    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData)
     {
         RectTransform attackerParent = rightCharaParent;
         Image attackerImage = rightChara;
+        DataUnit attackerData = rightData;
 
         RectTransform attackedParent = leftCharaParent;
         Image attackedImage = leftChara;
+        DataUnit attackedData = leftData;
+
 
         if (leftOrigin)
         {
             attackerParent = leftCharaParent;
             attackerImage = leftChara;
+            attackerData = leftData;
 
             attackedParent = rightCharaParent;
             attackedImage = rightChara;
+            attackedData = rightData;
         }
 
         attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
         attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
 
-        attackerParent.DOMoveX(attackerParent.position.x + attackerMovement * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOMoveX(attackedParent.position.x + attackedMovement * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
+        attackerParent.DOMoveX(attackerParent.position.x + attackerMovement + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOMoveX(attackedParent.position.x + attackedMovement + rightWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
 
         attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation), attackerRotationDuration).SetEase(attackerRotationEase);
         attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation), attackedRotationDuration).SetEase(attackedRotationEase);
 
-        attackerParent.DOScale(Vector3.one * attackerScale, attackerScaleDuration);
-        attackedParent.DOScale(Vector3.one * attackedScale, attackedScaleDuration);
+        attackerParent.DOScale(Vector3.one * (attackerScale * attackerData.attackSpriteSize), attackerScaleDuration);
+        attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration);
 
         Color colorAttacker = attackerImage.material.GetColor("_Color");
         DOTween.To(() => colorAttacker, x => colorAttacker = x, colorStandard, fadeColorStartDuration)
@@ -381,7 +411,7 @@ public class UIBattleAttack : MonoBehaviour
     }
 
 
-    // CREATES THE GHOST TRAIL
+    // CREATES THE GHOST TRAIL ON THE ATTACKED UNIT
     public IEnumerator GhostTrail(int iterations, float durationBetween, float ghostDuration, bool leftOrigin)
     {
         while (iterations > 0)

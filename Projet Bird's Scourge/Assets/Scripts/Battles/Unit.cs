@@ -125,19 +125,19 @@ public class Unit : MonoBehaviour
                         clickedEnnemy.TakeDamages(attackDamage * 2);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
                         
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,attackDamage * 2,false,true));
+                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true,attackDamage * 2,false,true));
                     }
                     else // si ce n'est pas un critique
                     {
                         clickedEnnemy.TakeDamages(attackDamage);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
             
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true, attackDamage,false,false)); 
+                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, attackDamage,false,false)); 
                     }
                 }
                 else // Si c'est un miss
                 {
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true, 0,true,false));
+                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, 0,true,false));
                 }
                 
                 UIBattleManager.Instance.UpdateTurnUI();
@@ -169,7 +169,7 @@ public class Unit : MonoBehaviour
                 int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
                 
                 clickedUnit.currentHealth += addedPV;
-                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data.attackSprite, clickedUnit.data.attackSprite, true, addedPV, false, false));
+                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data, clickedUnit.data, true, addedPV, false, false));
                 
                 UIBattleManager.Instance.UpdateTurnUI();
                 //StartCoroutine(BattleManager.Instance.NextTurn());
