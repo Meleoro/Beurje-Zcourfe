@@ -62,8 +62,8 @@ public class UIBattleAttack : MonoBehaviour
     public Color colorNormalAttack;
     public Color colorMissAttack;
     public Color colorCritAttack;
-    public Color colorNormalHeal;
-    public Color colorCritHeal;
+    public Color colorNormalHealText;
+    public Color colorCritHealText;
     public Color colorSummonText;
 
     [Header("Text Feel")]
@@ -207,7 +207,7 @@ public class UIBattleAttack : MonoBehaviour
         else
             SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
 
-        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType));
+        StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, healValue, false, true));
 
@@ -328,6 +328,70 @@ public class UIBattleAttack : MonoBehaviour
         else if (CompetenceType.attackCrit == currentCompetenceType)
             wantedColor = colorCritAttack;
 
+        else if (CompetenceType.heal == currentCompetenceType)
+            wantedColor = colorHeal;
+
+
+        attackedImage.material.SetColor("_Color", colorStandard);
+        Color colorAttacked = attackedImage.material.GetColor("_Color");
+        DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
+            .OnUpdate(() => {
+                attackedImage.material.SetColor("_Color", colorAttacked);
+            });
+
+        yield return new WaitForSeconds(flickerColorDuration);
+
+        colorAttacked = attackedImage.material.GetColor("_Color");
+        DOTween.To(() => colorAttacked, x => colorAttacked = x, colorStandard, flickerColorDuration)
+            .OnUpdate(() => {
+                attackedImage.material.SetColor("_Color", colorAttacked);
+            });
+    }
+
+
+    public IEnumerator CharacterFeelHeal(bool leftOrigin, DataUnit leftData, DataUnit rightData, CompetenceType currentCompetenceType)
+    {
+        RectTransform attackerParent = rightCharaParent;
+        Image attackerImage = rightChara;
+        DataUnit attackerData = rightData;
+
+        RectTransform attackedParent = leftCharaParent;
+        Image attackedImage = leftChara;
+        DataUnit attackedData = leftData;
+
+        int rightModificator = -1;
+
+
+        if (leftOrigin)
+        {
+            attackerParent = leftCharaParent;
+            attackerImage = leftChara;
+            attackerData = leftData;
+
+            attackedParent = rightCharaParent;
+            attackedImage = rightChara;
+            attackedData = rightData;
+
+            rightModificator = 1;
+        }
+
+        attackerParent.DOMoveX(attackerParent.position.x + (attackerMovement * rightModificator) + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOMoveX(attackedParent.position.x + (attackedMovement * rightModificator) + rightWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
+
+        attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
+        attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
+
+        attackerParent.DOScale(Vector3.one * (attackerScale * attackerData.attackSpriteSize), attackerScaleDuration);
+        attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration);
+
+        Color colorAttacker = attackerImage.material.GetColor("_Color");
+        DOTween.To(() => colorAttacker, x => colorAttacker = x, colorStandard, fadeColorStartDuration)
+            .OnUpdate(() => {
+                attackerImage.material.SetColor("_Color", colorAttacker);
+            });
+
+
+        Color wantedColor = colorHeal;
 
         attackedImage.material.SetColor("_Color", colorStandard);
         Color colorAttacked = attackedImage.material.GetColor("_Color");
@@ -391,7 +455,7 @@ public class UIBattleAttack : MonoBehaviour
                     damageNumber.text = "CRIT " + damage.ToString();
 
                     if (isHeal)
-                        damageNumber.color = colorCritHeal;
+                        damageNumber.color = colorCritHealText;
 
                     else
                         damageNumber.color = colorCritAttack;
@@ -401,7 +465,7 @@ public class UIBattleAttack : MonoBehaviour
                     damageNumber.text = damage.ToString();
 
                     if (isHeal)
-                        damageNumber.color = colorNormalHeal;
+                        damageNumber.color = colorNormalHealText;
 
                     else
                         damageNumber.color = colorNormalAttack;

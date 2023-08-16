@@ -85,11 +85,14 @@ public class Unit : MonoBehaviour
         switch (competenceUsed.levels[competenceLevel].newEffet)
         {
             case DataCompetence.Effets.none :
-                StartCoroutine(AttackEnnemies(clickedEnnemy, competenceTiles, competenceUsed, competenceLevel));
+                if(clickedEnnemy != null)
+                    StartCoroutine(AttackEnnemies(clickedEnnemy, competenceTiles, competenceUsed, competenceLevel));
                 break;
             
+
             case DataCompetence.Effets.soin :
-                StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
+                if(clickedUnit != null)
+                    StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
                 break;
         }
     }
