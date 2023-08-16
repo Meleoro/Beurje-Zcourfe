@@ -304,8 +304,8 @@ public class UIBattleAttack : MonoBehaviour
             }
         }
 
-        attackerParent.DOMoveX(attackerParent.position.x + (attackerMovement * rightModificator) + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOMoveX(attackedParent.position.x + (attackedMovement * rightModificator) + rightWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
+        attackerParent.DOMoveX(attackerParent.position.x + (attackerMovement * rightModificator * currentWidthRatio) + leftWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOMoveX(attackedParent.position.x + (attackedMovement * rightModificator * currentWidthRatio) + rightWidthOffset, attackedMovementDuration).SetEase(attackedMovementEase);
 
         attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
         attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
