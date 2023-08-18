@@ -110,7 +110,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 0}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -149,12 +150,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54bc8f94a106a9440b028032aad96f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startTurnDuration: 0.3
+  offsetPosStart: {x: -0.3, y: -0.3}
   canMove: 1
   moveSpeed: 2.5
   smoothMoveFactor: 0.5
-  canZoom: 1
   zoomSpeed: 3
   smoothZoomFactor: 0.1
   maxZoom: 5
   minZoom: 1.5
+  _camera: {fileID: 0}
   worldUI: {fileID: 0}
+  screenWidth: 0
+  screenHeight: 0

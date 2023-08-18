@@ -1,0 +1,59 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class UIVfxManager : MonoBehaviour
+{
+    public static UIVfxManager Instance;
+
+    [Header("Parameters")] 
+    [SerializeField] private float attackFrameDuration;
+    
+    [Header("ReferencesVFX")] 
+    [SerializeField] private List<Sprite> VFXSlash;
+    [SerializeField] private List<Sprite> VFXBam;
+    [SerializeField] private List<Sprite> VFXHeal;
+
+    [Header("ReferencesUI")] 
+    [SerializeField] private Image leftAttackVFXImage;
+    [SerializeField] private Image rightAttackVFXImage;
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        
+        else
+            Destroy(gameObject);
+    }
+
+
+    
+    public void DOSlash(Vector2 imagePos, bool leftOrigin)
+    {
+        if (!leftOrigin)
+        {
+            leftAttackVFXImage.rectTransform.position = imagePos;
+            StartCoroutine(DoVFXSprite(VFXSlash, leftAttackVFXImage, attackFrameDuration));
+        }
+        else
+        {
+            rightAttackVFXImage.rectTransform.position = imagePos;
+            StartCoroutine(DoVFXSprite(VFXSlash, rightAttackVFXImage, attackFrameDuration));       
+        }
+    }
+    
+
+    private IEnumerator DoVFXSprite(List<Sprite> sprites, Image modifiedImage, float frameDuration)
+    {
+        for (int i = 0; i < sprites.Count; i++)
+        {
+            modifiedImage.sprite = sprites[i];
+            
+            yield return new WaitForSeconds(frameDuration);
+        }
+    }
+}

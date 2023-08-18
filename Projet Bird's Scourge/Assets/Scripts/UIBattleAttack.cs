@@ -561,4 +561,18 @@ public class UIBattleAttack : MonoBehaviour
             yield return new WaitForSeconds(durationBetween);
         }
     }
+    
+    
+    // MANAGES THE VFX TO LAUNCH
+    private void LaunchVFX(bool leftOrigin, CompetenceType currentCompetenceType)
+    {
+        Vector2 wantedPos = leftCharaParent.position;
+        if (leftOrigin)
+            wantedPos = rightCharaParent.position;
+
+        if (currentCompetenceType == CompetenceType.attack)
+        {
+            UIVfxManager.Instance.DOSlash(wantedPos, leftOrigin);
+        }
+    }
 }
