@@ -1076,6 +1076,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7850210266704907563, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -200
+      objectReference: {fileID: 0}
     - target: {fileID: 8059869477020156271, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_Camera
       value: 

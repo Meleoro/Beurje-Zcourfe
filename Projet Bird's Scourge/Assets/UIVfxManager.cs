@@ -28,6 +28,9 @@ public class UIVfxManager : MonoBehaviour
         
         else
             Destroy(gameObject);
+
+        leftAttackVFXImage.enabled = false;
+        rightAttackVFXImage.enabled = false;
     }
 
 
@@ -36,12 +39,16 @@ public class UIVfxManager : MonoBehaviour
     {
         if (!leftOrigin)
         {
+            leftAttackVFXImage.enabled = true;
             leftAttackVFXImage.rectTransform.position = imagePos;
+            
             StartCoroutine(DoVFXSprite(VFXSlash, leftAttackVFXImage, attackFrameDuration));
         }
         else
         {
+            rightAttackVFXImage.enabled = true;
             rightAttackVFXImage.rectTransform.position = imagePos;
+            
             StartCoroutine(DoVFXSprite(VFXSlash, rightAttackVFXImage, attackFrameDuration));       
         }
     }
@@ -55,5 +62,8 @@ public class UIVfxManager : MonoBehaviour
             
             yield return new WaitForSeconds(frameDuration);
         }
+        
+        leftAttackVFXImage.enabled = false;
+        rightAttackVFXImage.enabled = false;
     }
 }

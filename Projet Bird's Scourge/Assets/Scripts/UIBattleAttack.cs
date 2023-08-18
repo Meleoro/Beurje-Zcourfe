@@ -85,10 +85,10 @@ public class UIBattleAttack : MonoBehaviour
     [Header("Other")]
     float currentWidthRatio;
     float currentHeightRatio;
-    float leftWidthOffset;
-    float leftHeightOffset;
-    float rightWidthOffset;
-    float rightHeightOffset;
+    float attackerWidthOffset;
+    float attackerHeightOffset;
+    float attackedWidthOffset;
+    float attackedHeightOffset;
 
     public enum CompetenceType
     {
@@ -118,11 +118,11 @@ public class UIBattleAttack : MonoBehaviour
     {
         attackUI.gameObject.SetActive(false);
 
-        originalXLeft = leftCharaParent.transform.position.x;
-        originalXRight = rightCharaParent.transform.position.x;
+        originalXLeft = leftCharaParent.localPosition.x;
+        originalXRight = rightCharaParent.localPosition.x;
 
-        originalYLeft = leftCharaParent.transform.position.y;
-        originalYRight = rightCharaParent.transform.position.y;
+        originalYLeft = leftCharaParent.localPosition.y;
+        originalYRight = rightCharaParent.localPosition.y;
     }
 
 
@@ -162,16 +162,18 @@ public class UIBattleAttack : MonoBehaviour
 
 
         if (leftOrigin)
-            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData);
+            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData, leftOrigin);
         
         else
-            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
+            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
         
         StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
 
         StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin, currentCompetenceType));
+        
+        LaunchVFX(leftOrigin, currentCompetenceType);
 
         yield return new WaitForSeconds(1.3f);
 
@@ -184,7 +186,7 @@ public class UIBattleAttack : MonoBehaviour
     {
         CompetenceType currentCompetenceType = CompetenceType.summon;
 
-        SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData);
+        SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
 
         StartCoroutine(CharacterFeel(false, leftData, rightData, currentCompetenceType));
 
@@ -202,10 +204,10 @@ public class UIBattleAttack : MonoBehaviour
         CompetenceType currentCompetenceType = CompetenceType.heal;
 
         if (leftOrigin)
-            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData);
+            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData, leftOrigin);
 
         else
-            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData);
+            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
 
         StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
@@ -219,17 +221,10 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // SETUP THE DIFFERENT ELEMENTS
-    public void SetupFeel(Sprite leftSprite, Sprite rightSprite, DataUnit leftData, DataUnit rightData)
+    public void SetupFeel(Sprite leftSprite, Sprite rightSprite, DataUnit leftData, DataUnit rightData, bool leftOrigin)
     {
         currentWidthRatio = CameraManager.Instance.screenWidth / 800;
         currentHeightRatio = CameraManager.Instance.screenHeight / 300;
-
-        leftWidthOffset = 800 * leftData.XPosModificator;
-        leftHeightOffset = 300 * leftData.YPosModificator;
-
-        rightWidthOffset = 800 * rightData.XPosModificator;
-        rightHeightOffset = 300 * rightData.YPosModificator;
-
 
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
@@ -244,8 +239,28 @@ public class UIBattleAttack : MonoBehaviour
         leftCharaParent.localScale = Vector3.one * leftData.attackSpriteSize;
         rightCharaParent.localScale = Vector3.one * rightData.attackSpriteSize;
 
-        leftCharaParent.position = new Vector3(originalXLeft + leftWidthOffset, originalYLeft + leftHeightOffset, leftCharaParent.position.z);
-        rightCharaParent.position = new Vector3(originalXRight + rightWidthOffset, originalYRight + rightHeightOffset, rightCharaParent.position.z);
+        if (leftOrigin)
+        {
+            attackerWidthOffset = 800 * leftData.XPosModificator;
+            attackerHeightOffset = 300 * leftData.YPosModificator;
+
+            attackedWidthOffset = 800 * rightData.XPosModificator;
+            attackedHeightOffset = 300 * rightData.YPosModificator;
+
+            leftCharaParent.localPosition = new Vector3(originalXLeft + attackerWidthOffset, originalYLeft + attackerHeightOffset, leftCharaParent.position.z);
+            rightCharaParent.localPosition = new Vector3(originalXRight + attackedWidthOffset, originalYRight + attackedHeightOffset, rightCharaParent.position.z);
+        }
+        else
+        {
+            attackerWidthOffset = 800 * rightData.XPosModificator;
+            attackerHeightOffset = 300 * rightData.YPosModificator;
+
+            attackedWidthOffset = 800 * leftData.XPosModificator;
+            attackedHeightOffset = 300 * leftData.YPosModificator;
+
+            leftCharaParent.localPosition = new Vector3(originalXLeft + attackedWidthOffset, originalYLeft + attackedHeightOffset, leftCharaParent.position.z);
+            rightCharaParent.localPosition = new Vector3(originalXRight + attackerWidthOffset, originalYRight + attackerHeightOffset, rightCharaParent.position.z);
+        }
 
         attackFond.DOFade(0.8f, apparitionFadeDuration);
 
@@ -289,26 +304,28 @@ public class UIBattleAttack : MonoBehaviour
 
             rightModificator = 1;
         }
+        
+        
 
         if (CompetenceType.miss != currentCompetenceType)
         {
             if(CompetenceType.attackCrit == currentCompetenceType)
             {
-                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1.2f, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
-                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1.2f, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
+                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackerShakeVibrato);
+                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackedShakeVibrato);
             }
             else
             {
-                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackerShakeVibrato);
-                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * attackedShakeAmplitude * currentWidthRatio, attackedShakeVibrato);
+                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackerShakeVibrato);
+                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackedShakeVibrato);
             }
         }
 
-        attackerParent.DOMoveX(attackerParent.position.x + (attackerMovement * rightModificator * currentWidthRatio) + leftWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOMoveX(attackedParent.position.x + (attackedMovement * rightModificator * currentWidthRatio) + rightWidthOffset, attackedMovementDuration).SetEase(attackedMovementEase);
+        attackerParent.DOLocalMoveX(attackerParent.localPosition.x + (attackerMovement * rightModificator * currentWidthRatio) + attackerWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOLocalMoveX(attackedParent.localPosition.x + (attackedMovement * rightModificator * currentWidthRatio) + attackedWidthOffset, attackedMovementDuration).SetEase(attackedMovementEase);
 
-        attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
-        attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
+        attackerParent.DOLocalRotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
+        attackedParent.DOLocalRotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
 
         attackerParent.DOScale(Vector3.one * (attackerScale * attackerData.attackSpriteSize), attackerScaleDuration);
         attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration);
@@ -375,8 +392,8 @@ public class UIBattleAttack : MonoBehaviour
             rightModificator = 1;
         }
 
-        attackerParent.DOMoveX(attackerParent.position.x + (attackerMovement * rightModificator) + leftWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOMoveX(attackedParent.position.x + (attackedMovement * rightModificator) + rightWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
+        attackerParent.DOLocalMoveX(attackerParent.position.x + (attackerMovement * rightModificator) + attackerWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackedParent.DOLocalMoveX(attackedParent.position.x + (attackedMovement * rightModificator) + attackedWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
 
         attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
         attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
@@ -415,12 +432,12 @@ public class UIBattleAttack : MonoBehaviour
     {
         if (leftOrigin)
         {
-            damageNumber.rectTransform.position = new Vector3(textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
+            damageNumber.rectTransform.localPosition = new Vector3(textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
             damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, -textOriginalRot);
             damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
 
-            damageNumber.rectTransform.DOMoveX(textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
-            damageNumber.rectTransform.DOMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveX(textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
 
             damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
@@ -428,12 +445,12 @@ public class UIBattleAttack : MonoBehaviour
         }
         else
         {
-            damageNumber.rectTransform.position = new Vector3(800 - textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
+            damageNumber.rectTransform.localPosition = new Vector3(800 - textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
             damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, textOriginalRot);
             damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
 
-            damageNumber.rectTransform.DOMoveX(800 - textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
-            damageNumber.rectTransform.DOMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveX(800 - textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
 
             damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
