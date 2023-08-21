@@ -358,6 +358,7 @@ public class BattleManager : MonoBehaviour
         if (order[0].CompareTag("Unit"))
         {
             order[0].GetComponent<Unit>().EndTurn();
+            GainMana(1);
         }
         
         else if (order[0].CompareTag("Ennemy"))
@@ -365,9 +366,10 @@ public class BattleManager : MonoBehaviour
             
         }
         
+        MouseManager.Instance.ResetSelection();
+        
         order.RemoveAt(0);
         
-        GainMana(1);
         ActualiseOrder();
         
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(MouseManager.Instance.selectedUnit);

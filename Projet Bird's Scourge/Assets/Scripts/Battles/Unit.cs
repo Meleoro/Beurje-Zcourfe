@@ -322,6 +322,9 @@ public class Unit : MonoBehaviour
     public void EndTurn()
     {
         mustBeSelected = false;
+        
+        DesactivateOutline();
+        DeselectUnit();
     }
 
     public void SelectUnit()

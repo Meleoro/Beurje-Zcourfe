@@ -398,7 +398,7 @@ public class MouseManager : MonoBehaviour
     
         
     // WHEN THE PLAYER DESELECT A CHARACTER
-    private void StopSelection()
+    public void StopSelection()
     {
         competenceSelect = false;
         competenceDisplayed = false;
@@ -408,6 +408,22 @@ public class MouseManager : MonoBehaviour
         
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
         ManageOverlayTiles();
+    }
+
+    public void ResetSelection()
+    {
+        competenceSelect = false;
+        competenceDisplayed = false;
+        
+        unitSelect = false;
+        selectedUnit = null;
+
+        currentOverlayedUnit = null;
+        currentOverlayedEnnemy = null;
+        
+        UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
+        ManageOverlayTiles();
+        ManageOverlayUnit(null, null, false);
     }
 
     
