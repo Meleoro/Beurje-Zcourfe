@@ -14,7 +14,7 @@ public class UIVfxManager : MonoBehaviour
     [Header("ReferencesVFX")] 
     [SerializeField] private List<Sprite> VFXSlash;
     [SerializeField] private List<Sprite> VFXBam;
-    [SerializeField] private List<Sprite> VFXHeal;
+    [SerializeField] private GameObject VFXHeal;
 
     [Header("ReferencesUI")] 
     [SerializeField] private Image leftAttackVFXImage;
@@ -50,6 +50,21 @@ public class UIVfxManager : MonoBehaviour
             rightAttackVFXImage.rectTransform.position = imagePos;
             
             StartCoroutine(DoVFXSprite(VFXSlash, rightAttackVFXImage, attackFrameDuration));       
+        }
+    }
+
+    public void DoHeal(RectTransform parentLeft, RectTransform parentRight, bool leftOrigin)
+    {
+        if (leftOrigin)
+        {
+            GameObject currentVFX = Instantiate(VFXHeal, parentRight.position, Quaternion.identity, parentRight);
+            Destroy(currentVFX, 2f);
+        }
+
+        else
+        {
+            GameObject currentVFX = Instantiate(VFXHeal, parentLeft.localPosition, Quaternion.identity, parentLeft);
+            Destroy(currentVFX, 2f);
         }
     }
     

@@ -213,6 +213,8 @@ public class UIBattleAttack : MonoBehaviour
         StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, healValue, false, true));
+        
+        LaunchVFX(leftOrigin, currentCompetenceType);
 
         yield return new WaitForSeconds(1.5f);
 
@@ -425,14 +427,14 @@ public class UIBattleAttack : MonoBehaviour
             rightModificator = 1;
         }
 
-        attackerParent.DOLocalMoveX(attackerParent.position.x + (attackerMovement * rightModificator) + attackerWidthOffset * currentWidthRatio, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOLocalMoveX(attackedParent.position.x + (attackedMovement * rightModificator) + attackedWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
+        attackerParent.DOLocalMoveX(attackerParent.localPosition.x + (attackerMovement * rightModificator * currentWidthRatio) + attackerWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
+        //attackedParent.DOLocalMoveX(attackedParent.localPosition.x + (-attackedMovement * rightModificator) + attackedWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
 
         attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
         attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
 
         attackerParent.DOScale(Vector3.one * (attackerScale * attackerData.attackSpriteSize), attackerScaleDuration);
-        attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration);
+        attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration * 3f).SetEase(Ease.OutElastic);
 
         Color colorAttacker = attackerImage.material.GetColor("_Color");
         DOTween.To(() => colorAttacker, x => colorAttacker = x, colorStandard, fadeColorStartDuration)
@@ -652,6 +654,11 @@ public class UIBattleAttack : MonoBehaviour
         if (currentCompetenceType == CompetenceType.attack)
         {
             UIVfxManager.Instance.DOSlash(wantedPos, leftOrigin);
+        }
+        
+        else if (currentCompetenceType == CompetenceType.heal)
+        {
+            UIVfxManager.Instance.DoHeal(ghostParentLeft.GetComponent<RectTransform>(), ghostParentRight.GetComponent<RectTransform>(), leftOrigin);
         }
     }
 }
