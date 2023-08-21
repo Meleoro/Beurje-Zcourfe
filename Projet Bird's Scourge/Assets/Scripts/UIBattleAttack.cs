@@ -266,13 +266,13 @@ public class UIBattleAttack : MonoBehaviour
         attackFond.DOFade(0.8f, apparitionFadeDuration);
 
         float fadeLeft = leftChara.material.GetFloat("_Alpha");
-        DOTween.To(() => fadeLeft, x => fadeLeft = x, 1, fadeColorStartDuration)
+        DOTween.To(() => fadeLeft, x => fadeLeft = x, 1, fadeColorStartDuration * 0.25f)
             .OnUpdate(() => {
                 leftChara.material.SetFloat("_Alpha", fadeLeft);
             });
 
         float fadeRight = rightChara.material.GetFloat("_Alpha");
-        DOTween.To(() => fadeRight, x => fadeRight = x, 1, fadeColorStartDuration)
+        DOTween.To(() => fadeRight, x => fadeRight = x, 1, fadeColorStartDuration * 0.25f)
             .OnUpdate(() => {
                 rightChara.material.SetFloat("_Alpha", fadeRight);
             });
@@ -510,25 +510,49 @@ public class UIBattleAttack : MonoBehaviour
     // FADES OUT OF THE ATTACK UI
     public IEnumerator EndFeel()
     {
-        attackFond.DOFade(0f, 0.1f);
-
         float fadeLeft = leftChara.material.GetFloat("_Alpha");
-        DOTween.To(() => fadeLeft, x => fadeLeft = x, 0, fadeColorEndDuration)
+        DOTween.To(() => fadeLeft, x => fadeLeft = x, 0.5f, fadeColorEndDuration)
             .OnUpdate(() => {
                 leftChara.material.SetFloat("_Alpha", fadeLeft);
             });
 
         float fadeRight = rightChara.material.GetFloat("_Alpha");
-        DOTween.To(() => fadeRight, x => fadeRight = x, 0, fadeColorEndDuration)
+        DOTween.To(() => fadeRight, x => fadeRight = x, 0.5f, fadeColorEndDuration)
             .OnUpdate(() => {
                 rightChara.material.SetFloat("_Alpha", fadeRight);
             });
-
+        
+        
+        Color colorLeft = leftChara.material.GetColor("_Color");
+        DOTween.To(() => colorLeft, x => colorLeft = x, colorEnd, fadeColorEndDuration)
+            .OnUpdate(() => {
+                leftChara.material.SetColor("_Color", colorLeft);
+            });
+        
+        Color colorRight = rightChara.material.GetColor("_Color");
+        DOTween.To(() => colorRight, x => colorRight = x, colorEnd, fadeColorEndDuration)
+            .OnUpdate(() => {
+                rightChara.material.SetColor("_Color", colorRight);
+            });
+        
+        
+        leftCharaParent.DOLocalMoveX(leftCharaParent.localPosition.x + (-50 * currentWidthRatio), fadeColorEndDuration).SetEase(attackerMovementEase);
+        rightCharaParent.DOLocalMoveX(rightCharaParent.localPosition.x + (50 * currentWidthRatio), fadeColorEndDuration).SetEase(attackerMovementEase);
+        
+        leftCharaParent.DOScale(leftCharaParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
+        rightCharaParent.DOScale(rightCharaParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
+        
+        attackFond.DOFade(0f, fadeColorEndDuration + 0.01f);
+        
+        
+        yield return new WaitForSeconds(fadeColorEndDuration * 0.5f);
 
         CameraManager.Instance.ExitCameraBattle();
         
-        yield return new WaitForSeconds(0.1f);
+        
+        yield return new WaitForSeconds(fadeColorEndDuration * 0.5f + 0.01f);
 
+        
         AttackUISetup();
         attackUI.gameObject.SetActive(false);
         MouseManager.Instance.noControl = false;

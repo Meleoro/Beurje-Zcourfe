@@ -199,11 +199,18 @@ public class Ennemy : MonoBehaviour
     {
         currentHealth -= damages;
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
-            BattleManager.Instance.RemoveEnnemy(this);
-            Destroy(gameObject);
+            Death();
         }
+    }
+
+    public void Death()
+    {
+        DesactivateFlicker();
+        
+        BattleManager.Instance.RemoveEnnemy(this);
+        Destroy(gameObject);
     }
     
     
