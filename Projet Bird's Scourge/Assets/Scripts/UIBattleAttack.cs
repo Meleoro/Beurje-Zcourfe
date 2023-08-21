@@ -103,6 +103,7 @@ public class UIBattleAttack : MonoBehaviour
 
     [Header("References")] 
     public TextMeshProUGUI damageNumber;
+    public RectTransform attackUIParent;
     public RectTransform attackUI;
     public RectTransform leftCharaParent;
     public RectTransform rightCharaParent;
@@ -430,14 +431,19 @@ public class UIBattleAttack : MonoBehaviour
     // MANAGE THE DAMAGE TEXT
     public IEnumerator TextFeel(bool leftOrigin, bool miss, bool crit, int damage, bool isSummon, bool isHeal)
     {
+        Vector3 posLeftBottomCorner = new Vector3(-attackUIParent.rect.width * 0.5f, -attackUIParent.rect.height * 0.5f, 0);
+
         if (leftOrigin)
         {
-            damageNumber.rectTransform.localPosition = new Vector3(textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
+            Vector3 pos1 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYOrigin / 300), 0);
+            Vector3 pos2 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXEnd / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYEnd / 300), 0);
+            
+            damageNumber.rectTransform.localPosition = pos1;
             damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, -textOriginalRot);
             damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
 
-            damageNumber.rectTransform.DOLocalMoveX(textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
-            damageNumber.rectTransform.DOLocalMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveX(pos2.x, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveY(pos2.y, textMoveDuration).SetEase(textMoveEase);
 
             damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
@@ -445,12 +451,12 @@ public class UIBattleAttack : MonoBehaviour
         }
         else
         {
-            damageNumber.rectTransform.localPosition = new Vector3(800 - textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
+            damageNumber.rectTransform.localPosition = posLeftBottomCorner + new Vector3(800 - textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
             damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, textOriginalRot);
             damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
 
             damageNumber.rectTransform.DOLocalMoveX(800 - textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
-            damageNumber.rectTransform.DOLocalMoveY(textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveY(-300 + textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
 
             damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
