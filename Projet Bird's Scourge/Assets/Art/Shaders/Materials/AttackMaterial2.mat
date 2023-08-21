@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AttackMaterial 1
+  m_Name: AttackMaterial2
   m_Shader: {fileID: -6465566751694194690, guid: 227cc67838524a241a05b7f8644a82ce, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: db17a109af54b78488d92d0621937e6d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 519416998eeb81044ae4adcefd1a1c80, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -54,9 +54,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 0
+    - _DissolveColorScale: 0.02
+    - _DissolveScale: 30
+    - _DissolveValue: 1
     - _EnableExternalAlpha: 0
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _DissolveColor: {r: 11.31371, g: 0, b: 0, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

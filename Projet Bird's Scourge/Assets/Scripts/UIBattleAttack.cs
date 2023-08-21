@@ -168,7 +168,7 @@ public class UIBattleAttack : MonoBehaviour
         else
             SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
         
-        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType));
+        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType, deadEnnemy));
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
 
@@ -189,7 +189,7 @@ public class UIBattleAttack : MonoBehaviour
 
         SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
 
-        StartCoroutine(CharacterFeel(false, leftData, rightData, currentCompetenceType));
+        StartCoroutine(CharacterFeel(false, leftData, rightData, currentCompetenceType, false));
 
         StartCoroutine(TextFeel(false, false, false, 0, true, false));
         
@@ -276,11 +276,14 @@ public class UIBattleAttack : MonoBehaviour
             .OnUpdate(() => {
                 rightChara.material.SetFloat("_Alpha", fadeRight);
             });
+        
+        leftChara.material.SetFloat("_DissolveValue", 0);
+        rightChara.material.SetFloat("_DissolveValue", 0);
     }
 
 
     // GENERATE THE MOVEMENT OF THE CHARACTERS
-    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData, CompetenceType currentCompetenceType)
+    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData, CompetenceType currentCompetenceType, bool deathBlow)
     {
         RectTransform attackerParent = rightCharaParent;
         Image attackerImage = rightChara;
@@ -338,34 +341,63 @@ public class UIBattleAttack : MonoBehaviour
             });
 
 
-        Color wantedColor = colorDamage;
+        if (!deathBlow)
+        {
+            Color wantedColor = colorDamage;
 
-        if (CompetenceType.miss == currentCompetenceType)
-            wantedColor = colorMissAttack;
+            if (CompetenceType.miss == currentCompetenceType)
+                wantedColor = colorMissAttack;
 
-        else if (CompetenceType.attackCrit == currentCompetenceType)
-            wantedColor = colorCritAttack;
+            else if (CompetenceType.attackCrit == currentCompetenceType)
+                wantedColor = colorCritAttack;
 
-        else if (CompetenceType.heal == currentCompetenceType)
-            wantedColor = colorHeal;
+            else if (CompetenceType.heal == currentCompetenceType)
+                wantedColor = colorHeal;
 
 
-        attackedImage.material.SetColor("_Color", colorStandard);
-        Color colorAttacked = attackedImage.material.GetColor("_Color");
-        DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
-            .OnUpdate(() => {
-                attackedImage.material.SetColor("_Color", colorAttacked);
-            });
+            attackedImage.material.SetColor("_Color", colorStandard);
+            Color colorAttacked = attackedImage.material.GetColor("_Color");
+            DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
+                .OnUpdate(() => {
+                    attackedImage.material.SetColor("_Color", colorAttacked);
+                });
 
-        yield return new WaitForSeconds(flickerColorDuration);
+            yield return new WaitForSeconds(flickerColorDuration);
 
-        colorAttacked = attackedImage.material.GetColor("_Color");
-        DOTween.To(() => colorAttacked, x => colorAttacked = x, colorStandard, flickerColorDuration)
-            .OnUpdate(() => {
-                attackedImage.material.SetColor("_Color", colorAttacked);
-            });
+            colorAttacked = attackedImage.material.GetColor("_Color");
+            DOTween.To(() => colorAttacked, x => colorAttacked = x, colorStandard, flickerColorDuration)
+                .OnUpdate(() => {
+                    attackedImage.material.SetColor("_Color", colorAttacked);
+                });
+        }
+
+        else
+        {
+            Color wantedColor = colorDamage;
+
+            attackedImage.material.SetColor("_Color", colorStandard);
+            Color colorAttacked = attackedImage.material.GetColor("_Color");
+            DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
+                .OnUpdate(() => {
+                    attackedImage.material.SetColor("_Color", colorAttacked);
+                });
+
+            yield return new WaitForSeconds(flickerColorDuration);
+            
+            float dissoveValue = attackedImage.material.GetFloat("_DissolveValue");
+            DOTween.To(() => dissoveValue, x => dissoveValue = x, 1, flickerColorDuration * 3)
+                .OnUpdate(() => {
+                    attackedImage.material.SetFloat("_DissolveValue", dissoveValue);
+                });
+
+
+            colorAttacked = attackedImage.material.GetColor("_Color");
+            DOTween.To(() => colorAttacked, x => colorAttacked = x, colorEnd, flickerColorDuration)
+                .OnUpdate(() => {
+                    attackedImage.material.SetColor("_Color", colorAttacked);
+                });
+        }
     }
-
 
     public IEnumerator CharacterFeelHeal(bool leftOrigin, DataUnit leftData, DataUnit rightData, CompetenceType currentCompetenceType)
     {

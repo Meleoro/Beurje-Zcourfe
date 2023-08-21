@@ -892,6 +892,10 @@ PrefabInstance:
       propertyPath: tilesMovementColorSelected.r
       value: 0.5896226
       objectReference: {fileID: 0}
+    - target: {fileID: 1946965769018530418, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 731f85a3a6f1baa4a9d3ee7cced7ee7e, type: 2}
     - target: {fileID: 2026886303022342793, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
       propertyPath: m_RootOrder
       value: 2
