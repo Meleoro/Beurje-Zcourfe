@@ -125,22 +125,22 @@ public class Unit : MonoBehaviour
                 {
                     if (Random.Range(0, 100) <= attackCriticalRate) // Si c'est un critique
                     {
-                        clickedEnnemy.TakeDamages(attackDamage * 2);
+                        bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage * 2);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
                         
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true,attackDamage * 2,false,true));
+                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true,attackDamage * 2,false,true, deadEnnemy));
                     }
                     else // si ce n'est pas un critique
                     {
-                        clickedEnnemy.TakeDamages(attackDamage);
+                        bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
             
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, attackDamage,false,false)); 
+                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, attackDamage,false,false, deadEnnemy)); 
                     }
                 }
                 else // Si c'est un miss
                 {
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, 0,true,false));
+                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, 0,true,false, false));
                 }
                 
                 UIBattleManager.Instance.UpdateTurnUI();
@@ -193,16 +193,26 @@ public class Unit : MonoBehaviour
 
     
     // REDUCE THE HEALTH OF THE UNIT AND VERIFY IF HE IS DEAD
-    public void TakeDamages(int damages)
+    public bool TakeDamages(int damages)
     {
         currentHealth -= damages;
 
         if (currentHealth <= 0)
         {
-            BattleManager.Instance.RemoveUnit(this);
-            Destroy(gameObject);
+            Death();
+
+            return true;
         }
+
+        return false;
     }
+    
+    public void Death()
+    {
+        BattleManager.Instance.RemoveUnit(this);
+        Destroy(gameObject);
+    }
+
     
     
     //--------------------------TILES PART------------------------------

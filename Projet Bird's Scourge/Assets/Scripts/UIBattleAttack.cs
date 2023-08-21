@@ -153,7 +153,7 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE ATTACK UI HAS TO APPEAR
-    public IEnumerator AttackUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int damage, bool miss, bool crit)
+    public IEnumerator AttackUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int damage, bool miss, bool crit, bool deadEnnemy)
     {
         CompetenceType currentCompetenceType = CompetenceType.attack;
 

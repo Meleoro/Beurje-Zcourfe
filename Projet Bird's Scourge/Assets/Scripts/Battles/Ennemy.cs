@@ -126,20 +126,20 @@ public class Ennemy : MonoBehaviour
             // Si c'est un critique
             if (Random.Range(0, 100) <= attackCriticalRate) 
             {
-                attackedUnit.TakeDamages(attackDamage * 2);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage * 2,false,true));
+                bool deadUnit = attackedUnit.TakeDamages(attackDamage * 2);
+                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage * 2,false,true, deadUnit));
             }
             // si ce n'est pas un critique
             else 
             {
-                attackedUnit.TakeDamages(attackDamage);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage,false,false)); 
+                bool deadUnit = attackedUnit.TakeDamages(attackDamage);
+                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage,false,false, deadUnit)); 
             }
         }
         // Si c'est un miss
         else 
         { 
-            StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,0,true,false));
+            StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,0,true,false, false));
         }
 
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
@@ -195,14 +195,18 @@ public class Ennemy : MonoBehaviour
     
     
     // REDUCE THE HEALTH OF THE ENNEMY AND VERIFY IF HE IS DEAD
-    public void TakeDamages(int damages)
+    public bool TakeDamages(int damages)
     {
         currentHealth -= damages;
 
         if (currentHealth <= 0)
         {
             Death();
+
+            return true;
         }
+
+        return false;
     }
 
     public void Death()
