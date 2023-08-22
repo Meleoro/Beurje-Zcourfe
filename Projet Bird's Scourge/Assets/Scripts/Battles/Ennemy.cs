@@ -60,11 +60,15 @@ public class Ennemy : MonoBehaviour
 
 
     // EXECUTE THE ENNEMY'S TURN
-    public void DoTurn()
+    public IEnumerator DoTurn()
     {
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         FindTilesAtRange();
+        
+        MouseManager.Instance.SelectEnnemy(this);
 
+        yield return new WaitForSeconds(1);
+    
         List<OverlayTile> moveTileAttackTile = new List<OverlayTile>();
 
         bool isSummon = false;
@@ -179,7 +183,7 @@ public class Ennemy : MonoBehaviour
         positions.Add(transform.position);
         positions.Add(currentCompetenceTile.transform.position);
         
-        CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+        StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
         
         // Tile
         currentCompetenceTile.LaunchFlicker(0.5f, MouseManager.Instance.tilesAttackColorOver);

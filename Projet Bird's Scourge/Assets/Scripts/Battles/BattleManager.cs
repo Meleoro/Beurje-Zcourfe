@@ -339,7 +339,7 @@ public class BattleManager : MonoBehaviour
         
         else if (order[0].CompareTag("Ennemy"))
         {
-            order[0].GetComponent<Ennemy>().DoTurn();
+            StartCoroutine(order[0].GetComponent<Ennemy>().DoTurn());
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         }
 
@@ -388,7 +388,7 @@ public class BattleManager : MonoBehaviour
         
         else if (order[0].CompareTag("Ennemy"))
         {
-            order[0].GetComponent<Ennemy>().DoTurn();
+            StartCoroutine(order[0].GetComponent<Ennemy>().DoTurn());
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         }
 

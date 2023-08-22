@@ -134,6 +134,8 @@ public class MouseManager : MonoBehaviour
 
                         break;
                     }
+                    
+                    SelectEnnemy(clickedObject.GetComponent<Ennemy>());
                 }
 
                 else if (unitSelect && clickedObject.CompareTag("Tile") && !competenceSelect)
@@ -255,7 +257,7 @@ public class MouseManager : MonoBehaviour
         if (!click)
         {
             // If nothing is selected
-            if (currentUnit == null && currentEnnemy == null)
+            if (currentUnit is null && currentEnnemy is null)
             {
                 if (!unitSelect)
                 {
@@ -386,7 +388,7 @@ public class MouseManager : MonoBehaviour
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
 
         StartCoroutine(effectMaker.SquishTransform(currentUnit.transform, 1.2f, 0.07f));
-        CameraManager.Instance.SelectUnit(currentUnit);
+        CameraManager.Instance.SelectCharacter(currentUnit, null);
         
         currentUnit.SelectUnit();
 
@@ -394,6 +396,23 @@ public class MouseManager : MonoBehaviour
         unitSelect = true;
 
         ManageOverlayUnit(currentUnit, null, true);
+    }
+    
+    
+    // SETUP EVERYTHING WHEN WE WANT TO SELECT AN ENNEMY
+    public void SelectEnnemy(Ennemy currentEnnemy)
+    {
+        UIBattleManager.Instance.OpenUnitInfos(currentEnnemy.data, null, currentEnnemy);
+
+        StartCoroutine(effectMaker.SquishTransform(currentEnnemy.transform, 1.2f, 0.07f));
+        CameraManager.Instance.SelectCharacter(null, currentEnnemy);
+        
+        //currentEnnemy.SelectUnit();
+
+        competenceSelect = false;
+        unitSelect = true;
+
+        ManageOverlayUnit(null, currentEnnemy, true);
     }
     
         
@@ -417,6 +436,8 @@ public class MouseManager : MonoBehaviour
         
         unitSelect = false;
         selectedUnit = null;
+        
+        selectedEnnemy = null;
 
         currentOverlayedUnit = null;
         currentOverlayedEnnemy = null;

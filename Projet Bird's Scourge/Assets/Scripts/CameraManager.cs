@@ -93,12 +93,23 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    public void SelectUnit(Unit unit)
+    public void SelectCharacter(Unit unit, Ennemy ennemy)
     {
         canMove = false;
-        
-        Vector2 newPos = (Vector2)unit.transform.position + offsetPosStart;
-        float newSize = unit.data.levels[unit.CurrentLevel].PM * 0.2f + 2.5f;
+
+        Vector2 newPos = Vector2.zero;
+        float newSize = 0;
+
+        if (unit is not null)
+        {
+            newPos = (Vector2)unit.transform.position + offsetPosStart;
+            newSize = unit.data.levels[unit.CurrentLevel].PM * 0.2f + 2.5f;
+        }
+        else
+        {
+            newPos = (Vector2)ennemy.transform.position + offsetPosStart;
+            newSize = ennemy.data.levels[ennemy.CurrentLevel].PM * 0.2f + 2.5f;
+        }
 
         transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), startTurnDuration).OnComplete((() => canMove = true));
         _camera.DOOrthoSize(newSize, startTurnDuration);
@@ -109,8 +120,10 @@ public class CameraManager : MonoBehaviour
     
     
     // MOVE THE CAMERA TO ZOOM ON ALL THE UNITS CONCERNED BY THE ATTACK
-    public void EnterCameraBattle(List<Vector2> unitsPositions, float duration)
+    public IEnumerator EnterCameraBattle(List<Vector2> unitsPositions, float duration, float noControlTime)
     {
+        canMove = false;
+        
         savePos = transform.position;
         saveSize = _camera.orthographicSize;
         
@@ -127,7 +140,10 @@ public class CameraManager : MonoBehaviour
 
         transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), duration);
         _camera.DOOrthoSize(newSize, duration);
+
+        yield return new WaitForSeconds(noControlTime);
         
+        canMove = true;
     }
 
     

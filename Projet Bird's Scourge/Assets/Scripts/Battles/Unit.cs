@@ -102,8 +102,7 @@ public class Unit : MonoBehaviour
     public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
         MouseManager.Instance.noControl = true;
-        CameraManager.Instance.canMove = false;
-        
+
         if (competenceTiles.Contains(clickedEnnemy.currentTile))
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
@@ -113,7 +112,7 @@ public class Unit : MonoBehaviour
                 positions.Add(transform.position);
                 positions.Add(clickedEnnemy.transform.position);
 
-                CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+                StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
 
                 yield return new WaitForSeconds(1f);
                 
@@ -154,8 +153,7 @@ public class Unit : MonoBehaviour
     public IEnumerator UseCompetence(Unit clickedUnit, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
         MouseManager.Instance.noControl = true;
-        CameraManager.Instance.canMove = false;
-        
+
         if (competenceTiles.Contains(clickedUnit.currentTile))
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
@@ -165,7 +163,7 @@ public class Unit : MonoBehaviour
                 positions.Add(transform.position);
                 positions.Add(clickedUnit.transform.position);
 
-                CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+                StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
 
                 yield return new WaitForSeconds(1f);
 
