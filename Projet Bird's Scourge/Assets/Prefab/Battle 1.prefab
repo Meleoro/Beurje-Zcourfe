@@ -1115,8 +1115,8 @@ MonoBehaviour:
   colorNormalAttack: {r: 1, g: 0, b: 0, a: 1}
   colorMissAttack: {r: 0, g: 0.36626983, b: 1, a: 1}
   colorCritAttack: {r: 1, g: 0.49922678, b: 0, a: 1}
-  colorNormalHealText: {r: 0, g: 0, b: 0, a: 0}
-  colorCritHealText: {r: 0, g: 0, b: 0, a: 0}
+  colorNormalHealText: {r: 0.18280916, g: 0.5849056, b: 0, a: 1}
+  colorCritHealText: {r: 0, g: 1, b: 0.18060637, a: 1}
   colorSummonText: {r: 0.6313726, g: 0, b: 1, a: 1}
   textXOrigin: 570
   textXEnd: 723
@@ -9198,7 +9198,13 @@ MonoBehaviour:
   - {fileID: 532048598, guid: f3d1e0221d74ffe429187501c4f56c28, type: 3}
   - {fileID: 797912958, guid: f3d1e0221d74ffe429187501c4f56c28, type: 3}
   - {fileID: 1874507618, guid: f3d1e0221d74ffe429187501c4f56c28, type: 3}
-  VFXBam: []
+  VFXBam:
+  - {fileID: -1039637168, guid: 637ab27c601a64b44861fb185bc49a78, type: 3}
+  - {fileID: -801238691, guid: 637ab27c601a64b44861fb185bc49a78, type: 3}
+  - {fileID: 1602576873, guid: 637ab27c601a64b44861fb185bc49a78, type: 3}
+  - {fileID: 1894903164, guid: 637ab27c601a64b44861fb185bc49a78, type: 3}
+  - {fileID: 1823510726, guid: 637ab27c601a64b44861fb185bc49a78, type: 3}
+  - {fileID: -410014898, guid: 637ab27c601a64b44861fb185bc49a78, type: 3}
   VFXHeal: {fileID: 3672715016231226723, guid: f468ff17abe10b84e82a37abe52968ba, type: 3}
   leftAttackVFXImage: {fileID: 1663036505282007136}
   rightAttackVFXImage: {fileID: 5912094426241627423}

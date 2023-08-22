@@ -52,6 +52,25 @@ public class UIVfxManager : MonoBehaviour
             StartCoroutine(DoVFXSprite(VFXSlash, rightAttackVFXImage, attackFrameDuration));       
         }
     }
+    
+    
+    public void DOBam(Vector2 imagePos, bool leftOrigin)
+    {
+        if (!leftOrigin)
+        {
+            leftAttackVFXImage.enabled = true;
+            leftAttackVFXImage.rectTransform.position = imagePos;
+            
+            StartCoroutine(DoVFXSprite(VFXBam, leftAttackVFXImage, attackFrameDuration));
+        }
+        else
+        {
+            rightAttackVFXImage.enabled = true;
+            rightAttackVFXImage.rectTransform.position = imagePos;
+            
+            StartCoroutine(DoVFXSprite(VFXBam, rightAttackVFXImage, attackFrameDuration));       
+        }
+    }
 
     public void DoHeal(RectTransform parentLeft, RectTransform parentRight, bool leftOrigin)
     {

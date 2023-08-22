@@ -666,7 +666,7 @@ public class UIBattleAttack : MonoBehaviour
 
         if (currentCompetenceType == CompetenceType.attack)
         {
-            UIVfxManager.Instance.DOSlash(wantedPos, leftOrigin);
+            UIVfxManager.Instance.DOBam(wantedPos, leftOrigin);
         }
         
         else if (currentCompetenceType == CompetenceType.heal)
