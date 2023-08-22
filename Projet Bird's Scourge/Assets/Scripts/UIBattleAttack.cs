@@ -466,11 +466,17 @@ public class UIBattleAttack : MonoBehaviour
     public IEnumerator TextFeel(bool leftOrigin, bool miss, bool crit, int damage, bool isSummon, bool isHeal)
     {
         Vector3 posLeftBottomCorner = new Vector3(-attackUIParent.rect.width * 0.5f, -attackUIParent.rect.height * 0.5f, 0);
+        float healModificator = 1;
+
+        if (isHeal || isSummon)
+        {
+            healModificator = 0.8f;
+        }
 
         if (leftOrigin)
         {
             Vector3 pos1 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYOrigin / 300), 0);
-            Vector3 pos2 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXEnd / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYEnd / 300), 0);
+            Vector3 pos2 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXEnd * healModificator / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYEnd / 300), 0);
             
             damageNumber.rectTransform.localPosition = pos1;
             damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, -textOriginalRot);
@@ -481,20 +487,23 @@ public class UIBattleAttack : MonoBehaviour
 
             damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
-            damageNumber.rectTransform.DORotate(new Vector3(0, 0, -textEndRot), textMoveDuration).SetEase(textRotateEase);
+            damageNumber.rectTransform.DORotate(new Vector3(0, 0, -textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
         }
         else
         {
-            damageNumber.rectTransform.localPosition = posLeftBottomCorner + new Vector3(800 - textXOrigin * currentWidthRatio, textYOrigin * currentHeightRatio, 0);
+            Vector3 pos1 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(-posLeftBottomCorner.y, posLeftBottomCorner.y, textYOrigin / 300), 0);
+            Vector3 pos2 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXEnd * healModificator / 800), Mathf.Lerp(-posLeftBottomCorner.y, posLeftBottomCorner.y, textYEnd / 300), 0);
+            
+            damageNumber.rectTransform.localPosition = pos1;
             damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, textOriginalRot);
             damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
 
-            damageNumber.rectTransform.DOLocalMoveX(800 - textXEnd * currentWidthRatio, textMoveDuration).SetEase(textMoveEase);
-            damageNumber.rectTransform.DOLocalMoveY(-300 + textYEnd * currentHeightRatio, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveX(pos2.x, textMoveDuration).SetEase(textMoveEase);
+            damageNumber.rectTransform.DOLocalMoveY(pos2.y, textMoveDuration).SetEase(textMoveEase);
 
             damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
-            damageNumber.rectTransform.DORotate(new Vector3(0, 0, textEndRot), textMoveDuration).SetEase(textRotateEase);
+            damageNumber.rectTransform.DORotate(new Vector3(0, 0, textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
         }
 
 
