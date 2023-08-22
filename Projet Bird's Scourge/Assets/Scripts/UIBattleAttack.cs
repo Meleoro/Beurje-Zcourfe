@@ -153,7 +153,7 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE ATTACK UI HAS TO APPEAR
-    public IEnumerator AttackUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int damage, bool miss, bool crit, bool deadEnnemy)
+    public IEnumerator AttackUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int damage, bool miss, bool crit, bool deadEnnemy, DataCompetence.VFXTypes VFXType)
     {
         CompetenceType currentCompetenceType = CompetenceType.attack;
 
@@ -174,7 +174,7 @@ public class UIBattleAttack : MonoBehaviour
 
         StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin, currentCompetenceType));
         
-        LaunchVFX(leftOrigin, currentCompetenceType);
+        LaunchVFX(leftOrigin, VFXType);
 
         yield return new WaitForSeconds(1.3f);
 
@@ -183,7 +183,7 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE SUMMON UI HAS TO APPEAR
-    public IEnumerator SummonUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin)
+    public IEnumerator SummonUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, DataCompetence.VFXTypes VFXType)
     {
         CompetenceType currentCompetenceType = CompetenceType.summon;
 
@@ -200,7 +200,7 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // WHEN THE BUFF / HEAL UI HAS TO APPEAR
-    public IEnumerator HealUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit)
+    public IEnumerator HealUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit, DataCompetence.VFXTypes VFXType)
     {
         CompetenceType currentCompetenceType = CompetenceType.heal;
 
@@ -214,7 +214,7 @@ public class UIBattleAttack : MonoBehaviour
 
         StartCoroutine(TextFeel(leftOrigin, miss, crit, healValue, false, true));
         
-        LaunchVFX(leftOrigin, currentCompetenceType);
+        LaunchVFX(leftOrigin, VFXType);
 
         yield return new WaitForSeconds(1.5f);
 
@@ -658,18 +658,23 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // MANAGES THE VFX TO LAUNCH
-    private void LaunchVFX(bool leftOrigin, CompetenceType currentCompetenceType)
+    private void LaunchVFX(bool leftOrigin, DataCompetence.VFXTypes currentVFXType)
     {
         Vector2 wantedPos = leftCharaParent.position;
         if (leftOrigin)
             wantedPos = rightCharaParent.position;
 
-        if (currentCompetenceType == CompetenceType.attack)
+        if (currentVFXType == DataCompetence.VFXTypes.bam)
         {
             UIVfxManager.Instance.DOBam(wantedPos, leftOrigin);
         }
         
-        else if (currentCompetenceType == CompetenceType.heal)
+        else if (currentVFXType == DataCompetence.VFXTypes.slash)
+        {
+            UIVfxManager.Instance.DOSlash(wantedPos, leftOrigin);
+        }
+        
+        else if (currentVFXType == DataCompetence.VFXTypes.heal)
         {
             UIVfxManager.Instance.DoHeal(ghostParentLeft.GetComponent<RectTransform>(), ghostParentRight.GetComponent<RectTransform>(), leftOrigin);
         }

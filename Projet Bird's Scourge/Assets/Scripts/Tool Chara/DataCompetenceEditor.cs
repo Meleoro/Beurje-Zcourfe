@@ -16,6 +16,8 @@ public class DataCompetenceEditor : Editor
 
     [Header("General")] 
     private SerializedProperty propName;
+    private SerializedProperty VFXType;
+    
     private SerializedProperty propDegatsMax;
     private SerializedProperty propCooldown;
     
@@ -45,6 +47,8 @@ public class DataCompetenceEditor : Editor
         currentScript = target as DataCompetence;
 
         propName = so.FindProperty("competenceName");
+        VFXType = so.FindProperty("VFXType");
+        
         propDegatsMax = so.FindProperty("degatsMax");
         propCooldown = so.FindProperty("cooldown");
         
@@ -83,6 +87,7 @@ public class DataCompetenceEditor : Editor
             GUILayout.Space(3);
             
             EditorGUILayout.PropertyField(propName);
+            EditorGUILayout.PropertyField(VFXType);
         }
         
         GUILayout.Space(10);

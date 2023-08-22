@@ -40,10 +40,18 @@ public class DataCompetence : ScriptableObject
         lignesDroites,
         diagonales,
     }
+    
+    public enum VFXTypes
+    {
+        slash,
+        bam,
+        heal
+    }
 
     
     //[Header("General")]
     public string competenceName;
+    public VFXTypes VFXType;
    
 
     //[Header("LevelUp")] 
