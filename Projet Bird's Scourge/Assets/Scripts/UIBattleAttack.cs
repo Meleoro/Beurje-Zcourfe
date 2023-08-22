@@ -189,7 +189,7 @@ public class UIBattleAttack : MonoBehaviour
 
         SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
 
-        StartCoroutine(CharacterFeel(false, leftData, rightData, currentCompetenceType, false));
+        StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
         StartCoroutine(TextFeel(false, false, false, 0, true, false));
         
@@ -442,9 +442,13 @@ public class UIBattleAttack : MonoBehaviour
                 attackerImage.material.SetColor("_Color", colorAttacker);
             });
 
-
+        
         Color wantedColor = colorHeal;
 
+        if (currentCompetenceType == CompetenceType.summon)
+            wantedColor = colorSummon;
+
+        
         attackedImage.material.SetColor("_Color", colorStandard);
         Color colorAttacked = attackedImage.material.GetColor("_Color");
         DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
@@ -491,8 +495,8 @@ public class UIBattleAttack : MonoBehaviour
         }
         else
         {
-            Vector3 pos1 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(-posLeftBottomCorner.y, posLeftBottomCorner.y, textYOrigin / 300), 0);
-            Vector3 pos2 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXEnd * healModificator / 800), Mathf.Lerp(-posLeftBottomCorner.y, posLeftBottomCorner.y, textYEnd / 300), 0);
+            Vector3 pos1 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYOrigin / 300), 0);
+            Vector3 pos2 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXEnd * healModificator / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYEnd / 300), 0);
             
             damageNumber.rectTransform.localPosition = pos1;
             damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, textOriginalRot);
