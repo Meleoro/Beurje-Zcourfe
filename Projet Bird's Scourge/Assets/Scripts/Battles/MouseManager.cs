@@ -628,21 +628,24 @@ public class MouseManager : MonoBehaviour
     {
         if (unitSelect && !competenceSelect)
         {
-            if (tilesAtRangeDisplayed.Contains(focusedTile))
+            if (selectedUnit.mustBeSelected)
             {
-                for (int i = 0; i < currentPath.Count; i++)
+                if (tilesAtRangeDisplayed.Contains(focusedTile))
                 {
-                    currentPath[i].HideArrow();
-                }
+                    for (int i = 0; i < currentPath.Count; i++)
+                    {
+                        currentPath[i].HideArrow();
+                    }
                 
-                currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile, false);
+                    currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile, false);
 
-                for (int i = 0; i < currentPath.Count; i++)
-                {
-                    OverlayTile previousTile = i > 0 ? currentPath[i - 1] : selectedUnit.currentTile;
-                    OverlayTile nextTile = i < currentPath.Count - 1 ? currentPath[i + 1] : null;
+                    for (int i = 0; i < currentPath.Count; i++)
+                    {
+                        OverlayTile previousTile = i > 0 ? currentPath[i - 1] : selectedUnit.currentTile;
+                        OverlayTile nextTile = i < currentPath.Count - 1 ? currentPath[i + 1] : null;
                     
-                    currentPath[i].DisplayArrow(arrowCreator.CreateArrow(previousTile, currentPath[i], nextTile));
+                        currentPath[i].DisplayArrow(arrowCreator.CreateArrow(previousTile, currentPath[i], nextTile));
+                    }
                 }
             }
         }

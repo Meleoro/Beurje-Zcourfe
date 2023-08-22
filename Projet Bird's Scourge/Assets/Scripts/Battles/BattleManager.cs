@@ -363,7 +363,7 @@ public class BattleManager : MonoBehaviour
         
         else if (order[0].CompareTag("Ennemy"))
         {
-            
+            order[0].GetComponent<Ennemy>().DesactivateOutline();
         }
         
         MouseManager.Instance.ResetSelection();

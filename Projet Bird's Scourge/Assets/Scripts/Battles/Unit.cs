@@ -275,30 +275,33 @@ public class Unit : MonoBehaviour
     // MOVE WITH BREAKS 
     public IEnumerator MoveToTile(List<OverlayTile> path)
     {
-        MouseManager.Instance.noControl = true;
-        currentTile.isBlocked = false;
-        
-        for(int i = 0; i < path.Count; i++)
+        if (mustBeSelected)
         {
-            transform.position = path[i].transform.position + new Vector3(0, 0.4f, -1);
+            MouseManager.Instance.noControl = true;
+            currentTile.isBlocked = false;
+        
+            for(int i = 0; i < path.Count; i++)
+            {
+                transform.position = path[i].transform.position + new Vector3(0, 0.4f, -1);
 
-            transform.DOScale(new Vector3(0.75f, 1.25f, 1f), 0.04f)
-                .OnComplete(() => transform.DOScale(Vector3.one, 0.04f));
+                transform.DOScale(new Vector3(0.75f, 1.25f, 1f), 0.04f)
+                    .OnComplete(() => transform.DOScale(Vector3.one, 0.04f));
 
-            PM -= 1;
-            UIBattleManager.Instance.UpdateMovePointsUI(this);
-            yield return new WaitForSeconds(0.2f);
+                PM -= 1;
+                UIBattleManager.Instance.UpdateMovePointsUI(this);
+                yield return new WaitForSeconds(0.2f);
+            }
+        
+            currentTile = path[path.Count - 1];
+            currentTile.isBlocked = true;
+
+            MouseManager.Instance.noControl = false;
+        
+            FindTilesAtRange(true, true);
+            FindTilesCompetences();
+        
+            BattleManager.Instance.ActualiseUnits();
         }
-        
-        currentTile = path[path.Count - 1];
-        currentTile.isBlocked = true;
-
-        MouseManager.Instance.noControl = false;
-        
-        FindTilesAtRange(true, true);
-        FindTilesCompetences();
-        
-        BattleManager.Instance.ActualiseUnits();
     }
 
     
