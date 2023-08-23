@@ -13,6 +13,10 @@ public class CameraManager : MonoBehaviour
         get { return _instance; }
     }
 
+    [Header("Aventure")] 
+    public bool isInAdventure;
+    public Vector3 savePosAdventure;
+
     [Header("Battle")]
     private Vector3 savePos;
     private float saveSize;
@@ -73,7 +77,7 @@ public class CameraManager : MonoBehaviour
 
     public void Move()
     {
-        if (canMove)
+        if (canMove && !isInAdventure)
         {
             Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed, 0);
             transform.localPosition = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
@@ -82,7 +86,7 @@ public class CameraManager : MonoBehaviour
     
     public void Zoom()
     {
-        if (canMove)
+        if (canMove && !isInAdventure)
         {
             worldUI.localScale = new Vector3(zoom,zoom,zoom)/3;
             float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -93,6 +97,29 @@ public class CameraManager : MonoBehaviour
     }
 
 
+    // --------------------------  EXPLORATION PART  ------------------------------
+
+    public void CameraBattleStart(BattleManager currentBattle)
+    {
+        savePosAdventure = transform.position;
+        transform.position = currentBattle.transform.position;
+
+        isInAdventure = false;
+    }
+
+    public void CameraBattleEnd()
+    {
+        Destroy(BattleManager.Instance.gameObject);
+        
+        transform.position = savePosAdventure;
+    }
+    
+    
+    
+    // --------------------------  BATTLE PART  ------------------------------
+    
+    
+    // WHEN YOU SELECT A CHARACTER IN BATTLE
     public void SelectCharacter(Unit unit, Ennemy ennemy)
     {
         canMove = false;
@@ -116,7 +143,6 @@ public class CameraManager : MonoBehaviour
 
         zoom = newSize;
     }
-    
     
     
     // MOVE THE CAMERA TO ZOOM ON ALL THE UNITS CONCERNED BY THE ATTACK

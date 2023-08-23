@@ -14,6 +14,7 @@ public class Nod : MonoBehaviour
     }
 
     public NodeType nodeType = NodeType.battle;
+    public GameObject battlePrefab;
     
     private SpriteRenderer sr;
     public List<Nod> connectedNods = new List<Nod>();
@@ -23,11 +24,11 @@ public class Nod : MonoBehaviour
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        if (isCamp) sr.sprite = spritList[0];
+        /*if (isCamp) sr.sprite = spritList[0];
         else
         {
             sr.sprite = spritList[Random.Range(1, 7)];
-        }
+        }*/
     }
 
 
@@ -43,7 +44,11 @@ public class Nod : MonoBehaviour
 
     private void LaunchBattle()
     {
-        Debug.Log(12);
+        battlePrefab = AventureManager.Instance.ChoseBattle();
+
+        Instantiate(battlePrefab, new Vector3(300, 0, 0), Quaternion.identity);
+        
+        CameraManager.Instance.CameraBattleStart(BattleManager.Instance);
     }
 }
 

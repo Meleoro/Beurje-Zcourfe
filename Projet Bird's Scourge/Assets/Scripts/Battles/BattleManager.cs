@@ -42,6 +42,8 @@ public class BattleManager : MonoBehaviour
         
         else
             Destroy(gameObject);
+
+        CameraManager.Instance.isInAdventure = false;
     }
 
     private void Start()

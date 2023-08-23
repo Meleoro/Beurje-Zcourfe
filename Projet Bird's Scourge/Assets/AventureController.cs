@@ -13,7 +13,6 @@ public class AventureController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject player;
-    [SerializeField] private Transform _camera;
     private AventureManager mainScript;
     
 
@@ -69,7 +68,7 @@ public class AventureController : MonoBehaviour
         {
             float distance = selectedNod.transform.position.y - currentNod.transform.position.y;
 
-            _camera.DOMoveY(_camera.transform.position.y + distance, 1);
+            CameraManager.Instance.transform.DOMoveY(CameraManager.Instance.transform.position.y + distance, 1);
             
             player.transform.DOMove(selectedNod.transform.position, 1);
             currentNod = selectedNod;
