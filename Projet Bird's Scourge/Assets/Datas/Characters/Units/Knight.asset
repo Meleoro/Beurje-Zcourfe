@@ -36,7 +36,7 @@ MonoBehaviour:
     moveDiagonal: 0
     force: 4
     defense: 4
-    vitesse: 2
+    vitesse: 40
     agilite: 2
     chance: 2
   - level: 0

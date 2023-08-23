@@ -142,8 +142,6 @@ public class CameraManager : MonoBehaviour
         _camera.DOOrthoSize(newSize, duration);
 
         yield return new WaitForSeconds(noControlTime);
-        
-        canMove = true;
     }
 
     
@@ -152,5 +150,7 @@ public class CameraManager : MonoBehaviour
     {
         transform.DOMove(savePos, 0.2f);
         _camera.DOOrthoSize(saveSize, 0.2f);
+        
+        canMove = true;
     }
 }
