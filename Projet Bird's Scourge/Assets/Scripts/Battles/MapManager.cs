@@ -113,8 +113,8 @@ public class MapManager : MonoBehaviour
         Vector3Int start = new Vector3Int((max.x + min.x) / 2, (max.y + min.y) / 2, 0);
         List<Vector3Int> next = new List<Vector3Int>();
         List<Vector3Int> outPos = new List<Vector3Int>();
-        
-        Debug.Log(min.y);
+
+        CameraManager.Instance.transform.position = _tilemap.GetCellCenterWorld(start) + Vector3.back * 10;
 
         next.Add(start);
 
