@@ -75,6 +75,8 @@ public class AventureController : MonoBehaviour
             currentNod = selectedNod;
             
             mainScript.scriptCreator.UpdateMap(currentNod);
+            
+            selectedNod.DoNodeEffect();
         }
     }
 }

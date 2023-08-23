@@ -7,6 +7,14 @@ using Random = UnityEngine.Random;
 
 public class Nod : MonoBehaviour
 {
+    public enum NodeType
+    {
+        battle,
+        camp
+    }
+
+    public NodeType nodeType = NodeType.battle;
+    
     private SpriteRenderer sr;
     public List<Nod> connectedNods = new List<Nod>();
     public List<Sprite> spritList = new List<Sprite>();
@@ -20,6 +28,22 @@ public class Nod : MonoBehaviour
         {
             sr.sprite = spritList[Random.Range(1, 7)];
         }
+    }
+
+
+    public void DoNodeEffect()
+    {
+        switch (nodeType)
+        {
+            case NodeType.battle :
+                LaunchBattle();
+                break;
+        }
+    }
+
+    private void LaunchBattle()
+    {
+        Debug.Log(12);
     }
 }
 
