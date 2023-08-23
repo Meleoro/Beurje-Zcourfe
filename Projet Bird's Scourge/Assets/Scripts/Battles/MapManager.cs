@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -16,6 +18,11 @@ public class MapManager : MonoBehaviour
 
     [Header("Map Infos")] 
     public Dictionary<Vector2Int, OverlayTile> map;
+
+    [Header("Feel")] 
+    public GameObject placeholderSprite;
+    private List<GameObject> placeholders = new List<GameObject>();
+    [HideInInspector] public bool tilesAppeared;
 
 
     [Header("Références")] 
@@ -36,6 +43,7 @@ public class MapManager : MonoBehaviour
         _tilemap = GetComponentInChildren<Tilemap>();
         
         InitialiseMap();
+        StartCoroutine(StartEffect());
     }
     
 
@@ -71,5 +79,55 @@ public class MapManager : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    public IEnumerator StartEffect()
+    {
+        tilesAppeared = false;
+        
+        BoundsInt bounds = _tilemap.cellBounds;
+
+        _tilemap.GetComponent<TilemapRenderer>().enabled = false;
+        
+        // We go through every tile of the tilemap
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        {
+            for (int y = bounds.yMin; y < bounds.yMax; y++)
+            {
+                for (int z = bounds.zMin; z < bounds.zMax; z++)
+                {
+                    Vector3Int tilePos = new Vector3Int(x, y, z);
+                    
+                    if (_tilemap.HasTile(tilePos))
+                    {
+                        Vector3 currentPos = _tilemap.GetCellCenterWorld(tilePos);
+                        Sprite currentSprite = _tilemap.GetSprite(tilePos);
+
+                        GameObject currentGO = Instantiate(placeholderSprite, currentPos + Vector3.up * 1, Quaternion.identity);
+                        currentGO.GetComponent<SpriteRenderer>().sprite = currentSprite;
+                        currentGO.GetComponent<SpriteRenderer>().sortingOrder = -y - x;
+                        
+                        placeholders.Add(currentGO);
+
+                        currentGO.transform.DOMoveY(currentGO.transform.position.y - 1, 1);
+
+                        yield return new WaitForSeconds(0.01f);
+                    }
+                }
+            }
+        }
+        
+        yield return new WaitForSeconds(1f);
+
+        _tilemap.GetComponent<TilemapRenderer>().enabled = true;
+
+
+        for (int i = 0; i < placeholders.Count; i++)
+        {
+            Destroy(placeholders[i]);
+        }
+
+        tilesAppeared = true;
     }
 }

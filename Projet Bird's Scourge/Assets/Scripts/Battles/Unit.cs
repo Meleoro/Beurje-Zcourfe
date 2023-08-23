@@ -66,7 +66,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        if (currentTile == null)
+        if (currentTile is null && MapManager.Instance.tilesAppeared)
         {
             FindCurrentTile();
             

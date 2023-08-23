@@ -25,11 +25,11 @@ public class Nod : MonoBehaviour
     private void Start()
     {
         sr = GetComponent<SpriteRenderer>();
-        /*if (isCamp) sr.sprite = spritList[0];
+        if (isCamp) sr.sprite = spritList[0];
         else
         {
             sr.sprite = spritList[Random.Range(1, 7)];
-        }*/
+        }
     }
 
 
@@ -46,10 +46,10 @@ public class Nod : MonoBehaviour
     private IEnumerator LaunchBattle()
     {
         battlePrefab = AventureManager.Instance.ChoseBattle();
-
+ 
         StartCoroutine(UIMapManager.Instance.StartBattleEffect());
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.2f);
 
         Instantiate(battlePrefab, new Vector3(300, 0, 0), Quaternion.identity);
         

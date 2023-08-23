@@ -68,8 +68,8 @@ public class CameraManager : MonoBehaviour
 
     private void Update()
     {
-        screenHeight = _camera.pixelHeight;
-        screenWidth = _camera.pixelWidth;
+        screenHeight = _camera.scaledPixelHeight;
+        screenWidth = _camera.scaledPixelWidth;
 
         Move();
         Zoom();

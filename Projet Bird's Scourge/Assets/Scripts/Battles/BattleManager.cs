@@ -42,13 +42,14 @@ public class BattleManager : MonoBehaviour
         
         else
             Destroy(gameObject);
-
-        CameraManager.Instance.isInAdventure = false;
     }
 
-    private void Start()
+    private void Update()
     {
-        UIBattle.gameObject.SetActive(true);
+        if (MapManager.Instance.tilesAppeared)
+        {
+            UIBattle.gameObject.SetActive(true);
+        }
     }
 
 

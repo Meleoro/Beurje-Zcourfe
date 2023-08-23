@@ -47,7 +47,7 @@ public class Ennemy : MonoBehaviour
 
     private void Update()
     {
-        if (currentTile is null)
+        if (currentTile is null && MapManager.Instance.tilesAppeared)
         {
             FindCurrentTile();
             
