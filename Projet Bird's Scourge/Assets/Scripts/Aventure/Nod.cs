@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,14 +38,18 @@ public class Nod : MonoBehaviour
         switch (nodeType)
         {
             case NodeType.battle :
-                LaunchBattle();
+                StartCoroutine(LaunchBattle());
                 break;
         }
     }
 
-    private void LaunchBattle()
+    private IEnumerator LaunchBattle()
     {
         battlePrefab = AventureManager.Instance.ChoseBattle();
+
+        StartCoroutine(UIMapManager.Instance.StartBattleEffect());
+
+        yield return new WaitForSeconds(1);
 
         Instantiate(battlePrefab, new Vector3(300, 0, 0), Quaternion.identity);
         

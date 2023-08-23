@@ -55,14 +55,14 @@ public class AventureController : MonoBehaviour
         {
             if (hitObjects[i].collider.CompareTag("Nod"))
             {
-                MoveTo(hitObjects[i].collider.GetComponent<Nod>());
+                StartCoroutine(MoveTo(hitObjects[i].collider.GetComponent<Nod>()));
             }
         }
     }
     
 
     // MOVE THE CAMERA AND THE PLAYER + RETURNS TRUE IF A MOVEMENT HAS BEEN MADE
-    public void MoveTo(Nod selectedNod)
+    public IEnumerator MoveTo(Nod selectedNod)
     {
         if (currentNod.connectedNods.Contains(selectedNod) && selectedNod.transform.position.y > currentNod.transform.position.y)
         {
@@ -74,6 +74,8 @@ public class AventureController : MonoBehaviour
             currentNod = selectedNod;
             
             mainScript.scriptCreator.UpdateMap(currentNod);
+
+            yield return new WaitForSeconds(1.3f);
             
             selectedNod.DoNodeEffect();
         }

@@ -101,6 +101,8 @@ public class CameraManager : MonoBehaviour
 
     public void CameraBattleStart(BattleManager currentBattle)
     {
+        DOTween.Kill(transform);
+        
         savePosAdventure = transform.position;
         transform.position = new Vector3(currentBattle.transform.position.x, currentBattle.transform.position.y, -10);
 
