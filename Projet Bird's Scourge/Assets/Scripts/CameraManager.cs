@@ -102,8 +102,9 @@ public class CameraManager : MonoBehaviour
     public void CameraBattleStart(BattleManager currentBattle)
     {
         savePosAdventure = transform.position;
-        transform.position = currentBattle.transform.position;
+        transform.position = new Vector3(currentBattle.transform.position.x, currentBattle.transform.position.y, -10);
 
+        worldUI = WorldUIManager.Instance.GetComponent<RectTransform>();
         isInAdventure = false;
     }
 
@@ -112,6 +113,7 @@ public class CameraManager : MonoBehaviour
         Destroy(BattleManager.Instance.gameObject);
         
         transform.position = savePosAdventure;
+        isInAdventure = true;
     }
     
     

@@ -3964,6 +3964,7 @@ GameObject:
   - component: {fileID: 1578765055197809358}
   - component: {fileID: 8268378590702290393}
   - component: {fileID: 7910826992429538225}
+  - component: {fileID: 8127813883928505112}
   m_Layer: 5
   m_Name: UI_Attack
   m_TagString: Untagged
@@ -4055,6 +4056,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8127813883928505112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1881792358668768436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb790ea8bea320a46b6c8e3c4f39d934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1906756066666272169
 GameObject:
   m_ObjectHideFlags: 0
@@ -11026,6 +11039,7 @@ GameObject:
   - component: {fileID: 8915798298156027562}
   - component: {fileID: 7747413627944839068}
   - component: {fileID: 4658556128182991360}
+  - component: {fileID: 502538835430280557}
   m_Layer: 0
   m_Name: World UI
   m_TagString: Untagged
@@ -11116,6 +11130,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &502538835430280557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4203921916743754844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4d6599663d5dd4cabce4cc400c474c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4265041702834994273
 GameObject:
   m_ObjectHideFlags: 0
