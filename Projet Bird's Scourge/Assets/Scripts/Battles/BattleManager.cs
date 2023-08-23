@@ -15,8 +15,8 @@ public class BattleManager : MonoBehaviour
     }
     
     [Header("Start")]
-    private List<Unit> currentUnits = new List<Unit>();
-    private List<Ennemy> currentEnnemies = new List<Ennemy>();
+    [HideInInspector] public List<Unit> currentUnits = new List<Unit>();
+    [HideInInspector] public List<Ennemy> currentEnnemies = new List<Ennemy>();
     private int numberCharas;
 
     [Header("Units/Ennemies")]

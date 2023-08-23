@@ -62,19 +62,41 @@ public class Unit : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         BattleManager.Instance.AddUnitList(this);
+        
+        spriteRenderer.enabled = false;
     }
 
     private void Update()
     {
-        if (currentTile is null && MapManager.Instance.tilesAppeared)
+        /*if (currentTile is null && MapManager.Instance.tilesAppeared)
         {
             FindCurrentTile();
             
             BattleManager.Instance.AddUnit(this, false);
             //InitialiseTurn();
-        }
+        }*/
 
         ManageFlickerOutline();
+    }
+    
+    // MAKE APPEAR THE ENNEMY
+    public void Initialise()
+    {
+        FindCurrentTile();
+        FindTilesAtRange();
+            
+        BattleManager.Instance.AddUnit(this, false);
+
+        spriteRenderer.enabled = true;
+
+        spriteRenderer.DOFade(0, 0);
+        spriteRenderer.DOFade(1, 0.08f);
+
+        transform.position = transform.position + Vector3.up * 2;
+        transform.DOMoveY(transform.position.y - 2, 0.25f);
+
+        transform.localScale = new Vector3(0.5f, 2f, 1);
+        transform.DOScale( new Vector3(1f, 1f, 1), 0.25f);
     }
     
 

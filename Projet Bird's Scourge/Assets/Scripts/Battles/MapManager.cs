@@ -23,6 +23,8 @@ public class MapManager : MonoBehaviour
     public GameObject placeholderSprite;
     private List<GameObject> placeholders = new List<GameObject>();
     [HideInInspector] public bool tilesAppeared;
+    private Vector3Int max;
+    private Vector3Int min;
 
 
     [Header("Références")] 
@@ -52,6 +54,9 @@ public class MapManager : MonoBehaviour
     {
         BoundsInt bounds = _tilemap.cellBounds;
 
+        max = new Vector3Int(-100, -100, 0);
+        min = new Vector3Int(100, 100, 0);
+
         map = new Dictionary<Vector2Int, OverlayTile>();
 
         // We go through every tile of the tilemap
@@ -75,6 +80,18 @@ public class MapManager : MonoBehaviour
                             posNewOverlayTile.z + 1);
                         
                         map.Add(new Vector2Int(tilePos.x, tilePos.y), newOverlayTile.GetComponent<OverlayTile>());
+
+                        if (x > max.x)
+                            max = new Vector3Int(x, max.y, max.z);
+
+                        if (y > max.y)
+                            max = new Vector3Int(max.x, y, max.z);
+
+                        if (x < min.x)
+                            min = new Vector3Int(x, min.y, min.z);
+
+                        if (y < min.y)
+                            min = new Vector3Int(min.x, y, min.z);
                     }
                 }
             }
@@ -85,49 +102,113 @@ public class MapManager : MonoBehaviour
     public IEnumerator StartEffect()
     {
         tilesAppeared = false;
+        MouseManager.Instance.noControl = true;
         
-        BoundsInt bounds = _tilemap.cellBounds;
-
         _tilemap.GetComponent<TilemapRenderer>().enabled = false;
+
+        int wantedCount = map.Count;
+        int currentCount = 0;
         
-        // We go through every tile of the tilemap
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        
+        Vector3Int start = new Vector3Int((max.x + min.x) / 2, (max.y + min.y) / 2, 0);
+        List<Vector3Int> next = new List<Vector3Int>();
+        List<Vector3Int> outPos = new List<Vector3Int>();
+        
+        Debug.Log(min.y);
+
+        next.Add(start);
+
+        while (currentCount < wantedCount)
         {
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
+            List<Vector3Int> neighbors = new List<Vector3Int>();
+
+            for (int i = 0; i < next.Count; i++)
             {
-                for (int z = bounds.zMin; z < bounds.zMax; z++)
+                if (_tilemap.HasTile(next[i]))
                 {
-                    Vector3Int tilePos = new Vector3Int(x, y, z);
-                    
-                    if (_tilemap.HasTile(tilePos))
-                    {
-                        Vector3 currentPos = _tilemap.GetCellCenterWorld(tilePos);
-                        Sprite currentSprite = _tilemap.GetSprite(tilePos);
+                    Vector3 currentPos = _tilemap.GetCellCenterWorld(next[i]);
+                    Sprite currentSprite = _tilemap.GetSprite(next[i]);
 
-                        GameObject currentGO = Instantiate(placeholderSprite, currentPos + Vector3.up * 1, Quaternion.identity);
-                        currentGO.GetComponent<SpriteRenderer>().sprite = currentSprite;
-                        currentGO.GetComponent<SpriteRenderer>().sortingOrder = -y - x;
+                    GameObject currentGO = Instantiate(placeholderSprite, currentPos + Vector3.up * 1, Quaternion.identity);
+                    currentGO.GetComponent<SpriteRenderer>().sprite = currentSprite;
+                    currentGO.GetComponent<SpriteRenderer>().sortingOrder = -next[i].y - next[i].x;
                         
-                        placeholders.Add(currentGO);
+                    placeholders.Add(currentGO);
 
-                        currentGO.transform.DOMoveY(currentGO.transform.position.y - 1, 1);
+                    currentGO.transform.DOMoveY(currentGO.transform.position.y - 1, 1);
+                    
+                    outPos.Add(next[i]);
+                    currentCount += 1;
+                } 
+                
+                neighbors.AddRange(FindNeighbors(next[i]));
+            }
+            
+            yield return new WaitForSeconds(0.03f);
 
-                        yield return new WaitForSeconds(0.01f);
-                    }
+            neighbors = neighbors.Distinct().ToList();
+            next = new List<Vector3Int>();
+
+            for (int i = neighbors.Count - 1; i >= 0; i--)
+            {
+                if (!outPos.Contains(neighbors[i]))
+                {
+                    next.Add(neighbors[i]);
                 }
             }
         }
-        
+
         yield return new WaitForSeconds(1f);
 
         _tilemap.GetComponent<TilemapRenderer>().enabled = true;
-
 
         for (int i = 0; i < placeholders.Count; i++)
         {
             Destroy(placeholders[i]);
         }
 
+
+        // CHARACTER PART
+        for (int i = 0; i < BattleManager.Instance.currentUnits.Count; i++)
+        {
+            BattleManager.Instance.currentUnits[i].Initialise();
+            yield return new WaitForSeconds(0.2f);
+        }
+        
+        for (int i = 0; i < BattleManager.Instance.currentEnnemies.Count; i++)
+        {
+            BattleManager.Instance.currentEnnemies[i].Initialise();
+            yield return new WaitForSeconds(0.2f);
+        }
+        
+        yield return new WaitForSeconds(0.5f);
+        
         tilesAppeared = true;
+        MouseManager.Instance.noControl = false;
+    }
+    
+    
+    // RENVOIE UNE LISTE DE TOUS LES VOISINS DE LA CASE EN PARAMETRES (SI CASE NON VIDE)
+    private List<Vector3Int> FindNeighbors(Vector3Int currentPos)
+    {
+        List<Vector3Int> neighbors = new List<Vector3Int>();
+
+        // Up
+        Vector3Int newPos = new Vector3Int(currentPos.x, currentPos.y + 1);
+        neighbors.Add(newPos);
+        
+        // Down
+        newPos = new Vector3Int(currentPos.x, currentPos.y - 1);
+        neighbors.Add(newPos);
+        
+        // Left
+        newPos = new Vector3Int(currentPos.x + 1, currentPos.y);
+        neighbors.Add(newPos);
+
+        // Right
+        newPos = new Vector3Int(currentPos.x - 1, currentPos.y);
+        neighbors.Add(newPos);
+        
+        return neighbors;
     }
 }
