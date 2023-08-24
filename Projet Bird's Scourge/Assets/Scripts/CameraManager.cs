@@ -13,6 +13,10 @@ public class CameraManager : MonoBehaviour
         get { return _instance; }
     }
 
+    [Header("Aventure")] 
+    public bool isInAdventure;
+    public Vector3 savePosAdventure;
+
     [Header("Battle")]
     private Vector3 savePos;
     private float saveSize;
@@ -36,11 +40,12 @@ public class CameraManager : MonoBehaviour
     private float zoom;
     
     [Header("References")] 
-    private Camera _camera;
+    [HideInInspector] public Camera _camera;
     public RectTransform worldUI;
 
-    [Header("Other")] 
-    private float screenWidth;
+    [Header("Other")]
+    [HideInInspector] public float screenWidth;
+    [HideInInspector] public float screenHeight;
 
 
     private void Awake()
@@ -50,23 +55,30 @@ public class CameraManager : MonoBehaviour
         
         else
             Destroy(gameObject);
+        
+        _camera = GetComponent<Camera>();
     }
 
     private void Start()
     {
-        _camera = GetComponent<Camera>();
         zoom = _camera.orthographicSize;
+
+        screenHeight = _camera.pixelHeight;
+        screenWidth = _camera.pixelWidth;
     }
 
     private void Update()
     {
+        screenHeight = _camera.scaledPixelHeight;
+        screenWidth = _camera.scaledPixelWidth;
+
         Move();
         Zoom();
     }
 
     public void Move()
     {
-        if (canMove)
+        if (canMove && !isInAdventure)
         {
             Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed, 0);
             transform.localPosition = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
@@ -75,7 +87,7 @@ public class CameraManager : MonoBehaviour
     
     public void Zoom()
     {
-        if (canMove)
+        if (canMove && !isInAdventure)
         {
             worldUI.localScale = new Vector3(zoom,zoom,zoom)/3;
             float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -86,12 +98,50 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    public void SelectUnit(Unit unit)
+    // --------------------------  EXPLORATION PART  ------------------------------
+
+    public void CameraBattleStart(BattleManager currentBattle)
+    {
+        DOTween.Kill(transform);
+        
+        savePosAdventure = transform.position;
+        transform.position = new Vector3(currentBattle.transform.position.x, currentBattle.transform.position.y, -10);
+
+        worldUI = WorldUIManager.Instance.GetComponent<RectTransform>();
+        isInAdventure = false;
+    }
+
+    public void CameraBattleEnd()
+    {
+        Destroy(BattleManager.Instance.gameObject);
+        
+        transform.position = savePosAdventure;
+        isInAdventure = true;
+    }
+    
+    
+    
+    // --------------------------  BATTLE PART  ------------------------------
+    
+    
+    // WHEN YOU SELECT A CHARACTER IN BATTLE
+    public void SelectCharacter(Unit unit, Ennemy ennemy)
     {
         canMove = false;
-        
-        Vector2 newPos = (Vector2)unit.transform.position + offsetPosStart;
-        float newSize = unit.data.levels[unit.CurrentLevel].PM * 0.2f + 2.5f;
+
+        Vector2 newPos = Vector2.zero;
+        float newSize = 0;
+
+        if (unit is not null)
+        {
+            newPos = (Vector2)unit.transform.position + offsetPosStart;
+            newSize = unit.data.levels[unit.CurrentLevel].PM * 0.2f + 2.5f;
+        }
+        else
+        {
+            newPos = (Vector2)ennemy.transform.position + offsetPosStart;
+            newSize = ennemy.data.levels[ennemy.CurrentLevel].PM * 0.2f + 2.5f;
+        }
 
         transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), startTurnDuration).OnComplete((() => canMove = true));
         _camera.DOOrthoSize(newSize, startTurnDuration);
@@ -100,10 +150,11 @@ public class CameraManager : MonoBehaviour
     }
     
     
-    
     // MOVE THE CAMERA TO ZOOM ON ALL THE UNITS CONCERNED BY THE ATTACK
-    public void EnterCameraBattle(List<Vector2> unitsPositions, float duration)
+    public IEnumerator EnterCameraBattle(List<Vector2> unitsPositions, float duration, float noControlTime)
     {
+        canMove = false;
+        
         savePos = transform.position;
         saveSize = _camera.orthographicSize;
         
@@ -120,7 +171,8 @@ public class CameraManager : MonoBehaviour
 
         transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), duration);
         _camera.DOOrthoSize(newSize, duration);
-        
+
+        yield return new WaitForSeconds(noControlTime);
     }
 
     
@@ -129,5 +181,7 @@ public class CameraManager : MonoBehaviour
     {
         transform.DOMove(savePos, 0.2f);
         _camera.DOOrthoSize(saveSize, 0.2f);
+        
+        canMove = true;
     }
 }

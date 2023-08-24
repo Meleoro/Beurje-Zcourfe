@@ -1,17 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Searcher;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AventureManager : MonoBehaviour
 {
+    public static AventureManager Instance;
+    
     [Header("Datas")] 
-    public List<ListSpots> map;
+    [HideInInspector] public List<ListSpots> map;
+    
+    [Header("Battles")] 
+    public List<GameObject> possibleBattles;
 
     [Header("Références")]
     [HideInInspector] public AventureCreator scriptCreator;
     [HideInInspector] public AventureController scriptController;
-    
+
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        
+        else
+            Destroy(gameObject);
+    }
+
     private void Start()
     {
         scriptCreator = GetComponent<AventureCreator>();
@@ -19,6 +36,8 @@ public class AventureManager : MonoBehaviour
         
         map = scriptCreator.GenerateMap();
         scriptController.Initialise(map);
+
+        CameraManager.Instance.isInAdventure = true;
     }
 
 
@@ -33,5 +52,14 @@ public class AventureManager : MonoBehaviour
                 scriptController.ManageClickedElement();
             }
         }
+    }
+
+
+    // CHOSES WHICH BATTLE PREFAB IS ASSIGNED TO A NODE
+    public GameObject ChoseBattle()
+    {
+        int battleIndex = Random.Range(0, possibleBattles.Count);
+
+        return possibleBattles[battleIndex];
     }
 }

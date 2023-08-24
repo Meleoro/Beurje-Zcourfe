@@ -42,29 +42,56 @@ public class Ennemy : MonoBehaviour
         currentHealth = data.levels[CurrentLevel].PV;
         
         BattleManager.Instance.AddEnnemyList(this);
+        
+        spriteRenderer.enabled = false;
     }
     
 
     private void Update()
     {
-        if (currentTile is null)
+        /*if (currentTile is null && MapManager.Instance.tilesAppeared)
         {
             FindCurrentTile();
             
             BattleManager.Instance.AddEnnemy(this, isSummoned);
             
             FindTilesAtRange();
-        }
+        }*/
+    }
+
+
+    // MAKE APPEAR THE ENNEMY
+    public void Initialise()
+    {
+        FindCurrentTile();
+        FindTilesAtRange();
+            
+        BattleManager.Instance.AddEnnemy(this, isSummoned);
+
+        spriteRenderer.enabled = true;
+
+        spriteRenderer.DOFade(0, 0);
+        spriteRenderer.DOFade(1, 0.08f);
+
+        transform.position = transform.position + Vector3.up * 2;
+        transform.DOMoveY(transform.position.y - 2, 0.25f);
+
+        transform.localScale = new Vector3(1, 0.2f, 1);
+        transform.DOScaleY(1, 0.25f);
     }
     
 
 
     // EXECUTE THE ENNEMY'S TURN
-    public void DoTurn()
+    public IEnumerator DoTurn()
     {
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         FindTilesAtRange();
+        
+        MouseManager.Instance.SelectEnnemy(this);
 
+        yield return new WaitForSeconds(1);
+    
         List<OverlayTile> moveTileAttackTile = new List<OverlayTile>();
 
         bool isSummon = false;
@@ -126,20 +153,20 @@ public class Ennemy : MonoBehaviour
             // Si c'est un critique
             if (Random.Range(0, 100) <= attackCriticalRate) 
             {
-                attackedUnit.TakeDamages(attackDamage * 2);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data.damageSprite, data.attackSprite, false,attackDamage * 2,false,true));
+                bool deadUnit = attackedUnit.TakeDamages(attackDamage * 2);
+                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage * 2,false,true, deadUnit, competenceUsed.VFXType));
             }
             // si ce n'est pas un critique
             else 
             {
-                attackedUnit.TakeDamages(attackDamage);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data.damageSprite, data.attackSprite, false,attackDamage,false,false)); 
+                bool deadUnit = attackedUnit.TakeDamages(attackDamage);
+                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage,false,false, deadUnit, competenceUsed.VFXType)); 
             }
         }
         // Si c'est un miss
         else 
         { 
-            StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data.damageSprite, data.attackSprite, false,0,true,false));
+            StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,0,true,false, false, competenceUsed.VFXType));
         }
 
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
@@ -156,7 +183,7 @@ public class Ennemy : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(UIBattleManager.Instance.attackScript.SummonUIFeel(
-            currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data.damageSprite, data.attackSprite));
+            currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data, data, false, currentCompetence.VFXType));
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
         
@@ -179,7 +206,7 @@ public class Ennemy : MonoBehaviour
         positions.Add(transform.position);
         positions.Add(currentCompetenceTile.transform.position);
         
-        CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+        StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
         
         // Tile
         currentCompetenceTile.LaunchFlicker(0.5f, MouseManager.Instance.tilesAttackColorOver);
@@ -195,15 +222,26 @@ public class Ennemy : MonoBehaviour
     
     
     // REDUCE THE HEALTH OF THE ENNEMY AND VERIFY IF HE IS DEAD
-    public void TakeDamages(int damages)
+    public bool TakeDamages(int damages)
     {
         currentHealth -= damages;
 
-        if (currentHealth < 0)
+        if (currentHealth <= 0)
         {
-            BattleManager.Instance.RemoveEnnemy(this);
-            Destroy(gameObject);
+            Death();
+
+            return true;
         }
+
+        return false;
+    }
+
+    public void Death()
+    {
+        DesactivateFlicker();
+        
+        BattleManager.Instance.RemoveEnnemy(this);
+        Destroy(gameObject);
     }
     
     

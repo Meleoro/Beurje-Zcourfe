@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Shaman A-1
   m_EditorClassIdentifier: 
   competenceName: Staff Blow
+  VFXType: 0
   levels:
   - competenceDescription: Inflicts low damage to a single target
     competenceManaCost: 0
@@ -32,7 +33,7 @@ MonoBehaviour:
     - list: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     newPaternePrefab: 0
     newPortee: 0
-    newEffet: 0
+    newEffet: 1
     summonedUnit: {fileID: 3151643708691705637, guid: e5e5b57d75b3bb14896de80efa602e2d, type: 3}
     healedPV: 0
     newAlteration: 0

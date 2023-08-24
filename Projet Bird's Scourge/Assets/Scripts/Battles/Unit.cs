@@ -62,19 +62,41 @@ public class Unit : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         
         BattleManager.Instance.AddUnitList(this);
+        
+        spriteRenderer.enabled = false;
     }
 
     private void Update()
     {
-        if (currentTile == null)
+        /*if (currentTile is null && MapManager.Instance.tilesAppeared)
         {
             FindCurrentTile();
             
             BattleManager.Instance.AddUnit(this, false);
             //InitialiseTurn();
-        }
+        }*/
 
         ManageFlickerOutline();
+    }
+    
+    // MAKE APPEAR THE ENNEMY
+    public void Initialise()
+    {
+        FindCurrentTile();
+        FindTilesAtRange();
+            
+        BattleManager.Instance.AddUnit(this, false);
+
+        spriteRenderer.enabled = true;
+
+        spriteRenderer.DOFade(0, 0);
+        spriteRenderer.DOFade(1, 0.08f);
+
+        transform.position = transform.position + Vector3.up * 2;
+        transform.DOMoveY(transform.position.y - 2, 0.25f);
+
+        transform.localScale = new Vector3(0.5f, 2f, 1);
+        transform.DOScale( new Vector3(1f, 1f, 1), 0.25f);
     }
     
 
@@ -85,11 +107,14 @@ public class Unit : MonoBehaviour
         switch (competenceUsed.levels[competenceLevel].newEffet)
         {
             case DataCompetence.Effets.none :
-                StartCoroutine(AttackEnnemies(clickedEnnemy, competenceTiles, competenceUsed, competenceLevel));
+                if(clickedEnnemy != null)
+                    StartCoroutine(AttackEnnemies(clickedEnnemy, competenceTiles, competenceUsed, competenceLevel));
                 break;
             
+
             case DataCompetence.Effets.soin :
-                StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
+                if(clickedUnit != null)
+                    StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
                 break;
         }
     }
@@ -99,8 +124,7 @@ public class Unit : MonoBehaviour
     public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
         MouseManager.Instance.noControl = true;
-        CameraManager.Instance.canMove = false;
-        
+
         if (competenceTiles.Contains(clickedEnnemy.currentTile))
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
@@ -110,7 +134,7 @@ public class Unit : MonoBehaviour
                 positions.Add(transform.position);
                 positions.Add(clickedEnnemy.transform.position);
 
-                CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+                StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
 
                 yield return new WaitForSeconds(1f);
                 
@@ -122,22 +146,22 @@ public class Unit : MonoBehaviour
                 {
                     if (Random.Range(0, 100) <= attackCriticalRate) // Si c'est un critique
                     {
-                        clickedEnnemy.TakeDamages(attackDamage * 2);
+                        bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage * 2);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
                         
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true,attackDamage * 2,false,true));
+                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true,attackDamage * 2,false,true, deadEnnemy, competenceUsed.VFXType));
                     }
                     else // si ce n'est pas un critique
                     {
-                        clickedEnnemy.TakeDamages(attackDamage);
+                        bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
             
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true, attackDamage,false,false)); 
+                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, attackDamage,false,false, deadEnnemy, competenceUsed.VFXType)); 
                     }
                 }
                 else // Si c'est un miss
                 {
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data.attackSprite, clickedEnnemy.data.damageSprite, true, 0,true,false));
+                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, 0,true,false, false, competenceUsed.VFXType));
                 }
                 
                 UIBattleManager.Instance.UpdateTurnUI();
@@ -151,8 +175,7 @@ public class Unit : MonoBehaviour
     public IEnumerator UseCompetence(Unit clickedUnit, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
         MouseManager.Instance.noControl = true;
-        CameraManager.Instance.canMove = false;
-        
+
         if (competenceTiles.Contains(clickedUnit.currentTile))
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
@@ -162,14 +185,14 @@ public class Unit : MonoBehaviour
                 positions.Add(transform.position);
                 positions.Add(clickedUnit.transform.position);
 
-                CameraManager.Instance.EnterCameraBattle(positions, 0.7f);
+                StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
 
                 yield return new WaitForSeconds(1f);
 
                 int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
                 
                 clickedUnit.currentHealth += addedPV;
-                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data.attackSprite, clickedUnit.data.attackSprite, true, addedPV, false, false));
+                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data, clickedUnit.data, true, addedPV, false, false, competenceUsed.VFXType));
                 
                 UIBattleManager.Instance.UpdateTurnUI();
                 //StartCoroutine(BattleManager.Instance.NextTurn());
@@ -190,16 +213,26 @@ public class Unit : MonoBehaviour
 
     
     // REDUCE THE HEALTH OF THE UNIT AND VERIFY IF HE IS DEAD
-    public void TakeDamages(int damages)
+    public bool TakeDamages(int damages)
     {
         currentHealth -= damages;
 
         if (currentHealth <= 0)
         {
-            BattleManager.Instance.RemoveUnit(this);
-            Destroy(gameObject);
+            Death();
+
+            return true;
         }
+
+        return false;
     }
+    
+    public void Death()
+    {
+        BattleManager.Instance.RemoveUnit(this);
+        Destroy(gameObject);
+    }
+
     
     
     //--------------------------TILES PART------------------------------
@@ -264,30 +297,33 @@ public class Unit : MonoBehaviour
     // MOVE WITH BREAKS 
     public IEnumerator MoveToTile(List<OverlayTile> path)
     {
-        MouseManager.Instance.noControl = true;
-        currentTile.isBlocked = false;
-        
-        for(int i = 0; i < path.Count; i++)
+        if (mustBeSelected)
         {
-            transform.position = path[i].transform.position + new Vector3(0, 0.4f, -1);
+            MouseManager.Instance.noControl = true;
+            currentTile.isBlocked = false;
+        
+            for(int i = 0; i < path.Count; i++)
+            {
+                transform.position = path[i].transform.position + new Vector3(0, 0.4f, -1);
 
-            transform.DOScale(new Vector3(0.75f, 1.25f, 1f), 0.04f)
-                .OnComplete(() => transform.DOScale(Vector3.one, 0.04f));
+                transform.DOScale(new Vector3(0.75f, 1.25f, 1f), 0.04f)
+                    .OnComplete(() => transform.DOScale(Vector3.one, 0.04f));
 
-            PM -= 1;
-            UIBattleManager.Instance.UpdateMovePointsUI(this);
-            yield return new WaitForSeconds(0.2f);
+                PM -= 1;
+                UIBattleManager.Instance.UpdateMovePointsUI(this);
+                yield return new WaitForSeconds(0.2f);
+            }
+        
+            currentTile = path[path.Count - 1];
+            currentTile.isBlocked = true;
+
+            MouseManager.Instance.noControl = false;
+        
+            FindTilesAtRange(true, true);
+            FindTilesCompetences();
+        
+            BattleManager.Instance.ActualiseUnits();
         }
-        
-        currentTile = path[path.Count - 1];
-        currentTile.isBlocked = true;
-
-        MouseManager.Instance.noControl = false;
-        
-        FindTilesAtRange(true, true);
-        FindTilesCompetences();
-        
-        BattleManager.Instance.ActualiseUnits();
     }
 
     
@@ -309,6 +345,9 @@ public class Unit : MonoBehaviour
     public void EndTurn()
     {
         mustBeSelected = false;
+        
+        DesactivateOutline();
+        DeselectUnit();
     }
 
     public void SelectUnit()

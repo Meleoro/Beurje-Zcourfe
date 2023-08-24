@@ -134,6 +134,8 @@ public class MouseManager : MonoBehaviour
 
                         break;
                     }
+                    
+                    SelectEnnemy(clickedObject.GetComponent<Ennemy>());
                 }
 
                 else if (unitSelect && clickedObject.CompareTag("Tile") && !competenceSelect)
@@ -255,7 +257,7 @@ public class MouseManager : MonoBehaviour
         if (!click)
         {
             // If nothing is selected
-            if (currentUnit == null && currentEnnemy == null)
+            if (currentUnit is null && currentEnnemy is null)
             {
                 if (!unitSelect)
                 {
@@ -386,7 +388,7 @@ public class MouseManager : MonoBehaviour
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(currentUnit);
 
         StartCoroutine(effectMaker.SquishTransform(currentUnit.transform, 1.2f, 0.07f));
-        CameraManager.Instance.SelectUnit(currentUnit);
+        CameraManager.Instance.SelectCharacter(currentUnit, null);
         
         currentUnit.SelectUnit();
 
@@ -396,9 +398,26 @@ public class MouseManager : MonoBehaviour
         ManageOverlayUnit(currentUnit, null, true);
     }
     
+    
+    // SETUP EVERYTHING WHEN WE WANT TO SELECT AN ENNEMY
+    public void SelectEnnemy(Ennemy currentEnnemy)
+    {
+        UIBattleManager.Instance.OpenUnitInfos(currentEnnemy.data, null, currentEnnemy);
+
+        StartCoroutine(effectMaker.SquishTransform(currentEnnemy.transform, 1.2f, 0.07f));
+        CameraManager.Instance.SelectCharacter(null, currentEnnemy);
+        
+        //currentEnnemy.SelectUnit();
+
+        competenceSelect = false;
+        unitSelect = true;
+
+        ManageOverlayUnit(null, currentEnnemy, true);
+    }
+    
         
     // WHEN THE PLAYER DESELECT A CHARACTER
-    private void StopSelection()
+    public void StopSelection()
     {
         competenceSelect = false;
         competenceDisplayed = false;
@@ -408,6 +427,24 @@ public class MouseManager : MonoBehaviour
         
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
         ManageOverlayTiles();
+    }
+
+    public void ResetSelection()
+    {
+        competenceSelect = false;
+        competenceDisplayed = false;
+        
+        unitSelect = false;
+        selectedUnit = null;
+        
+        selectedEnnemy = null;
+
+        currentOverlayedUnit = null;
+        currentOverlayedEnnemy = null;
+        
+        UIBattleManager.Instance.UpdateTurnUISelectedUnit(selectedUnit);
+        ManageOverlayTiles();
+        ManageOverlayUnit(null, null, false);
     }
 
     
@@ -591,21 +628,24 @@ public class MouseManager : MonoBehaviour
     {
         if (unitSelect && !competenceSelect)
         {
-            if (tilesAtRangeDisplayed.Contains(focusedTile))
+            if (selectedUnit.mustBeSelected)
             {
-                for (int i = 0; i < currentPath.Count; i++)
+                if (tilesAtRangeDisplayed.Contains(focusedTile))
                 {
-                    currentPath[i].HideArrow();
-                }
+                    for (int i = 0; i < currentPath.Count; i++)
+                    {
+                        currentPath[i].HideArrow();
+                    }
                 
-                currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile, false);
+                    currentPath = pathFinder.FindPath(selectedUnit.currentTile, focusedTile, false);
 
-                for (int i = 0; i < currentPath.Count; i++)
-                {
-                    OverlayTile previousTile = i > 0 ? currentPath[i - 1] : selectedUnit.currentTile;
-                    OverlayTile nextTile = i < currentPath.Count - 1 ? currentPath[i + 1] : null;
+                    for (int i = 0; i < currentPath.Count; i++)
+                    {
+                        OverlayTile previousTile = i > 0 ? currentPath[i - 1] : selectedUnit.currentTile;
+                        OverlayTile nextTile = i < currentPath.Count - 1 ? currentPath[i + 1] : null;
                     
-                    currentPath[i].DisplayArrow(arrowCreator.CreateArrow(previousTile, currentPath[i], nextTile));
+                        currentPath[i].DisplayArrow(arrowCreator.CreateArrow(previousTile, currentPath[i], nextTile));
+                    }
                 }
             }
         }

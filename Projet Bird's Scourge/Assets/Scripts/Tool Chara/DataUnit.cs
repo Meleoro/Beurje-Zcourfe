@@ -28,6 +28,12 @@ public class DataUnit : ScriptableObject
     public DataCompetence passifData;
 
 
+    /*[Header("UI")] */
+    [Range(0f, 2f)] public float attackSpriteSize = 1f;
+    [Range(-0.5f, 0.5f)] public float XPosModificator = 0;
+    [Range(-0.5f, 0.5f)] public float YPosModificator = 0;
+
+
     /*[Header("Levels")] */
     public List<UnitLevel> levels = new List<UnitLevel>();
 }

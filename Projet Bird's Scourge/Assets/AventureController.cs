@@ -13,7 +13,6 @@ public class AventureController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private GameObject player;
-    [SerializeField] private Transform _camera;
     private AventureManager mainScript;
     
 
@@ -56,25 +55,29 @@ public class AventureController : MonoBehaviour
         {
             if (hitObjects[i].collider.CompareTag("Nod"))
             {
-                MoveTo(hitObjects[i].collider.GetComponent<Nod>());
+                StartCoroutine(MoveTo(hitObjects[i].collider.GetComponent<Nod>()));
             }
         }
     }
     
 
     // MOVE THE CAMERA AND THE PLAYER + RETURNS TRUE IF A MOVEMENT HAS BEEN MADE
-    public void MoveTo(Nod selectedNod)
+    public IEnumerator MoveTo(Nod selectedNod)
     {
         if (currentNod.connectedNods.Contains(selectedNod) && selectedNod.transform.position.y > currentNod.transform.position.y)
         {
             float distance = selectedNod.transform.position.y - currentNod.transform.position.y;
 
-            _camera.DOMoveY(_camera.transform.position.y + distance, 1);
+            CameraManager.Instance.transform.DOMoveY(CameraManager.Instance.transform.position.y + distance, 1);
             
             player.transform.DOMove(selectedNod.transform.position, 1);
             currentNod = selectedNod;
             
             mainScript.scriptCreator.UpdateMap(currentNod);
+
+            yield return new WaitForSeconds(1.3f);
+            
+            selectedNod.DoNodeEffect();
         }
     }
 }

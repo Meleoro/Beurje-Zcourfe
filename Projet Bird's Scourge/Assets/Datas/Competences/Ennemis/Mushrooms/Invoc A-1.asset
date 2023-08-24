@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Invoc A-1
   m_EditorClassIdentifier: 
   competenceName: HeadButt
+  VFXType: 0
   levels:
   - competenceDescription: Inflicts low damage to a single target
     competenceManaCost: 0

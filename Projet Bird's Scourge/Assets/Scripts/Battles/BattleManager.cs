@@ -15,8 +15,8 @@ public class BattleManager : MonoBehaviour
     }
     
     [Header("Start")]
-    private List<Unit> currentUnits = new List<Unit>();
-    private List<Ennemy> currentEnnemies = new List<Ennemy>();
+    [HideInInspector] public List<Unit> currentUnits = new List<Unit>();
+    [HideInInspector] public List<Ennemy> currentEnnemies = new List<Ennemy>();
     private int numberCharas;
 
     [Header("Units/Ennemies")]
@@ -44,9 +44,12 @@ public class BattleManager : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void Start()
+    private void Update()
     {
-        UIBattle.gameObject.SetActive(true);
+        if (MapManager.Instance.tilesAppeared)
+        {
+            UIBattle.gameObject.SetActive(true);
+        }
     }
 
 
@@ -339,7 +342,7 @@ public class BattleManager : MonoBehaviour
         
         else if (order[0].CompareTag("Ennemy"))
         {
-            order[0].GetComponent<Ennemy>().DoTurn();
+            StartCoroutine(order[0].GetComponent<Ennemy>().DoTurn());
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         }
 
@@ -358,16 +361,18 @@ public class BattleManager : MonoBehaviour
         if (order[0].CompareTag("Unit"))
         {
             order[0].GetComponent<Unit>().EndTurn();
+            GainMana(1);
         }
         
         else if (order[0].CompareTag("Ennemy"))
         {
-            
+            order[0].GetComponent<Ennemy>().DesactivateOutline();
         }
+        
+        MouseManager.Instance.ResetSelection();
         
         order.RemoveAt(0);
         
-        GainMana(1);
         ActualiseOrder();
         
         UIBattleManager.Instance.UpdateTurnUISelectedUnit(MouseManager.Instance.selectedUnit);
@@ -386,7 +391,7 @@ public class BattleManager : MonoBehaviour
         
         else if (order[0].CompareTag("Ennemy"))
         {
-            order[0].GetComponent<Ennemy>().DoTurn();
+            StartCoroutine(order[0].GetComponent<Ennemy>().DoTurn());
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         }
 

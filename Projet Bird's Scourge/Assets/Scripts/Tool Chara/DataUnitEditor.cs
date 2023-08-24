@@ -32,6 +32,10 @@ public class DataUnitEditor : Editor
     private SerializedProperty levelUnlockCompetence2;
     private SerializedProperty levelUnlockPassif;
 
+    private SerializedProperty attackSpriteSize;
+    private SerializedProperty XPosModificator;
+    private SerializedProperty YPosModificator;
+
     private SerializedProperty levels;
     private int levelSize;
     private int paternSize;
@@ -57,6 +61,10 @@ public class DataUnitEditor : Editor
         levelUnlockCompetence1 = so.FindProperty("levelUnlockCompetence1");
         levelUnlockCompetence2 = so.FindProperty("levelUnlockCompetence2");
         levelUnlockPassif = so.FindProperty("levelUnlockPassif");
+
+        attackSpriteSize = so.FindProperty("attackSpriteSize");
+        XPosModificator = so.FindProperty("XPosModificator");
+        YPosModificator = so.FindProperty("YPosModificator");
 
         levels = so.FindProperty("levels");
         
@@ -111,6 +119,15 @@ public class DataUnitEditor : Editor
                 
             EditorGUILayout.PropertyField(passifData);
             EditorGUILayout.PropertyField(levelUnlockPassif);
+            GUILayout.Space(4);
+
+            GUILayout.Space(8);
+            GUILayout.Label("UI", titreStyle);
+            GUILayout.Space(4);
+
+            EditorGUILayout.PropertyField(attackSpriteSize);
+            EditorGUILayout.PropertyField(XPosModificator);
+            EditorGUILayout.PropertyField(YPosModificator);
             GUILayout.Space(4);
         }
         
