@@ -29,6 +29,7 @@ public class AventureCreator : MonoBehaviour
     public Transform fond;
     public GameObject spot;
     public Transform parentSpot;
+    private DecorationCreator decorationScript;
     
     
     // THE WHOLE PROCESS TO GENERATE THE MAP (RETURNS THE WHOLE MAP)
@@ -47,6 +48,10 @@ public class AventureCreator : MonoBehaviour
 
         // Finally we initiate every nods with their functions
 
+        // Finally we generate the decoration of the map
+        decorationScript = GetComponent<DecorationCreator>();
+        decorationScript.GenerateDecoration(fond);
+
         return map;
     }
 
@@ -59,10 +64,10 @@ public class AventureCreator : MonoBehaviour
     {
         Vector2 maxBounds = GetBounds(fond);
 
-        stockageCurrentMinX = -maxBounds.x-5;
-        stockageCurrentMaxX = maxBounds.x+5;
+        stockageCurrentMinX = -maxBounds.x - 5;
+        stockageCurrentMaxX = maxBounds.x + 5;
 
-        List<Vector2> possibleSpots = GeneratePossibleSpots(-maxBounds.y, wantedMapLength);
+        List<Vector2> possibleSpots = GeneratePossibleSpots(maxBounds.y, wantedMapLength);
 
         return possibleSpots;
     }
@@ -106,8 +111,8 @@ public class AventureCreator : MonoBehaviour
         float currentHeight = currentTransform.localScale.y;
         Vector2 center = currentTransform.position;
 
-        finalBounds = new Vector2(center.x + currentWidth * 0.35f, center.y + currentHeight * 0.4f);
-        
+        finalBounds = new Vector2(center.x + currentWidth * 0.35f, center.y - currentHeight * 0.2f);
+
         return finalBounds;
     }
 
