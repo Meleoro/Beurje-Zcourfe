@@ -100,7 +100,7 @@ public class DecorationCreator : MonoBehaviour
     {
         for (int i = possibleSpots.Count - 1; i >= 0; i--)
         {
-            RaycastHit2D hit = Physics2D.CircleCast(possibleSpots[i], 1, Vector2.zero);
+            RaycastHit2D hit = Physics2D.CircleCast(possibleSpots[i], 0.6f, Vector2.zero);
 
             if (hit.collider is not null)
             {

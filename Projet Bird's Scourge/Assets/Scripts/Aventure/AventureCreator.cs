@@ -285,6 +285,7 @@ public class AventureCreator : MonoBehaviour
                         connectedNodes[i].connectedNods.Add(currentNod);
                         
                         AddLine(currentNod.GetComponent<LineRenderer>(), currentNod.transform.position, connectedNodes[i].transform.position);
+                        currentNod.ActualiseNeighbors(connectedNodes[i].transform.localPosition - currentNod.transform.localPosition);
                     }
                 }
             }
