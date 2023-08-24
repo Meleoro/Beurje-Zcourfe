@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -18,6 +19,7 @@ public class Nod : MonoBehaviour
     public GameObject battlePrefab;
     
     private SpriteRenderer sr;
+    private EdgeCollider2D edgeCollider;
     public List<Nod> connectedNods = new List<Nod>();
     public List<Sprite> spritList = new List<Sprite>();
     public bool isCamp;
@@ -42,6 +44,21 @@ public class Nod : MonoBehaviour
                 break;
         }
     }
+
+
+    public void ActualiseNeighbors(Vector2 pos2)
+    {
+        if(edgeCollider is null)
+            edgeCollider = GetComponent<EdgeCollider2D>();
+        
+        List<Vector2> currentPoints = edgeCollider.points.ToList();
+
+        currentPoints.Add(Vector2.zero);
+        currentPoints.Add(pos2 / transform.localScale.x);
+
+        edgeCollider.points = currentPoints.ToArray();
+    }
+    
 
     private IEnumerator LaunchBattle()
     {
