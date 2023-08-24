@@ -31,8 +31,6 @@ public class UIMapManager : MonoBehaviour
 
     public IEnumerator StartBattleEffect()
     {
-        Debug.Log(CameraManager.Instance.screenHeight);
-        
         flashImage.DOFade(1, flashDuration * 0.3f).OnComplete((() => flashImage.DOFade(0, flashDuration * 0.7f)));
         
         yield return new WaitForSeconds(flashDuration * 2);

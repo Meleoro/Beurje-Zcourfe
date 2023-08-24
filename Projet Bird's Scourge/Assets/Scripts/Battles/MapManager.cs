@@ -34,7 +34,7 @@ public class MapManager : MonoBehaviour
     
     
     
-    private void Awake()
+    private void Start()
     {
         if (_instance == null)
             _instance = this;
@@ -116,6 +116,10 @@ public class MapManager : MonoBehaviour
 
         CameraManager.Instance.transform.position = _tilemap.GetCellCenterWorld(start) + Vector3.back * 10;
 
+        float stockage = CameraManager.Instance._camera.orthographicSize;
+        CameraManager.Instance._camera.DOOrthoSize(2, 0);
+        CameraManager.Instance._camera.DOOrthoSize(stockage, 2);
+
         next.Add(start);
 
         while (currentCount < wantedCount)
@@ -135,7 +139,7 @@ public class MapManager : MonoBehaviour
                         
                     placeholders.Add(currentGO);
 
-                    currentGO.transform.DOMoveY(currentGO.transform.position.y - 1, 1);
+                    currentGO.transform.DOMoveY(currentGO.transform.position.y - 1, 0.3f);
                     
                     outPos.Add(next[i]);
                     currentCount += 1;
@@ -144,7 +148,7 @@ public class MapManager : MonoBehaviour
                 neighbors.AddRange(FindNeighbors(next[i]));
             }
             
-            yield return new WaitForSeconds(0.03f);
+            yield return new WaitForSeconds(0.06f);
 
             neighbors = neighbors.Distinct().ToList();
             next = new List<Vector3Int>();
@@ -158,7 +162,7 @@ public class MapManager : MonoBehaviour
             }
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         _tilemap.GetComponent<TilemapRenderer>().enabled = true;
 

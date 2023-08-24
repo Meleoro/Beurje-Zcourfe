@@ -55,11 +55,12 @@ public class CameraManager : MonoBehaviour
         
         else
             Destroy(gameObject);
+        
+        _camera = GetComponent<Camera>();
     }
 
     private void Start()
     {
-        _camera = GetComponent<Camera>();
         zoom = _camera.orthographicSize;
 
         screenHeight = _camera.pixelHeight;

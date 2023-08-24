@@ -12182,6 +12182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac9084e12ee9f140818adc80861a92e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentUnits: []
+  currentEnnemies: []
   order:
   - {fileID: 0}
   - {fileID: 6779804781764080839}
@@ -18904,6 +18906,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6339ee822967584eb8a1999095298b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placeholderSprite: {fileID: 5701679627413830503, guid: 70da0c042c13b7345873f387bf0f6a39, type: 3}
+  tilesAppeared: 0
   overlayTile: {fileID: 5058824656546141229, guid: 44adb3ec43bea5b43be22207ea2ea785, type: 3}
   overlayTilesContainer: {fileID: 1171489425184497934}
 --- !u!1 &8964725033366987003
