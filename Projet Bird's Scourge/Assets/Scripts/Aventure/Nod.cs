@@ -30,7 +30,7 @@ public class Nod : MonoBehaviour
         if (isCamp) sr.sprite = spritList[0];
         else
         {
-            sr.sprite = spritList[Random.Range(1, 7)];
+            sr.sprite = spritList[Random.Range(1, 10)];
         }
     }
 
