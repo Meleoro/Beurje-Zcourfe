@@ -22,11 +22,11 @@ public class DecorationCreator : MonoBehaviour
     private float stockageCurrentMinX;
     private float stockageCurrentMaxX;
 
-    
 
-    public void GenerateDecoration(Transform fond)
+
+    public void GenerateDecoration(Transform fond, float minX, float maxX)
     {
-        List<Vector2> possiblePos = FindPossibleSpots(fond);
+        List<Vector2> possiblePos = FindPossibleSpots(fond, minX, maxX);
         
         possiblePos = VerifyPossibleSpots(possiblePos);
 
@@ -39,31 +39,49 @@ public class DecorationCreator : MonoBehaviour
     // --------------- TO FIND THE POSSIBLE SPOTS --------------- 
     
     // GENERATES THE POSSIBLE POSITIONS INTO WORLD SPACE FOR THE SPOTS
-    private List<Vector2> FindPossibleSpots(Transform fond)
+    private List<Vector2> FindPossibleSpots(Transform fond, float minX, float maxX)
     {
         Vector2 maxBounds = GetBounds(fond);
-
-        stockageCurrentMinX = maxBounds.x;
+        
         stockageCurrentMinY = maxBounds.y;
         stockageCurrentMaxY = -maxBounds.y;
 
-        List<Vector2> possibleSpots = GeneratePossibleSpots(stockageCurrentMinX, wantedMapLength);
+        List<Vector2> possibleSpots = GeneratePossibleSpots(minX, maxX, wantedMapLength);
 
         return possibleSpots;
     }
 
 
     // GENERATES THE POSSIBLE POSITIONS FOR A CERTAIN NUMBER OF ITERATIONS
-    private List<Vector2> GeneratePossibleSpots(float minY, int iterations)
+    private List<Vector2> GeneratePossibleSpots(float minX, float maxX, int iterations)
     {
         List<Vector2> possibleSpots = new List<Vector2>();
 
-        for (int x = 0; x < iterations; x++)
+        float currentX = minX;
+
+        while (currentX < maxX)
         {
             for (int y = 0; y < rawsNbr; y++)
             {
                 float posY = Mathf.Lerp(stockageCurrentMinY, stockageCurrentMaxY, ((float)y / rawsNbr) + (1f / rawsNbr) * 0.5f);
-                float posX = minY + distanceBetweenColumns * x;
+                float posX = currentX;
+
+                float posModificator = 0.15f;
+                posX += Random.Range(-posModificator, posModificator);
+                posY += Random.Range(-posModificator, posModificator);
+                
+                possibleSpots.Add(new Vector2(posX, posY));
+            }
+
+            currentX += distanceBetweenColumns;
+        }
+        
+        /*for (int x = 0; x < iterations; x++)
+        {
+            for (int y = 0; y < rawsNbr; y++)
+            {
+                float posY = Mathf.Lerp(stockageCurrentMinY, stockageCurrentMaxY, ((float)y / rawsNbr) + (1f / rawsNbr) * 0.5f);
+                float posX = minX + distanceBetweenColumns * x;
 
                 float posModificator = 0.15f;
                 posX += Random.Range(-posModificator, posModificator);
@@ -76,7 +94,7 @@ public class DecorationCreator : MonoBehaviour
             {
                 stockageCurrentMaxY = minY + distanceBetweenColumns * x;
             }
-        }
+        }*/
 
         return possibleSpots;
     }

@@ -52,7 +52,7 @@ public class AventureCreator : MonoBehaviour
 
         // Finally we generate the decoration of the map
         decorationScript = GetComponent<DecorationCreator>();
-        decorationScript.GenerateDecoration(fond);
+        decorationScript.GenerateDecoration(fond, startX.position.x - 2, startX.position.x + distanceBetweenColumns * (wantedMapLength - 1));
 
         return map;
     }
@@ -419,6 +419,9 @@ public class AventureCreator : MonoBehaviour
 
         // Then we add the line renderers of these elements
         GeneratePaths(map.Count - 2);
+        
+        
+        decorationScript.GenerateDecoration(fond, stockageCurrentMinX - distanceBetweenColumns, stockageCurrentMinX);
     }
 
     private void RemoveRaw()
