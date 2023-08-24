@@ -99,15 +99,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528247c090183524aac288f499dece93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nodeType: 0
+  battlePrefab: {fileID: 0}
   connectedNods: []
   spritList:
-  - {fileID: -823029485, guid: a6f7e61d3640b4046a07ee811824ca0d, type: 3}
-  - {fileID: 1819457365, guid: a6f7e61d3640b4046a07ee811824ca0d, type: 3}
-  - {fileID: 1614515420, guid: a6f7e61d3640b4046a07ee811824ca0d, type: 3}
-  - {fileID: -2055913697, guid: a6f7e61d3640b4046a07ee811824ca0d, type: 3}
-  - {fileID: 295684429, guid: a6f7e61d3640b4046a07ee811824ca0d, type: 3}
-  - {fileID: -261800532, guid: a6f7e61d3640b4046a07ee811824ca0d, type: 3}
-  - {fileID: 1505874658, guid: a6f7e61d3640b4046a07ee811824ca0d, type: 3}
+  - {fileID: 1419029345, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: 342287233, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: 585079695, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: 585079695, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: -797835952, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: 1027492237, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: -1166268561, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: 1086660690, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: -1748904262, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  - {fileID: 150629121, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
   isCamp: 0
 --- !u!120 &-797691430176007696
 LineRenderer:
