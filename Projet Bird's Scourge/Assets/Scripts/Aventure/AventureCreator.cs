@@ -12,14 +12,15 @@ public class AventureCreator : MonoBehaviour
 
     [Header("Parametres")] 
     [SerializeField] private int wantedMapLength;
-    [SerializeField] private int columnsNbr;
-    [Range(1, 20)] [SerializeField] private int distanceBetweenRaws;
+    [SerializeField] private int rawsNbr;
+    [Range(1, 20)] [SerializeField] private int distanceBetweenColumns;
     [SerializeField] private int stepsBetweenCamp;
     [Range(0, 100)] [SerializeField] private int probaSpotSpawn;
-    [SerializeField] private int maxElementsPerRaw;
+    [SerializeField] private int maxElementsPerColumn;
 
     [Header("Update")] 
     [SerializeField] private int heightStartUpdate;    // Indicates from which number of movement we start ton update the map
+    private float stockageCurrentMinY;
     private float stockageCurrentMaxY;
     private float stockageCurrentMinX;
     private float stockageCurrentMaxX;
@@ -30,6 +31,7 @@ public class AventureCreator : MonoBehaviour
     public GameObject spot;
     public Transform parentSpot;
     private DecorationCreator decorationScript;
+    public Transform startX;
     
     
     // THE WHOLE PROCESS TO GENERATE THE MAP (RETURNS THE WHOLE MAP)
@@ -64,26 +66,29 @@ public class AventureCreator : MonoBehaviour
     {
         Vector2 maxBounds = GetBounds(fond);
 
-        stockageCurrentMinX = -maxBounds.x - 5;
-        stockageCurrentMaxX = maxBounds.x + 5;
+        stockageCurrentMinX = maxBounds.x;
+        stockageCurrentMinY = maxBounds.y;
+        stockageCurrentMaxY = -maxBounds.y;
 
-        List<Vector2> possibleSpots = GeneratePossibleSpots(maxBounds.y, wantedMapLength);
+        List<Vector2> possibleSpots = GeneratePossibleSpots(stockageCurrentMinX, wantedMapLength);
 
         return possibleSpots;
     }
 
 
     // GENERATES THE POSSIBLE POSITIONS FOR A CERTAIN NUMBER OF ITERATIONS
-    private List<Vector2> GeneratePossibleSpots(float minY, int interations)
+    private List<Vector2> GeneratePossibleSpots(float minX, int interations)
     {
         List<Vector2> possibleSpots = new List<Vector2>();
-
-        for (int y = 0; y < interations; y++)
+        
+        
+        for (int x = 0; x < interations; x++)
         {
-            for (int x = 0; x < columnsNbr; x++)
+            for (int y = 0; y < rawsNbr; y++)
             {
-                float posX = Mathf.Lerp(stockageCurrentMinX, stockageCurrentMaxX, ((float)x / columnsNbr) + (1f / columnsNbr) * 0.5f);
-                float posY = minY + distanceBetweenRaws * y;
+                float posY = Mathf.Lerp(stockageCurrentMinY, stockageCurrentMaxY, ((float)y / rawsNbr) + (1f / rawsNbr) * 0.5f);
+                
+                float posX = minX + distanceBetweenColumns * x;
 
                 float posModificator = 0.1f;
                 posX += Random.Range(-posModificator, posModificator);
@@ -92,9 +97,9 @@ public class AventureCreator : MonoBehaviour
                 possibleSpots.Add(new Vector2(posX, posY));
             }
 
-            if (y == interations - 1)
+            if (x == interations - 1)
             {
-                stockageCurrentMaxY = minY + distanceBetweenRaws * y;
+                stockageCurrentMinX = minX + distanceBetweenColumns * x;
             }
         }
 
@@ -107,11 +112,10 @@ public class AventureCreator : MonoBehaviour
     {
         Vector2 finalBounds;
         
-        float currentWidth = currentTransform.localScale.x;
-        float currentHeight = currentTransform.localScale.y;
+        float currentHeight = currentTransform.localScale.x;
         Vector2 center = currentTransform.position;
 
-        finalBounds = new Vector2(center.x + currentWidth * 0.35f, center.y - currentHeight * 0.35f);
+        finalBounds = new Vector2(startX.position.x, center.y - currentHeight * 1.1f);
 
         return finalBounds;
     }
@@ -125,7 +129,7 @@ public class AventureCreator : MonoBehaviour
     {
         int currentElementsInRaw = 0;
 
-        int rawsNumber = (int)(possibleSpots.Count / columnsNbr);
+        int rawsNumber = (int)(possibleSpots.Count / rawsNbr);
 
         int i = 0;
 
@@ -135,7 +139,7 @@ public class AventureCreator : MonoBehaviour
             int reelY = map.Count - 1;
 
             // We go across every column in on line
-            for (int x = 0; x < columnsNbr; x++)
+            for (int x = 0; x < rawsNbr; x++)
             {
                 if (VerifySpot(new Vector2Int(x, reelY), currentElementsInRaw, currentCounterCamp <= 1))
                 {
@@ -189,7 +193,7 @@ public class AventureCreator : MonoBehaviour
                 map.RemoveAt(reelY);
                 
                 y -= 1;
-                i -= columnsNbr;
+                i -= rawsNbr;
                 currentElementsInRaw = 0;
             }
             
@@ -216,14 +220,14 @@ public class AventureCreator : MonoBehaviour
     {
         if (isCamp)
         {
-            if (coordinates.x == (int)(columnsNbr * 0.5f))
+            if (coordinates.x == (int)(rawsNbr * 0.5f))
             {
                 return true;
             }
         }
         else
         {
-            if (currentElementsInRaw < maxElementsPerRaw)
+            if (currentElementsInRaw < maxElementsPerColumn)
             {
                 bool hasPrecedent = false;
                 
@@ -240,7 +244,7 @@ public class AventureCreator : MonoBehaviour
                     hasPrecedent = true;
                 }
 
-                if (coordinates.x + 1 < maxElementsPerRaw)
+                if (coordinates.x + 1 < maxElementsPerColumn)
                 {
                     if (map[coordinates.y - 1].list[coordinates.x + 1] is not null)
                     {
@@ -305,9 +309,9 @@ public class AventureCreator : MonoBehaviour
         List<Nod> linkedNodes = new List<Nod>();
         bool nextIsCamp = false;
 
-        if (map[coordinates.y + 1].list[(int)(columnsNbr * 0.5f)] is not null)
+        if (map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)] is not null)
         {
-            nextIsCamp = map[coordinates.y + 1].list[(int)(columnsNbr * 0.5f)].isCamp;
+            nextIsCamp = map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)].isCamp;
         }
 
         
@@ -355,7 +359,7 @@ public class AventureCreator : MonoBehaviour
 
         else if (!isCamp)
         {
-            linkedNodes.Add(map[coordinates.y + 1].list[(int)(columnsNbr * 0.5f)]);
+            linkedNodes.Add(map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)]);
         }
 
         else
@@ -408,7 +412,7 @@ public class AventureCreator : MonoBehaviour
     private void AddRaw()
     {
         // First we generate the positions for our new raw
-        List<Vector2> possiblePos = GeneratePossibleSpots(stockageCurrentMaxY + distanceBetweenRaws, 1);
+        List<Vector2> possiblePos = GeneratePossibleSpots(stockageCurrentMinX + distanceBetweenColumns, 1);
         
         // Next we check on which positions we create nods
         ChoseSpots(possiblePos);

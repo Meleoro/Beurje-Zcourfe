@@ -40,7 +40,7 @@ public class Nod : MonoBehaviour
         switch (nodeType)
         {
             case NodeType.battle :
-                StartCoroutine(LaunchBattle());
+                //StartCoroutine(LaunchBattle());
                 break;
         }
     }

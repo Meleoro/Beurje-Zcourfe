@@ -64,11 +64,11 @@ public class AventureController : MonoBehaviour
     // MOVE THE CAMERA AND THE PLAYER + RETURNS TRUE IF A MOVEMENT HAS BEEN MADE
     public IEnumerator MoveTo(Nod selectedNod)
     {
-        if (currentNod.connectedNods.Contains(selectedNod) && selectedNod.transform.position.y > currentNod.transform.position.y)
+        if (currentNod.connectedNods.Contains(selectedNod) && selectedNod.transform.position.x > currentNod.transform.position.x)
         {
-            float distance = selectedNod.transform.position.y - currentNod.transform.position.y;
+            float distance = selectedNod.transform.position.x - currentNod.transform.position.x;
 
-            CameraManager.Instance.transform.DOMoveY(CameraManager.Instance.transform.position.y + distance, 1);
+            CameraManager.Instance.transform.DOMoveX(CameraManager.Instance.transform.position.x + distance, 1);
             
             player.transform.DOMove(selectedNod.transform.position, 1);
             currentNod = selectedNod;

@@ -9,14 +9,16 @@ public class DecorationCreator : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private List<Decoration> possibleDecorations = new List<Decoration>();
+    [SerializeField] private Transform startX;
 
     [Header("Parameters")] 
-    [SerializeField] private int columnsNbr;
+    [SerializeField] private int rawsNbr;
     [SerializeField] private int wantedMapLength;
-    [SerializeField] private float distanceBetweenRaws;
-    private float stockageCurrentMaxY;
+    [SerializeField] private float distanceBetweenColumns; 
 
     [Header("Other")] 
+    private float stockageCurrentMinY;
+    private float stockageCurrentMaxY;
     private float stockageCurrentMinX;
     private float stockageCurrentMaxX;
 
@@ -41,10 +43,11 @@ public class DecorationCreator : MonoBehaviour
     {
         Vector2 maxBounds = GetBounds(fond);
 
-        stockageCurrentMinX = -maxBounds.x - 5;
-        stockageCurrentMaxX = maxBounds.x + 5;
+        stockageCurrentMinX = maxBounds.x;
+        stockageCurrentMinY = maxBounds.y;
+        stockageCurrentMaxY = -maxBounds.y;
 
-        List<Vector2> possibleSpots = GeneratePossibleSpots(maxBounds.y, wantedMapLength);
+        List<Vector2> possibleSpots = GeneratePossibleSpots(stockageCurrentMinX, wantedMapLength);
 
         return possibleSpots;
     }
@@ -55,12 +58,12 @@ public class DecorationCreator : MonoBehaviour
     {
         List<Vector2> possibleSpots = new List<Vector2>();
 
-        for (int y = 0; y < iterations; y++)
+        for (int x = 0; x < iterations; x++)
         {
-            for (int x = 0; x < columnsNbr; x++)
+            for (int y = 0; y < rawsNbr; y++)
             {
-                float posX = Mathf.Lerp(stockageCurrentMinX, stockageCurrentMaxX, ((float)x / columnsNbr) + (1f / columnsNbr) * 0.5f);
-                float posY = minY + distanceBetweenRaws * y;
+                float posY = Mathf.Lerp(stockageCurrentMinY, stockageCurrentMaxY, ((float)y / rawsNbr) + (1f / rawsNbr) * 0.5f);
+                float posX = minY + distanceBetweenColumns * x;
 
                 float posModificator = 0.15f;
                 posX += Random.Range(-posModificator, posModificator);
@@ -69,9 +72,9 @@ public class DecorationCreator : MonoBehaviour
                 possibleSpots.Add(new Vector2(posX, posY));
             }
 
-            if (y == iterations - 1)
+            if (x == iterations - 1)
             {
-                stockageCurrentMaxY = minY + distanceBetweenRaws * y;
+                stockageCurrentMaxY = minY + distanceBetweenColumns * x;
             }
         }
 
@@ -84,11 +87,10 @@ public class DecorationCreator : MonoBehaviour
     {
         Vector2 finalBounds;
         
-        float currentWidth = currentTransform.localScale.x;
-        float currentHeight = currentTransform.localScale.y;
+        float currentHeight = currentTransform.localScale.x;
         Vector2 center = currentTransform.position;
 
-        finalBounds = new Vector2(center.x + currentWidth * 0.55f, center.y - currentHeight * 0.49f);
+        finalBounds = new Vector2(startX.position.x - 2, center.y - currentHeight - 1.7f);
 
         return finalBounds;
     }
