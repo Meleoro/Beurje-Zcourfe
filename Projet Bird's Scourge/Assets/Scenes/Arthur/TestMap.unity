@@ -161,7 +161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -17
+      value: -16.37
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalPosition.z
@@ -490,9 +490,9 @@ MonoBehaviour:
     probaSpawn: 20
   - gameObject: {fileID: 7490347191434055514, guid: 0dd8d540989857041bd425c5059a3707, type: 3}
     probaSpawn: 20
-  columnsNbr: 30
-  wantedMapLength: 50
-  distanceBetweenRaws: 0.4
+  columnsNbr: 40
+  wantedMapLength: 60
+  distanceBetweenRaws: 0.35
 --- !u!1 &809115568
 GameObject:
   m_ObjectHideFlags: 0

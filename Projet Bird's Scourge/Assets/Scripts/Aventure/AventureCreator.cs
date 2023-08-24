@@ -111,7 +111,7 @@ public class AventureCreator : MonoBehaviour
         float currentHeight = currentTransform.localScale.y;
         Vector2 center = currentTransform.position;
 
-        finalBounds = new Vector2(center.x + currentWidth * 0.35f, center.y - currentHeight * 0.2f);
+        finalBounds = new Vector2(center.x + currentWidth * 0.35f, center.y - currentHeight * 0.35f);
 
         return finalBounds;
     }
