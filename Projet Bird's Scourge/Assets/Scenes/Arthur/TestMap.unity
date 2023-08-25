@@ -954,10 +954,11 @@ MonoBehaviour:
   probaSpotSpawn: 59
   maxElementsPerColumn: 3
   heightStartUpdate: 5
-  fond: {fileID: 1237722585}
+  fond: {fileID: 1550823684}
   spot: {fileID: 8627825287045226144, guid: 7e7eeea682a401f4a8031287e3130dff, type: 3}
   parentSpot: {fileID: 1596632194}
   startX: {fileID: 1552808990}
+  background: {fileID: 1550823680}
 --- !u!114 &802230189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1771,7 +1772,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1237722585
 Transform:
   m_ObjectHideFlags: 0

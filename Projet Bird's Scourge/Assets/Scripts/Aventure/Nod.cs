@@ -41,10 +41,10 @@ public class Nod : MonoBehaviour
         switch (nodeType)
         {
             case NodeType.battle :
-                StartCoroutine(LaunchBattle());
+                //StartCoroutine(LaunchBattle());
                 break;
             case NodeType.chest :
-                StartCoroutine(UIMapManager.Instance.ChestPopUp());
+                //StartCoroutine(UIMapManager.Instance.ChestPopUp());
                 break;
         }
     }
