@@ -342,25 +342,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2369557555630285998, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2649350130129897931, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 4070802901164830704, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
-      propertyPath: orthographic size
-      value: 10.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070802901164830704, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.15779635
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070802901164830704, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.16150653
-      objectReference: {fileID: 0}
-    - target: {fileID: 4070802901164830704, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.16981131
+    - target: {fileID: 6445688200004470535, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_RootOrder
@@ -404,10 +396,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8895858868240851330, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
-      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

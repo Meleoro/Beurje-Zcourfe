@@ -42,6 +42,8 @@ public class CameraManager : MonoBehaviour
     [Header("References")] 
     [HideInInspector] public Camera _camera;
     public RectTransform worldUI;
+    public GameObject FXAventure;
+    public GameObject FXBattle;
 
     [Header("Other")]
     [HideInInspector] public float screenWidth;
@@ -74,6 +76,17 @@ public class CameraManager : MonoBehaviour
 
         Move();
         Zoom();
+
+        if (isInAdventure)
+        {
+            FXAventure.SetActive(true);
+            FXBattle.SetActive(false);
+        }
+        else
+        {
+            FXAventure.SetActive(false);
+            FXBattle.SetActive(true);
+        }
     }
 
     public void Move()
@@ -109,6 +122,9 @@ public class CameraManager : MonoBehaviour
 
         worldUI = WorldUIManager.Instance.GetComponent<RectTransform>();
         isInAdventure = false;
+
+        FXAventure.SetActive(false);
+        FXBattle.SetActive(true);
     }
 
     public void CameraBattleEnd()
@@ -117,6 +133,9 @@ public class CameraManager : MonoBehaviour
         
         transform.position = savePosAdventure;
         isInAdventure = true;
+        
+        FXAventure.SetActive(true);
+        FXBattle.SetActive(false);
     }
     
     
