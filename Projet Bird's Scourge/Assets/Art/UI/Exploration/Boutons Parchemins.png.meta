@@ -110,8 +110,8 @@ TextureImporter:
       name: Boutons Parchemins_0
       rect:
         serializedVersion: 2
-        x: 89
-        y: 217
+        x: 7
+        y: 223
         width: 97
         height: 21
       alignment: 0
@@ -131,8 +131,8 @@ TextureImporter:
       name: Boutons Parchemins_1
       rect:
         serializedVersion: 2
-        x: 190
-        y: 217
+        x: 108
+        y: 223
         width: 97
         height: 20
       alignment: 0
@@ -152,10 +152,10 @@ TextureImporter:
       name: Boutons Parchemins_2
       rect:
         serializedVersion: 2
-        x: 190
-        y: 196
-        width: 97
-        height: 20
+        x: 210
+        y: 223
+        width: 163
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,10 +173,10 @@ TextureImporter:
       name: Boutons Parchemins_3
       rect:
         serializedVersion: 2
-        x: 190
-        y: 166
+        x: 7
+        y: 198
         width: 97
-        height: 29
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +194,10 @@ TextureImporter:
       name: Boutons Parchemins_4
       rect:
         serializedVersion: 2
-        x: 125
-        y: 142
-        width: 163
-        height: 22
+        x: 109
+        y: 190
+        width: 97
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,6 +207,111 @@ TextureImporter:
       bones: []
       spriteID: 67e853bc9bbf1d64fb4304500b10001e
       internalID: 1947649764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_5
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 160
+        width: 272
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a64e388e69eaa64eac053d7f153bd1b
+      internalID: 1477483820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_6
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 133
+        width: 213
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58c34ec13d76e514990625c536ae2d5d
+      internalID: -690930252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_7
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 84
+        width: 214
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa1ad05518ffc6d409a5aa779e76c65f
+      internalID: 586696578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_8
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 43
+        width: 183
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12bef08575f75094ba730f9c6fac2c92
+      internalID: -1416073037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_9
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 6
+        width: 220
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 495fa7e0c6373914a9b0228e48998291
+      internalID: 753467310
       vertices: []
       indices: 
       edges: []
@@ -227,6 +332,11 @@ TextureImporter:
       Boutons Parchemins_2: -538602170
       Boutons Parchemins_3: -578558022
       Boutons Parchemins_4: 1947649764
+      Boutons Parchemins_5: 1477483820
+      Boutons Parchemins_6: -690930252
+      Boutons Parchemins_7: 586696578
+      Boutons Parchemins_8: -1416073037
+      Boutons Parchemins_9: 753467310
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -73,10 +73,10 @@ public class CameraManager : MonoBehaviour
         screenHeight = _camera.pixelHeight;
         screenWidth = _camera.pixelWidth;
 
-        if(cameraParent is not null)
+        /*if(cameraParent is not null)
             originalPos = cameraParent.transform.position;
 
-        StartCoroutine(ShakeExploration());
+        StartCoroutine(ShakeExploration());*/
     }
 
     private void Update()
@@ -149,7 +149,7 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    public IEnumerator ShakeExploration()
+    /*public IEnumerator ShakeExploration()
     {
         if (timerShake < 0)
         {
@@ -165,7 +165,7 @@ public class CameraManager : MonoBehaviour
         cameraParent.transform.position = Vector3.Lerp(cameraParent.transform.position, wantedPosShake, Time.deltaTime);
 
         StartCoroutine(ShakeExploration());
-    }
+    }*/
     
     
     

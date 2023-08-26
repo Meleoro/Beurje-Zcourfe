@@ -47,7 +47,7 @@ public class Nod : MonoBehaviour
                 //StartCoroutine(LaunchBattle());
                 break;
             case NodeType.chest :
-                //StartCoroutine(UIMapManager.Instance.ChestPopUp());
+                StartCoroutine(UIMapManager.Instance.ChestPopUp());
                 break;
         }
     }
