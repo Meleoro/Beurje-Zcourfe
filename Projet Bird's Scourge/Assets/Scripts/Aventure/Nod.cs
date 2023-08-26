@@ -19,11 +19,14 @@ public class Nod : MonoBehaviour
     public NodeType nodeType = NodeType.battle;
     public GameObject battlePrefab;
     
+    public List<Nod> connectedNods = new List<Nod>();
+    public bool isCamp;
+    
+    [Header("References")]
+    public List<Sprite> spritList = new List<Sprite>();
+    public GameObject lineRenderer;
     private SpriteRenderer sr;
     private EdgeCollider2D edgeCollider;
-    public List<Nod> connectedNods = new List<Nod>();
-    public List<Sprite> spritList = new List<Sprite>();
-    public bool isCamp;
 
     private void Start()
     {
@@ -41,26 +44,42 @@ public class Nod : MonoBehaviour
         switch (nodeType)
         {
             case NodeType.battle :
-                StartCoroutine(LaunchBattle());
+                //StartCoroutine(LaunchBattle());
                 break;
             case NodeType.chest :
-                StartCoroutine(UIMapManager.Instance.ChestPopUp());
+                //StartCoroutine(UIMapManager.Instance.ChestPopUp());
                 break;
         }
     }
 
 
-    public void ActualiseNeighbors(Vector2 pos2)
-    {
+    public void ActualiseNeighbors(Vector2 pos2, Vector2 colliderPos)
+    { 
+        // Collider part
         if(edgeCollider is null)
             edgeCollider = GetComponent<EdgeCollider2D>();
         
         List<Vector2> currentPoints = edgeCollider.points.ToList();
 
         currentPoints.Add(Vector2.zero);
-        currentPoints.Add(pos2 / transform.localScale.x);
+        currentPoints.Add(colliderPos / transform.localScale.x);
 
         edgeCollider.points = currentPoints.ToArray();
+        
+        
+        // Line Renderer part
+        LineRenderer newLineRenderer = Instantiate(lineRenderer, transform.position, Quaternion.identity, transform)
+            .GetComponent<LineRenderer>();
+
+        Vector2 direction = pos2 - (Vector2)transform.position;
+
+        Vector2 point1 = (Vector2)transform.position + direction.normalized * 1f;
+        Vector2 point2 = pos2 - direction.normalized * 1f;
+
+        newLineRenderer.positionCount = 2;
+        
+        newLineRenderer.SetPosition(0, point1);
+        newLineRenderer.SetPosition(1, point2);
     }
     
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -25,6 +26,7 @@ public class AventureCreator : MonoBehaviour
     private float stockageCurrentMinX;
     private float stockageCurrentMaxX;
     private int currentCounterCamp;
+    private SpriteRenderer farestBackground;
     
     [Header("Références")]
     public Transform fond;
@@ -32,6 +34,7 @@ public class AventureCreator : MonoBehaviour
     public Transform parentSpot;
     private DecorationCreator decorationScript;
     public Transform startX;
+    public GameObject background;
     
     
     // THE WHOLE PROCESS TO GENERATE THE MAP (RETURNS THE WHOLE MAP)
@@ -53,6 +56,8 @@ public class AventureCreator : MonoBehaviour
         // Finally we generate the decoration of the map
         decorationScript = GetComponent<DecorationCreator>();
         decorationScript.GenerateDecoration(fond, startX.position.x - 2, startX.position.x + distanceBetweenColumns * (wantedMapLength - 1));
+
+        ManageBackground();
 
         return map;
     }
@@ -288,8 +293,8 @@ public class AventureCreator : MonoBehaviour
                         currentNod.connectedNods.Add(connectedNodes[i]);
                         connectedNodes[i].connectedNods.Add(currentNod);
                         
-                        AddLine(currentNod.GetComponent<LineRenderer>(), currentNod.transform.position, connectedNodes[i].transform.position);
-                        currentNod.ActualiseNeighbors(connectedNodes[i].transform.localPosition - currentNod.transform.localPosition);
+                        //AddLine(currentNod.GetComponent<LineRenderer>(), currentNod.transform.position, connectedNodes[i].transform.position);
+                        currentNod.ActualiseNeighbors(connectedNodes[i].transform.position, connectedNodes[i].transform.localPosition - currentNod.transform.localPosition);
                     }
                 }
             }
@@ -419,6 +424,8 @@ public class AventureCreator : MonoBehaviour
 
         // Then we add the line renderers of these elements
         GeneratePaths(map.Count - 2);
+
+        ManageBackground();
         
         
         decorationScript.GenerateDecoration(fond, stockageCurrentMinX - distanceBetweenColumns, stockageCurrentMinX);
@@ -433,6 +440,29 @@ public class AventureCreator : MonoBehaviour
         }
         
         map.RemoveAt(0);
+    }
+
+
+
+    private void ManageBackground()
+    {
+        if (farestBackground is null)
+            farestBackground = fond.GetComponent<SpriteRenderer>();
+        
+        float pixelWidth = farestBackground.bounds.size.x * 0.5f;
+        
+        if (farestBackground.transform.position.x + pixelWidth < stockageCurrentMinX)
+        {
+            AddBackground(farestBackground);
+        }
+    }
+
+    private void AddBackground(SpriteRenderer currentBackground)
+    {
+        float pixelWidth = currentBackground.bounds.size.x * 0.5f;
+        Vector3 posBackground = currentBackground.transform.position;
+
+        farestBackground = Instantiate(background, posBackground + new Vector3(pixelWidth, 0, 0), Quaternion.Euler(0, 0, 90)).GetComponent<SpriteRenderer>();
     }
 }
 
