@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CameraManager : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class CameraManager : MonoBehaviour
     [Header("Aventure")] 
     public bool isInAdventure;
     public Vector3 savePosAdventure;
+    private Vector3 originalPos;
+    private Vector3 wantedPosShake;
+    private float timerShake;
 
     [Header("Battle")]
     private Vector3 savePos;
@@ -44,6 +48,7 @@ public class CameraManager : MonoBehaviour
     public RectTransform worldUI;
     public GameObject FXAventure;
     public GameObject FXBattle;
+    public Transform cameraParent;
 
     [Header("Other")]
     [HideInInspector] public float screenWidth;
@@ -67,6 +72,11 @@ public class CameraManager : MonoBehaviour
 
         screenHeight = _camera.pixelHeight;
         screenWidth = _camera.pixelWidth;
+
+        if(cameraParent is not null)
+            originalPos = cameraParent.transform.position;
+
+        StartCoroutine(ShakeExploration());
     }
 
     private void Update()
@@ -136,6 +146,25 @@ public class CameraManager : MonoBehaviour
         
         FXAventure.SetActive(true);
         FXBattle.SetActive(false);
+    }
+
+
+    public IEnumerator ShakeExploration()
+    {
+        if (timerShake < 0)
+        {
+            timerShake = 1.5f;
+
+            DOTween.To(() => wantedPosShake.x, x => wantedPosShake.x = x, originalPos.x + Random.Range(-0.25f, 0.25f), 1.4f);
+            DOTween.To(() => wantedPosShake.y, x => wantedPosShake.y = x, originalPos.y + Random.Range(-0.25f, 0.25f), 1.4f);
+        }
+
+        yield return new WaitForEndOfFrame();
+
+        timerShake -= Time.deltaTime;
+        cameraParent.transform.position = Vector3.Lerp(cameraParent.transform.position, wantedPosShake, Time.deltaTime);
+
+        StartCoroutine(ShakeExploration());
     }
     
     
