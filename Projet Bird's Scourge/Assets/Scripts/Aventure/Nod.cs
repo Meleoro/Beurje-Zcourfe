@@ -11,30 +11,95 @@ public class Nod : MonoBehaviour
 {
     public enum NodeType
     {
+        none,
         battle,
+        eliteBattle,
         camp,
-        chest
+        chest,
+        events,
+        shop,
+        statue,
+        bird,
+        boss
     }
 
-    public NodeType nodeType = NodeType.battle;
+    public NodeType nodeType = NodeType.none;
     public GameObject battlePrefab;
     
     public List<Nod> connectedNods = new List<Nod>();
     public bool isCamp;
+
+    [Header("References Icones")] 
+    public GameObject iconBattle;
+    public GameObject iconElite;
+    public GameObject iconBoss;
+    public GameObject iconEvent;
+    public GameObject iconBenediction;
+    public GameObject iconChest;
+    public GameObject iconShop;
+    public GameObject iconBird;
+    public GameObject iconCamp;
     
     [Header("References")]
-    public List<Sprite> spritList = new List<Sprite>();
     public GameObject lineRenderer;
     private SpriteRenderer sr;
     private EdgeCollider2D edgeCollider;
 
     private void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
+        /*sr = GetComponent<SpriteRenderer>();
         if (isCamp) sr.sprite = spritList[0];
         else
         {
             sr.sprite = spritList[Random.Range(1, 10)];
+        }*/
+    }
+
+    public void InitialiseNode()
+    {
+        ChooseNodeAppearance();
+    }
+
+
+    public void ChooseNodeAppearance()
+    {
+        switch (nodeType)
+        {
+            case NodeType.battle :
+                iconBattle.SetActive(true);
+                break;
+            
+            case NodeType.eliteBattle :
+                iconElite.SetActive(true);
+                break;
+            
+            case NodeType.boss :
+                iconBoss.SetActive(true);
+                break;
+            
+            case NodeType.events :
+                iconEvent.SetActive(true);
+                break;
+            
+            case NodeType.statue :
+                iconBenediction.SetActive(true);
+                break;
+            
+            case NodeType.chest :
+                iconChest.SetActive(true);
+                break;
+            
+            case NodeType.shop :
+                iconShop.SetActive(true);
+                break;
+            
+            case NodeType.bird :
+                iconBird.SetActive(true);
+                break;
+            
+            case NodeType.camp :
+                iconCamp.SetActive(true);
+                break;
         }
     }
 

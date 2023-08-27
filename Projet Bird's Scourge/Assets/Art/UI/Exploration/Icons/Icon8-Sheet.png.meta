@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a98ea79976817974cad312c81bce733a
+guid: 8cd33dfd99caf34479cecf972bbcd20a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,13 +107,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TestIcon1_0
+      name: Icon8-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 50
-        height: 50
+        width: 55
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,20 +121,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 321b7c8b2597d2a49a2c7ee2d86ea703
-      internalID: 1589940309
+      spriteID: 1a73744d9fef55740a6dd30fc2315589
+      internalID: -1531049800
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestIcon1_1
+      name: Icon8-Sheet_1
       rect:
         serializedVersion: 2
-        x: 50
+        x: 55
         y: 0
-        width: 50
-        height: 50
+        width: 55
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -142,20 +142,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c25f280d7a38f1c4b9398bdff4b7afa4
-      internalID: 1783903163
+      spriteID: 65e962e11d5c55f4fa8de86424554f5f
+      internalID: -2088574146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TestIcon1_2
+      name: Icon8-Sheet_2
       rect:
         serializedVersion: 2
-        x: 100
+        x: 110
         y: 0
-        width: 50
-        height: 50
+        width: 55
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -163,8 +163,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 24f4325db25f34e4e9a388d8aa530c4a
-      internalID: -185983891
+      spriteID: abd94a327a37aca4fba15fe95648dfc4
+      internalID: -758011021
       vertices: []
       indices: 
       edges: []
@@ -180,9 +180,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TestIcon1_0: 1589940309
-      TestIcon1_1: 1783903163
-      TestIcon1_2: -185983891
+      Icon8-Sheet_0: -1531049800
+      Icon8-Sheet_1: -2088574146
+      Icon8-Sheet_2: -758011021
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

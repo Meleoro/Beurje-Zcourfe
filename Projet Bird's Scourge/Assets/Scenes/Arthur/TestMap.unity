@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &59631736 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+  m_PrefabInstance: {fileID: 218575950}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &68698280
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,31 +345,35 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 689020200}
     m_Modifications:
     - target: {fileID: 2649350130129897931, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3004902933839461279, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: cameraParent
+      value: 
+      objectReference: {fileID: 689020200}
     - target: {fileID: 6362287375282396953, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_FalloffIntensity
       value: 0.441
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.74
+      value: 0.9879354
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.9226549
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -10
+      value: -9.000392
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalRotation.w
@@ -372,15 +381,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7670727719712499871, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -914,6 +923,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 462034795}
   m_CullTransparentMesh: 1
+--- !u!1 &689020199
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 689020200}
+  m_Layer: 0
+  m_Name: CameraParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &689020200
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689020199}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.7520646, y: -2.9226549, z: -0.9996083}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 59631736}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &748861967 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1911813559630662265, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
@@ -957,6 +998,19 @@ MonoBehaviour:
   stepsBetweenCamp: 5
   probaSpotSpawn: 59
   maxElementsPerColumn: 3
+  nodeTypes:
+  - nodType: 1
+    percentageSpawn: 70
+  - nodType: 2
+    percentageSpawn: 10
+  - nodType: 4
+    percentageSpawn: 15
+  - nodType: 5
+    percentageSpawn: 20
+  - nodType: 6
+    percentageSpawn: 10
+  - nodType: 7
+    percentageSpawn: 10
   heightStartUpdate: 5
   fond: {fileID: 1550823684}
   spot: {fileID: 8627825287045226144, guid: 7e7eeea682a401f4a8031287e3130dff, type: 3}
