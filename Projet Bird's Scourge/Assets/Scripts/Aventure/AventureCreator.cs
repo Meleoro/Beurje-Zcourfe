@@ -556,6 +556,8 @@ public class AventureCreator : MonoBehaviour
 
         // Then we add the line renderers of these elements
         GeneratePaths(map.Count - 2);
+        
+        ChoseIcons(map.Count - 2);
 
         ManageBackground();
         
