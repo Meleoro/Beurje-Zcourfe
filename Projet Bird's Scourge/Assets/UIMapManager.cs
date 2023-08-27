@@ -49,13 +49,18 @@ public class UIMapManager : MonoBehaviour
     public float foodTotal;
     public float goldTotal;
 
-    [Header("Pop UP Event")] public EventData eventData;
+    [Header("Pop UP Event")] 
+    public EventData eventData;
     public GameObject canvasEvent;
     public TextMeshProUGUI eventText;
     public TextMeshProUGUI eventTitle;
     public TextMeshProUGUI option1Text;
     public TextMeshProUGUI option2Text;
     public Image eventImage;
+    
+    [Header("Pop UP Campement")] 
+    public GameObject canvasCamp;
+   
     
     private void Awake()
     {
@@ -91,6 +96,7 @@ public class UIMapManager : MonoBehaviour
     
     public IEnumerator ChestPopUp()
     {
+        canvasEvent.transform.localScale = Vector3.zero;
         canvasCoffre.SetActive(true);
         canvasCoffre.transform.DOScale(Vector3.one, 0.5f);
         yield return new WaitForSeconds(0.8f);
@@ -175,8 +181,17 @@ public class UIMapManager : MonoBehaviour
         option1Text.text = eventData.option1Text;
         option2Text.text = eventData.option2Text;
 
+        canvasEvent.transform.localScale = Vector3.zero;
         canvasEvent.SetActive(true);
-        canvasCoffre.transform.DOScale(Vector3.one, 0.5f);
+        canvasEvent.transform.DOScale(Vector3.one, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+    }
+    
+    public IEnumerator CampPopUp()
+    {
+        canvasEvent.transform.localScale = Vector3.zero;
+        canvasCamp.SetActive(true);
+        canvasCamp.transform.DOScale(Vector3.one, 0.5f);
         yield return new WaitForSeconds(0.5f);
     }
 }

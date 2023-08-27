@@ -117,6 +117,9 @@ public class Nod : MonoBehaviour
             case NodeType.events :
                 StartCoroutine(UIMapManager.Instance.EventPopUp());
                 break;
+            case NodeType.camp :
+                StartCoroutine(UIMapManager.Instance.CampPopUp());
+                break;
         }
     }
 
