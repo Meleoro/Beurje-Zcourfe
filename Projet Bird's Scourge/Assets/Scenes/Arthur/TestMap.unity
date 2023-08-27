@@ -134,6 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &185892507 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4111397568071122198, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
+  m_PrefabInstance: {fileID: 7323102759118879676}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &218575950
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -287,6 +292,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &329412769 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7151879572568922931, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
+  m_PrefabInstance: {fileID: 7323102759118879676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &351580771
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,11 +508,54 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 11
   m_TargetDisplay: 0
+--- !u!114 &556641845 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2217658471457211767, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
+  m_PrefabInstance: {fileID: 7323102759118879676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &732510450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6543261131337443009, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
+  m_PrefabInstance: {fileID: 7323102759118879676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &740881754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5693655588097277825, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
+  m_PrefabInstance: {fileID: 7323102759118879676}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &746860957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7189267090574859171, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
+  m_PrefabInstance: {fileID: 7323102759118879676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &748861967 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1911813559630662265, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
   m_PrefabInstance: {fileID: 218575950}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &749887316 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 804341495737166094, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
+  m_PrefabInstance: {fileID: 7323102759118879676}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &802230187
 GameObject:
   m_ObjectHideFlags: 0
@@ -1568,25 +1627,32 @@ MonoBehaviour:
   bande2Image: {fileID: 1310008338}
   flashDuration: 0.2
   canvasCoffre: {fileID: 1680395331}
-  pierre: 10
-  bois: 15
-  fer: 20
   boisLocation: {fileID: 6415658472818365665}
-  FerLocation: {fileID: 0}
+  FerLocation: {fileID: 732510450}
   pierreLocation: {fileID: 1956416360031522038}
+  foodLocation: {fileID: 740881754}
+  goldLocation: {fileID: 185892507}
   iconeBois: {fileID: 3266410423369081595, guid: 00cac626dbdee314abf2e3784827ce6a, type: 3}
   iconePierre: {fileID: 7369444261111572002, guid: 386f413f16de5f34db5133c101726859, type: 3}
-  iconeFer: {fileID: 1839550551910114156, guid: d723fea6597a18c4490616ca40bfec60, type: 3}
+  iconeFer: {fileID: 732510450}
+  iconeFood: {fileID: 7599187007277839303, guid: 7de7ea56ef3b68d48889f9a6778422d1, type: 3}
+  iconeGold: {fileID: 7599187007277839303, guid: c7cc0dd99bfcd46499416bf1606cfb63, type: 3}
   animChest: {fileID: 446030516}
   compteurBois: {fileID: 1621522770}
   compteurPierre: {fileID: 969029916}
   compteurFer: {fileID: 165131408}
+  compteurFood: {fileID: 749887316}
+  compteurGold: {fileID: 329412769}
   compteurBoisGot: {fileID: 1361183681}
   compteurPierreGot: {fileID: 2017256027}
   compteurFerGot: {fileID: 2082055584}
-  boisTotal: 34
-  pierreTotal: 23
-  ferTotal: 12
+  compteurFoodGot: {fileID: 556641845}
+  compteurGoldGot: {fileID: 746860957}
+  boisTotal: 0
+  pierreTotal: 0
+  ferTotal: 0
+  foodTotal: 0
+  goldTotal: 0
 --- !u!1 &1956416360031522038 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5290243759167370528, guid: 1980727c5be736b4a96947733c4fb15a, type: 3}
@@ -1600,9 +1666,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 454558754}
     m_Modifications:
+    - target: {fileID: 2593372466186360440, guid: c2302396730cb5e4c876d60244660988, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3641591695517691903, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_Name
       value: Pop Up Event
+      objectReference: {fileID: 0}
+    - target: {fileID: 3641591695517691903, guid: c2302396730cb5e4c876d60244660988, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5603213011492181138, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_Pivot.x

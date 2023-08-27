@@ -6,6 +6,7 @@ using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UIMapManager : MonoBehaviour
 {
@@ -21,26 +22,33 @@ public class UIMapManager : MonoBehaviour
 
     [Header("Proto Pop Up Coffre")]
     public GameObject canvasCoffre;
-    public int pierre;
-    public int bois;
-    public int fer;
     public GameObject boisLocation;
     public GameObject FerLocation;
     public GameObject pierreLocation;
+    public GameObject foodLocation;
+    public GameObject goldLocation;
     public GameObject iconeBois;
     public GameObject iconePierre;
     public GameObject iconeFer;
+    public GameObject iconeFood;
+    public GameObject iconeGold;
     public Animator animChest;
     public TextMeshProUGUI compteurBois;
     public TextMeshProUGUI compteurPierre;
     public TextMeshProUGUI compteurFer;
+    public TextMeshProUGUI compteurFood;
+    public TextMeshProUGUI compteurGold;
     public TextMeshProUGUI compteurBoisGot;
     public TextMeshProUGUI compteurPierreGot;
     public TextMeshProUGUI compteurFerGot;
-
+    public TextMeshProUGUI compteurFoodGot;
+    public TextMeshProUGUI compteurGoldGot;
     public float boisTotal;
     public float pierreTotal;
     public float ferTotal;
+    public float foodTotal;
+    public float goldTotal;
+    
 private void Awake()
     {
         if (Instance == null)
@@ -48,6 +56,7 @@ private void Awake()
         
         else
             Destroy(gameObject);
+        StartCoroutine(UIMapManager.Instance.ChestPopUp());
     }
 
     public IEnumerator ChestPopUp()
@@ -60,9 +69,9 @@ private void Awake()
         yield return new WaitForSeconds(1f);
         animChest.SetBool("Open",true);
         yield return new WaitForSeconds(1f);
-       
-    
-        
+
+
+        int bois = Random.Range(5, 50);
         for (int i = 0; i < bois; i++)
         {
             GameObject CreatedBois = Instantiate(iconeBois, animChest.transform);
@@ -73,6 +82,7 @@ private void Awake()
         }
         compteurBoisGot.text = "+ " + bois;
         
+        int fer = Random.Range(5, 50);
         for (int i = 0; i < fer; i++)
         {
             GameObject CreatedFer = Instantiate(iconeFer, animChest.transform);
@@ -83,6 +93,7 @@ private void Awake()
         }
         compteurFerGot.text = "+ " + fer;
         
+        int pierre = Random.Range(5, 50);
         for (int i = 0; i < pierre; i++)
         {
             GameObject CreatedPierre = Instantiate(iconePierre, animChest.transform);
@@ -92,6 +103,28 @@ private void Awake()
             yield return new WaitForSeconds(0.1f);
         }
         compteurPierreGot.text = "+ " + pierre;
+        
+        int gold = Random.Range(5, 50);
+        for (int i = 0; i < gold; i++)
+        {
+            GameObject CreatedGold = Instantiate(iconeGold, animChest.transform);
+            CreatedGold.transform.DOMove(goldLocation.transform.position, 0.5f).OnComplete((() => Destroy(CreatedGold)));
+            if (goldTotal < goldTotal + gold) goldTotal += 1;
+            compteurGold.text = goldTotal + "";
+            yield return new WaitForSeconds(0.1f);
+        }
+        compteurGoldGot.text = "+ " + gold;
+        
+        int food = Random.Range(5, 50);
+        for (int i = 0; i < food; i++)
+        {
+            GameObject CreatedFood = Instantiate(iconeFood, animChest.transform);
+            CreatedFood.transform.DOMove(foodLocation.transform.position, 0.5f).OnComplete((() => Destroy(CreatedFood)));
+            if (foodTotal < foodTotal + food) foodTotal += 1;
+            compteurFood.text = foodTotal + "";
+            yield return new WaitForSeconds(0.1f);
+        }
+        compteurFoodGot.text = "+ " + food;
     }
     
     public IEnumerator StartBattleEffect()
