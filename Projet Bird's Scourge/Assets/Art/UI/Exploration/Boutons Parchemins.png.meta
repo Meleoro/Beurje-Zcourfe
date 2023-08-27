@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3b481daad6c2ac343a9c7686ed767be5
+guid: d6f15b2a07ffc784397f9451f93784e5
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -107,285 +107,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Boutons et icones ressources_0
+      name: Boutons Parchemins_0
       rect:
         serializedVersion: 2
         x: 7
-        y: 185
-        width: 123
-        height: 45
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b5a4bfd4f042ae44da2d13e3773e8ef2
-      internalID: -188288594
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_1
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 183
-        width: 124
-        height: 46
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0ff8784a645821f4a820daa670fdd64a
-      internalID: -574139677
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_4
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 142
-        width: 123
-        height: 35
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c0b032edd88ac344fbdb049b0c3b2bf8
-      internalID: -916169798
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_5
-      rect:
-        serializedVersion: 2
-        x: 136
-        y: 141
-        width: 124
-        height: 36
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2d55605d97168364c8c25927d1ac7978
-      internalID: -768356894
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_6
-      rect:
-        serializedVersion: 2
-        x: 274
-        y: 106
-        width: 75
-        height: 85
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e079c6d8aaddd504c9d79c7198a4250a
-      internalID: 1493349305
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_7
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 101
-        width: 255
-        height: 33
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bda3152fdedd7a34193f915828774f03
-      internalID: 338336669
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_8
-      rect:
-        serializedVersion: 2
-        x: 6
-        y: 52
-        width: 119
-        height: 46
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0c19e0b0ffabb7d4ebb4724c993c716a
-      internalID: -1203945040
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_9
-      rect:
-        serializedVersion: 2
-        x: 132
-        y: 54
-        width: 99
-        height: 42
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f23f46322a0994144baae26b9b571ce0
-      internalID: -1117384420
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_10
-      rect:
-        serializedVersion: 2
-        x: 237
-        y: 54
-        width: 48
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 06be8fdae26136d4da2cff55fb200c27
-      internalID: 80559904
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_11
-      rect:
-        serializedVersion: 2
-        x: 290
-        y: 30
-        width: 58
-        height: 70
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1fe3e23f388392f43848507cb4a8038e
-      internalID: -1501868886
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_12
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 12
-        width: 30
-        height: 27
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 02ac0fc285c2df24c86cf4d68cccabc1
-      internalID: 196181196
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_13
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 14
-        width: 27
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5a2a292b6edbc3c44aaaa9189ff1d66c
-      internalID: 1316935434
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_14
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 12
-        width: 29
-        height: 22
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 221a1de94f530b94eaaa3f7bedfe6a06
-      internalID: -100939354
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Boutons et icones ressources_15
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 13
-        width: 21
+        y: 223
+        width: 97
         height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -394,19 +121,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbd85c9b074f74d4d8fc42b6e5210bc1
-      internalID: -727225028
+      spriteID: 3b7d1e90489054743aa98f9bec10b3fe
+      internalID: -2032357110
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Boutons et icones ressources_18
+      name: Boutons Parchemins_1
       rect:
         serializedVersion: 2
-        x: 138
-        y: 12
-        width: 28
+        x: 108
+        y: 223
+        width: 97
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f1a614a0c0ce934987d5e73eb80b849
+      internalID: -813161724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_2
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 223
+        width: 163
         height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -415,8 +163,155 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1011450658338764490f2b075641165f
-      internalID: -660294743
+      spriteID: ff173e55ed989574593e4d7ea62db582
+      internalID: -538602170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_3
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 198
+        width: 97
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8549fc363c1f89b4ba840759efbef09a
+      internalID: -578558022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_4
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 190
+        width: 97
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67e853bc9bbf1d64fb4304500b10001e
+      internalID: 1947649764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_5
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 160
+        width: 272
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a64e388e69eaa64eac053d7f153bd1b
+      internalID: 1477483820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_6
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 133
+        width: 213
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58c34ec13d76e514990625c536ae2d5d
+      internalID: -690930252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_7
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 84
+        width: 214
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa1ad05518ffc6d409a5aa779e76c65f
+      internalID: 586696578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_8
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 43
+        width: 183
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12bef08575f75094ba730f9c6fac2c92
+      internalID: -1416073037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boutons Parchemins_9
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 6
+        width: 220
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 495fa7e0c6373914a9b0228e48998291
+      internalID: 753467310
       vertices: []
       indices: 
       edges: []
@@ -432,25 +327,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Boutons et icones ressources_0: -188288594
-      Boutons et icones ressources_1: -574139677
-      Boutons et icones ressources_10: 80559904
-      Boutons et icones ressources_11: -1501868886
-      Boutons et icones ressources_12: 196181196
-      Boutons et icones ressources_13: 1316935434
-      Boutons et icones ressources_14: -100939354
-      Boutons et icones ressources_15: -727225028
-      Boutons et icones ressources_16: -1787067159
-      Boutons et icones ressources_17: -1836223326
-      Boutons et icones ressources_18: -660294743
-      Boutons et icones ressources_2: -1882170620
-      Boutons et icones ressources_3: -712826256
-      Boutons et icones ressources_4: -916169798
-      Boutons et icones ressources_5: -768356894
-      Boutons et icones ressources_6: 1493349305
-      Boutons et icones ressources_7: 338336669
-      Boutons et icones ressources_8: -1203945040
-      Boutons et icones ressources_9: -1117384420
+      Boutons Parchemins_0: -2032357110
+      Boutons Parchemins_1: -813161724
+      Boutons Parchemins_2: -538602170
+      Boutons Parchemins_3: -578558022
+      Boutons Parchemins_4: 1947649764
+      Boutons Parchemins_5: 1477483820
+      Boutons Parchemins_6: -690930252
+      Boutons Parchemins_7: 586696578
+      Boutons Parchemins_8: -1416073037
+      Boutons Parchemins_9: 753467310
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
