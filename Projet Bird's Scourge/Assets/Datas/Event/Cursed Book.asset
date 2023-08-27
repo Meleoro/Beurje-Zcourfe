@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8b3613694f6794d98ff76c12c28b49, type: 3}
+  m_Name: Cursed Book
+  m_EditorClassIdentifier: 
+  ID: 1
+  eventImage: {fileID: -1748904262, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  eventTitle: The Cursed Book
+  eventText: You find a strange looking book. It looks as powerful as it is dangerous.
+    It might help, but at what cost?
+  option1Text: Take the book (+1 book)
+  option2Text: Leave the book (Nothing)
