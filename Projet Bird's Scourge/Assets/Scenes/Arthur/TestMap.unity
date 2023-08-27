@@ -594,6 +594,17 @@ MonoBehaviour:
   stepsBetweenCamp: 5
   probaSpotSpawn: 59
   maxElementsPerColumn: 3
+  nodeTypes:
+  - nodType: 1
+    percentageSpawn: 70
+  - nodType: 2
+    percentageSpawn: 10
+  - nodType: 4
+    percentageSpawn: 15
+  - nodType: 5
+    percentageSpawn: 20
+  - nodType: 7
+    percentageSpawn: 10
   heightStartUpdate: 5
   fond: {fileID: 1550823684}
   spot: {fileID: 8627825287045226144, guid: 7e7eeea682a401f4a8031287e3130dff, type: 3}
