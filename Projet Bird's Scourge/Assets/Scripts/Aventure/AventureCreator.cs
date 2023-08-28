@@ -59,7 +59,7 @@ public class AventureCreator : MonoBehaviour
 
         // Finally we generate the decoration of the map
         decorationScript = GetComponent<DecorationCreator>();
-        decorationScript.GenerateDecoration(fond, startX.position.x - 2, startX.position.x + distanceBetweenColumns * (wantedMapLength - 1));
+        decorationScript.GenerateDecoration(fond, startX.position.x - 2, startX.position.x + distanceBetweenColumns * (wantedMapLength) - 2);
 
         ManageBackground();
 
@@ -619,7 +619,7 @@ public class AventureCreator : MonoBehaviour
             {
                 isOkay = true;
                 
-                EndBackground(stockageCurrentMinX);
+                EndBackground(stockageCurrentMinX - 1.2f);
             }
         }
     }
