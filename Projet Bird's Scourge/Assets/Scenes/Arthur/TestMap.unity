@@ -1656,6 +1656,7 @@ MonoBehaviour:
   parentSpot: {fileID: 1596632194}
   startX: {fileID: 1552808990}
   background: {fileID: 1550823680}
+  backgroundEnd: {fileID: 1237722584}
 --- !u!114 &802230189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2314,7 +2315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1237722585
 Transform:
   m_ObjectHideFlags: 0
@@ -2323,7 +2324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1237722584}
   m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 30.34, y: 0, z: 112.1459}
+  m_LocalPosition: {x: 30.8, y: 0, z: 112.1459}
   m_LocalScale: {x: 8, y: 9, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2371,7 +2372,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 02adf8723ab5682418ddc00f6241aad7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e7d190caf4cf17b4fbd115e4abe7f004, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 1

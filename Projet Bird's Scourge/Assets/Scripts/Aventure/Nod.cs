@@ -28,6 +28,7 @@ public class Nod : MonoBehaviour
     
     public List<Nod> connectedNods = new List<Nod>();
     public bool isCamp;
+    public bool isLast;
 
     [Header("References Icones")] 
     public GameObject iconBattle;

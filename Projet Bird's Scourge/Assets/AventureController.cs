@@ -73,7 +73,7 @@ public class AventureController : MonoBehaviour
             player.transform.DOMove(selectedNod.transform.position, 1);
             currentNod = selectedNod;
             
-            mainScript.scriptCreator.UpdateMap(currentNod);
+            //mainScript.scriptCreator.UpdateMap(currentNod);
 
             yield return new WaitForSeconds(1.3f);
             

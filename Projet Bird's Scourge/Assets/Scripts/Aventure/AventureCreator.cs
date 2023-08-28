@@ -37,6 +37,7 @@ public class AventureCreator : MonoBehaviour
     private DecorationCreator decorationScript;
     public Transform startX;
     public GameObject background;
+    public GameObject backgroundEnd;
     
     
     // THE WHOLE PROCESS TO GENERATE THE MAP (RETURNS THE WHOLE MAP)
@@ -137,11 +138,11 @@ public class AventureCreator : MonoBehaviour
     {
         int currentElementsInRaw = 0;
 
-        int rawsNumber = (int)(possibleSpots.Count / rawsNbr);
+        int columnNbr = (int)(possibleSpots.Count / rawsNbr);
 
         int i = 0;
 
-        for (int y = 0; y < rawsNumber; y++)
+        for (int y = 0; y < columnNbr; y++)
         {
             map.Add(new ListSpots());
             int reelY = map.Count - 1;
@@ -158,6 +159,11 @@ public class AventureCreator : MonoBehaviour
                     newSpot.isCamp = currentCounterCamp <= 1;
 
                     currentElementsInRaw += 1;
+
+                    if (reelY == wantedMapLength - 1)
+                    {
+                        newSpot.isLast = true;
+                    }
                 }
 
                 else
@@ -177,7 +183,7 @@ public class AventureCreator : MonoBehaviour
                 {
                     if (map[reelY - 1].list[k] is not null)
                     {
-                        List<Nod> possibleLinks = VerifyLink(new Vector2Int(k, reelY - 1), map[reelY - 1].list[k].isCamp);
+                        List<Nod> possibleLinks = VerifyLink(new Vector2Int(k, reelY - 1), map[reelY - 1].list[k].isCamp, map[reelY - 1].list[k].isLast);
 
                         if (possibleLinks.Count == 0)
                         {
@@ -227,6 +233,13 @@ public class AventureCreator : MonoBehaviour
     private bool VerifySpot(Vector2Int coordinates, int currentElementsInRaw, bool isCamp)
     {
         if (isCamp)
+        {
+            if (coordinates.x == (int)(rawsNbr * 0.5f))
+            {
+                return true;
+            }
+        }
+        else if (coordinates.y == wantedMapLength - 1)
         {
             if (coordinates.x == (int)(rawsNbr * 0.5f))
             {
@@ -289,7 +302,7 @@ public class AventureCreator : MonoBehaviour
                 if (map[y].list[x] is not null)
                 {
                     Nod currentNod = map[y].list[x];
-                    List<Nod> connectedNodes = VerifyLink(new Vector2Int(x, y), currentNod.isCamp);
+                    List<Nod> connectedNodes = VerifyLink(new Vector2Int(x, y), currentNod.isCamp, currentNod.isLast);
 
                     for (int i = 0; i < connectedNodes.Count; i++)
                     {
@@ -312,18 +325,20 @@ public class AventureCreator : MonoBehaviour
         currentLineRenderer.SetPosition(currentLineRenderer.positionCount - 1, pos2);
     }
 
-    private List<Nod> VerifyLink(Vector2Int coordinates, bool isCamp)
+    private List<Nod> VerifyLink(Vector2Int coordinates, bool isCamp, bool isLast)
     {
         List<Nod> linkedNodes = new List<Nod>();
         bool nextIsCamp = false;
+        bool nextIsLast = false;
 
         if (map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)] is not null)
         {
             nextIsCamp = map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)].isCamp;
+            nextIsLast = map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)].isLast;
         }
 
         
-        if (!nextIsCamp && !isCamp)
+        if (!nextIsCamp && !isCamp && !nextIsLast)
         {
             if (map[coordinates.y + 1].list[coordinates.x] is not null)
             {
@@ -391,7 +406,7 @@ public class AventureCreator : MonoBehaviour
 
     private void ChoseIcons(int startRaw)
     {
-        for (int y = startRaw; y < map.Count - 1; y++)
+        for (int y = startRaw; y < map.Count; y++)
         {
             for (int x = 0; x < map[y].list.Count; x++)
             {
@@ -408,6 +423,12 @@ public class AventureCreator : MonoBehaviour
                     else if (y == 1)
                     {
                         currentNod.nodeType = Nod.NodeType.battle;
+                        currentNod.InitialiseNode();
+                    }
+                    
+                    else if (y == map.Count - 1)
+                    {
+                        currentNod.nodeType = Nod.NodeType.chest;
                         currentNod.InitialiseNode();
                     }
 
@@ -580,14 +601,26 @@ public class AventureCreator : MonoBehaviour
 
     private void ManageBackground()
     {
-        if (farestBackground is null)
-            farestBackground = fond.GetComponent<SpriteRenderer>();
-        
-        float pixelWidth = farestBackground.bounds.size.x * 0.5f;
-        
-        if (farestBackground.transform.position.x + pixelWidth < stockageCurrentMinX)
+        bool isOkay = false;
+
+        while (!isOkay)
         {
-            AddBackground(farestBackground);
+            if (farestBackground is null)
+                farestBackground = fond.GetComponent<SpriteRenderer>();
+        
+            float pixelWidth = farestBackground.bounds.size.x * 0.5f;
+        
+            if (farestBackground.transform.position.x + pixelWidth < stockageCurrentMinX)
+            {
+                AddBackground(farestBackground);
+            }
+
+            else
+            {
+                isOkay = true;
+                
+                EndBackground(stockageCurrentMinX);
+            }
         }
     }
 
@@ -597,6 +630,13 @@ public class AventureCreator : MonoBehaviour
         Vector3 posBackground = currentBackground.transform.position;
 
         farestBackground = Instantiate(background, posBackground + new Vector3(pixelWidth, 0, 0), Quaternion.Euler(0, 0, 90)).GetComponent<SpriteRenderer>();
+    }
+
+    private void EndBackground(float XPos)
+    {
+        Vector3 posBackground = new Vector3(XPos, backgroundEnd.transform.position.y, backgroundEnd.transform.position.z);
+
+        backgroundEnd.transform.position = posBackground;
     }
 }
 
