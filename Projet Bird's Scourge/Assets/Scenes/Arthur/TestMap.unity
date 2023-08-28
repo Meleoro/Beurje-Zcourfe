@@ -1633,23 +1633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce36390d84433ed49b6ce45c4448e68d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wantedMapLength: 15
-  rawsNbr: 5
-  distanceBetweenColumns: 5
-  stepsBetweenCamp: 5
-  probaSpotSpawn: 59
-  maxElementsPerColumn: 3
-  nodeTypes:
-  - nodType: 1
-    percentageSpawn: 70
-  - nodType: 2
-    percentageSpawn: 10
-  - nodType: 4
-    percentageSpawn: 15
-  - nodType: 5
-    percentageSpawn: 20
-  - nodType: 7
-    percentageSpawn: 10
+  data: {fileID: 11400000, guid: 7cd8103a57439804c9a5126eac546579, type: 2}
   heightStartUpdate: 5
   fond: {fileID: 1550823684}
   spot: {fileID: 8627825287045226144, guid: 7e7eeea682a401f4a8031287e3130dff, type: 3}

@@ -9,17 +9,9 @@ using Random = UnityEngine.Random;
 
 public class AventureCreator : MonoBehaviour
 {
-    [Header("General")]
+    [Header("General")] 
+    public AventureData data;
     private List<ListSpots> map = new List<ListSpots>();
-
-    [Header("Parametres")] 
-    [SerializeField] private int wantedMapLength;
-    [SerializeField] private int rawsNbr;
-    [Range(1, 20)] [SerializeField] private int distanceBetweenColumns;
-    [SerializeField] private int stepsBetweenCamp;
-    [Range(0, 100)] [SerializeField] private int probaSpotSpawn;
-    [SerializeField] private int maxElementsPerColumn;
-    public List<NodeTypeClass> nodeTypes = new List<NodeTypeClass>();
 
     [Header("Update")] 
     [SerializeField] private int heightStartUpdate;    // Indicates from which number of movement we start ton update the map
@@ -59,7 +51,7 @@ public class AventureCreator : MonoBehaviour
 
         // Finally we generate the decoration of the map
         decorationScript = GetComponent<DecorationCreator>();
-        decorationScript.GenerateDecoration(fond, startX.position.x - 2, startX.position.x + distanceBetweenColumns * (wantedMapLength) - 2);
+        decorationScript.GenerateDecoration(fond, startX.position.x - 2, startX.position.x + data.distanceBetweenColumns * (data.wantedMapLength) - 2);
 
         ManageBackground();
 
@@ -79,7 +71,7 @@ public class AventureCreator : MonoBehaviour
         stockageCurrentMinY = maxBounds.y;
         stockageCurrentMaxY = -maxBounds.y;
 
-        List<Vector2> possibleSpots = GeneratePossibleSpots(stockageCurrentMinX, wantedMapLength);
+        List<Vector2> possibleSpots = GeneratePossibleSpots(stockageCurrentMinX, data.wantedMapLength);
 
         return possibleSpots;
     }
@@ -93,11 +85,11 @@ public class AventureCreator : MonoBehaviour
         
         for (int x = 0; x < interations; x++)
         {
-            for (int y = 0; y < rawsNbr; y++)
+            for (int y = 0; y < data.rawsNbr; y++)
             {
-                float posY = Mathf.Lerp(stockageCurrentMinY, stockageCurrentMaxY, ((float)y / rawsNbr) + (1f / rawsNbr) * 0.5f);
+                float posY = Mathf.Lerp(stockageCurrentMinY, stockageCurrentMaxY, ((float)y / data.rawsNbr) + (1f / data.rawsNbr) * 0.5f);
                 
-                float posX = minX + distanceBetweenColumns * x;
+                float posX = minX + data.distanceBetweenColumns * x;
 
                 float posModificator = 0.1f;
                 posX += Random.Range(-posModificator, posModificator);
@@ -108,7 +100,7 @@ public class AventureCreator : MonoBehaviour
 
             if (x == interations - 1)
             {
-                stockageCurrentMinX = minX + distanceBetweenColumns * x;
+                stockageCurrentMinX = minX + data.distanceBetweenColumns * x;
             }
         }
 
@@ -138,7 +130,7 @@ public class AventureCreator : MonoBehaviour
     {
         int currentElementsInRaw = 0;
 
-        int columnNbr = (int)(possibleSpots.Count / rawsNbr);
+        int columnNbr = (int)(possibleSpots.Count / data.rawsNbr);
 
         int i = 0;
 
@@ -148,7 +140,7 @@ public class AventureCreator : MonoBehaviour
             int reelY = map.Count - 1;
 
             // We go across every column in on line
-            for (int x = 0; x < rawsNbr; x++)
+            for (int x = 0; x < data.rawsNbr; x++)
             {
                 if (VerifySpot(new Vector2Int(x, reelY), currentElementsInRaw, currentCounterCamp <= 1))
                 {
@@ -160,7 +152,7 @@ public class AventureCreator : MonoBehaviour
 
                     currentElementsInRaw += 1;
 
-                    if (reelY == wantedMapLength - 1)
+                    if (reelY == data.wantedMapLength - 1)
                     {
                         newSpot.isLast = true;
                     }
@@ -207,7 +199,7 @@ public class AventureCreator : MonoBehaviour
                 map.RemoveAt(reelY);
                 
                 y -= 1;
-                i -= rawsNbr;
+                i -= data.rawsNbr;
                 currentElementsInRaw = 0;
             }
             
@@ -216,7 +208,7 @@ public class AventureCreator : MonoBehaviour
             {
                 if (currentCounterCamp <= 1)
                 {
-                    currentCounterCamp = stepsBetweenCamp;
+                    currentCounterCamp = data.stepsBetweenCamp;
                 }
                 else
                 {
@@ -234,21 +226,21 @@ public class AventureCreator : MonoBehaviour
     {
         if (isCamp)
         {
-            if (coordinates.x == (int)(rawsNbr * 0.5f))
+            if (coordinates.x == (int)(data.rawsNbr * 0.5f))
             {
                 return true;
             }
         }
-        else if (coordinates.y == wantedMapLength - 1)
+        else if (coordinates.y == data.wantedMapLength - 1)
         {
-            if (coordinates.x == (int)(rawsNbr * 0.5f))
+            if (coordinates.x == (int)(data.rawsNbr * 0.5f))
             {
                 return true;
             }
         }
         else
         {
-            if (currentElementsInRaw < maxElementsPerColumn)
+            if (currentElementsInRaw < data.maxElementsPerColumn)
             {
                 bool hasPrecedent = false;
                 
@@ -265,7 +257,7 @@ public class AventureCreator : MonoBehaviour
                     hasPrecedent = true;
                 }
 
-                if (coordinates.x + 1 < maxElementsPerColumn)
+                if (coordinates.x + 1 < data.maxElementsPerColumn)
                 {
                     if (map[coordinates.y - 1].list[coordinates.x + 1] is not null)
                     {
@@ -277,7 +269,7 @@ public class AventureCreator : MonoBehaviour
                 {
                     int tirage = Random.Range(0, 100);
 
-                    if (tirage < probaSpotSpawn)
+                    if (tirage < data.probaSpotSpawn)
                     {
                         return true;
                     }
@@ -331,10 +323,10 @@ public class AventureCreator : MonoBehaviour
         bool nextIsCamp = false;
         bool nextIsLast = false;
 
-        if (map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)] is not null)
+        if (map[coordinates.y + 1].list[(int)(data.rawsNbr * 0.5f)] is not null)
         {
-            nextIsCamp = map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)].isCamp;
-            nextIsLast = map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)].isLast;
+            nextIsCamp = map[coordinates.y + 1].list[(int)(data.rawsNbr * 0.5f)].isCamp;
+            nextIsLast = map[coordinates.y + 1].list[(int)(data.rawsNbr * 0.5f)].isLast;
         }
 
         
@@ -382,7 +374,7 @@ public class AventureCreator : MonoBehaviour
 
         else if (!isCamp)
         {
-            linkedNodes.Add(map[coordinates.y + 1].list[(int)(rawsNbr * 0.5f)]);
+            linkedNodes.Add(map[coordinates.y + 1].list[(int)(data.rawsNbr * 0.5f)]);
         }
 
         else
@@ -440,13 +432,13 @@ public class AventureCreator : MonoBehaviour
                         {
                             Nod.NodeType selectedNodeType = Nod.NodeType.none;
                             
-                            for (int i = 0; i < nodeTypes.Count; i++)
+                            for (int i = 0; i < data.nodeTypes.Count; i++)
                             {
                                 int draw = Random.Range(0, 100);
 
-                                if (draw < nodeTypes[i].percentageSpawn)
+                                if (draw < data.nodeTypes[i].percentageSpawn)
                                 {
-                                    selectedNodeType = nodeTypes[i].nodType;
+                                    selectedNodeType = data.nodeTypes[i].nodType;
                                 }
                             }
 
@@ -538,7 +530,7 @@ public class AventureCreator : MonoBehaviour
 
     // --------------- TO UPDATE THE MAP ---------------
 
-    public void UpdateMap(Nod currentNod)
+    /*public void UpdateMap(Nod currentNod)
     {
         int playerHeight = 0;
         
@@ -595,7 +587,7 @@ public class AventureCreator : MonoBehaviour
         }
         
         map.RemoveAt(0);
-    }
+    }*/
 
 
 
@@ -652,5 +644,6 @@ public class ListSpots
 public class NodeTypeClass
 {
     public Nod.NodeType nodType;
-    public int percentageSpawn;
+    [Range(0, 100)] public int percentageSpawn;
+    [Range(0, 100)] public int startSpawn;
 }

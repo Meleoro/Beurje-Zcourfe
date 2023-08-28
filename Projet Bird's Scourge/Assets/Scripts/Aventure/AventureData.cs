@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AventureData : MonoBehaviour
+[CreateAssetMenu(menuName = "DataAventure")]
+public class AventureData : ScriptableObject
 {
     [Header("Gen Pro")] 
     public int wantedMapLength;
