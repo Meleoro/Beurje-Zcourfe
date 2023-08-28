@@ -110,7 +110,7 @@ public class Nod : MonoBehaviour
         switch (nodeType)
         {
             case NodeType.battle :
-                //StartCoroutine(LaunchBattle());
+                StartCoroutine(LaunchBattle());
                 break;
             case NodeType.chest :
                 StartCoroutine(UIMapManager.Instance.ChestPopUp());
@@ -163,7 +163,9 @@ public class Nod : MonoBehaviour
 
         yield return new WaitForSeconds(1.2f);
 
-        Instantiate(battlePrefab, new Vector3(300, 0, 0), Quaternion.identity);
+        BattleManager currentBattleManager = Instantiate(battlePrefab, new Vector3(300, 0, 0), Quaternion.identity).GetComponent<BattleManager>();
+        
+        currentBattleManager.InitialiseUnitSpots(AventureManager.Instance.unit1, AventureManager.Instance.unit2, AventureManager.Instance.unit3);
         
         CameraManager.Instance.CameraBattleStart(BattleManager.Instance);
     }

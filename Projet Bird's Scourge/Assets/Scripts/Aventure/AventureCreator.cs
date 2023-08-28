@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -432,15 +433,25 @@ public class AventureCreator : MonoBehaviour
                         {
                             Nod.NodeType selectedNodeType = Nod.NodeType.none;
                             int selectedNodStart = 0;
-                            
-                            for (int i = 0; i < data.nodeTypes.Count; i++)
+
+                            List<NodeTypeClass> currentNodeTypes = new List<NodeTypeClass>(data.nodeTypes);
+
+                            for (int i = currentNodeTypes.Count - 1; i >= 0; i--)
                             {
                                 int draw = Random.Range(0, 100);
+                                int index = Random.Range(0, currentNodeTypes.Count);
 
-                                if (draw < data.nodeTypes[i].percentageSpawn)
+                                if (draw < currentNodeTypes[index].percentageSpawn)
                                 {
-                                    selectedNodeType = data.nodeTypes[i].nodType;
-                                    selectedNodStart = data.nodeTypes[i].startSpawn;
+                                    selectedNodeType = currentNodeTypes[index].nodType;
+                                    selectedNodStart = currentNodeTypes[index].startSpawn;
+
+                                    break;
+                                }
+
+                                else
+                                {
+                                    currentNodeTypes.RemoveAt(index);
                                 }
                             }
 

@@ -11,6 +11,9 @@ public class AventureManager : MonoBehaviour
     
     [Header("Datas")] 
     [HideInInspector] public List<ListSpots> map;
+    public GameObject unit1;
+    public GameObject unit2;
+    public GameObject unit3;
     
     [Header("Battles")] 
     public List<GameObject> possibleBattles;

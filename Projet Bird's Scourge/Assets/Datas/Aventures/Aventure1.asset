@@ -15,20 +15,26 @@ MonoBehaviour:
   wantedMapLength: 20
   rawsNbr: 5
   distanceBetweenColumns: 6
-  stepsBetweenCamp: 3
+  stepsBetweenCamp: 5
   probaSpotSpawn: 50
   maxElementsPerColumn: 3
   nodeTypes:
   - nodType: 1
     percentageSpawn: 70
+    startSpawn: 0
   - nodType: 2
     percentageSpawn: 10
+    startSpawn: 30
   - nodType: 4
     percentageSpawn: 10
+    startSpawn: 0
   - nodType: 5
-    percentageSpawn: 20
+    percentageSpawn: 15
+    startSpawn: 0
   - nodType: 6
     percentageSpawn: 10
+    startSpawn: 30
   - nodType: 7
     percentageSpawn: 10
+    startSpawn: 0
   battleNodes: []

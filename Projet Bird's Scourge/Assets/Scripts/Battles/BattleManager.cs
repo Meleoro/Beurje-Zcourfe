@@ -33,6 +33,9 @@ public class BattleManager : MonoBehaviour
 
     [Header("Références")] 
     public UIBattleManager UIBattle;
+    public UnitSpot unitSpot1;
+    public UnitSpot unitSpot2;
+    public UnitSpot unitSpot3;
 
 
     private void Awake()
@@ -54,6 +57,26 @@ public class BattleManager : MonoBehaviour
 
 
     // ----------------------- DICTIONNARIES MANAGEMENT -----------------------
+
+    
+    public void InitialiseUnitSpots(GameObject unit1, GameObject unit2, GameObject unit3)
+    {
+        if (unit1 is not null)
+        {
+            unitSpot1.SpawnUnit(unit1);
+        }
+        
+        if (unit2 is not null)
+        {
+            unitSpot2.SpawnUnit(unit2);
+        }
+        
+        if (unit3 is not null)
+        {
+            unitSpot3.SpawnUnit(unit3);
+        }
+    }
+    
 
     public void AddUnit(Unit newUnit, bool summoned)
     {

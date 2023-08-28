@@ -1654,6 +1654,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: []
+  unit1: {fileID: 262518477433530119, guid: 41f5cb488bbe20845a1f4590d8b6f939, type: 3}
+  unit2: {fileID: 8337190906301115193, guid: ca1c4a61bcd319c47bca22a3cd23a7c9, type: 3}
+  unit3: {fileID: 0}
   possibleBattles:
   - {fileID: 4736870783535128294, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
   scriptCreator: {fileID: 0}
