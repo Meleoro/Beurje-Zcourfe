@@ -431,6 +431,7 @@ public class AventureCreator : MonoBehaviour
                         while (!isOkay)
                         {
                             Nod.NodeType selectedNodeType = Nod.NodeType.none;
+                            int selectedNodStart = 0;
                             
                             for (int i = 0; i < data.nodeTypes.Count; i++)
                             {
@@ -439,6 +440,7 @@ public class AventureCreator : MonoBehaviour
                                 if (draw < data.nodeTypes[i].percentageSpawn)
                                 {
                                     selectedNodeType = data.nodeTypes[i].nodType;
+                                    selectedNodStart = data.nodeTypes[i].startSpawn;
                                 }
                             }
 
@@ -446,8 +448,9 @@ public class AventureCreator : MonoBehaviour
                             {
                                 bool test1 = VerifyConsecutive(currentNod, selectedNodeType);
                                 bool test2 = VerifyChoice(y, currentNod, selectedNodeType);
+                                bool test3 = VerifyStart(y, selectedNodStart);
 
-                                if (test1 && test2)
+                                if (test1 && test2 && test3)
                                 {
                                     currentNod.nodeType = selectedNodeType;
                                     currentNod.InitialiseNode();
@@ -504,7 +507,7 @@ public class AventureCreator : MonoBehaviour
 
         return true;
     }
-
+    
     private bool VerifySamePrevious(Nod nod1, Nod nod2)
     {
         bool hasSamePrevious = false;
@@ -524,6 +527,24 @@ public class AventureCreator : MonoBehaviour
         }
         
         return hasSamePrevious;
+    }
+    
+    private bool VerifyStart(int currentY, int nodStartPercentage)
+    {
+        if (nodStartPercentage != 0)
+        {
+            float currentRatioMap = (float)currentY / (float)data.wantedMapLength;
+            float nodRatio = (float)nodStartPercentage / 100f;
+            
+            if (currentRatioMap > nodRatio)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        return true;
     }
     
 
