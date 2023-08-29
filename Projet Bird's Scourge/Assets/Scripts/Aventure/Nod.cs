@@ -24,6 +24,7 @@ public class Nod : MonoBehaviour
     }
 
     public NodeType nodeType = NodeType.none;
+    public int nodeDifficulty;
     public GameObject battlePrefab;
     
     public List<Nod> connectedNods = new List<Nod>();
@@ -58,8 +59,21 @@ public class Nod : MonoBehaviour
         }*/
     }
 
-    public void InitialiseNode()
+    public void InitialiseNode(NodeType currentType, int currentDifficulty)
     {
+        nodeType = currentType;
+        nodeDifficulty = currentDifficulty;
+        
+        iconBattle.SetActive(false);
+        iconElite.SetActive(false);
+        iconBoss.SetActive(false);
+        iconEvent.SetActive(false);
+        iconBenediction.SetActive(false);
+        iconChest.SetActive(false);
+        iconShop.SetActive(false);
+        iconBird.SetActive(false);
+        iconCamp.SetActive(false);
+        
         ChooseNodeAppearance();
     }
 

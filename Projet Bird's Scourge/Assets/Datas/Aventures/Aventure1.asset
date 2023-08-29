@@ -22,19 +22,26 @@ MonoBehaviour:
   - nodType: 1
     percentageSpawn: 70
     startSpawn: 0
+    difficultyValue: 2
   - nodType: 2
     percentageSpawn: 10
     startSpawn: 30
+    difficultyValue: 4
   - nodType: 4
     percentageSpawn: 10
     startSpawn: 0
+    difficultyValue: -3
   - nodType: 5
     percentageSpawn: 15
     startSpawn: 0
+    difficultyValue: -2
   - nodType: 6
     percentageSpawn: 10
     startSpawn: 30
+    difficultyValue: -2
   - nodType: 7
     percentageSpawn: 10
     startSpawn: 0
+    difficultyValue: -4
+  minBattlePerPath: 2
   battleNodes: []

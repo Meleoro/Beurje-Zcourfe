@@ -519,4 +519,6 @@ public class NodeTypeClass
     public Nod.NodeType nodType;
     [Range(0, 100)] public int percentageSpawn;
     [Range(0, 100)] public int startSpawn;
+    
+    [Range(-5, 5)] public int difficultyValue = 0;
 }
