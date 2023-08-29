@@ -26,34 +26,34 @@ public class IconSelector
 
                     if (currentNod.isCamp)
                     {
-                        currentNod.InitialiseNode(Nod.NodeType.camp, 0);
+                        currentNod.InitialiseNode(Nod.NodeType.camp, 0, y);
 
                         if (currentNod.previousNods.Count != 0) 
                         {
                             List<List<Nod>> possiblePaths = RecursivePaths(currentNod.previousNods, currentNod);
-                            
-                            CheckPaths(possiblePaths, data);
+
+                            CheckPaths(map, possiblePaths, data);
                         }
                     }
                     
                     else if (currentNod.previousNods[0].isCamp)
                     {
                         currentNod.nodeType = Nod.NodeType.battle;
-                        currentNod.InitialiseNode(Nod.NodeType.battle, 2);
+                        currentNod.InitialiseNode(Nod.NodeType.battle, 2, y);
                     }
                     
                     else if (y == map.Count - 1)
                     {
                         currentNod.nodeType = Nod.NodeType.chest;
-                        currentNod.InitialiseNode(Nod.NodeType.chest, 0);
+                        currentNod.InitialiseNode(Nod.NodeType.chest, 0, y);
                         
                         List<List<Nod>> possiblePaths = RecursivePaths(currentNod.previousNods, currentNod);
-                        CheckPaths(possiblePaths, data);
+                        CheckPaths(map, possiblePaths, data);
                     }
 
                     else
                     {
-                        SelectRandomIcon(map, data, currentNod, y);
+                        SelectRandomIcon(map, data, currentNod, y, data.nodeTypes);
                     }
                 }
             }
@@ -108,9 +108,10 @@ public class IconSelector
     
     
     // CHECKS EVERY PREVIOUS PATHS TO BALANCE THEM
-    private void CheckPaths(List<List<Nod>> currentPaths, AventureData data)
+    private void CheckPaths(List<ListSpots> map, List<List<Nod>> currentPaths, AventureData data)
     {
         bool isOkay = false;
+        int iterations = 0;
 
         while (!isOkay)
         {
@@ -135,7 +136,7 @@ public class IconSelector
                         }
                     }
 
-                    BalancePath(currentPaths[i], pathDifficulty, upNodes, downNodes);
+                    BalancePath(map, data, currentPaths[i], pathDifficulty, upNodes, downNodes);
                 }
             }
 
@@ -149,6 +150,12 @@ public class IconSelector
                 {
                     isOkay = false;
                 }
+            }
+
+            iterations += 1;
+            if (iterations > 20)
+            {
+                isOkay = true;
             }
         }
     }
@@ -168,25 +175,27 @@ public class IconSelector
     }
 
 
-    private void BalancePath(List<Nod> currentPath, int currentDifficulty, List<NodeTypeClass> upNodes, List<NodeTypeClass> downNodes)
+    private void BalancePath(List<ListSpots> map, AventureData data, List<Nod> currentPath, int currentDifficulty, List<NodeTypeClass> upNodes, List<NodeTypeClass> downNodes)
     {
         bool isOkay = false;
 
         while (!isOkay)
         {
             int indexNode = Random.Range(1, currentPath.Count - 1);
-            NodeTypeClass newNodeType = new NodeTypeClass();
+            List<NodeTypeClass> newNodeType = new List<NodeTypeClass>();
 
             if (currentDifficulty > 3)
             {
-                newNodeType = downNodes[Random.Range(0, downNodes.Count)];
+                newNodeType = downNodes;
             }
             else
             {
-                newNodeType = upNodes[Random.Range(0, upNodes.Count)];
+                newNodeType = upNodes;
             }
             
-            currentPath[indexNode].InitialiseNode(newNodeType.nodType, newNodeType.difficultyValue);
+            //currentPath[indexNode].InitialiseNode(newNodeType.nodType, newNodeType.difficultyValue);
+
+            SelectRandomIcon(map, data, currentPath[indexNode], currentPath[indexNode].mapY, newNodeType);
 
             currentDifficulty = GetPathDifficulty(currentPath);
 
@@ -201,7 +210,7 @@ public class IconSelector
 
     // ---------------------------- RANDOM PART ----------------------------------
     
-    private void SelectRandomIcon(List<ListSpots> map, AventureData data, Nod currentNod, int y)
+    private void SelectRandomIcon(List<ListSpots> map, AventureData data, Nod currentNod, int y, List<NodeTypeClass> nodeTypes)
     {
         bool isOkay = false;
 
@@ -211,7 +220,7 @@ public class IconSelector
             int selectedNodStart = 0;
             int selectedNodeDifficulty = 0;
 
-            List<NodeTypeClass> currentNodeTypes = new List<NodeTypeClass>(data.nodeTypes);
+            List<NodeTypeClass> currentNodeTypes = new List<NodeTypeClass>(nodeTypes);
 
             for (int i = currentNodeTypes.Count - 1; i >= 0; i--)
             {
@@ -241,7 +250,7 @@ public class IconSelector
 
                 if (test1 && test2 && test3)
                 {
-                    currentNod.InitialiseNode(selectedNodeType, selectedNodeDifficulty);
+                    currentNod.InitialiseNode(selectedNodeType, selectedNodeDifficulty, y);
                                 
                     isOkay = true;
                 }
@@ -274,6 +283,11 @@ public class IconSelector
 
     private bool VerifyChoice(List<ListSpots> map, int currentY, Nod currentNod, Nod.NodeType wantedNodeType)
     {
+        if (wantedNodeType == Nod.NodeType.battle)
+        {
+            return true;
+        }
+        
         for (int x = 0; x < map[currentY].list.Count; x++)
         {
             if (map[currentY].list[x] is not null)

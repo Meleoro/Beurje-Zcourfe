@@ -32,6 +32,7 @@ public class Nod : MonoBehaviour
     public List<Nod> nextNods = new List<Nod>();
     public bool isCamp;
     public bool isLast;
+    public int mapY;
 
     [Header("References Icones")] 
     public GameObject iconBattle;
@@ -59,10 +60,12 @@ public class Nod : MonoBehaviour
         }*/
     }
 
-    public void InitialiseNode(NodeType currentType, int currentDifficulty)
+    public void InitialiseNode(NodeType currentType, int currentDifficulty, int currentY)
     {
         nodeType = currentType;
         nodeDifficulty = currentDifficulty;
+
+        mapY = currentY;
         
         iconBattle.SetActive(false);
         iconElite.SetActive(false);
