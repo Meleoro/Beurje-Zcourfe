@@ -12,7 +12,11 @@ public class AventureData : ScriptableObject
     public int stepsBetweenCamp;
     [Range(0, 100)] public int probaSpotSpawn;
     public int maxElementsPerColumn;
+
+    [Header("IconPart")]
     public List<NodeTypeClass> nodeTypes = new List<NodeTypeClass>();
+    public int minBattlePerPath = 2;
+    
 
     [Header("Nod Content")] 
     public List<GameObject> battleNodes = new List<GameObject>();

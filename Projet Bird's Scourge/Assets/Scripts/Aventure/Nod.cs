@@ -27,6 +27,8 @@ public class Nod : MonoBehaviour
     public GameObject battlePrefab;
     
     public List<Nod> connectedNods = new List<Nod>();
+    public List<Nod> previousNods = new List<Nod>();
+    public List<Nod> nextNods = new List<Nod>();
     public bool isCamp;
     public bool isLast;
 

@@ -28,11 +28,17 @@ public class AventureCreator : MonoBehaviour
     public GameObject spot;
     public Transform parentSpot;
     private DecorationCreator decorationScript;
+    private IconSelector iconScript;
     public Transform startX;
     public GameObject background;
     public GameObject backgroundEnd;
-    
-    
+
+    private void Start()
+    {
+        iconScript = new IconSelector();
+    }
+
+
     // THE WHOLE PROCESS TO GENERATE THE MAP (RETURNS THE WHOLE MAP)
     public List<ListSpots> GenerateMap()
     {
@@ -48,7 +54,7 @@ public class AventureCreator : MonoBehaviour
         GeneratePaths(0);
 
         // Finally we initiate every nods with their functions
-        ChoseIcons(0);
+        iconScript.ChoseIcons(map, data, 0);
 
         // Finally we generate the decoration of the map
         decorationScript = GetComponent<DecorationCreator>();
@@ -392,172 +398,7 @@ public class AventureCreator : MonoBehaviour
 
         return linkedNodes;
     }
-    
-    
-    // --------------- TO SELECT THE UTILITY OF EVERY ICONS OF THE MAP ---------------
 
-
-    private void ChoseIcons(int startRaw)
-    {
-        for (int y = startRaw; y < map.Count; y++)
-        {
-            for (int x = 0; x < map[y].list.Count; x++)
-            {
-                if (map[y].list[x] is not null)
-                {
-                    Nod currentNod = map[y].list[x];
-
-                    if (currentNod.isCamp)
-                    {
-                        currentNod.nodeType = Nod.NodeType.camp;
-                        currentNod.InitialiseNode();
-                    }
-                    
-                    else if (y == 1)
-                    {
-                        currentNod.nodeType = Nod.NodeType.battle;
-                        currentNod.InitialiseNode();
-                    }
-                    
-                    else if (y == map.Count - 1)
-                    {
-                        currentNod.nodeType = Nod.NodeType.chest;
-                        currentNod.InitialiseNode();
-                    }
-
-                    else
-                    {
-                        bool isOkay = false;
-
-                        while (!isOkay)
-                        {
-                            Nod.NodeType selectedNodeType = Nod.NodeType.none;
-                            int selectedNodStart = 0;
-
-                            List<NodeTypeClass> currentNodeTypes = new List<NodeTypeClass>(data.nodeTypes);
-
-                            for (int i = currentNodeTypes.Count - 1; i >= 0; i--)
-                            {
-                                int draw = Random.Range(0, 100);
-                                int index = Random.Range(0, currentNodeTypes.Count);
-
-                                if (draw < currentNodeTypes[index].percentageSpawn)
-                                {
-                                    selectedNodeType = currentNodeTypes[index].nodType;
-                                    selectedNodStart = currentNodeTypes[index].startSpawn;
-
-                                    break;
-                                }
-
-                                else
-                                {
-                                    currentNodeTypes.RemoveAt(index);
-                                }
-                            }
-
-                            if (selectedNodeType != Nod.NodeType.none)
-                            {
-                                bool test1 = VerifyConsecutive(currentNod, selectedNodeType);
-                                bool test2 = VerifyChoice(y, currentNod, selectedNodeType);
-                                bool test3 = VerifyStart(y, selectedNodStart);
-
-                                if (test1 && test2 && test3)
-                                {
-                                    currentNod.nodeType = selectedNodeType;
-                                    currentNod.InitialiseNode();
-                                
-                                    isOkay = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private bool VerifyConsecutive(Nod currentNod, Nod.NodeType wantedNodeType)
-    {
-        if (wantedNodeType != Nod.NodeType.battle && wantedNodeType != Nod.NodeType.events)
-        {
-            for (int i = 0; i < currentNod.connectedNods.Count; i++)
-            {
-                Nod currentNeighbor = currentNod.connectedNods[i];
-
-                if (currentNeighbor.nodeType != Nod.NodeType.none)
-                {
-                    if (currentNeighbor.nodeType == wantedNodeType)
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
-    private bool VerifyChoice(int currentY, Nod currentNod, Nod.NodeType wantedNodeType)
-    {
-        for (int x = 0; x < map[currentY].list.Count; x++)
-        {
-            if (map[currentY].list[x] is not null)
-            {
-                if (map[currentY].list[x] != currentNod)
-                {
-                    if (VerifySamePrevious(currentNod, map[currentY].list[x]))
-                    {
-                        if (map[currentY].list[x].nodeType == wantedNodeType)
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-    
-    private bool VerifySamePrevious(Nod nod1, Nod nod2)
-    {
-        bool hasSamePrevious = false;
-
-        for (int i = 0; i < nod1.connectedNods.Count; i++)
-        {
-            for (int j = 0; j < nod2.connectedNods.Count; j++)
-            {
-                if (nod1.connectedNods[i] == nod2.connectedNods[j])
-                {
-                    if (nod1.connectedNods[i].transform.position.x < nod1.transform.position.x)
-                    {
-                        hasSamePrevious = true;
-                    }
-                }
-            }
-        }
-        
-        return hasSamePrevious;
-    }
-    
-    private bool VerifyStart(int currentY, int nodStartPercentage)
-    {
-        if (nodStartPercentage != 0)
-        {
-            float currentRatioMap = (float)currentY / (float)data.wantedMapLength;
-            float nodRatio = (float)nodStartPercentage / 100f;
-            
-            if (currentRatioMap > nodRatio)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        return true;
-    }
-    
 
 
     // --------------- TO UPDATE THE MAP ---------------
