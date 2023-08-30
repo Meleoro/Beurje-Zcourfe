@@ -44,7 +44,7 @@ public class DecorationCreator : MonoBehaviour
         Vector2 maxBounds = GetBounds(fond);
         
         stockageCurrentMinY = maxBounds.y;
-        stockageCurrentMaxY = -maxBounds.y;
+        stockageCurrentMaxY = maxBounds.x;
 
         List<Vector2> possibleSpots = GeneratePossibleSpots(minX, maxX, wantedMapLength);
 
@@ -108,7 +108,7 @@ public class DecorationCreator : MonoBehaviour
         float currentHeight = currentTransform.localScale.x;
         Vector2 center = currentTransform.position;
 
-        finalBounds = new Vector2(startX.position.x - 2, center.y - currentHeight - 1.7f);
+        finalBounds = new Vector2(center.y + currentHeight + 1.7f, center.y - currentHeight - 1.7f);
 
         return finalBounds;
     }

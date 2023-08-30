@@ -33,7 +33,7 @@ public class AventureCreator : MonoBehaviour
     public GameObject background;
     public GameObject backgroundEnd;
 
-    private void Start()
+    private void Awake()
     {
         iconScript = new IconSelector();
     }
@@ -72,11 +72,11 @@ public class AventureCreator : MonoBehaviour
     // GENERATES THE POSSIBLE POSITIONS INTO WORLD SPACE FOR THE SPOTS
     private List<Vector2> FindPossibleSpots()
     {
-        Vector2 maxBounds = GetBounds(fond);
+        Vector3 maxBounds = GetBounds(fond);
 
         stockageCurrentMinX = maxBounds.x;
         stockageCurrentMinY = maxBounds.y;
-        stockageCurrentMaxY = -maxBounds.y;
+        stockageCurrentMaxY = maxBounds.z;
 
         List<Vector2> possibleSpots = GeneratePossibleSpots(stockageCurrentMinX, data.wantedMapLength);
 
@@ -116,14 +116,14 @@ public class AventureCreator : MonoBehaviour
 
 
     // GET THE BOUNDS OF THE SPRITE ON WHICH THE SPOTS WILL BE DISPLAYED
-    private Vector2 GetBounds(Transform currentTransform)
+    private Vector3 GetBounds(Transform currentTransform)
     {
-        Vector2 finalBounds;
+        Vector3 finalBounds;
         
         float currentHeight = currentTransform.localScale.x;
         Vector2 center = currentTransform.position;
 
-        finalBounds = new Vector2(startX.position.x, center.y - currentHeight * 1.1f);
+        finalBounds = new Vector3(startX.position.x, center.y - currentHeight * 1.1f, center.y + currentHeight * 1.1f);
 
         return finalBounds;
     }

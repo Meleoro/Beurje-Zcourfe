@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class IconSelector 
 {
-    
-    
-    
     // --------------- TO SELECT THE UTILITY OF EVERY ICONS OF THE MAP ---------------
     public void ChoseIcons(List<ListSpots> map, AventureData data, int startRaw)
     {
@@ -213,6 +210,7 @@ public class IconSelector
     private void SelectRandomIcon(List<ListSpots> map, AventureData data, Nod currentNod, int y, List<NodeTypeClass> nodeTypes)
     {
         bool isOkay = false;
+        int iterations = 0;
 
         while (!isOkay)
         {
@@ -248,7 +246,9 @@ public class IconSelector
                 bool test2 = VerifyChoice(map, y, currentNod, selectedNodeType);
                 bool test3 = VerifyStart(data, y, selectedNodStart);
 
-                if (test1 && test2 && test3)
+                iterations += 1;
+
+                if ((test1 && test2 && test3) || iterations > 10)
                 {
                     currentNod.InitialiseNode(selectedNodeType, selectedNodeDifficulty, y);
                                 

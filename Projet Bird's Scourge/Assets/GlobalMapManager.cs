@@ -22,6 +22,11 @@ public class GlobalMapManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        CameraManager.Instance.EnterGlobal();
+    }
+
 
     public void OpenZone()
     {
@@ -31,8 +36,9 @@ public class GlobalMapManager : MonoBehaviour
 
     public void LaunchAventure(AventureData data)
     {
-        AventureCreator currentCreator = Instantiate(aventureObject, aventurePos, Quaternion.identity).GetComponent<AventureCreator>();
+        AventureCreator currentCreator = Instantiate(aventureObject, aventurePos, Quaternion.identity).GetComponentInChildren<AventureCreator>();
 
         currentCreator.data = data;
+        currentCreator.GenerateMap();
     }
 }

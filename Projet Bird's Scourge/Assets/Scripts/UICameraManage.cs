@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UICameraManager : MonoBehaviour
+public class UICameraManage : MonoBehaviour
 {
-    public static UICameraManager Instance;
+    public static UICameraManage Instance;
 
     private void Awake()
     {

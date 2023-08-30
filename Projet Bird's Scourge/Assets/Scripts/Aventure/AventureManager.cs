@@ -36,11 +36,15 @@ public class AventureManager : MonoBehaviour
     {
         scriptCreator = GetComponent<AventureCreator>();
         scriptController = GetComponent<AventureController>();
-        
-        map = scriptCreator.GenerateMap();
-        scriptController.Initialise(map);
 
-        CameraManager.Instance.isInAdventure = true;
+        if (!CameraManager.Instance.isInGlobal)
+        {
+            map = scriptCreator.GenerateMap();
+        
+            scriptController.Initialise(map);
+        }
+
+        CameraManager.Instance.EnterAventure();
     }
 
 

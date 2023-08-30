@@ -13,9 +13,12 @@ public class CameraManager : MonoBehaviour
     {
         get { return _instance; }
     }
-
-    [Header("Aventure")] 
+    
+    [Header("CameraStates")]
     public bool isInAdventure;
+    public bool isInGlobal;
+
+    [Header("Aventure")]
     public Vector3 savePosAdventure;
     private Vector3 originalPos;
     private Vector3 wantedPosShake;
@@ -84,8 +87,11 @@ public class CameraManager : MonoBehaviour
         screenHeight = _camera.scaledPixelHeight;
         screenWidth = _camera.scaledPixelWidth;
 
-        Move();
-        Zoom();
+        if (canMove && !isInAdventure && !isInGlobal)
+        {
+            Move();
+            Zoom();
+        }
 
         if (isInAdventure)
         {
@@ -101,24 +107,34 @@ public class CameraManager : MonoBehaviour
 
     public void Move()
     {
-        if (canMove && !isInAdventure)
-        {
-            Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed, 0);
-            transform.localPosition = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
-        }
+        Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed, 0);
+        transform.localPosition = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
     }
     
     public void Zoom()
     {
-        if (canMove && !isInAdventure)
-        {
-            worldUI.localScale = new Vector3(zoom,zoom,zoom)/3;
-            float scroll = Input.GetAxis("Mouse ScrollWheel");
-            zoom -= scroll * zoomSpeed;
-            zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
-            _camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, zoom, ref zoomVelocity, smoothZoomFactor);
-        }
+        worldUI.localScale = new Vector3(zoom,zoom,zoom)/3;
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        zoom -= scroll * zoomSpeed;
+        zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+        _camera.orthographicSize = Mathf.SmoothDamp(_camera.orthographicSize, zoom, ref zoomVelocity, smoothZoomFactor);
     }
+    
+    
+    // -------------------------- GENERAL PART --------------------------------
+
+    public void EnterAventure()
+    {
+        isInAdventure = true;
+        isInGlobal = false;
+    }
+    
+    public void EnterGlobal()
+    {
+        isInAdventure = false;
+        isInGlobal = true;
+    }
+    
 
 
     // --------------------------  EXPLORATION PART  ------------------------------

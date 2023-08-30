@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class UICameraFinder : MonoBehaviour
+public class UICameraFinde : MonoBehaviour
 {
     void Start()
     {
-        GetComponent<Canvas>().worldCamera = UICameraManager.Instance.GetComponent<Camera>();
+        GetComponent<Canvas>().worldCamera = UICameraManage.Instance.GetComponent<Camera>();
     }
 }

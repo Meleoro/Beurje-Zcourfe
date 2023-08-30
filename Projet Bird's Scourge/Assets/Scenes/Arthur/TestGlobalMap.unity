@@ -5806,8 +5806,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneData: {fileID: 11400000, guid: 7cd8103a57439804c9a5126eac546579, type: 2}
---- !u!68 &1775086569
-EdgeCollider2D:
+--- !u!60 &1775086569
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5839,18 +5839,23 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   m_Points:
-  - {x: -5.462967, y: -2.9157405}
-  - {x: -11.567917, y: -0.6445559}
-  - {x: -11.030098, y: 7.394035}
-  - {x: 1.8345413, y: 8.2450485}
-  - {x: -2.9201508, y: -0.40595412}
-  - {x: -5.6003113, y: -2.8537035}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+    m_Paths:
+    - - {x: -5.238777, y: 9.213885}
+      - {x: -11.687308, y: 6.5502763}
+      - {x: -11.550416, y: -0.90603197}
+      - {x: -4.845015, y: -3.5900958}
+      - {x: 1.6948309, y: 8.425886}
+  m_UseDelaunayMesh: 0
 --- !u!1 &1862610437
 GameObject:
   m_ObjectHideFlags: 0
@@ -6144,8 +6149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneData: {fileID: 11400000, guid: 7cd8103a57439804c9a5126eac546579, type: 2}
---- !u!68 &1976445540
-EdgeCollider2D:
+--- !u!60 &1976445540
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6177,18 +6182,23 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   m_Points:
-  - {x: -1.5608444, y: 1.9130031}
-  - {x: 11.267319, y: 1.2202471}
-  - {x: 12.723976, y: 4.9707603}
-  - {x: 9.859863, y: 8.064259}
-  - {x: 1.8598557, y: 8.184745}
-  - {x: -1.569519, y: 1.913002}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+    m_Paths:
+    - - {x: 6.9850388, y: 8.955179}
+      - {x: 1.4743052, y: 8.19952}
+      - {x: -1.5579314, y: 1.810371}
+      - {x: 11.647425, y: 1.2282853}
+      - {x: 13.239539, y: 6.744305}
+  m_UseDelaunayMesh: 0
 --- !u!1 &2027003816
 GameObject:
   m_ObjectHideFlags: 0
@@ -6232,7 +6242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aventurePos: {x: 10, y: 0, z: 0}
-  aventureObject: {fileID: 0}
+  aventureObject: {fileID: 7788743900425766509, guid: 7f53a355de82ecf4dbf643de429a5999, type: 3}
 --- !u!4 &2027003819
 Transform:
   m_ObjectHideFlags: 0
