@@ -188,6 +188,10 @@ public class Nod : MonoBehaviour
         
         newLineRenderer.SetPosition(0, point1);
         newLineRenderer.SetPosition(1, point2);
+        
+        float dissolveValue = 1;
+        DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, Random.Range(1.8f, 2.7f)).OnUpdate((() =>
+            newLineRenderer.material.SetFloat("_DissolveValue", dissolveValue))); 
     }
     
 
