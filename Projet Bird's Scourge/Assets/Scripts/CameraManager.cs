@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 public class CameraManager : MonoBehaviour
@@ -49,8 +50,8 @@ public class CameraManager : MonoBehaviour
     [Header("References")] 
     [HideInInspector] public Camera _camera;
     public RectTransform worldUI;
-    public GameObject FXAventure;
-    public GameObject FXBattle;
+    public Light2D FXAventure;
+    public Light2D FXBattle;
     public Transform cameraParent;
 
     [Header("Other")]
@@ -95,13 +96,13 @@ public class CameraManager : MonoBehaviour
 
         if (isInAdventure)
         {
-            FXAventure.SetActive(true);
-            FXBattle.SetActive(false);
+            FXAventure.gameObject.SetActive(true);
+            FXBattle.gameObject.SetActive(false);
         }
         else
         {
-            FXAventure.SetActive(false);
-            FXBattle.SetActive(true);
+            FXAventure.gameObject.SetActive(false);
+            FXBattle.gameObject.SetActive(true);
         }
     }
 
@@ -129,6 +130,19 @@ public class CameraManager : MonoBehaviour
         isInGlobal = false;
 
         transform.position = newPos;
+
+        _camera.DOOrthoSize(12f, 0);
+        _camera.DOOrthoSize(10.8f, 1.5f).SetEase(Ease.OutSine);
+
+        float currentIntensity = 0;
+        float wantedIntensity = FXAventure.intensity;
+
+        FXAventure.intensity = 0;
+
+        DOTween.To(() => currentIntensity, x => currentIntensity = x, wantedIntensity, 2).OnUpdate(() =>
+        {
+            FXAventure.intensity = currentIntensity;
+        }); 
     }
     
     public void EnterGlobal()
@@ -151,8 +165,8 @@ public class CameraManager : MonoBehaviour
         worldUI = WorldUIManager.Instance.GetComponent<RectTransform>();
         isInAdventure = false;
 
-        FXAventure.SetActive(false);
-        FXBattle.SetActive(true);
+        FXAventure.gameObject.SetActive(false);
+        FXBattle.gameObject.SetActive(true);
     }
 
     public void CameraBattleEnd()
@@ -162,8 +176,8 @@ public class CameraManager : MonoBehaviour
         transform.position = savePosAdventure;
         isInAdventure = true;
         
-        FXAventure.SetActive(true);
-        FXBattle.SetActive(false);
+        FXAventure.gameObject.SetActive(true);
+        FXBattle.gameObject.SetActive(false);
     }
 
 

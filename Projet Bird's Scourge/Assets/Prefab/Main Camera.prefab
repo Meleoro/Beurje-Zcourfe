@@ -184,7 +184,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10.6
+  orthographic size: 10.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -265,6 +265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInAdventure: 0
+  isInGlobal: 0
   savePosAdventure: {x: 0, y: 0, z: 0}
   startTurnDuration: 0.3
   offsetPosStart: {x: -0.3, y: -0.3}
@@ -277,8 +278,9 @@ MonoBehaviour:
   minZoom: 1.5
   _camera: {fileID: 0}
   worldUI: {fileID: 0}
-  FXAventure: {fileID: 6445688200004470535}
-  FXBattle: {fileID: 2369557555630285998}
+  FXAventure: {fileID: 6362287375282396953}
+  FXBattle: {fileID: 83049223448871562}
+  cameraParent: {fileID: 0}
   screenWidth: 0
   screenHeight: 0
 --- !u!1 &6445688200004470535
@@ -306,7 +308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6445688200004470535}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.74, y: 0, z: 10}
+  m_LocalPosition: {x: 1.37, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -329,7 +331,7 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 3
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.578
+  m_FalloffIntensity: 0.441
   m_Color: {r: 1, g: 0.79688627, b: 0.6179246, a: 1}
   m_Intensity: 1.5
   m_LightVolumeIntensity: 1
