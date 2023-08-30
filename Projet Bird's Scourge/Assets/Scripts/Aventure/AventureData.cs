@@ -15,8 +15,7 @@ public class AventureData : ScriptableObject
 
     [Header("IconPart")]
     public List<NodeTypeClass> nodeTypes = new List<NodeTypeClass>();
-    public int minBattlePerPath = 2;
-    
+
 
     [Header("Nod Content")] 
     public List<GameObject> battleNodes = new List<GameObject>();
