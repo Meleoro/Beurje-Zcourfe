@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -83,44 +84,60 @@ public class Nod : MonoBehaviour
 
     public void ChooseNodeAppearance()
     {
+        SpriteRenderer currentSpriteRenderer = null;
+        
         switch (nodeType)
         {
             case NodeType.battle :
                 iconBattle.SetActive(true);
+                currentSpriteRenderer = iconBattle.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.eliteBattle :
                 iconElite.SetActive(true);
+                currentSpriteRenderer = iconElite.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.boss :
                 iconBoss.SetActive(true);
+                currentSpriteRenderer = iconBoss.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.events :
                 iconEvent.SetActive(true);
+                currentSpriteRenderer = iconEvent.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.statue :
                 iconBenediction.SetActive(true);
+                currentSpriteRenderer = iconBenediction.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.chest :
                 iconChest.SetActive(true);
+                currentSpriteRenderer = iconChest.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.shop :
                 iconShop.SetActive(true);
+                currentSpriteRenderer = iconShop.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.bird :
                 iconBird.SetActive(true);
+                currentSpriteRenderer = iconBird.GetComponent<SpriteRenderer>();
                 break;
             
             case NodeType.camp :
                 iconCamp.SetActive(true);
+                currentSpriteRenderer = iconCamp.GetComponent<SpriteRenderer>();
                 break;
         }
+        
+        
+        float dissolveValue = 1;
+        DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, Random.Range(1.6f, 2.5f)).OnUpdate((() =>
+            currentSpriteRenderer.material.SetFloat("_DissolveValue", dissolveValue))); 
     }
 
 

@@ -123,10 +123,12 @@ public class CameraManager : MonoBehaviour
     
     // -------------------------- GENERAL PART --------------------------------
 
-    public void EnterAventure()
+    public void EnterAventure(Vector3 newPos)
     {
         isInAdventure = true;
         isInGlobal = false;
+
+        transform.position = newPos;
     }
     
     public void EnterGlobal()

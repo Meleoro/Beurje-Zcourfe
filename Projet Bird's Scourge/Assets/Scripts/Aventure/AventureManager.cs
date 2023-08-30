@@ -44,7 +44,7 @@ public class AventureManager : MonoBehaviour
             scriptController.Initialise(map);
         }
 
-        CameraManager.Instance.EnterAventure();
+        CameraManager.Instance.EnterAventure(transform.position + new Vector3(2, 0, -10));
     }
 
 
