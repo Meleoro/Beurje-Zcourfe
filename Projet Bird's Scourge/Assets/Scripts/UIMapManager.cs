@@ -21,7 +21,13 @@ public class UIMapManager : MonoBehaviour
     [Header("StartBattleTransitionParameters")] [SerializeField]
     private float flashDuration;
 
-    [Header("Proto Pop Up Coffre")] public GameObject canvasCoffre;
+    [Header("State Bar")] public bool isOpen;
+    public GameObject stateBar;
+    public float openY;
+    public float closeY;
+    
+    [Header("Proto Pop Up Coffre")] 
+    public GameObject canvasCoffre;
     public GameObject boisLocation;
     public GameObject FerLocation;
     public GameObject pierreLocation;
@@ -93,6 +99,12 @@ public class UIMapManager : MonoBehaviour
         bande2Image.rectTransform.DOLocalMoveY(bande2Image.rectTransform.localPosition.y - 280 * 0.5f, 1);
     }
 
+    public void LanguetteStateBar()
+    {
+        if (isOpen) stateBar.transform.DOMoveY(closeY, 0.5f);
+        else stateBar.transform.DOMoveY(openY, 0.5f);
+        isOpen = !isOpen;
+    }
     
     public IEnumerator ChestPopUp()
     {
