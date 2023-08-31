@@ -9,6 +9,7 @@ TagManager:
   - Tile
   - Nod
   - Zone
+  - Region
   layers:
   - Default
   - TransparentFX

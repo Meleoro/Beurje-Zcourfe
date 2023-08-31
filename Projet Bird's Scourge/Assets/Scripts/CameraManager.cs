@@ -124,24 +124,43 @@ public class CameraManager : MonoBehaviour
     
     // -------------------------- GENERAL PART --------------------------------
 
-    public void EnterAventure(Vector3 newPos)
+    public IEnumerator EnterAventure(Vector3 newPos, bool fromGlobalMap)
     {
         isInAdventure = true;
         isInGlobal = false;
+
+        if (fromGlobalMap)
+        {
+            _camera.DOOrthoSize(12f, 1.5f).SetEase(Ease.InSine);
+        
+            float currentIntensity = 1.5f;
+            float wantedIntensity = 0;
+
+            FXAventure.intensity = 1.5f;
+
+            DOTween.To(() => currentIntensity, x => currentIntensity = x, wantedIntensity, 2).OnUpdate(() =>
+            {
+                FXAventure.intensity = currentIntensity;
+            }); 
+            
+            yield return new WaitForSeconds(2.2f);
+        }
+
+        StartCoroutine(AventureEffect.Instance.AppearEffect());
 
         transform.position = newPos;
 
         _camera.DOOrthoSize(12f, 0);
         _camera.DOOrthoSize(10.8f, 1.5f).SetEase(Ease.OutSine);
 
-        float currentIntensity = 0;
-        float wantedIntensity = FXAventure.intensity;
+        float currentIntensity2 = 0;
+        float wantedIntensity2 = 1.5f;
 
         FXAventure.intensity = 0;
 
-        DOTween.To(() => currentIntensity, x => currentIntensity = x, wantedIntensity, 2).OnUpdate(() =>
+        DOTween.To(() => currentIntensity2, x => currentIntensity2 = x, wantedIntensity2, 2).OnUpdate(() =>
         {
-            FXAventure.intensity = currentIntensity;
+            FXAventure.intensity = currentIntensity2;
         }); 
     }
     

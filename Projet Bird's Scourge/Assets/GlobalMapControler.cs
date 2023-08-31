@@ -24,6 +24,15 @@ public class GlobalMapControler : MonoBehaviour
             if (hits[i].collider.CompareTag("Zone"))
             {
                 GlobalMapManager.Instance.LaunchAventure(hits[i].collider.GetComponent<ZoneMap>().zoneData);
+
+                break;
+            }
+
+            if (hits[i].collider.CompareTag("Region"))
+            {
+                StartCoroutine(GlobalMapManager.Instance.EnterRegion(hits[i].collider.GetComponent<RegionMap>().regionObject));
+
+                break;
             }
         }
     }
