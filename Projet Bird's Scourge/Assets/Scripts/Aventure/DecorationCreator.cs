@@ -148,13 +148,14 @@ public class DecorationCreator : MonoBehaviour
 
                 if (index < possibleDecorations[j].probaSpawn)
                 {
-                    SpriteRenderer currentSR = Instantiate(possibleDecorations[j].gameObject, possibleSpots[i],
-                        Quaternion.identity).GetComponentInChildren<SpriteRenderer>();
+                    SpriteRenderer newDecoration = Instantiate(possibleDecorations[j].gameObject, possibleSpots[i], Quaternion.identity).GetComponent<SpriteRenderer>();
+                    
+                    AventureEffect.Instance.AddDecoration(newDecoration);
 
-                    float dissolveValue = 1;
+                    /*float dissolveValue = 1;
 
                     DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, Random.Range(3f, 5f)).OnUpdate((() =>
-                        currentSR.material.SetFloat("_DissolveValue", dissolveValue))); 
+                        currentSR.material.SetFloat("_DissolveValue", dissolveValue))); */
                     
                     break;
                 }

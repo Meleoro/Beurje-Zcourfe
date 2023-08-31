@@ -45,6 +45,7 @@ public class Nod : MonoBehaviour
     public GameObject iconShop;
     public GameObject iconBird;
     public GameObject iconCamp;
+    private SpriteRenderer currentSpriteRenderer;
     
     [Header("References")]
     public GameObject lineRenderer;
@@ -84,7 +85,8 @@ public class Nod : MonoBehaviour
 
     public void ChooseNodeAppearance()
     {
-        SpriteRenderer currentSpriteRenderer = null;
+        if(currentSpriteRenderer is not null)
+            AventureEffect.Instance.RemoveIcon(currentSpriteRenderer);
         
         switch (nodeType)
         {
@@ -135,9 +137,11 @@ public class Nod : MonoBehaviour
         }
         
         
-        float dissolveValue = 1;
+        /*float dissolveValue = 1;
         DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, Random.Range(1.6f, 2.5f)).OnUpdate((() =>
-            currentSpriteRenderer.material.SetFloat("_DissolveValue", dissolveValue))); 
+            currentSpriteRenderer.material.SetFloat("_DissolveValue", dissolveValue))); */
+        
+        AventureEffect.Instance.AddIcon(currentSpriteRenderer);
     }
 
 
@@ -189,9 +193,11 @@ public class Nod : MonoBehaviour
         newLineRenderer.SetPosition(0, point1);
         newLineRenderer.SetPosition(1, point2);
         
-        float dissolveValue = 1;
+        /*float dissolveValue = 1;
         DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, Random.Range(1.8f, 2.7f)).OnUpdate((() =>
-            newLineRenderer.material.SetFloat("_DissolveValue", dissolveValue))); 
+            newLineRenderer.material.SetFloat("_DissolveValue", dissolveValue))); */
+        
+        AventureEffect.Instance.AddLine(newLineRenderer);
     }
     
 

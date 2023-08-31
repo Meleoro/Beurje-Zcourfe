@@ -30,13 +30,13 @@ public class AventureManager : MonoBehaviour
         
         else
             Destroy(gameObject);
+        
+        scriptCreator = GetComponent<AventureCreator>();
+        scriptController = GetComponent<AventureController>();
     }
 
     private void Start()
     {
-        scriptCreator = GetComponent<AventureCreator>();
-        scriptController = GetComponent<AventureController>();
-
         if (!CameraManager.Instance.isInGlobal)
         {
             map = scriptCreator.GenerateMap();
@@ -44,7 +44,7 @@ public class AventureManager : MonoBehaviour
             scriptController.Initialise(map);
         }
 
-        CameraManager.Instance.EnterAventure(transform.position + new Vector3(2.8f, 0, -10));
+        StartCoroutine(CameraManager.Instance.EnterAventure(transform.position + new Vector3(2.8f, 0, -10), CameraManager.Instance.isInGlobal));
     }
 
 
