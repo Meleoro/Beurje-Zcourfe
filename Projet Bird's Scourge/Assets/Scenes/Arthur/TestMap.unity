@@ -6865,7 +6865,7 @@ MonoBehaviour:
   wood: 0
   stone: 0
   iron: 0
-  gold: 35
+  gold: 100
   food: 0
 --- !u!1 &1661312964
 GameObject:
