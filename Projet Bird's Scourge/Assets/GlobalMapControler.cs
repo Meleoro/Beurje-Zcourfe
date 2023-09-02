@@ -73,7 +73,9 @@ public class GlobalMapControler : MonoBehaviour
 
             if (hits[i].collider.CompareTag("Region"))
             {
-                StartCoroutine(GlobalMapManager.Instance.EnterRegion(hits[i].collider.GetComponent<RegionMap>().regionObject));
+                RegionMap currentScript = hits[i].collider.GetComponent<RegionMap>();
+                
+                StartCoroutine(GlobalMapManager.Instance.EnterRegion(currentScript.regionObject, currentScript.newPosCam, currentScript.newSizeCam));
                 ManageColors(null, hits[i].collider.GetComponent<SpriteRenderer>());
 
                 break;

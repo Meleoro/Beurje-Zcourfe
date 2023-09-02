@@ -47,11 +47,14 @@ public class GlobalMapManager : MonoBehaviour
 
     
     
-    public IEnumerator EnterRegion(GameObject regionObject)
+    public IEnumerator EnterRegion(GameObject regionObject, Vector3 newPosCam, float newSizeCam)
     {
         float dissolveValue = 0;
+
+        CameraManager.Instance.transform.DOMove(newPosCam, 1);
+        CameraManager.Instance._camera.DOOrthoSize(newSizeCam, 1);
         
-        SpriteRenderer[] continentSprites = continentObject.GetComponentsInChildren<SpriteRenderer>();
+        /*SpriteRenderer[] continentSprites = continentObject.GetComponentsInChildren<SpriteRenderer>();
 
         for (int i = 0; i < continentSprites.Length; i++)
         {
@@ -60,9 +63,9 @@ public class GlobalMapManager : MonoBehaviour
             
             DOTween.To(() => dissolveValue, x => dissolveValue = x, 1, 2f).OnUpdate((() =>
                 currentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
-        }
+        }*/
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
 
         regionObject.SetActive(true);
         
