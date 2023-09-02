@@ -29,12 +29,7 @@ public class GlobalMapManager : MonoBehaviour
     {
         CameraManager.Instance.EnterGlobal();
     }
-
-
-    public void OpenZone()
-    {
-        
-    }
+    
     
 
     public void LaunchAventure(AventureData data)
@@ -47,24 +42,38 @@ public class GlobalMapManager : MonoBehaviour
         AventureManager.Instance.scriptController.Initialise(map);
     }
 
+    
+    
     public IEnumerator EnterRegion(GameObject regionObject)
     {
         float dissolveValue = 0;
-        SpriteRenderer continentSprite = continentObject.GetComponentInChildren<SpriteRenderer>(); 
+        
+        SpriteRenderer[] continentSprites = continentObject.GetComponentsInChildren<SpriteRenderer>();
 
-        DOTween.To(() => dissolveValue, x => dissolveValue = x, 1, 2f).OnUpdate((() =>
-            continentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
+        for (int i = 0; i < continentSprites.Length; i++)
+        {
+            dissolveValue = 0;
+            SpriteRenderer currentSprite = continentSprites[i];
+            
+            DOTween.To(() => dissolveValue, x => dissolveValue = x, 1, 2f).OnUpdate((() =>
+                currentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
+        }
 
         yield return new WaitForSeconds(1f);
 
         regionObject.SetActive(true);
         
-        dissolveValue = 1;
-        SpriteRenderer regionSprite = regionObject.GetComponentInChildren<SpriteRenderer>(); 
+        SpriteRenderer[] regionSprites = regionObject.GetComponentsInChildren<SpriteRenderer>();
 
-        DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, 2f).OnUpdate((() =>
-            regionSprite.material.SetFloat("_DissolveValue", dissolveValue)));
-        
+        for (int i = 0; i < regionSprites.Length; i++)
+        {
+            dissolveValue = 1;
+            SpriteRenderer currentSprite = regionSprites[i];
+            
+            DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, 2f).OnUpdate((() =>
+                currentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
+        }
+
         yield return new WaitForSeconds(1f);
         
         continentObject.SetActive(false);
