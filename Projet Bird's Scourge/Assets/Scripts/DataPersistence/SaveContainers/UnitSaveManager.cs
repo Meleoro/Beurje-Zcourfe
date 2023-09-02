@@ -6,6 +6,7 @@ public class UnitSaveManager : MonoBehaviour, IDataPersistence
 {
     public static UnitSaveManager Instance;
     
+    
     public int unit1Level;
     public int unit2Level;
     public int unit3Level;

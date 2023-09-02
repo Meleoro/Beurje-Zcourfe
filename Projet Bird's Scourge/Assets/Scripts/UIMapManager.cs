@@ -28,6 +28,18 @@ public class UIMapManager : MonoBehaviour
     public TextMeshProUGUI compteurFerState;
     public TextMeshProUGUI compteurFoodState;
     public TextMeshProUGUI compteurGoldState;
+    public TextMeshProUGUI nomUnit1;
+    public TextMeshProUGUI nomUnit2;
+    public TextMeshProUGUI nomUnit3;
+    public TextMeshProUGUI compteurHPUnit1;
+    public TextMeshProUGUI compteurHPUnit2;
+    public TextMeshProUGUI compteurHPUnit3;
+    public Slider lifeBarUnit1;
+    public Slider lifeBarUnit2;
+    public Slider lifeBarUnit3;
+    public Image imageUnit1;
+    public Image imageUnit2;
+    public Image imageUnit3;
     
     [Header("Coffre")] [SerializeField]
     public GameObject canvasCoffre;
@@ -65,8 +77,10 @@ public class UIMapManager : MonoBehaviour
     
     [Header("Pop UP Campement")] 
     public GameObject canvasCamp;
-   
-    
+    public int percentHealed;
+
+    #region Fonction Générales
+
     private void Awake()
     {
         if (Instance == null)
@@ -77,8 +91,68 @@ public class UIMapManager : MonoBehaviour
         
         
         UpdateStateBar();
+        nomUnit1.text = AventureManager.Instance.unit1.GetComponent<Unit>().data.charaName;
+        nomUnit2.text = AventureManager.Instance.unit2.GetComponent<Unit>().data.charaName;
+        nomUnit3.text = AventureManager.Instance.unit3.GetComponent<Unit>().data.charaName;
+        imageUnit1.sprite = AventureManager.Instance.unit1.GetComponent<Unit>().data.idleSprite;
+        imageUnit2.sprite = AventureManager.Instance.unit2.GetComponent<Unit>().data.idleSprite;
+        imageUnit3.sprite = AventureManager.Instance.unit3.GetComponent<Unit>().data.idleSprite;
     }
     
+    public void LanguetteStateBar()
+    {
+        if (isOpen) stateBar.transform.DOMoveY(closeY, 0.5f);
+        else stateBar.transform.DOMoveY(openY, 0.5f);
+        isOpen = !isOpen;
+    }
+    public void UpdateStateBar()
+    {
+        // Texte compteur de Ressources
+        compteurBoisState.text = ResourcesSaveManager.Instance.wood.ToString();
+        compteurPierreState.text = ResourcesSaveManager.Instance.stone.ToString();
+        compteurFerState.text = ResourcesSaveManager.Instance.iron.ToString();
+        compteurGoldState.text = ResourcesSaveManager.Instance.gold.ToString();
+        compteurFoodState.text = ResourcesSaveManager.Instance.food.ToString();
+
+        // Texte compteur de HP
+        
+        compteurHPUnit1.text = AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit1.GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV + " HP";
+        
+        compteurHPUnit2.text = AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit2.GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV + " HP";
+        
+        compteurHPUnit3.text = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit3.GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV + " HP";
+        
+        // Barres de vie
+        
+        lifeBarUnit1.maxValue = AventureManager.Instance.unit1.GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
+
+        lifeBarUnit1.value = AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth;
+        
+        lifeBarUnit2.maxValue = AventureManager.Instance.unit2.GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV;
+
+        lifeBarUnit2.value = AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth;
+        
+        lifeBarUnit3.maxValue = AventureManager.Instance.unit3.GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+
+        lifeBarUnit3.value = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth;
+       
+    }
+    public void ClosePopUp()
+    {
+        canvasEvent.transform.DOScale(Vector3.zero, 0.5f);
+        canvasCoffre.transform.DOScale(Vector3.zero, 0.5f);
+        canvasCamp.transform.DOScale(Vector3.zero, 0.5f);
+    }
+
+    #endregion
+
+    #region Fonctions Battle
     public IEnumerator StartBattleEffect()
     {
         flashImage.DOFade(1, flashDuration * 0.3f).OnComplete((() => flashImage.DOFade(0, flashDuration * 0.7f)));
@@ -100,23 +174,10 @@ public class UIMapManager : MonoBehaviour
         bande2Image.rectTransform.DOLocalMoveY(bande2Image.rectTransform.localPosition.y - 280 * 0.5f, 1);
     }
     
-    public void LanguetteStateBar()
-    {
-        if (isOpen) stateBar.transform.DOMoveY(closeY, 0.5f);
-        else stateBar.transform.DOMoveY(openY, 0.5f);
-        isOpen = !isOpen;
-    }
-    
-    public void UpdateStateBar()
-    {
-       compteurBoisState.text = ResourcesSaveManager.Instance.wood.ToString();
-       compteurPierreState.text = ResourcesSaveManager.Instance.stone.ToString();
-       compteurFerState.text = ResourcesSaveManager.Instance.iron.ToString();
-       compteurGoldState.text = ResourcesSaveManager.Instance.gold.ToString();
-       compteurFoodState.text = ResourcesSaveManager.Instance.food.ToString();
-    }
-    
-    public IEnumerator ChestPopUp()
+    #endregion
+
+    #region Fonctions Chest
+  public IEnumerator ChestPopUp()
     {
         compteurBois.text = ResourcesSaveManager.Instance.wood + "";
         compteurPierre.text = ResourcesSaveManager.Instance.stone + "";
@@ -201,15 +262,20 @@ public class UIMapManager : MonoBehaviour
         UpdateStateBar();
     }
     
+
+    #endregion
+
+    #region Fonctions Event
+
     public IEnumerator EventPopUp()
     {
         eventData = AventureManager.Instance.possibleEvents[
             Random.Range(0, AventureManager.Instance.possibleEvents.Count - 1)];
         eventImage.sprite = eventData.eventImage;
         
-       /* eventImageRect.width = eventData.eventImage.rect.width;
-        eventImageRect.height = eventData.eventImage.rect.height;
-        eventImage.rectTransform.rect.width = eventImageRect.width;*/
+        /* eventImageRect.width = eventData.eventImage.rect.width;
+         eventImageRect.height = eventData.eventImage.rect.height;
+         eventImage.rectTransform.rect.width = eventImageRect.width;*/
         
         eventText.text = eventData.eventText;
         eventTitle.text = eventData.eventTitle;
@@ -250,13 +316,11 @@ public class UIMapManager : MonoBehaviour
         }
     }
 
-    public void ClosePopUp()
-    {
-        canvasEvent.transform.DOScale(Vector3.zero, 0.5f);
-        canvasCoffre.transform.DOScale(Vector3.zero, 0.5f);
-        canvasCamp.transform.DOScale(Vector3.zero, 0.5f);
-    }
-    
+
+    #endregion
+
+    #region Fonctions Campement
+
     public IEnumerator CampPopUp()
     {
         canvasEvent.transform.localScale = Vector3.zero;
@@ -264,6 +328,61 @@ public class UIMapManager : MonoBehaviour
         canvasCamp.transform.DOScale(Vector3.one, 0.5f);
         yield return new WaitForSeconds(0.5f);
     }
-    
-   
+
+    public void CampEffect(int index)
+    {
+        if (index == 1)
+        {
+            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth +=
+                (AventureManager.Instance.unit1.GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV * percentHealed / 100);
+
+            if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit1
+                    .GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV)
+            {
+                AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit1
+                    .GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
+            }
+              
+            
+            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth +=
+                (AventureManager.Instance.unit2.GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV * percentHealed / 100);
+            
+            if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit2
+                    .GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV)
+            {
+                AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit2
+                    .GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV;
+            }
+            
+            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth +=
+                (AventureManager.Instance.unit3.GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV * percentHealed / 100);
+            
+            if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit3
+                    .GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV)
+            {
+                AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit3
+                    .GetComponent<Unit>()
+                    .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+            }
+            
+            UpdateStateBar();
+            ClosePopUp();
+        }
+        else
+        {
+            Debug.Log("Quit Aventure");
+        }
+            
+    }
+
+    #endregion
+  
 }
