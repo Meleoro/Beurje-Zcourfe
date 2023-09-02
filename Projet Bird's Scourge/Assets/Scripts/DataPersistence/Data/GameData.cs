@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -15,8 +13,11 @@ public class GameData
     public int unit6Level;
 
     [Header("Resources")] 
-    public int woodCounter;
-    public int stoneCounter;
+    public int wood;
+    public int stone;
+    public int iron;
+    public int gold;
+    public int food;
     
     
     public GameData()
@@ -28,7 +29,10 @@ public class GameData
         unit5Level = 1;
         unit6Level = 1;
 
-        woodCounter = 0;
-        stoneCounter = 0;
+        wood = 0;
+        stone = 0;
+        iron = 0;
+        gold = 0;
+        food = 0;
     }
 }

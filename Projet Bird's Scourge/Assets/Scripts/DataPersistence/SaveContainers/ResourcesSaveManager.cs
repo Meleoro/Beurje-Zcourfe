@@ -7,8 +7,11 @@ public class ResourcesSaveManager : MonoBehaviour, IDataPersistence
 {
     public static ResourcesSaveManager Instance;
 
-    public int woodCounter;
-    public int stoneCounter;
+    public int wood;
+    public int stone;
+    public int iron;
+    public int gold;
+    public int food;
 
 
     private void Awake()
@@ -21,15 +24,20 @@ public class ResourcesSaveManager : MonoBehaviour, IDataPersistence
     }
 
 
-    public void LoadSave(GameData gameData)
-    {
-        woodCounter = gameData.woodCounter;
-        stoneCounter = gameData.stoneCounter;
-    }
-
     public void SaveData(ref GameData gameData)
     {
-        gameData.woodCounter = woodCounter;
-        gameData.stoneCounter = stoneCounter;
+        wood = gameData.wood;
+        stone = gameData.stone;
+        iron = gameData.iron;
+        gold = gameData.gold;
+        food = gameData.food;
+    }
+    public void LoadSave(GameData gameData)
+    {
+        gameData.wood = wood ;
+        gameData.stone = stone;
+        gameData.iron = iron;
+        gameData.gold = gold;
+        gameData.food = food;
     }
 }
