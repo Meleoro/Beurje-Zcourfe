@@ -1018,6 +1018,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 707679630}
+  - component: {fileID: 707679633}
+  - component: {fileID: 707679632}
+  - component: {fileID: 707679631}
   m_Layer: 0
   m_Name: SaveManager
   m_TagString: Untagged
@@ -1040,6 +1043,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &707679631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707679629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86cf8cc6279c9a84580ec272b65b6c1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  woodCounter: 0
+  stoneCounter: 0
+--- !u!114 &707679632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707679629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ad952bb888ad548a9ced2bc94f5bc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unit1Level: 0
+  unit2Level: 0
+  unit3Level: 0
+  unit4Level: 0
+  unit5Level: 0
+  unit6Level: 0
+--- !u!114 &707679633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 707679629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae69d7a92d547f54992b504aa55315bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data.json
 --- !u!1 &717486343
 GameObject:
   m_ObjectHideFlags: 0
