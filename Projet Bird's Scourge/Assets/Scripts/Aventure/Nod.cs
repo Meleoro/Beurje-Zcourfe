@@ -152,10 +152,10 @@ public class Nod : MonoBehaviour
                 StartCoroutine(UIMapManager.Instance.CampPopUp());
                 break;
             case NodeType.statue :
-                StartCoroutine(UIMapManager.Instance.CampPopUp());
+                StartCoroutine(UIMapManager.Instance.PopUpStatue());
                 break;
             case NodeType.shop :
-                StartCoroutine(UIMapManager.Instance.CampPopUp());
+                StartCoroutine(UIMapManager.Instance.PopUpShop());
                 break;
         }
     }

@@ -40,6 +40,7 @@ public class UIMapManager : MonoBehaviour
     public Image imageUnit1;
     public Image imageUnit2;
     public Image imageUnit3;
+    public GameObject quitConfirmation;
     
     [Header("Coffre")] [SerializeField]
     public GameObject canvasCoffre;
@@ -78,6 +79,17 @@ public class UIMapManager : MonoBehaviour
     [Header("Pop UP Campement")] 
     public GameObject canvasCamp;
     public int percentHealed;
+    
+    [Header("Pop UP Statue")] 
+    public GameObject canvasStatue;
+    
+    [Header("Pop UP Shop")] 
+    public GameObject canvasShop;
+    public TextMeshProUGUI merchantTalk;
+    public List<TextMeshProUGUI> pricesList;
+    public List<Image> imagesList;
+    public List<ShopItemData> itemDataList;
+  
 
     #region Fonction Générales
 
@@ -148,8 +160,28 @@ public class UIMapManager : MonoBehaviour
         canvasEvent.transform.DOScale(Vector3.zero, 0.5f);
         canvasCoffre.transform.DOScale(Vector3.zero, 0.5f);
         canvasCamp.transform.DOScale(Vector3.zero, 0.5f);
+        canvasShop.transform.DOScale(Vector3.zero, 0.5f);
+        canvasStatue.transform.DOScale(Vector3.zero, 0.5f);
     }
 
+    public void QuitExploration()
+    {
+        quitConfirmation.transform.localScale = Vector3.zero;
+        quitConfirmation.SetActive(true);
+        quitConfirmation.transform.DOScale(Vector3.one, 0.5f);
+    }
+    
+    public void QuitEffect(int index)
+    {
+        if (index == 1)
+        {
+            quitConfirmation.transform.DOScale(Vector3.zero, 0.5f);
+        }
+        else
+        {
+            Debug.Log("Quit Exploration");
+        }
+    }
     #endregion
 
     #region Fonctions Battle
@@ -384,5 +416,133 @@ public class UIMapManager : MonoBehaviour
     }
 
     #endregion
-  
+
+    #region Fonctions Statue
+
+    public IEnumerator PopUpStatue()
+    {
+        canvasStatue.transform.localScale = Vector3.zero;
+        canvasStatue.SetActive(true);
+        canvasStatue.transform.DOScale(Vector3.one, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    #endregion
+    
+    #region Fonctions Shop
+
+    public IEnumerator PopUpShop()
+    {
+        canvasShop.transform.localScale = Vector3.zero;
+        canvasShop.SetActive(true);
+        canvasShop.transform.DOScale(Vector3.one, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < pricesList.Count; i++)
+        {
+            pricesList[i].text = itemDataList[i].price.ToString();
+            if (itemDataList[i].price > ResourcesSaveManager.Instance.gold)
+            {
+                pricesList[i].color = Color.red;
+            }
+            imagesList[i].sprite = itemDataList[i].image;
+        }
+    }
+
+    public void UpdateMerchantText(int index)
+    {
+        merchantTalk.text = itemDataList[index].description;
+    }
+
+    public void UpdateItemPrice()
+    {
+        for (int i = 0; i < pricesList.Count; i++)
+        {
+            if (itemDataList[i].price > ResourcesSaveManager.Instance.gold)
+            {
+                pricesList[i].color = Color.red;
+            }
+        }
+    }
+    public void BuyItem(int index)
+    {
+        if (ResourcesSaveManager.Instance.gold >= itemDataList[index].price) // Check si on peut l'acheter
+        {
+            ResourcesSaveManager.Instance.gold -= itemDataList[index].price; // Enlève l'agent
+           
+            switch (itemDataList[index].itemType) // Execute l'effet
+            {
+                case ShopItemData.type.wood:
+                    ResourcesSaveManager.Instance.wood += itemDataList[index].amount;
+                    break;
+
+                case ShopItemData.type.stone:
+                    ResourcesSaveManager.Instance.stone += itemDataList[index].amount;
+                    break;
+
+                case ShopItemData.type.iron:
+                    ResourcesSaveManager.Instance.iron += itemDataList[index].amount;
+                    break;
+
+                case ShopItemData.type.food:
+                    ResourcesSaveManager.Instance.food += itemDataList[index].amount;
+                    break;
+
+                case ShopItemData.type.potion:
+                    AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth +=
+                        (AventureManager.Instance.unit1.GetComponent<Unit>()
+                                .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV *
+                         itemDataList[index].PercentHPHealed / 100);
+
+                    if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance
+                            .unit1
+                            .GetComponent<Unit>()
+                            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV)
+                    {
+                        AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance
+                            .unit1
+                            .GetComponent<Unit>()
+                            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
+                    }
+
+
+                    AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth +=
+                        (AventureManager.Instance.unit2.GetComponent<Unit>()
+                                .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV *
+                            itemDataList[index].PercentHPHealed / 100);
+
+                    if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance
+                            .unit2
+                            .GetComponent<Unit>()
+                            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV)
+                    {
+                        AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance
+                            .unit2
+                            .GetComponent<Unit>()
+                            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV;
+                    }
+
+                    AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth +=
+                        (AventureManager.Instance.unit3.GetComponent<Unit>()
+                                .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV *
+                            itemDataList[index].PercentHPHealed / 100);
+
+                    if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance
+                            .unit3
+                            .GetComponent<Unit>()
+                            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV)
+                    {
+                        AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance
+                            .unit3
+                            .GetComponent<Unit>()
+                            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+                    }
+
+                    break;
+            }
+            UpdateStateBar();
+            UpdateItemPrice();
+        }
+    }
+
+    #endregion
 }
