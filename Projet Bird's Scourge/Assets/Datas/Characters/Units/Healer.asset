@@ -29,7 +29,7 @@ MonoBehaviour:
   YPosModificator: 0
   levels:
   - level: 0
-    PV: 7
+    PV: 10
     PM: 3
     movePatern: []
     shyBehavior: 0

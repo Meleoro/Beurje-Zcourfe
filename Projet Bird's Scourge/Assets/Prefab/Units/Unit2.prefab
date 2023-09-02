@@ -245,9 +245,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   haste: 0
-  PM: 4
+  PM: 3
   mustBeSelected: 0
-  currentHealth: 10
+  currentHealth: 1
   currentLevel: 1
   attackLevel: 1
   competence1Level: 1

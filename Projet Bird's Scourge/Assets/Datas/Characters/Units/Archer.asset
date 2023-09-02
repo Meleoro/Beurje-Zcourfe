@@ -25,6 +25,8 @@ MonoBehaviour:
   levelUnlockPassif: 0
   passifData: {fileID: 0}
   attackSpriteSize: 1
+  XPosModificator: 0
+  YPosModificator: 0
   levels:
   - level: 0
     PV: 10
