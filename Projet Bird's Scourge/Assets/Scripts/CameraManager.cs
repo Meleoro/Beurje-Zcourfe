@@ -94,7 +94,7 @@ public class CameraManager : MonoBehaviour
             Zoom();
         }
 
-        if (isInAdventure)
+        if (isInAdventure || isInGlobal)
         {
             FXAventure.gameObject.SetActive(true);
             FXBattle.gameObject.SetActive(false);

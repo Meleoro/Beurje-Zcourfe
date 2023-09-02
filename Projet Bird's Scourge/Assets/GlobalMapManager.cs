@@ -15,6 +15,7 @@ public class GlobalMapManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject aventureObject;
     [SerializeField] private GameObject continentObject;
+    [HideInInspector] public GlobalMapControler scriptController;
 
     private void Awake()
     {
@@ -28,6 +29,8 @@ public class GlobalMapManager : MonoBehaviour
     private void Start()
     {
         CameraManager.Instance.EnterGlobal();
+
+        scriptController = GetComponent<GlobalMapControler>();
     }
     
     
