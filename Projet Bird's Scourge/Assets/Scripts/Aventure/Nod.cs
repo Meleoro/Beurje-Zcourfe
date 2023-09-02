@@ -52,16 +52,6 @@ public class Nod : MonoBehaviour
     private SpriteRenderer sr;
     private EdgeCollider2D edgeCollider;
 
-    private void Start()
-    {
-        /*sr = GetComponent<SpriteRenderer>();
-        if (isCamp) sr.sprite = spritList[0];
-        else
-        {
-            sr.sprite = spritList[Random.Range(1, 10)];
-        }*/
-    }
-
     public void InitialiseNode(NodeType currentType, int currentDifficulty, int currentY)
     {
         nodeType = currentType;
@@ -159,6 +149,12 @@ public class Nod : MonoBehaviour
                 StartCoroutine(UIMapManager.Instance.EventPopUp());
                 break;
             case NodeType.camp :
+                StartCoroutine(UIMapManager.Instance.CampPopUp());
+                break;
+            case NodeType.statue :
+                StartCoroutine(UIMapManager.Instance.CampPopUp());
+                break;
+            case NodeType.shop :
                 StartCoroutine(UIMapManager.Instance.CampPopUp());
                 break;
         }

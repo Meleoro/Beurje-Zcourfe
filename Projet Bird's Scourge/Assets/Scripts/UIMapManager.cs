@@ -12,21 +12,24 @@ public class UIMapManager : MonoBehaviour
 {
     public static UIMapManager Instance;
 
-    [Header("StartBattleTransitionReferences")] [SerializeField]
+    [Header("Battle")] [SerializeField]
     private Image flashImage;
-
     [SerializeField] private Image bande1Image;
     [SerializeField] private Image bande2Image;
-
-    [Header("StartBattleTransitionParameters")] [SerializeField]
     private float flashDuration;
 
-    [Header("State Bar")] public bool isOpen;
+    [Header("State Bar")] [SerializeField]
+    private bool isOpen;
     public GameObject stateBar;
     public float openY;
     public float closeY;
+    public TextMeshProUGUI compteurBoisState;
+    public TextMeshProUGUI compteurPierreState;
+    public TextMeshProUGUI compteurFerState;
+    public TextMeshProUGUI compteurFoodState;
+    public TextMeshProUGUI compteurGoldState;
     
-    [Header("Proto Pop Up Coffre")] 
+    [Header("Coffre")] [SerializeField]
     public GameObject canvasCoffre;
     public GameObject boisLocation;
     public GameObject FerLocation;
@@ -49,12 +52,7 @@ public class UIMapManager : MonoBehaviour
     public TextMeshProUGUI compteurFerGot;
     public TextMeshProUGUI compteurFoodGot;
     public TextMeshProUGUI compteurGoldGot;
-    public float boisTotal;
-    public float pierreTotal;
-    public float ferTotal;
-    public float foodTotal;
-    public float goldTotal;
-
+    
     [Header("Pop UP Event")] 
     public EventData eventData;
     public GameObject canvasEvent;
@@ -63,6 +61,7 @@ public class UIMapManager : MonoBehaviour
     public TextMeshProUGUI option1Text;
     public TextMeshProUGUI option2Text;
     public Image eventImage;
+    private Rect eventImageRect;
     
     [Header("Pop UP Campement")] 
     public GameObject canvasCamp;
@@ -75,9 +74,11 @@ public class UIMapManager : MonoBehaviour
 
         else
             Destroy(gameObject);
-
+        
+        
+        UpdateStateBar();
     }
-
+    
     public IEnumerator StartBattleEffect()
     {
         flashImage.DOFade(1, flashDuration * 0.3f).OnComplete((() => flashImage.DOFade(0, flashDuration * 0.7f)));
@@ -98,7 +99,7 @@ public class UIMapManager : MonoBehaviour
         bande2Image.rectTransform.DOScaleY(0, 1);
         bande2Image.rectTransform.DOLocalMoveY(bande2Image.rectTransform.localPosition.y - 280 * 0.5f, 1);
     }
-
+    
     public void LanguetteStateBar()
     {
         if (isOpen) stateBar.transform.DOMoveY(closeY, 0.5f);
@@ -106,8 +107,23 @@ public class UIMapManager : MonoBehaviour
         isOpen = !isOpen;
     }
     
+    public void UpdateStateBar()
+    {
+       compteurBoisState.text = ResourcesSaveManager.Instance.wood.ToString();
+       compteurPierreState.text = ResourcesSaveManager.Instance.stone.ToString();
+       compteurFerState.text = ResourcesSaveManager.Instance.iron.ToString();
+       compteurGoldState.text = ResourcesSaveManager.Instance.gold.ToString();
+       compteurFoodState.text = ResourcesSaveManager.Instance.food.ToString();
+    }
+    
     public IEnumerator ChestPopUp()
     {
+        compteurBois.text = ResourcesSaveManager.Instance.wood + "";
+        compteurPierre.text = ResourcesSaveManager.Instance.stone + "";
+        compteurFer.text = ResourcesSaveManager.Instance.iron + "";
+        compteurGold.text = ResourcesSaveManager.Instance.gold + "";
+        compteurFood.text = ResourcesSaveManager.Instance.food + "";
+        
         canvasEvent.transform.localScale = Vector3.zero;
         canvasCoffre.SetActive(true);
         canvasCoffre.transform.DOScale(Vector3.one, 0.5f);
@@ -125,8 +141,8 @@ public class UIMapManager : MonoBehaviour
             GameObject CreatedBois = Instantiate(iconeBois, animChest.transform);
             CreatedBois.transform.DOMove(boisLocation.transform.position, 0.5f)
                 .OnComplete((() => Destroy(CreatedBois)));
-            if (boisTotal < boisTotal + bois) boisTotal += 1;
-            compteurBois.text = boisTotal + "";
+            if (ResourcesSaveManager.Instance.wood < ResourcesSaveManager.Instance.wood + bois) ResourcesSaveManager.Instance.wood += 1;
+            compteurBois.text = ResourcesSaveManager.Instance.wood + "";
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -137,8 +153,8 @@ public class UIMapManager : MonoBehaviour
         {
             GameObject CreatedFer = Instantiate(iconeFer, animChest.transform);
             CreatedFer.transform.DOMove(FerLocation.transform.position, 0.5f).OnComplete((() => Destroy(CreatedFer)));
-            if (ferTotal < ferTotal + fer) ferTotal += 1;
-            compteurFer.text = ferTotal + "";
+            if (ResourcesSaveManager.Instance.iron < ResourcesSaveManager.Instance.iron + fer) ResourcesSaveManager.Instance.iron += 1;
+            compteurFer.text = ResourcesSaveManager.Instance.iron + "";
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -150,8 +166,8 @@ public class UIMapManager : MonoBehaviour
             GameObject CreatedPierre = Instantiate(iconePierre, animChest.transform);
             CreatedPierre.transform.DOMove(pierreLocation.transform.position, 0.5f)
                 .OnComplete((() => Destroy(CreatedPierre)));
-            if (pierreTotal < pierreTotal + pierre) pierreTotal += 1;
-            compteurPierre.text = pierreTotal + "";
+            if (ResourcesSaveManager.Instance.stone < ResourcesSaveManager.Instance.stone + pierre) ResourcesSaveManager.Instance.stone += 1;
+            compteurPierre.text = ResourcesSaveManager.Instance.stone + "";
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -163,8 +179,8 @@ public class UIMapManager : MonoBehaviour
             GameObject CreatedGold = Instantiate(iconeGold, animChest.transform);
             CreatedGold.transform.DOMove(goldLocation.transform.position, 0.5f)
                 .OnComplete((() => Destroy(CreatedGold)));
-            if (goldTotal < goldTotal + gold) goldTotal += 1;
-            compteurGold.text = goldTotal + "";
+            if (ResourcesSaveManager.Instance.gold < ResourcesSaveManager.Instance.gold + gold) ResourcesSaveManager.Instance.gold += 1;
+            compteurGold.text = ResourcesSaveManager.Instance.gold + "";
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -176,18 +192,25 @@ public class UIMapManager : MonoBehaviour
             GameObject CreatedFood = Instantiate(iconeFood, animChest.transform);
             CreatedFood.transform.DOMove(foodLocation.transform.position, 0.5f)
                 .OnComplete((() => Destroy(CreatedFood)));
-            if (foodTotal < foodTotal + food) foodTotal += 1;
-            compteurFood.text = foodTotal + "";
+            if (ResourcesSaveManager.Instance.food < ResourcesSaveManager.Instance.food + food) ResourcesSaveManager.Instance.food += 1;
+            compteurFood.text = ResourcesSaveManager.Instance.food + "";
             yield return new WaitForSeconds(0.1f);
         }
 
         compteurFoodGot.text = "+ " + food;
+        UpdateStateBar();
     }
-
     
     public IEnumerator EventPopUp()
     {
+        eventData = AventureManager.Instance.possibleEvents[
+            Random.Range(0, AventureManager.Instance.possibleEvents.Count - 1)];
         eventImage.sprite = eventData.eventImage;
+        
+       /* eventImageRect.width = eventData.eventImage.rect.width;
+        eventImageRect.height = eventData.eventImage.rect.height;
+        eventImage.rectTransform.rect.width = eventImageRect.width;*/
+        
         eventText.text = eventData.eventText;
         eventTitle.text = eventData.eventTitle;
         option1Text.text = eventData.option1Text;
@@ -198,6 +221,41 @@ public class UIMapManager : MonoBehaviour
         canvasEvent.transform.DOScale(Vector3.one, 0.5f);
         yield return new WaitForSeconds(0.5f);
     }
+
+    public void EventEffect(int index)
+    {
+        if (index == 1)
+        {
+            switch (eventData.ID)
+            {
+                case 1 :
+                    break;
+                case 2 :
+                    ResourcesSaveManager.Instance.gold -= 10;
+                    UpdateStateBar();
+                    break;
+                case 3 :
+                    ResourcesSaveManager.Instance.food -= 15;
+                    UpdateStateBar();
+                    break;
+            }
+        }
+        else
+        {
+            switch (eventData.ID)
+            {
+                case 1 :
+                    break;
+            }
+        }
+    }
+
+    public void ClosePopUp()
+    {
+        canvasEvent.transform.DOScale(Vector3.zero, 0.5f);
+        canvasCoffre.transform.DOScale(Vector3.zero, 0.5f);
+        canvasCamp.transform.DOScale(Vector3.zero, 0.5f);
+    }
     
     public IEnumerator CampPopUp()
     {
@@ -206,4 +264,6 @@ public class UIMapManager : MonoBehaviour
         canvasCamp.transform.DOScale(Vector3.one, 0.5f);
         yield return new WaitForSeconds(0.5f);
     }
+    
+   
 }

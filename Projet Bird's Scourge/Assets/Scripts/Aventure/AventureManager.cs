@@ -17,6 +17,9 @@ public class AventureManager : MonoBehaviour
     
     [Header("Battles")] 
     public List<GameObject> possibleBattles;
+    
+    [Header("Events")] 
+    public List<EventData> possibleEvents;
 
     [Header("Références")]
     [HideInInspector] public AventureCreator scriptCreator;
