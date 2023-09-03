@@ -267,6 +267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 93621532}
+  - component: {fileID: 93621533}
   m_Layer: 0
   m_Name: CarteContinent
   m_TagString: Untagged
@@ -295,6 +296,30 @@ Transform:
   m_Father: {fileID: 2027003819}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &93621533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93621531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918e30cdea40b8e41930d327236ce56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  regionSpriteRenderers:
+  - {fileID: 1859392132}
+  - {fileID: 1350524949}
+  - {fileID: 2094807857}
+  - {fileID: 898436844}
+  regionColliders:
+  - {fileID: 1350524951}
+  - {fileID: 2094807859}
+  - {fileID: 898436846}
+  regionTexts: []
+  regionImages: []
 --- !u!1001 &218575950
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6000,6 +6025,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1968717006}
+  - component: {fileID: 1968717007}
   m_Layer: 0
   m_Name: "CarteR\xE9gion1"
   m_TagString: Untagged
@@ -6028,6 +6054,31 @@ Transform:
   m_Father: {fileID: 2027003819}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1968717007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968717005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918e30cdea40b8e41930d327236ce56e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 0
+  regionSpriteRenderers:
+  - {fileID: 1665404206}
+  - {fileID: 887623148}
+  - {fileID: 1612563043}
+  - {fileID: 1450262978}
+  - {fileID: 1661324767}
+  regionColliders:
+  - {fileID: 1612563045}
+  - {fileID: 1450262980}
+  - {fileID: 1661324769}
+  regionTexts: []
+  regionImages: []
 --- !u!1 &1974492078
 GameObject:
   m_ObjectHideFlags: 0
@@ -6493,6 +6544,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e363dc1c17bba2438e14910217c9194, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentRegion: {fileID: 93621533}
+  cameraOriginalPos: {x: 0, y: 0, z: 0}
+  cameraOrinalSize: 0
   aventurePos: {x: 10, y: 0, z: 0}
   aventureObject: {fileID: 7788743900425766509, guid: 7f53a355de82ecf4dbf643de429a5999, type: 3}
   continentObject: {fileID: 93621531}

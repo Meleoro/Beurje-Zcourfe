@@ -81,6 +81,14 @@ public class GlobalMapControler : MonoBehaviour
                 break;
             }
         }
+
+        if (hits.Length == 0)
+        {
+            if (!GlobalMapManager.Instance.currentRegion.isGlobal)
+            {
+                StartCoroutine(GlobalMapManager.Instance.QuitRegion());
+            }
+        }
     }
 
 

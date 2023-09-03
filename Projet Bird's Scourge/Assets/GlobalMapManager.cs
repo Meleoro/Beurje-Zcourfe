@@ -9,6 +9,11 @@ public class GlobalMapManager : MonoBehaviour
 {
     public static GlobalMapManager Instance;
 
+    [Header("CurrentInfos")] 
+    public RegionContent currentRegion;
+    [SerializeField] private Vector3 cameraOriginalPos;
+    [SerializeField] private float cameraOrinalSize;
+
     [Header("Parameters")] 
     [SerializeField] private Vector3 aventurePos;
 
@@ -49,6 +54,9 @@ public class GlobalMapManager : MonoBehaviour
     
     public IEnumerator EnterRegion(GameObject regionObject, Vector3 newPosCam, float newSizeCam)
     {
+        cameraOriginalPos = CameraManager.Instance.transform.position;
+        cameraOrinalSize = CameraManager.Instance._camera.orthographicSize;
+        
         float dissolveValue = 0;
 
         CameraManager.Instance.transform.DOMove(newPosCam, 1);
@@ -69,7 +77,7 @@ public class GlobalMapManager : MonoBehaviour
 
         regionObject.SetActive(true);
         
-        SpriteRenderer[] regionSprites = regionObject.GetComponentsInChildren<SpriteRenderer>();
+        /*SpriteRenderer[] regionSprites = regionObject.GetComponentsInChildren<SpriteRenderer>();
 
         for (int i = 0; i < regionSprites.Length; i++)
         {
@@ -80,8 +88,29 @@ public class GlobalMapManager : MonoBehaviour
                 currentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
         }
 
-        yield return new WaitForSeconds(1f);
+        SpriteRenderer[] continentSprites = continentObject.GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < continentSprites.Length; i++)
+        {
+            continentSprites[i].DOFade(0.5f, 1);
+        }*/
         
-        continentObject.SetActive(false);
+        StartCoroutine(currentRegion.QuitRegion());
+        currentRegion = regionObject.GetComponent<RegionContent>();
+        StartCoroutine(currentRegion.EnterRegion());
+    }
+
+    public IEnumerator QuitRegion()
+    {
+        float dissolveValue = 0;
+
+        CameraManager.Instance.transform.DOMove(cameraOriginalPos, 1);
+        CameraManager.Instance._camera.DOOrthoSize(cameraOrinalSize, 1);
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        StartCoroutine(currentRegion.QuitRegion());
+        currentRegion = continentObject.GetComponent<RegionContent>();
+        StartCoroutine(currentRegion.EnterRegion());
     }
 }
