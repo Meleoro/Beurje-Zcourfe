@@ -6,6 +6,7 @@ using UnityEngine;
 public class GlobalMapControler : MonoBehaviour
 {
     [Header("CurrentInfos")] 
+    public bool noControl;
     public SpriteRenderer currentOverlayedElement;
     public SpriteRenderer currentClickedElement;
     
@@ -17,7 +18,7 @@ public class GlobalMapControler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !noControl)
         {
             VerifyClickedElement();
         }
@@ -65,7 +66,7 @@ public class GlobalMapControler : MonoBehaviour
         {
             if (hits[i].collider.CompareTag("Zone"))
             {
-                GlobalMapManager.Instance.LaunchAventure(hits[i].collider.GetComponent<ZoneMap>().zoneData);
+                StartCoroutine(GameManager.Instance.EnterAventure(hits[i].collider.GetComponent<ZoneMap>().zoneData));
                 ManageColors(null, hits[i].collider.GetComponent<SpriteRenderer>());
 
                 break;

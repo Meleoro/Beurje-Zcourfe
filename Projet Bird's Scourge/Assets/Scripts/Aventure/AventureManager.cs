@@ -40,14 +40,14 @@ public class AventureManager : MonoBehaviour
 
     private void Start()
     {
-        if (!CameraManager.Instance.isInGlobal)
+        /*if (!CameraManager.Instance.isInGlobal)
         {
             map = scriptCreator.GenerateMap();
         
             scriptController.Initialise(map);
-        }
-
-        StartCoroutine(CameraManager.Instance.EnterAventure(transform.position + new Vector3(2.8f, 0, -10), CameraManager.Instance.isInGlobal));
+        }*/
+        
+        StartCoroutine(AventureEffect.Instance.AppearEffect());
     }
 
 
