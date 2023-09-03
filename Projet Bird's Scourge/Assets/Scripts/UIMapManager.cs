@@ -100,17 +100,12 @@ public class UIMapManager : MonoBehaviour
 
         else
             Destroy(gameObject);
-        
-        
-        UpdateStateBar();
-        nomUnit1.text = AventureManager.Instance.unit1.GetComponent<Unit>().data.charaName;
-        nomUnit2.text = AventureManager.Instance.unit2.GetComponent<Unit>().data.charaName;
-        nomUnit3.text = AventureManager.Instance.unit3.GetComponent<Unit>().data.charaName;
-        imageUnit1.sprite = AventureManager.Instance.unit1.GetComponent<Unit>().data.idleSprite;
-        imageUnit2.sprite = AventureManager.Instance.unit2.GetComponent<Unit>().data.idleSprite;
-        imageUnit3.sprite = AventureManager.Instance.unit3.GetComponent<Unit>().data.idleSprite;
+
+
+        StartCoroutine(DelayUpdateStateBar());
     }
     
+
     public void LanguetteStateBar()
     {
         if (isOpen) stateBar.transform.DOMoveY(closeY, 0.5f);
@@ -154,6 +149,18 @@ public class UIMapManager : MonoBehaviour
 
         lifeBarUnit3.value = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth;
        
+    }
+
+    public IEnumerator DelayUpdateStateBar()
+    {
+        yield return new WaitForSeconds(1f);
+        UpdateStateBar();
+        nomUnit1.text = AventureManager.Instance.unit1.GetComponent<Unit>().data.charaName;
+        nomUnit2.text = AventureManager.Instance.unit2.GetComponent<Unit>().data.charaName;
+        nomUnit3.text = AventureManager.Instance.unit3.GetComponent<Unit>().data.charaName;
+        imageUnit1.sprite = AventureManager.Instance.unit1.GetComponent<Unit>().data.idleSprite;
+        imageUnit2.sprite = AventureManager.Instance.unit2.GetComponent<Unit>().data.idleSprite;
+        imageUnit3.sprite = AventureManager.Instance.unit3.GetComponent<Unit>().data.idleSprite;
     }
     public void ClosePopUp()
     {
