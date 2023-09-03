@@ -11,8 +11,8 @@ public class GlobalMapManager : MonoBehaviour
 
     [Header("CurrentInfos")] 
     public RegionContent currentRegion;
-    [SerializeField] private Vector3 cameraOriginalPos;
-    [SerializeField] private float cameraOrinalSize;
+    public Vector3 cameraOriginalPos;
+    public float cameraOriginalSize;
 
     [Header("Parameters")] 
     [SerializeField] private Vector3 aventurePos;
@@ -33,9 +33,14 @@ public class GlobalMapManager : MonoBehaviour
 
     private void Start()
     {
-        CameraManager.Instance.EnterGlobal();
+        //GameManager.Instance.EnterGlobalMap();
 
         scriptController = GetComponent<GlobalMapControler>();
+    }
+
+    public void Initialise()
+    {
+        currentRegion = continentObject.GetComponent<RegionContent>();
     }
     
     
@@ -52,48 +57,20 @@ public class GlobalMapManager : MonoBehaviour
 
     
     
-    public IEnumerator EnterRegion(GameObject regionObject, Vector3 newPosCam, float newSizeCam)
+    public IEnumerator EnterRegion(GameObject regionObject, Vector3 posCamOffset, float newSizeCam)
     {
+        scriptController.noControl = true;
+        
         cameraOriginalPos = CameraManager.Instance.transform.position;
-        cameraOrinalSize = CameraManager.Instance._camera.orthographicSize;
-        
-        float dissolveValue = 0;
+        cameraOriginalSize = CameraManager.Instance._camera.orthographicSize;
 
-        CameraManager.Instance.transform.DOMove(newPosCam, 1);
+        CameraManager.Instance.transform.DOMove(cameraOriginalPos + posCamOffset, 1);
         CameraManager.Instance._camera.DOOrthoSize(newSizeCam, 1);
-        
-        /*SpriteRenderer[] continentSprites = continentObject.GetComponentsInChildren<SpriteRenderer>();
-
-        for (int i = 0; i < continentSprites.Length; i++)
-        {
-            dissolveValue = 0;
-            SpriteRenderer currentSprite = continentSprites[i];
-            
-            DOTween.To(() => dissolveValue, x => dissolveValue = x, 1, 2f).OnUpdate((() =>
-                currentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
-        }*/
 
         yield return new WaitForSeconds(0.2f);
 
         regionObject.SetActive(true);
-        
-        /*SpriteRenderer[] regionSprites = regionObject.GetComponentsInChildren<SpriteRenderer>();
 
-        for (int i = 0; i < regionSprites.Length; i++)
-        {
-            dissolveValue = 1;
-            SpriteRenderer currentSprite = regionSprites[i];
-            
-            DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, 2f).OnUpdate((() =>
-                currentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
-        }
-
-        SpriteRenderer[] continentSprites = continentObject.GetComponentsInChildren<SpriteRenderer>();
-
-        for (int i = 0; i < continentSprites.Length; i++)
-        {
-            continentSprites[i].DOFade(0.5f, 1);
-        }*/
         
         StartCoroutine(currentRegion.QuitRegion());
         currentRegion = regionObject.GetComponent<RegionContent>();
@@ -102,10 +79,12 @@ public class GlobalMapManager : MonoBehaviour
 
     public IEnumerator QuitRegion()
     {
+        scriptController.noControl = true;
+        
         float dissolveValue = 0;
 
         CameraManager.Instance.transform.DOMove(cameraOriginalPos, 1);
-        CameraManager.Instance._camera.DOOrthoSize(cameraOrinalSize, 1);
+        CameraManager.Instance._camera.DOOrthoSize(cameraOriginalSize, 1);
         
         yield return new WaitForSeconds(0.2f);
         

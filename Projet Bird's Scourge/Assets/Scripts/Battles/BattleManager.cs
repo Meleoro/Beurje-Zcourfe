@@ -61,17 +61,17 @@ public class BattleManager : MonoBehaviour
     
     public void InitialiseUnitSpots(GameObject unit1, GameObject unit2, GameObject unit3)
     {
-        if (unit1 is not null)
+        if (unit1 != null)
         {
             unitSpot1.SpawnUnit(unit1);
         }
         
-        if (unit2 is not null)
+        if (unit2 != null)
         {
             unitSpot2.SpawnUnit(unit2);
         }
         
-        if (unit3 is not null)
+        if (unit3 != null)
         {
             unitSpot3.SpawnUnit(unit3);
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -19,6 +20,18 @@ public class GameData
     public int gold;
     public int food;
     
+    [Header("Progression")]
+    public int r1z1Progression;
+    public int r1z2Progression;
+    public int r1z3Progression;
+    public int r2z1Progression;
+    public int r2z2Progression;
+    public int r2z3Progression;
+    public int r3z1Progression;
+    public int r3z2Progression;
+    public int r3z3Progression;
+    public List<List<float>> zonesProgressions = new List<List<float>>();
+    
     
     public GameData()
     {
@@ -34,5 +47,27 @@ public class GameData
         iron = 0;
         gold = 0;
         food = 0;
+
+        r1z1Progression = 0;
+        r1z2Progression = 0;
+        r1z3Progression = 0;
+        
+        r2z1Progression = 0;
+        r2z2Progression = 0;
+        r2z3Progression = 0;
+        
+        r3z1Progression = 0;
+        r3z2Progression = 0;
+        r3z3Progression = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            zonesProgressions.Add(new List<float>());
+            
+            for (int j = 0; j < 3; j++)
+            {
+                zonesProgressions[i].Add(0);
+            }
+        }
     }
 }

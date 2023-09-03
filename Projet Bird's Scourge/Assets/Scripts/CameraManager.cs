@@ -124,7 +124,7 @@ public class CameraManager : MonoBehaviour
     
     // -------------------------- GENERAL PART --------------------------------
 
-    public IEnumerator EnterAventure(Vector3 newPos, bool fromGlobalMap)
+    public IEnumerator TransitionAventure(Vector3 newPos, bool fromGlobalMap)
     {
         isInAdventure = true;
         isInGlobal = false;
@@ -145,8 +145,7 @@ public class CameraManager : MonoBehaviour
             
             yield return new WaitForSeconds(2.2f);
         }
-
-        StartCoroutine(AventureEffect.Instance.AppearEffect());
+        //StartCoroutine(AventureEffect.Instance.AppearEffect());
 
         transform.position = newPos;
 
@@ -164,10 +163,13 @@ public class CameraManager : MonoBehaviour
         }); 
     }
     
-    public void EnterGlobal()
+    public void EnterGlobal(Vector3 newPos, float newSize)
     {
         isInAdventure = false;
         isInGlobal = true;
+
+        transform.position = newPos;
+        _camera.orthographicSize = newSize;
     }
     
 
