@@ -302,53 +302,25 @@ public class UIMapManager : MonoBehaviour
     public IEnumerator EventPopUp()
     {
         eventData = AventureManager.Instance.possibleEvents[
-            Random.Range(0, AventureManager.Instance.possibleEvents.Count - 1)];
+           /* Random.Range(0, AventureManager.Instance.possibleEvents.Count - 1)*/0];
         eventImage.sprite = eventData.eventImage;
+        EventEffects.instance.eventData = eventData;
         
         /* eventImageRect.width = eventData.eventImage.rect.width;
          eventImageRect.height = eventData.eventImage.rect.height;
          eventImage.rectTransform.rect.width = eventImageRect.width;*/
         
-        eventText.text = eventData.eventText;
         eventTitle.text = eventData.eventTitle;
-        option1Text.text = eventData.option1Text;
-        option2Text.text = eventData.option2Text;
+        eventText.text = eventData.eventTexts[0];
+        option1Text.text = eventData.option1Text[0];
+        option2Text.text = eventData.option2Text[0];
 
         canvasEvent.transform.localScale = Vector3.zero;
         canvasEvent.SetActive(true);
         canvasEvent.transform.DOScale(Vector3.one, 0.5f);
         yield return new WaitForSeconds(0.5f);
     }
-
-    public void EventEffect(int index)
-    {
-        if (index == 1)
-        {
-            switch (eventData.ID)
-            {
-                case 1 :
-                    break;
-                case 2 :
-                    ResourcesSaveManager.Instance.gold -= 10;
-                    UpdateStateBar();
-                    break;
-                case 3 :
-                    ResourcesSaveManager.Instance.food -= 15;
-                    UpdateStateBar();
-                    break;
-            }
-        }
-        else
-        {
-            switch (eventData.ID)
-            {
-                case 1 :
-                    break;
-            }
-        }
-    }
-
-
+    
     #endregion
 
     #region Fonctions Campement

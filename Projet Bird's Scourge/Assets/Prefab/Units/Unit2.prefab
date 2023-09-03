@@ -247,7 +247,7 @@ MonoBehaviour:
   haste: 0
   PM: 3
   mustBeSelected: 0
-  currentHealth: 1
+  currentHealth: 10
   currentLevel: 1
   attackLevel: 1
   competence1Level: 1

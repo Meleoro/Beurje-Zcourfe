@@ -8,7 +8,7 @@ public class EventData : ScriptableObject
    public int ID;
    public Sprite eventImage;
    public string eventTitle;
-   public string eventText;
-   public string option1Text;
-   public string option2Text;
+   public List<string> eventTexts;
+   public List<string> option1Text;
+   public List<string> option2Text;
 }

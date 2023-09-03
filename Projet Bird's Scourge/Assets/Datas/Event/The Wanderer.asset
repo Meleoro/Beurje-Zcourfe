@@ -15,7 +15,21 @@ MonoBehaviour:
   ID: 2
   eventImage: {fileID: 416844323, guid: 543ce7a87b032fd46a8598c3ca714e2d, type: 3}
   eventTitle: The Wanderer
-  eventText: You cross paths with a strange-looking wanderer. He asks you for a small
-    coin to help him survive these difficult times.
-  option1Text: Give him a coin (- 10 Gold)
-  option2Text: Ignore him (Nothing ?)
+  eventTexts:
+  - You cross paths with a strange-looking wanderer. He asks you for a small coin
+    to help him survive these difficult times.
+  - '"So, kindness is always present in this world..." said the wanderer. "Thank
+    you, you have my prayers travelers..." As the wanderer seemed to disappear into
+    the mist, you notice he droped a shiny thing on the ground. You turn to give
+    it back, but he already vanished...'
+  - '"It seems I''ve misjudged this world... it''s not worth saving..." says the
+    wanderer. "May the darkness take you travelers..." As the wanderer seemed to
+    disappear into the mist, you felt an intense pain rise up within you.'
+  option1Text:
+  - Give him a coin (- 10 Gold)
+  - What a strange man... (+ 50 Gold)
+  - Argh... who was that guy (-3HP)
+  option2Text:
+  - Ignore Him (Nothing)
+  - Gold, so lucky ! (+ 50 Gold)
+  - That hurts... (-3HP)
