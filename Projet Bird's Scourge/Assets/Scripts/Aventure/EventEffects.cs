@@ -136,7 +136,6 @@ public class EventEffects : MonoBehaviour
                         if (currentStep == 0 && ResourcesSaveManager.Instance.gold >= 10)
                         {
                             StartCoroutine(ChangeStep(1));
-                       
                             ResourcesSaveManager.Instance.gold -= 10;
                             UpdateStateBar();
                         }
@@ -190,6 +189,37 @@ public class EventEffects : MonoBehaviour
                     break;
                 
                 case 3 :       // The Meal ----------------------------------------------
+                    if (index == 1)
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                            UpdateStateBar();
+                            ResourcesSaveManager.Instance.food -= 10;
+                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth += 7;
+                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth += 7;
+                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth += 7;
+                            if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
+                            if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV; 
+                            if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+                        }
+
+                        if (currentStep == 1)
+                        {
+                           ClosePopUp();
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 0)
+                        {
+                            ClosePopUp();
+                        }
+                        if (currentStep == 1)
+                        {
+                            ClosePopUp();
+                        }
+                    }
                     break;
             }
     }

@@ -15,7 +15,15 @@ MonoBehaviour:
   ID: 3
   eventImage: {fileID: -1166268561, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
   eventTitle: The Meal
-  eventText: Exhausted, you need a break. Maybe a hot meal will put the team back
-    on its feet. But this hard-earned food is supposed to be taken back to the Nest...
-  option1Text: Eat a hot meal (-15 Food, +10%HP)
-  option2Text: Keep the food (Nothing)
+  eventTexts:
+  - Exhausted, you'll find the perfect place to spend the night. Hunger is making
+    itself felt. A meal could put the team back on their feet, but this hard-earned
+    food is destined for the Nest...
+  - After enjoying a hot meal, you feel great, but you vow to redouble your efforts
+    to find more food.
+  option1Text:
+  - Prepare a meal (- 10 Food, + 7 HP)
+  - That was tasty !
+  option2Text:
+  - Keep the food (Nothing)
+  - We'll do our best !
