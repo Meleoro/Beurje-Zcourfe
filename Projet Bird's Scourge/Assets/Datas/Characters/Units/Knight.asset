@@ -34,7 +34,7 @@ MonoBehaviour:
     movePatern: []
     shyBehavior: 0
     moveDiagonal: 0
-    force: 4
+    force: 50
     defense: 4
     vitesse: 40
     agilite: 2
