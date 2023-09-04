@@ -182,12 +182,13 @@ public class CameraManager : MonoBehaviour
         
         savePosAdventure = transform.position;
         transform.position = new Vector3(currentBattle.transform.position.x, currentBattle.transform.position.y, -10);
-
-        worldUI = WorldUIManager.Instance.GetComponent<RectTransform>();
+        
         isInAdventure = false;
 
         FXAventure.gameObject.SetActive(false);
         FXBattle.gameObject.SetActive(true);
+        
+        worldUI = WorldUIManager.Instance.GetComponent<RectTransform>();
     }
 
     public void CameraBattleEnd()
