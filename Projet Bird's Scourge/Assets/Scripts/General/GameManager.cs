@@ -17,12 +17,14 @@ public class GameManager : MonoBehaviour
     public GameObject globalMapObject;
     public Vector3 globalMapPos;
     private GameObject currentGlobalMap;
+    private bool isInGlobalMap;
 
     [Header("Aventure")] 
     public GameObject aventureObject;
     public Vector3 aventurePos;
     private GameObject currentAventure;
-    
+    private bool isInAventure;
+
 
     private void Awake()
     {
@@ -40,7 +42,7 @@ public class GameManager : MonoBehaviour
             EnterGlobalMap();
 
         else
-            StartCoroutine(EnterAventure(startAventureData));
+            StartCoroutine(EnterAventure(startAventureData, -1, -1));
     }
 
 
@@ -55,6 +57,9 @@ public class GameManager : MonoBehaviour
 
     public void EnterGlobalMap()
     {
+        isInGlobalMap = true;
+        isInAventure = false;
+        
         currentGlobalMap = Instantiate(globalMapObject, globalMapPos, Quaternion.identity);
 
         CameraManager.Instance.EnterGlobal(globalMapPos + new Vector3(0, 0, -10), GlobalMapManager.Instance.cameraOriginalSize);
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
     
     
     
-    public IEnumerator EnterAventure(AventureData data)
+    public IEnumerator EnterAventure(AventureData data, int regionIndex, int zoneIndex)
     {
         StartCoroutine(CameraManager.Instance.TransitionAventure(aventurePos + new Vector3(2.8f, 0, -10), CameraManager.Instance.isInGlobal));
 
@@ -81,16 +86,26 @@ public class GameManager : MonoBehaviour
         List<ListSpots> map = currentCreator.GenerateMap();
         
         AventureManager.Instance.scriptController.Initialise(map);
+        AventureManager.Instance.regionIndex = regionIndex;
+        AventureManager.Instance.zoneIndex = zoneIndex;
+
+        isInGlobalMap = false;
+        isInAventure = true;
     }
 
     public IEnumerator ExitAventure()
     {
         StartCoroutine(CameraManager.Instance.TransitionAventure(globalMapPos + new Vector3(0, 0, -10), true));
+        
+        ProgressionSaveManager.Instance.ActualiseSaves(AventureManager.Instance.regionIndex, AventureManager.Instance.zoneIndex, (int)(((float)AventureManager.Instance.currentY / (float)AventureManager.Instance.maxY) * 100f));
 
         yield return new WaitForSeconds(2.2f);
         
         Destroy(currentAventure);
         
         currentGlobalMap = Instantiate(globalMapObject, globalMapPos, Quaternion.identity);
+        
+        isInGlobalMap = true;
+        isInAventure = false;
     }
 }

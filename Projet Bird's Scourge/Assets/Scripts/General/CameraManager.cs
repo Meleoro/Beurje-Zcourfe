@@ -131,7 +131,7 @@ public class CameraManager : MonoBehaviour
 
         if (fromGlobalMap)
         {
-            _camera.DOOrthoSize(12f, 1.5f).SetEase(Ease.InSine);
+            _camera.DOOrthoSize(_camera.orthographicSize + 2, 1.5f).SetEase(Ease.InSine);
         
             float currentIntensity = 1.5f;
             float wantedIntensity = 0;

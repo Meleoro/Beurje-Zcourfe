@@ -9,8 +9,12 @@ public class AventureManager : MonoBehaviour
 {
     public static AventureManager Instance;
     
-    [Header("Datas")] 
+    [Header("Datas")]
     [HideInInspector] public List<ListSpots> map;
+    [HideInInspector] public int regionIndex;
+    [HideInInspector] public int zoneIndex;
+    [HideInInspector] public int maxY;
+    [HideInInspector] public int currentY;
     public GameObject unit1;
     public GameObject unit2;
     public GameObject unit3;
@@ -40,13 +44,6 @@ public class AventureManager : MonoBehaviour
 
     private void Start()
     {
-        /*if (!CameraManager.Instance.isInGlobal)
-        {
-            map = scriptCreator.GenerateMap();
-        
-            scriptController.Initialise(map);
-        }*/
-        
         StartCoroutine(AventureEffect.Instance.AppearEffect());
     }
 

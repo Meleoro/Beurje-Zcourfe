@@ -32,7 +32,7 @@ Texture2D:
   m_TextureDimension: 2
   m_TextureSettings:
     serializedVersion: 2
-    m_FilterMode: 1
+    m_FilterMode: 0
     m_Aniso: 1
     m_MipBias: 0
     m_WrapU: 0
@@ -118,6 +118,21 @@ MonoBehaviour:
       m_Y: 236
       m_Width: 23
       m_Height: 62
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 5
+    m_Metrics:
+      m_Width: 39.375
+      m_Height: 28.125
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 61.875
+      m_HorizontalAdvance: 45
+    m_GlyphRect:
+      m_X: 549
+      m_Y: 329
+      m_Width: 40
+      m_Height: 29
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -403,6 +418,21 @@ MonoBehaviour:
       m_Y: 317
       m_Width: 45
       m_Height: 62
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+  - m_Index: 29
+    m_Metrics:
+      m_Width: 11.25
+      m_Height: 39.375
+      m_HorizontalBearingX: 5.625
+      m_HorizontalBearingY: 39.375
+      m_HorizontalAdvance: 22.5
+    m_GlyphRect:
+      m_X: 1000
+      m_Y: 91
+      m_Width: 12
+      m_Height: 40
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
@@ -931,6 +961,21 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
+  - m_Index: 77
+    m_Metrics:
+      m_Width: 16.875
+      m_Height: 78.75
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 61.875
+      m_HorizontalAdvance: 22.5
+    m_GlyphRect:
+      m_X: 608
+      m_Y: 329
+      m_Width: 17
+      m_Height: 79
+    m_Scale: 1
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
   - m_Index: 78
     m_Metrics:
       m_Width: 50.625
@@ -1171,51 +1216,6 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-  - m_Index: 29
-    m_Metrics:
-      m_Width: 11.25
-      m_Height: 39.375
-      m_HorizontalBearingX: 5.625
-      m_HorizontalBearingY: 39.375
-      m_HorizontalAdvance: 22.5
-    m_GlyphRect:
-      m_X: 1000
-      m_Y: 91
-      m_Width: 12
-      m_Height: 40
-    m_Scale: 1
-    m_AtlasIndex: 0
-    m_ClassDefinitionType: 0
-  - m_Index: 5
-    m_Metrics:
-      m_Width: 39.375
-      m_Height: 28.125
-      m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 61.875
-      m_HorizontalAdvance: 45
-    m_GlyphRect:
-      m_X: 549
-      m_Y: 329
-      m_Width: 40
-      m_Height: 29
-    m_Scale: 1
-    m_AtlasIndex: 0
-    m_ClassDefinitionType: 0
-  - m_Index: 77
-    m_Metrics:
-      m_Width: 16.875
-      m_Height: 78.75
-      m_HorizontalBearingX: 0
-      m_HorizontalBearingY: 61.875
-      m_HorizontalAdvance: 22.5
-    m_GlyphRect:
-      m_X: 608
-      m_Y: 329
-      m_Width: 17
-      m_Height: 79
-    m_Scale: 1
-    m_AtlasIndex: 0
-    m_ClassDefinitionType: 0
   m_CharacterTable:
   - m_ElementType: 1
     m_Unicode: 32
@@ -1224,6 +1224,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 33
     m_GlyphIndex: 4
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 34
+    m_GlyphIndex: 5
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 37
@@ -1300,6 +1304,10 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 57
     m_GlyphIndex: 28
+    m_Scale: 1
+  - m_ElementType: 1
+    m_Unicode: 58
+    m_GlyphIndex: 29
     m_Scale: 1
   - m_ElementType: 1
     m_Unicode: 63
@@ -1442,6 +1450,10 @@ MonoBehaviour:
     m_GlyphIndex: 76
     m_Scale: 1
   - m_ElementType: 1
+    m_Unicode: 106
+    m_GlyphIndex: 77
+    m_Scale: 1
+  - m_ElementType: 1
     m_Unicode: 107
     m_GlyphIndex: 78
     m_Scale: 1
@@ -1504,18 +1516,6 @@ MonoBehaviour:
   - m_ElementType: 1
     m_Unicode: 122
     m_GlyphIndex: 93
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 58
-    m_GlyphIndex: 29
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 34
-    m_GlyphIndex: 5
-    m_Scale: 1
-  - m_ElementType: 1
-    m_Unicode: 106
-    m_GlyphIndex: 77
     m_Scale: 1
   m_AtlasTextures:
   - {fileID: -8004524277739066494}
@@ -2091,7 +2091,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: alagard Atlas Material
-  m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+  m_Shader: {fileID: 4800000, guid: cf81c85f95fe47e1a27f6ae460cf182c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -2175,12 +2175,14 @@ Material:
     - _UnderlayOffsetX: 0
     - _UnderlayOffsetY: 0
     - _UnderlaySoftness: 0
+    - _UseUIAlphaClip: 0
     - _VertexOffsetX: 0
     - _VertexOffsetY: 0
     - _WeightBold: 0.75
     - _WeightNormal: 0
     m_Colors:
     - _ClipRect: {r: -32767, g: -32767, b: 32767, a: 32767}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EnvMatrixRotation: {r: 0, g: 0, b: 0, a: 0}
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}

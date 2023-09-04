@@ -271,15 +271,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7405011669189504759, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
       propertyPath: startInMap
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7405011669189504759, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
       propertyPath: startInAventure
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8008650245741842786, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
       propertyPath: m_Name
       value: Essential
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027024753174922372, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027024753174922372, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027024753174922372, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

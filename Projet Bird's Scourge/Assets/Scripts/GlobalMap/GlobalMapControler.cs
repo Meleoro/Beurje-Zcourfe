@@ -8,12 +8,15 @@ public class GlobalMapControler : MonoBehaviour
     [Header("CurrentInfos")] 
     public bool noControl;
     public SpriteRenderer currentOverlayedElement;
+    public ZoneMap currentOverlayedElementScript;
     public SpriteRenderer currentClickedElement;
     
     [Header("Colors")] 
     public Color baseColor;
     public Color overlayColor;
     public Color clickColor;
+    public Color lockBaseColor;
+    public Color lockOverlayColor;
 
 
     private void Update()
@@ -22,7 +25,7 @@ public class GlobalMapControler : MonoBehaviour
         {
             VerifyClickedElement();
         }
-        else
+        else 
         {
             VerifyOverlayedElement();
         }
@@ -39,21 +42,21 @@ public class GlobalMapControler : MonoBehaviour
         {
             if (hits[i].collider.CompareTag("Zone"))
             {
-                ManageColors(hits[i].collider.GetComponent<SpriteRenderer>(), null);
+                ManageColorsZone(hits[i].collider.GetComponent<SpriteRenderer>(), null);
 
                 break;
             }
 
             if (hits[i].collider.CompareTag("Region"))
             {
-                ManageColors(hits[i].collider.GetComponent<SpriteRenderer>(), null);
+                ManageColorsRegions(hits[i].collider.GetComponent<SpriteRenderer>(), null);
 
                 break;
             }
         }
         
         if(hits.Length == 0)
-            ManageColors(null, null);
+            ManageColorsZone(null, null);
     }
     
 
@@ -66,8 +69,10 @@ public class GlobalMapControler : MonoBehaviour
         {
             if (hits[i].collider.CompareTag("Zone"))
             {
-                StartCoroutine(GameManager.Instance.EnterAventure(hits[i].collider.GetComponent<ZoneMap>().zoneData));
-                ManageColors(null, hits[i].collider.GetComponent<SpriteRenderer>());
+                ZoneMap currentZone = hits[i].collider.GetComponent<ZoneMap>();
+                
+                StartCoroutine(GameManager.Instance.EnterAventure(currentZone.zoneData, currentZone.regionIndex, currentZone.zoneIndex));
+                ManageColorsZone(null, hits[i].collider.GetComponent<SpriteRenderer>());
 
                 break;
             }
@@ -77,7 +82,7 @@ public class GlobalMapControler : MonoBehaviour
                 RegionMap currentScript = hits[i].collider.GetComponent<RegionMap>();
                 
                 StartCoroutine(GlobalMapManager.Instance.EnterRegion(currentScript.regionObject, currentScript.newPosCam, currentScript.newSizeCam));
-                ManageColors(null, hits[i].collider.GetComponent<SpriteRenderer>());
+                ManageColorsRegions(null, hits[i].collider.GetComponent<SpriteRenderer>());
 
                 break;
             }
@@ -94,22 +99,106 @@ public class GlobalMapControler : MonoBehaviour
 
 
 
-    private void ManageColors(SpriteRenderer overlayedZone, SpriteRenderer clickedZone)
+    private void ManageColorsZone(SpriteRenderer overlayedZone, SpriteRenderer clickedZone)
+    {
+        if (overlayedZone != null)
+        {
+            if (currentOverlayedElement != null && currentOverlayedElementScript != null)
+            {
+                ZoneMap currentScript = overlayedZone.GetComponent<ZoneMap>();
+
+                if (currentOverlayedElementScript.isLocked)
+                {
+                    currentOverlayedElement.color = lockBaseColor;
+                }
+                else
+                {
+                    currentOverlayedElement.color = baseColor;
+                }
+
+                currentOverlayedElementScript = currentScript;
+                currentOverlayedElement = overlayedZone;
+                
+                if (currentScript.isLocked)
+                {
+                    currentOverlayedElement.color = lockOverlayColor;
+                }
+                else
+                {
+                    currentOverlayedElement.color = overlayColor;
+                }
+            }
+
+            else
+            {
+                currentOverlayedElement = overlayedZone;
+                currentOverlayedElementScript = overlayedZone.GetComponent<ZoneMap>();;
+                
+                if (currentOverlayedElementScript.isLocked)
+                {
+                    currentOverlayedElement.color = lockOverlayColor;
+                }
+                else
+                {
+                    currentOverlayedElement.color = overlayColor;
+                }
+            }
+        }
+        
+        else if (clickedZone != null)
+        {
+            if (currentClickedElement != null)
+            {
+                currentClickedElement.color = baseColor;
+                
+                clickedZone.color = clickColor; 
+                currentClickedElement = clickedZone; 
+            }
+
+            else
+            {
+                currentClickedElement = clickedZone;
+                currentClickedElement.color = baseColor;
+            }
+        }
+
+        else
+        {
+            if (currentOverlayedElement != null)
+            {
+                currentOverlayedElement.color = baseColor;
+                currentOverlayedElementScript = null;
+                currentOverlayedElement = null;
+            }
+
+            if (currentClickedElement != null)
+            {
+                currentClickedElement.color = baseColor;
+                currentOverlayedElementScript = null;
+                currentClickedElement = null;
+            }
+        }
+    }
+    
+    private void ManageColorsRegions(SpriteRenderer overlayedZone, SpriteRenderer clickedZone)
     {
         if (overlayedZone != null)
         {
             if (currentOverlayedElement != null)
             {
                 currentOverlayedElement.color = baseColor;
-                
-                overlayedZone.color = overlayColor;
+
                 currentOverlayedElement = overlayedZone;
+                
+                currentOverlayedElement.color = overlayColor;
             }
 
             else
             {
                 currentOverlayedElement = overlayedZone;
-                currentOverlayedElement.color = baseColor;
+
+                currentOverlayedElement.color = overlayColor;
+                
             }
         }
         

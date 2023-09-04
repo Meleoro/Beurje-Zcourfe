@@ -66,6 +66,8 @@ public class AventureController : MonoBehaviour
     {
         if (currentNod.connectedNods.Contains(selectedNod) && selectedNod.transform.position.x > currentNod.transform.position.x)
         {
+            AventureManager.Instance.currentY += 1;
+            
             float distance = selectedNod.transform.position.x - currentNod.transform.position.x;
 
             CameraManager.Instance.transform.DOMoveX(CameraManager.Instance.transform.position.x + distance, 1);

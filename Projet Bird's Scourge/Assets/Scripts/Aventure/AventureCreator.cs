@@ -43,6 +43,7 @@ public class AventureCreator : MonoBehaviour
     public List<ListSpots> GenerateMap()
     {
         map = new List<ListSpots>();
+        AventureManager.Instance.maxY = data.wantedMapLength;
         
         // First we find the bounds and generate the possible spots
         List<Vector2> possibleSpots = FindPossibleSpots();

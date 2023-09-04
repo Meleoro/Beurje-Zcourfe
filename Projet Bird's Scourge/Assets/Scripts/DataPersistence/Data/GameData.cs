@@ -30,7 +30,7 @@ public class GameData
     public int r3z1Progression;
     public int r3z2Progression;
     public int r3z3Progression;
-    public List<List<float>> zonesProgressions = new List<List<float>>();
+    public List<ListFloat> zonesProgressions = new List<ListFloat>();
     
     
     public GameData()
@@ -60,14 +60,16 @@ public class GameData
         r3z2Progression = 0;
         r3z3Progression = 0;
 
+        zonesProgressions = new List<ListFloat>();
+        
         for (int i = 0; i < 3; i++)
         {
-            zonesProgressions.Add(new List<float>());
+            zonesProgressions.Add(new ListFloat());
             
-            for (int j = 0; j < 3; j++)
+            /*for (int j = 0; j < 3; j++)
             {
-                zonesProgressions[i].Add(0);
-            }
+                zonesProgressions[i].list.Add(0);
+            }*/
         }
     }
 }

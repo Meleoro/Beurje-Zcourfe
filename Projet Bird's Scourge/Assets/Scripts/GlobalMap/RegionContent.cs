@@ -16,6 +16,7 @@ public class RegionContent : MonoBehaviour
     public List<Image> regionImages = new List<Image>();
 
     public List<TextMeshProUGUI> progressionTexts = new List<TextMeshProUGUI>();
+    public List<ZoneMap> zoneScripts = new List<ZoneMap>();
     public List<Image> progressionsImages = new List<Image>();
 
 
@@ -144,8 +145,22 @@ public class RegionContent : MonoBehaviour
     {
         for (int i = 0; i < texts.Count; i++)
         {
-            texts[i].text = ProgressionSaveManager.Instance.zonesProgressions[regionIndex][i] + "%";
-            fillImages[i].fillAmount = ProgressionSaveManager.Instance.zonesProgressions[regionIndex][i] / 100;
+            if (ProgressionSaveManager.Instance.zonesProgressions[regionIndex].list.Count != 3)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    ProgressionSaveManager.Instance.zonesProgressions[regionIndex].list.Add(0);
+                }
+            }
+            
+            texts[i].text = ProgressionSaveManager.Instance.zonesProgressions[regionIndex].list[i] + "%";
+            fillImages[i].fillAmount = ProgressionSaveManager.Instance.zonesProgressions[regionIndex].list[i] / 100;
+            zoneScripts[i].currentProgression = (int)ProgressionSaveManager.Instance.zonesProgressions[regionIndex].list[i];
+        }
+
+        for (int i = 0; i < zoneScripts.Count; i++)
+        {
+            zoneScripts[i].VerifyLock();
         }
     }
 }
