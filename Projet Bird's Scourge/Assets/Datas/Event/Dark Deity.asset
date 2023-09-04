@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8b3613694f6794d98ff76c12c28b49, type: 3}
+  m_Name: Dark Deity
+  m_EditorClassIdentifier: 
+  ID: 1
+  eventImage: {fileID: -1748904262, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  eventTitle: Dark Deity
+  eventTexts:
+  - In a small altar, you find a mysterious statue bearing the effigy an evil deity.
+    Legend has it that this deity can bestow powerful dark powers on those who pray
+    for her.
+  - You begin to pray at the altar. Every word you say seems to raise a dark aura
+    inside you, and soon you feel a pain tightening in your throat.
+  - The pain intensifies, each of your words seems to pierce a new part of your body.
+    But still, you feel a great dark power growing inside you.
+  - As you finally finish the prayer, you are freed from pain, leaving only the dark
+    power within you.  You feel more powerful than ever, but also more evil than
+    ever.
+  option1Text:
+  - Pray at the altar (+ 1 blessing, - HP)
+  - Continue to pray (- 5 HP)
+  - Pray to the end (+ 1 Blessing, - 7 HP)
+  - I'm unstopable now ! (+ 1 Blessing)
+  option2Text:
+  - Ignore the altar (Nothing)
+  - Stop praying (- 3 HP)
+  - Stop praying (- 5 HP)
+  - I'll kill them all... ( + 1 Blessing)

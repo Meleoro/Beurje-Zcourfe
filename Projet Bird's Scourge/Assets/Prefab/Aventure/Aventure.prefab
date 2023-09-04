@@ -3087,6 +3087,8 @@ MonoBehaviour:
   - {fileID: 4736870783535128294, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
   possibleEvents:
   - {fileID: 11400000, guid: 219fbdd530dd73a43a9441e8d78d635f, type: 2}
+  - {fileID: 11400000, guid: 1a98cfeff00b1c94d972b0a528b15758, type: 2}
+  - {fileID: 11400000, guid: 3a532fcc54e99194690a8dafdec5006b, type: 2}
   scriptCreator: {fileID: 0}
   scriptController: {fileID: 0}
 --- !u!114 &3152749814554971126
@@ -3484,7 +3486,7 @@ Transform:
   - {fileID: 3035985354489677213}
   - {fileID: 2734638741223251659}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7824762715110866682
 GameObject:
@@ -6364,7 +6366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7985182173998094780, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: CoolDownBouton
+      value: CoolDownButton
       objectReference: {fileID: 0}
     - target: {fileID: 7985182173998094780, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -6377,6 +6379,10 @@ PrefabInstance:
     - target: {fileID: 7985182173998094780, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7985182173998094780, guid: c2302396730cb5e4c876d60244660988, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7985182173998094780, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -6420,7 +6426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8717648709216232326, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: CoolDownBouton
+      value: CoolDownButton
       objectReference: {fileID: 0}
     - target: {fileID: 8717648709216232326, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -6433,6 +6439,10 @@ PrefabInstance:
     - target: {fileID: 8717648709216232326, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8717648709216232326, guid: c2302396730cb5e4c876d60244660988, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8717648709216232326, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
