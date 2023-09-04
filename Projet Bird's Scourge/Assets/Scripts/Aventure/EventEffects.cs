@@ -49,92 +49,159 @@ public class EventEffects : MonoBehaviour
 
     public void EventEffect(int index)
     {
-        if (index == 1) // BOUTON DU HAUT ----------------------------------------------------------------------------------------
-        {
-            switch (eventData.ID)
+        switch (eventData.ID)
             {
                 case 1 :      // The Cursed Book ----------------------------------------
+                    if (index == 1)
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                        }
+
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(ChangeStep(2));
+                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 5;
+                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 5;
+                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 5;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            UpdateStateBar();
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            StartCoroutine(ChangeStep(3));
+                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 7;
+                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 7;
+                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 7;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            UpdateStateBar();
+                        }
+                        
+                        if (currentStep == 3)
+                        {
+                            ClosePopUp();
+                            Debug.Log("New Blessing");
+                            UpdateStateBar();
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 0)
+                        {
+                            ClosePopUp();
+                        }
+                        
+                        if (currentStep == 1)
+                        {
+                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
+                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
+                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            ClosePopUp();
+                            UpdateStateBar();
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 5;
+                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 5;
+                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 5;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            ClosePopUp();
+                            UpdateStateBar();
+                        }
+                        
+                        if (currentStep == 3)
+                        {
+                            ClosePopUp();
+                            Debug.Log("New Blessing");
+                            UpdateStateBar();
+                        }
+                    }
                     break;
                 
                 case 2 :     // The Wanderer --------------------------------------------
-                    if (currentStep == 0 && ResourcesSaveManager.Instance.gold >= 10)
+                    if (index == 1)
                     {
-                        CoolDownBouton();
-                        StartCoroutine(CoolDownChangeStep(1));
+                        if (currentStep == 0 && ResourcesSaveManager.Instance.gold >= 10)
+                        {
+                            StartCoroutine(ChangeStep(1));
                        
-                        ResourcesSaveManager.Instance.gold -= 10;
-                        UpdateStateBar();
+                            ResourcesSaveManager.Instance.gold -= 10;
+                            UpdateStateBar();
+                        }
+                        if (currentStep == 1)
+                        {
+                            ResourcesSaveManager.Instance.gold += 50;
+                            UpdateStateBar();
+                            ClosePopUp();
+                            StartCoroutine(ChangeStep(0));
+                        }
+                        if (currentStep == 2)
+                        {
+                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
+                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
+                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            UpdateStateBar();
+                            ClosePopUp();
+                            StartCoroutine(ChangeStep(0));
+                        }
                     }
-                    if (currentStep == 1)
+                    else
                     {
-                        CoolDownBouton();
-                        ResourcesSaveManager.Instance.gold += 50;
-                        UpdateStateBar();
-                        ClosePopUp();
-                        StartCoroutine(CoolDownChangeStep(0));
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(2));
+                        }
+                        if (currentStep == 1)
+                        {
+                            ResourcesSaveManager.Instance.gold += 50;
+                            UpdateStateBar();
+                            ClosePopUp();
+                            StartCoroutine(ChangeStep(0));
+                        }
+                        if (currentStep == 2)
+                        {
+                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
+                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
+                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            UpdateStateBar();
+                            ClosePopUp();
+                            StartCoroutine(ChangeStep(0));
+                        } 
                     }
-                    if (currentStep == 2)
-                    {
-                        CoolDownBouton();
-                        if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > 3) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
-                        if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > 3) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
-                        if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > 3) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                        UpdateStateBar();
-                        ClosePopUp();
-                        StartCoroutine(CoolDownChangeStep(0));
-                    }
+                   
                     break;
                 
                 case 3 :       // The Meal ----------------------------------------------
-                    if (ResourcesSaveManager.Instance.food >= 15)
-                    {
-                        ResourcesSaveManager.Instance.food -= 15;
-                        UpdateStateBar();
-                    }
                     break;
             }
-        }
-        else   // BOUTON DU BAS -----------------------------------------------------------------------------------------------
-        {
-            switch (eventData.ID)
-            {
-                case 1 :
-                    break;
-                case 2 :
-                    if (currentStep == 0)
-                    {
-                        CoolDownBouton();
-                        StartCoroutine(CoolDownChangeStep(2));
-                    }
-                    if (currentStep == 1)
-                    {
-                        CoolDownBouton();
-                        ResourcesSaveManager.Instance.gold += 50;
-                        UpdateStateBar();
-                        ClosePopUp();
-                        StartCoroutine(CoolDownChangeStep(0));
-                    }
-                    if (currentStep == 2)
-                    {
-                        CoolDownBouton();
-                        if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > 3) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
-                        if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > 3) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
-                        if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > 3) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                        UpdateStateBar();
-                        ClosePopUp();
-                        StartCoroutine(CoolDownChangeStep(0));
-                    }
-                    break;
-            }
-        }
     }
 
-    public void CoolDownBouton()
+    #region Fonctions Générales
+
+    public void CoolDownButton()
     {
-        StartCoroutine(CoolDownBoutonTimer());
+        StartCoroutine(CoolDownBouton());
     }
-
-    public IEnumerator CoolDownBoutonTimer()
+    
+     public IEnumerator CoolDownBouton()
     {
         boutonBas.interactable = false;
         boutonHaut.interactable = false;
@@ -143,7 +210,7 @@ public class EventEffects : MonoBehaviour
         boutonHaut.interactable = true;
     }
     
-    public IEnumerator CoolDownChangeStep(int nextStep)
+    public IEnumerator ChangeStep(int nextStep)
     {
         yield return new WaitForSeconds(0.5f);
         currentStep = nextStep;
@@ -152,10 +219,7 @@ public class EventEffects : MonoBehaviour
         option2Text.text = eventData.option2Text[currentStep];
     }
     
-    
-    
-    
-      public void UpdateStateBar()
+    public void UpdateStateBar()
     {
         // Texte compteur de Ressources
         compteurBoisState.text = ResourcesSaveManager.Instance.wood.ToString();
@@ -193,8 +257,13 @@ public class EventEffects : MonoBehaviour
         lifeBarUnit3.value = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth;
        
     }
+    
     public void ClosePopUp()
     {
         canvasEvent.transform.DOScale(Vector3.zero, 0.5f);
     }
+
+    #endregion
+    
+   
 }
