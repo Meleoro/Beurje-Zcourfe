@@ -1068,8 +1068,8 @@ MonoBehaviour:
   bande2Image: {fileID: 1682551727503199452}
   isOpen: 0
   stateBar: {fileID: 2467374913177238477}
-  openY: 20.5
-  closeY: 21.4
+  openY: 4.28
+  closeY: 5.15
   compteurBoisState: {fileID: 6327996603363010477}
   compteurPierreState: {fileID: 2279577714409329607}
   compteurFerState: {fileID: 2001803286787898095}
@@ -3478,7 +3478,7 @@ Transform:
   - {fileID: 3035985354489677213}
   - {fileID: 2734638741223251659}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7824762715110866682
 GameObject:
