@@ -37,6 +37,9 @@ public class BattleManager : MonoBehaviour
     public UnitSpot unitSpot2;
     public UnitSpot unitSpot3;
 
+    [Header("Others")] 
+    private bool doOnce;
+
 
     private void Awake()
     {
@@ -53,7 +56,28 @@ public class BattleManager : MonoBehaviour
         {
             UIBattle.gameObject.SetActive(true);
         }
+
+        if (currentEnnemies.Count == 0 && !doOnce)
+        {
+            doOnce = true;
+            StartCoroutine(EndBattle());
+        }
     }
+
+
+    private IEnumerator EndBattle()
+    {
+        yield return new WaitForSeconds(2f);
+        
+        StartCoroutine(UIMapManager.Instance.StartBattleEffect());
+
+        yield return new WaitForSeconds(1.2f);
+
+        CameraManager.Instance.CameraBattleEnd();
+        Destroy(gameObject);
+    }
+    
+    
 
 
     // ----------------------- DICTIONNARIES MANAGEMENT -----------------------

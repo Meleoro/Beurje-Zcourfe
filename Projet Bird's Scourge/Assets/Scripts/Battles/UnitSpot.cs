@@ -10,7 +10,7 @@ public class UnitSpot : MonoBehaviour
 
     public void SpawnUnit(GameObject currentUnit)
     {
-        Instantiate(currentUnit, transform.position, Quaternion.identity);
+        Instantiate(currentUnit, transform.position, Quaternion.identity, transform);
     }
     
     

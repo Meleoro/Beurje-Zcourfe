@@ -17,13 +17,13 @@ public class GameManager : MonoBehaviour
     public GameObject globalMapObject;
     public Vector3 globalMapPos;
     private GameObject currentGlobalMap;
-    private bool isInGlobalMap;
+    //private bool isInGlobalMap;
 
     [Header("Aventure")] 
     public GameObject aventureObject;
     public Vector3 aventurePos;
     private GameObject currentAventure;
-    private bool isInAventure;
+    //private bool isInAventure;
 
 
     private void Awake()
@@ -57,8 +57,8 @@ public class GameManager : MonoBehaviour
 
     public void EnterGlobalMap()
     {
-        isInGlobalMap = true;
-        isInAventure = false;
+        /*isInGlobalMap = true;
+        isInAventure = false;*/
         
         currentGlobalMap = Instantiate(globalMapObject, globalMapPos, Quaternion.identity);
 
@@ -89,8 +89,8 @@ public class GameManager : MonoBehaviour
         AventureManager.Instance.regionIndex = regionIndex;
         AventureManager.Instance.zoneIndex = zoneIndex;
 
-        isInGlobalMap = false;
-        isInAventure = true;
+        /*isInGlobalMap = false;
+        isInAventure = true;*/
     }
 
     public IEnumerator ExitAventure()
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         
         currentGlobalMap = Instantiate(globalMapObject, globalMapPos, Quaternion.identity);
         
-        isInGlobalMap = true;
-        isInAventure = false;
+        /*isInGlobalMap = true;
+        isInAventure = false;*/
     }
 }

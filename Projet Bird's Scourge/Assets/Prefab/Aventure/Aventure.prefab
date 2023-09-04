@@ -1066,6 +1066,7 @@ MonoBehaviour:
   flashImage: {fileID: 7810885574514633988}
   bande1Image: {fileID: 1305927763239533222}
   bande2Image: {fileID: 1682551727503199452}
+  flashDuration: 0.1
   isOpen: 0
   stateBar: {fileID: 2467374913177238477}
   openY: 4.28
@@ -3074,9 +3075,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: []
+  regionIndex: 0
+  zoneIndex: 0
+  maxY: 0
+  currentY: 0
   unit1: {fileID: 262518477433530119, guid: 41f5cb488bbe20845a1f4590d8b6f939, type: 3}
   unit2: {fileID: 8337190906301115193, guid: ca1c4a61bcd319c47bca22a3cd23a7c9, type: 3}
   unit3: {fileID: 571604436184976588, guid: 59e4183c1276e394c881033dcc040e99, type: 3}
+  aventureCamSize: 10.8
   possibleBattles:
   - {fileID: 4736870783535128294, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
   possibleEvents:
@@ -3478,7 +3484,7 @@ Transform:
   - {fileID: 3035985354489677213}
   - {fileID: 2734638741223251659}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7824762715110866682
 GameObject:

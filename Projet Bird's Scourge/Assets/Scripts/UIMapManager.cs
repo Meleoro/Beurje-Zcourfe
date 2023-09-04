@@ -12,11 +12,11 @@ public class UIMapManager : MonoBehaviour
 {
     public static UIMapManager Instance;
 
-    [Header("Battle")] [SerializeField]
-    private Image flashImage;
+    [Header("Battle")] 
+    [SerializeField] private Image flashImage;
     [SerializeField] private Image bande1Image;
     [SerializeField] private Image bande2Image;
-    private float flashDuration;
+    [SerializeField] private float flashDuration;
 
     [Header("State Bar")] [SerializeField]
     private bool isOpen;
@@ -195,6 +195,9 @@ public class UIMapManager : MonoBehaviour
     public IEnumerator StartBattleEffect()
     {
         flashImage.DOFade(1, flashDuration * 0.3f).OnComplete((() => flashImage.DOFade(0, flashDuration * 0.7f)));
+        
+        bande1Image.rectTransform.DOLocalMoveY(0, 0);
+        bande2Image.rectTransform.DOLocalMoveY(0, 0);
 
         yield return new WaitForSeconds(flashDuration * 2);
 

@@ -18,6 +18,9 @@ public class AventureManager : MonoBehaviour
     public GameObject unit1;
     public GameObject unit2;
     public GameObject unit3;
+
+    [Header("Parameters")] 
+    public float aventureCamSize = 10.8f;
     
     [Header("Battles")] 
     public List<GameObject> possibleBattles;

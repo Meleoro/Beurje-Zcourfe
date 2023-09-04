@@ -192,13 +192,15 @@ public class CameraManager : MonoBehaviour
 
     public void CameraBattleEnd()
     {
-        Destroy(BattleManager.Instance.gameObject);
+        //Destroy(BattleManager.Instance.gameObject);
         
         transform.position = savePosAdventure;
         isInAdventure = true;
         
         FXAventure.gameObject.SetActive(true);
         FXBattle.gameObject.SetActive(false);
+
+        StartCoroutine(TransitionAventure(savePosAdventure, false));
     }
 
 
