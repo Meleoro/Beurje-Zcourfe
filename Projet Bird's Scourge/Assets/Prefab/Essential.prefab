@@ -95,15 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd2fadaaba828984e8fe55164af99111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  r1z1Progression: 0
-  r1z2Progression: 0
-  r1z3Progression: 0
-  r2z1Progression: 0
-  r2z2Progression: 0
-  r2z3Progression: 0
-  r3z1Progression: 0
-  r3z2Progression: 0
-  r3z3Progression: 0
+  zonesProgressions: []
 --- !u!1 &6494334908231885353
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,8 +140,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faee0cdfcb1cb1f45bf44866bf37c7ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startInMap: 1
-  startInAventure: 0
+  startInMap: 0
+  startInAventure: 1
   startAventureData: {fileID: 11400000, guid: 7cd8103a57439804c9a5126eac546579, type: 2}
   globalMapObject: {fileID: 8803689234088956845, guid: 133b71cae6a85be4d9a8f76492b99923, type: 3}
   globalMapPos: {x: -50, y: 0, z: 0}
@@ -187,7 +179,7 @@ Transform:
   - {fileID: 5201809749217810302}
   - {fileID: 4424852501593441259}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6276854392214612852
 PrefabInstance:
@@ -208,6 +200,18 @@ PrefabInstance:
     - target: {fileID: 3004902933839461279, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: cameraParent
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070802901164830704, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070802901164830704, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070802901164830704, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6362287375282396953, guid: a0a8f6f250d7571478f435a622dc7298, type: 3}
       propertyPath: m_Intensity
