@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class EventEffects : MonoBehaviour
 {
@@ -51,7 +52,7 @@ public class EventEffects : MonoBehaviour
     {
         switch (eventData.ID)
             {
-                case 1 :      // The Cursed Book ----------------------------------------
+                case 1 :      // The Dark Deity ----------------------------------------
                     if (index == 1)
                     {
                         if (currentStep == 0)
@@ -65,9 +66,9 @@ public class EventEffects : MonoBehaviour
                             AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 5;
                             AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 5;
                             AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 5;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
                             UpdateStateBar();
                         }
                         
@@ -77,9 +78,9 @@ public class EventEffects : MonoBehaviour
                             AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 7;
                             AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 7;
                             AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 7;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
                             UpdateStateBar();
                         }
                         
@@ -102,9 +103,9 @@ public class EventEffects : MonoBehaviour
                             AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
                             AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
                             AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
                             ClosePopUp();
                             UpdateStateBar();
                         }
@@ -114,9 +115,9 @@ public class EventEffects : MonoBehaviour
                             AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 5;
                             AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 5;
                             AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 5;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
                             ClosePopUp();
                             UpdateStateBar();
                         }
@@ -151,9 +152,9 @@ public class EventEffects : MonoBehaviour
                             AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
                             AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
                             AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
                             UpdateStateBar();
                             ClosePopUp();
                             StartCoroutine(ChangeStep(0));
@@ -177,9 +178,9 @@ public class EventEffects : MonoBehaviour
                             AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
                             AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
                             AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth < 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
                             UpdateStateBar();
                             ClosePopUp();
                             StartCoroutine(ChangeStep(0));
@@ -193,15 +194,19 @@ public class EventEffects : MonoBehaviour
                     {
                         if (currentStep == 0)
                         {
-                            StartCoroutine(ChangeStep(1));
-                            UpdateStateBar();
-                            ResourcesSaveManager.Instance.food -= 10;
-                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth += 7;
-                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth += 7;
-                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth += 7;
-                            if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
-                            if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV; 
-                            if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+                         
+                            if (ResourcesSaveManager.Instance.food >= 10)
+                            {
+                                ResourcesSaveManager.Instance.food -= 10;
+                                AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth += 7;
+                                AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth += 7;
+                                AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth += 7;
+                                if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
+                                if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV; 
+                                if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+                                StartCoroutine(ChangeStep(1));
+                                UpdateStateBar();
+                            }
                         }
 
                         if (currentStep == 1)
@@ -218,6 +223,103 @@ public class EventEffects : MonoBehaviour
                         if (currentStep == 1)
                         {
                             ClosePopUp();
+                        }
+                    }
+                    break;
+                
+                case 4 :     // The Old Sage --------------------------------------------
+                    if (index == 1)
+                    {
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                            // ajouet 50% d'XP à toutes les unités
+                            //AventureManager.Instance.unit1.GetComponent<Unit>().xp += AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].maxXP * 50 / 100;
+                            //AventureManager.Instance.unit2.GetComponent<Unit>().xp += AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].maxXP * 50 / 100;
+                            //AventureManager.Instance.unit3.GetComponent<Unit>().xp += AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].maxXP * 50 / 100;
+                            UpdateStateBar();
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                            List<GameObject> unitList = new List<GameObject>();
+                            unitList.Add(AventureManager.Instance.unit1);
+                            unitList.Add(AventureManager.Instance.unit2);
+                            unitList.Add(AventureManager.Instance.unit3);
+                            GameObject selectedUnit = unitList[Random.Range(0, 2)];
+                            selectedUnit.GetComponent<Unit>().currentHealth /= 2 ;
+                            UpdateStateBar();
+                            ClosePopUp();
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 1)
+                        {
+                            ClosePopUp();
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                            List<GameObject> unitList = new List<GameObject>();
+                            unitList.Add(AventureManager.Instance.unit1);
+                            unitList.Add(AventureManager.Instance.unit2);
+                            unitList.Add(AventureManager.Instance.unit3);
+                            GameObject selectedUnit = unitList[Random.Range(0, 2)];
+                            selectedUnit.GetComponent<Unit>().currentHealth /= 2 ;
+                            ClosePopUp();
+                        }
+                    }
+                    break;
+              
+                case 5 :     // The Merchant --------------------------------------------
+                    if (index == 1)
+                    {
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                            //if (il y a un item dans l'inventaire)
+                            ResourcesSaveManager.Instance.gold += 20;
+                            // Enlever un item aléatoire de l'invenaire
+                            UpdateStateBar();
+                        }
+
+                        if (currentStep == 2)
+                        {
+                            ClosePopUp();
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 1)
+                        {
+                            ClosePopUp();
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            ClosePopUp();
+                        }
+                    }
+                    break;
+                
+                
+                
+                case 999 :     // --------------------------------------- 
+                    if (index == 1)
+                    {
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(ChangeStep(1)); 
                         }
                     }
                     break;
@@ -242,7 +344,7 @@ public class EventEffects : MonoBehaviour
     
     public IEnumerator ChangeStep(int nextStep)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         currentStep = nextStep;
         eventText.text = eventData.eventTexts[currentStep];
         option1Text.text = eventData.option1Text[currentStep];

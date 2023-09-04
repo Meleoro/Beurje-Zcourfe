@@ -311,8 +311,7 @@ public class UIMapManager : MonoBehaviour
 
     public IEnumerator EventPopUp()
     {
-        eventData = AventureManager.Instance.possibleEvents[
-         1 ];
+        eventData = AventureManager.Instance.possibleEvents[Random.Range(0,AventureManager.Instance.possibleEvents.Count - 1)];
         eventImage.sprite = eventData.eventImage;
         EventEffects.instance.eventData = eventData;
         

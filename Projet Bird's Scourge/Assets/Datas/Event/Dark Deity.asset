@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1
   eventImage: {fileID: -1748904262, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
-  eventTitle: Dark Deity
+  eventTitle: The Dark Deity
   eventTexts:
   - In a small altar, you find a mysterious statue bearing the effigy an evil deity.
     Legend has it that this deity can bestow powerful dark powers on those who pray

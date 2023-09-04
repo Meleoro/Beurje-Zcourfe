@@ -3089,6 +3089,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 219fbdd530dd73a43a9441e8d78d635f, type: 2}
   - {fileID: 11400000, guid: 1a98cfeff00b1c94d972b0a528b15758, type: 2}
   - {fileID: 11400000, guid: 3a532fcc54e99194690a8dafdec5006b, type: 2}
+  - {fileID: 11400000, guid: 792f595325f3dd045bd1a02327e1378c, type: 2}
+  - {fileID: 11400000, guid: 71c75cbf02ba147478f87b0046e041b8, type: 2}
   scriptCreator: {fileID: 0}
   scriptController: {fileID: 0}
 --- !u!114 &3152749814554971126

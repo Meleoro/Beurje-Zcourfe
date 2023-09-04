@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8b3613694f6794d98ff76c12c28b49, type: 3}
+  m_Name: The Old Sage
+  m_EditorClassIdentifier: 
+  ID: 4
+  eventImage: {fileID: -1748904262, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  eventTitle: The Old Sage
+  eventTexts:
+  - At the bottom of the forest, you meet an old man. He looks very wise, but also
+    rather suspicious. He offers you to become your master and teach you everything
+    that knows.
+  - You learn a lot from his teachings. "Your training is now over," says the old
+    man. I will now take my payment. The soul of one of you!" A dark power surrounded
+    a member of the team. You run as fast as possible to avoid it and finally sow
+    the old man. You are in one piece but one of you is seriously injured.
+  option1Text:
+  - Accept his teaching. (+50% XP, ???)
+  - What was that ? (HP / 2 for one unit)
+  option2Text:
+  - Reject his teaching. (Nothing)
+  - At least we're safe. (HP / 2 for one unit)
