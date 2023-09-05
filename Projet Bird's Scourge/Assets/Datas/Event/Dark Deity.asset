@@ -27,12 +27,12 @@ MonoBehaviour:
     power within you.  You feel more powerful than ever, but also more evil than
     ever.
   option1Text:
-  - Pray at the altar (+ 1 blessing, - HP)
-  - Continue to pray (- 5 HP)
-  - Pray to the end (+ 1 Blessing, - 7 HP)
-  - I'm unstopable now ! (+ 1 Blessing)
+  - Pray the deity (+1 blessing, -HP)
+  - Continue to pray (-5 HP)
+  - Pray to the end (+1 Blessing, -7 HP)
+  - I'm unstopable now ! (+1 Blessing)
   option2Text:
   - Ignore the altar (Nothing)
-  - Stop praying (- 3 HP)
-  - Stop praying (- 5 HP)
-  - I'll kill them all... ( + 1 Blessing)
+  - Stop praying (-3 HP)
+  - Stop praying (-5 HP)
+  - I'll kill them all... ( +1 Blessing)

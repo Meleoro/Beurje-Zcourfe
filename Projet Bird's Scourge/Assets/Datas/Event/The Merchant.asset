@@ -21,7 +21,7 @@ MonoBehaviour:
   - The merchant picks an object from your bag with a mischievous look and gives
     you the 20 gold coins. You wonder if this exchange was really worth it.
   option1Text:
-  - Accept the deal (- 1  item, + 20 gold)
+  - Accept the deal (-1  item, +20 gold)
   - That was worth it !
   option2Text:
   - Reject the deal (Nothing)

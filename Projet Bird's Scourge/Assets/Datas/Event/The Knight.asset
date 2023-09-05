@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b8b3613694f6794d98ff76c12c28b49, type: 3}
+  m_Name: The Knight
+  m_EditorClassIdentifier: 
+  ID: 6
+  eventImage: {fileID: 1419029345, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
+  eventTitle: The Knight
+  eventTexts:
+  - In the distance, you see a valiant knight fighting hordes of monsters. He is
+    defeating dozens of them with ease. Once the fight is over, he approaches. "That
+    was impressive, wasn't it? If you can guess what's my secret, I'll reward you,"
+    he says.
+  - Ha, no, my sword is nothing special. My strength actually comes from this potion
+    that a mage gave me (well, that I stole from a mage). Well, that was fun but
+    I've got some more fiends to kill, see you again kids!
+  - That's right, how did you know? I got this potion from a powerful mage. Since
+    you guessed, it's yours! These lands are full of fiends, so a little help wouldn't
+    hurt. See you again kids!
+  option1Text:
+  - I bet it's your sword. (+???)
+  - That was stupid. (Nothing)
+  - So, he actually has no talent. (+1 Potion)
+  option2Text:
+  - I think you drank a potion. (+???)
+  - Who does he think he is? (Nothing)
+  - So strong, I wanna be like him! (+1 Potion)

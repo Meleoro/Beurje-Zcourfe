@@ -52,7 +52,7 @@ public class EventEffects : MonoBehaviour
     {
         switch (eventData.ID)
             {
-                case 1 :      // The Dark Deity ----------------------------------------
+                case 1 :     // The Dark Deity ------------------------------------------
                     if (index == 1)
                     {
                         if (currentStep == 0)
@@ -189,7 +189,7 @@ public class EventEffects : MonoBehaviour
                    
                     break;
                 
-                case 3 :       // The Meal ----------------------------------------------
+                case 3 :     // The Meal ------------------------------------------------
                     if (index == 1)
                     {
                         if (currentStep == 0)
@@ -230,7 +230,7 @@ public class EventEffects : MonoBehaviour
                 case 4 :     // The Old Sage --------------------------------------------
                     if (index == 1)
                     {
-                        if (currentStep == 1)
+                        if (currentStep == 0)
                         {
                             StartCoroutine(ChangeStep(1));
                             // ajouet 50% d'XP à toutes les unités
@@ -240,7 +240,7 @@ public class EventEffects : MonoBehaviour
                             UpdateStateBar();
                         }
                         
-                        if (currentStep == 2)
+                        if (currentStep == 1)
                         {
                             StartCoroutine(ChangeStep(1));
                             List<GameObject> unitList = new List<GameObject>();
@@ -255,12 +255,12 @@ public class EventEffects : MonoBehaviour
                     }
                     else
                     {
-                        if (currentStep == 1)
+                        if (currentStep == 0)
                         {
                             ClosePopUp();
                         }
                         
-                        if (currentStep == 2)
+                        if (currentStep == 1)
                         {
                             StartCoroutine(ChangeStep(1));
                             List<GameObject> unitList = new List<GameObject>();
@@ -269,6 +269,7 @@ public class EventEffects : MonoBehaviour
                             unitList.Add(AventureManager.Instance.unit3);
                             GameObject selectedUnit = unitList[Random.Range(0, 2)];
                             selectedUnit.GetComponent<Unit>().currentHealth /= 2 ;
+                            UpdateStateBar();
                             ClosePopUp();
                         }
                     }
@@ -277,7 +278,7 @@ public class EventEffects : MonoBehaviour
                 case 5 :     // The Merchant --------------------------------------------
                     if (index == 1)
                     {
-                        if (currentStep == 1)
+                        if (currentStep == 0)
                         {
                             StartCoroutine(ChangeStep(1));
                             //if (il y a un item dans l'inventaire)
@@ -286,13 +287,33 @@ public class EventEffects : MonoBehaviour
                             UpdateStateBar();
                         }
 
-                        if (currentStep == 2)
+                        if (currentStep == 1)
                         {
                             ClosePopUp();
                         }
                     }
                     else
                     {
+                        if (currentStep == 0)
+                        {
+                            ClosePopUp();
+                        }
+                        
+                        if (currentStep == 1)
+                        {
+                            ClosePopUp();
+                        }
+                    }
+                    break;
+                
+                case 6 :     // The Knight ---------------------------------------------- 
+                    if (index == 1)
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                        }
+                        
                         if (currentStep == 1)
                         {
                             ClosePopUp();
@@ -300,12 +321,112 @@ public class EventEffects : MonoBehaviour
                         
                         if (currentStep == 2)
                         {
+                            Debug.Log("ajoute une potion de force à l'inventaire");
+                            UpdateStateBar();
                             ClosePopUp();
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(2)); 
+                        }
+                        
+                        if (currentStep == 1)
+                        {
+                            ClosePopUp();
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            Debug.Log("ajoute une potion de force à l'inventaire");
+                            UpdateStateBar();
+                           ClosePopUp();
                         }
                     }
                     break;
                 
-                
+                case 7 :     // The Camp------------------------------------------------- 
+                    if (index == 1)
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(1));
+                            ResourcesSaveManager.Instance.food += 20;
+                            UpdateStateBar();
+                        }
+                        
+                        if (currentStep == 1)
+                        {
+                            ClosePopUp();
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(1)); 
+                            ResourcesSaveManager.Instance.wood += 20;
+                            UpdateStateBar();
+                        }
+                        if (currentStep == 1)
+                        {
+                            ClosePopUp();
+                        }
+                    }
+                    break;
+
+                case 8 :     // --------------------------------------- 
+                    if (index == 1)
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(1)); 
+                        }
+                        
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(ChangeStep(3)); 
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            ClosePopUp();
+                        }
+                        
+                        if (currentStep == 3)
+                        {
+                            ResourcesSaveManager.Instance.gold += 35;
+                            UpdateStateBar();
+                            ClosePopUp();
+                        }
+                    }
+                    else
+                    {
+                        if (currentStep == 0)
+                        {
+                            StartCoroutine(ChangeStep(1)); 
+                        }
+                        
+                        if (currentStep == 1)
+                        {
+                            StartCoroutine(ChangeStep(2)); 
+                        }
+                        
+                        if (currentStep == 2)
+                        {
+                            ClosePopUp();
+                        }
+                        
+                        if (currentStep == 3)
+                        {
+                            ResourcesSaveManager.Instance.gold += 35;
+                            UpdateStateBar();
+                            ClosePopUp();
+                        }
+                    }
+                    break;
                 
                 case 999 :     // --------------------------------------- 
                     if (index == 1)
@@ -393,6 +514,7 @@ public class EventEffects : MonoBehaviour
     public void ClosePopUp()
     {
         canvasEvent.transform.DOScale(Vector3.zero, 0.5f);
+        currentStep = 0;
     }
 
     #endregion

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Bravery Banner
   m_EditorClassIdentifier: 
   competenceName: Bravery Banner
+  VFXType: 0
   levels:
   - competenceDescription: Increases the target's attack and defense for 2 turns
     competenceManaCost: 1
