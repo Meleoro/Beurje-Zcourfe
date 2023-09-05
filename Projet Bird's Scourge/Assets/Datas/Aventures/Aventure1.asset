@@ -43,5 +43,6 @@ MonoBehaviour:
     percentageSpawn: 10
     startSpawn: 0
     difficultyValue: -4
-  minBattlePerPath: 2
-  battleNodes: []
+  battleNodes:
+  - {fileID: 4736870783535128294, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
+  eventNodes: []
