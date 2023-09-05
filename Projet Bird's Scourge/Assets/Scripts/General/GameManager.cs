@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour
         AventureManager.Instance.scriptController.Initialise(map);
         AventureManager.Instance.regionIndex = regionIndex;
         AventureManager.Instance.zoneIndex = zoneIndex;
+        
+        AventureManager.Instance.InitialisePossibleNods(data);
 
         /*isInGlobalMap = false;
         isInAventure = true;*/
