@@ -109,7 +109,7 @@ public class CameraManager : MonoBehaviour
     public void Move()
     {
         Vector3 newPosition = transform.position + new Vector3(Input.GetAxisRaw("Horizontal") * moveSpeed,(Input.GetAxisRaw("Vertical")) * moveSpeed, 0);
-        transform.localPosition = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
+        transform.position = Vector3.SmoothDamp(transform.position,newPosition,ref moveVelocity,smoothMoveFactor);
     }
     
     public void Zoom()
@@ -179,6 +179,8 @@ public class CameraManager : MonoBehaviour
     public void CameraBattleStart(BattleManager currentBattle)
     {
         DOTween.Kill(transform);
+
+        canMove = false;
         
         savePosAdventure = transform.position;
         transform.position = new Vector3(currentBattle.transform.position.x, currentBattle.transform.position.y, -10);
@@ -205,26 +207,7 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    /*public IEnumerator ShakeExploration()
-    {
-        if (timerShake < 0)
-        {
-            timerShake = 1.5f;
 
-            DOTween.To(() => wantedPosShake.x, x => wantedPosShake.x = x, originalPos.x + Random.Range(-0.25f, 0.25f), 1.4f);
-            DOTween.To(() => wantedPosShake.y, x => wantedPosShake.y = x, originalPos.y + Random.Range(-0.25f, 0.25f), 1.4f);
-        }
-
-        yield return new WaitForEndOfFrame();
-
-        timerShake -= Time.deltaTime;
-        cameraParent.transform.position = Vector3.Lerp(cameraParent.transform.position, wantedPosShake, Time.deltaTime);
-
-        StartCoroutine(ShakeExploration());
-    }*/
-    
-    
-    
     // --------------------------  BATTLE PART  ------------------------------
     
     
@@ -246,7 +229,7 @@ public class CameraManager : MonoBehaviour
             newPos = (Vector2)ennemy.transform.position + offsetPosStart;
             newSize = ennemy.data.levels[ennemy.CurrentLevel].PM * 0.2f + 2.5f;
         }
-
+        
         transform.DOMove(new Vector3(newPos.x, newPos.y, transform.position.z), startTurnDuration).OnComplete((() => canMove = true));
         _camera.DOOrthoSize(newSize, startTurnDuration);
 

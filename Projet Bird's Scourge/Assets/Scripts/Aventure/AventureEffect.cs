@@ -55,10 +55,9 @@ public class AventureEffect : MonoBehaviour
 
             DOTween.To(() => dissolveValue, x => dissolveValue = x, 0, Random.Range(3f, 5f)).OnUpdate((() =>
                 currentSprite.material.SetFloat("_DissolveValue", dissolveValue)));
-
-            yield return new WaitForSeconds(0.0001f);
         }
 
+        yield return null;
     }
 
 

@@ -16,7 +16,7 @@ public class AventureData : ScriptableObject
     [Header("IconPart")]
     public List<NodeTypeClass> nodeTypes = new List<NodeTypeClass>();
 
-
     [Header("Nod Content")] 
     public List<GameObject> battleNodes = new List<GameObject>();
+    public List<EventData> eventNodes = new List<EventData>();
 }

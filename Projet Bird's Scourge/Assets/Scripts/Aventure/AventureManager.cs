@@ -50,6 +50,12 @@ public class AventureManager : MonoBehaviour
         StartCoroutine(AventureEffect.Instance.AppearEffect());
     }
 
+    public void InitialisePossibleNods(AventureData data)
+    {
+        possibleBattles = data.battleNodes;
+        possibleEvents = data.eventNodes;
+    }
+
 
     private void Update()
     {
