@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b8b3613694f6794d98ff76c12c28b49, type: 3}
-  m_Name: The Meal
+  m_Name: The Camp
   m_EditorClassIdentifier: 
-  ID: 3
+  ID: 7
   eventImage: {fileID: -1166268561, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}
-  eventTitle: The Meal
+  eventTitle: The Camp
   eventTexts:
-  - Exhausted, you find the perfect place to spend the night. Hunger is making itself
-    felt. A meal could put the team back on their feet, but this hard-earned food
-    is destined for the Nest...
-  - After enjoying a hot meal, you feel great, but you vow to redouble your efforts
-    to find more food.
+  - You come across a refugee camp offering food and resources to the survivors.
+    You explain your quest and are offered a choice between food or wood to help
+    you on your adventure.
+  - 'After thanking them and getting some rest, you set off again and resume your
+    adventure. '
   option1Text:
-  - Prepare a meal (-10 Food, +7 HP)
-  - That was tasty !
+  - Take the food. (+20 Food)
+  - The world is still kind !
   option2Text:
-  - Keep the food (Nothing)
-  - We'll do our best !
+  - Take the wood. (+20 Wood)
+  - Let's make the world a better place !

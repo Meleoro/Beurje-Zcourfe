@@ -3086,11 +3086,14 @@ MonoBehaviour:
   possibleBattles:
   - {fileID: 4736870783535128294, guid: 303ea7f47e4e4914fbbfe227a64dc0fa, type: 3}
   possibleEvents:
-  - {fileID: 11400000, guid: 219fbdd530dd73a43a9441e8d78d635f, type: 2}
   - {fileID: 11400000, guid: 1a98cfeff00b1c94d972b0a528b15758, type: 2}
+  - {fileID: 11400000, guid: 800c8b16849e4b841a3a3ad47daeceae, type: 2}
+  - {fileID: 11400000, guid: 0dab947a99d419847bf03de351a781f5, type: 2}
   - {fileID: 11400000, guid: 3a532fcc54e99194690a8dafdec5006b, type: 2}
-  - {fileID: 11400000, guid: 792f595325f3dd045bd1a02327e1378c, type: 2}
   - {fileID: 11400000, guid: 71c75cbf02ba147478f87b0046e041b8, type: 2}
+  - {fileID: 11400000, guid: 792f595325f3dd045bd1a02327e1378c, type: 2}
+  - {fileID: 11400000, guid: 219fbdd530dd73a43a9441e8d78d635f, type: 2}
+  - {fileID: 11400000, guid: 4d769651dee7f974b888cd6a3db56217, type: 2}
   scriptCreator: {fileID: 0}
   scriptController: {fileID: 0}
 --- !u!114 &3152749814554971126
@@ -6161,11 +6164,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2059890958230504925, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_fontSize
-      value: 26
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2059890958230504925, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_fontSizeBase
-      value: 26
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2094970119829778218, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -6185,11 +6188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2398978562622704035, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_fontSize
-      value: 26
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2398978562622704035, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_fontSizeBase
-      value: 26
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2593372466186360440, guid: c2302396730cb5e4c876d60244660988, type: 3}
       propertyPath: m_Enabled

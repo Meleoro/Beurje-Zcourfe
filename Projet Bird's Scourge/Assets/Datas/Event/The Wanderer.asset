@@ -26,10 +26,10 @@ MonoBehaviour:
     wanderer. "May the darkness take you travelers..." As the wanderer seemed to
     disappear into the mist, you felt an intense pain rise up within you.'
   option1Text:
-  - Give him a coin (- 10 Gold)
-  - What a strange man... (+ 50 Gold)
+  - Give him a coin (-10 Gold)
+  - What a strange man... (+50 Gold)
   - Argh... who was that guy (-3HP)
   option2Text:
   - Ignore Him (Nothing)
-  - Gold, so lucky ! (+ 50 Gold)
+  - Gold, so lucky ! (+50 Gold)
   - That hurts... (-3HP)
