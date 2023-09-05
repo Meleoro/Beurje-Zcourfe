@@ -402,6 +402,7 @@ public class UIMapManager : MonoBehaviour
 
     public IEnumerator PopUpStatue()
     {
+        GodessStatueManage.instance.GenerateBlessing();
         canvasStatue.transform.localScale = Vector3.zero;
         canvasStatue.SetActive(true);
         canvasStatue.transform.DOScale(Vector3.one, 0.5f);
@@ -466,58 +467,6 @@ public class UIMapManager : MonoBehaviour
 
                 case ShopItemData.type.food:
                     ResourcesSaveManager.Instance.food += itemDataList[index].amount;
-                    break;
-
-                case ShopItemData.type.potion:
-                    AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth +=
-                        (AventureManager.Instance.unit1.GetComponent<Unit>()
-                                .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV *
-                         itemDataList[index].PercentHPHealed / 100);
-
-                    if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance
-                            .unit1
-                            .GetComponent<Unit>()
-                            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV)
-                    {
-                        AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance
-                            .unit1
-                            .GetComponent<Unit>()
-                            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
-                    }
-
-
-                    AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth +=
-                        (AventureManager.Instance.unit2.GetComponent<Unit>()
-                                .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV *
-                            itemDataList[index].PercentHPHealed / 100);
-
-                    if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance
-                            .unit2
-                            .GetComponent<Unit>()
-                            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV)
-                    {
-                        AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance
-                            .unit2
-                            .GetComponent<Unit>()
-                            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV;
-                    }
-
-                    AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth +=
-                        (AventureManager.Instance.unit3.GetComponent<Unit>()
-                                .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV *
-                            itemDataList[index].PercentHPHealed / 100);
-
-                    if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance
-                            .unit3
-                            .GetComponent<Unit>()
-                            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV)
-                    {
-                        AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance
-                            .unit3
-                            .GetComponent<Unit>()
-                            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
-                    }
-
                     break;
             }
             UpdateStateBar();

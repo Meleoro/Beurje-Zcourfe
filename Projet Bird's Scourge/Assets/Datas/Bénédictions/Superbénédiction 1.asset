@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abb12608e6bf1fa46985faf94a10391a, type: 3}
+  m_Name: "Superb\xE9n\xE9diction 1"
+  m_EditorClassIdentifier: 
+  ID: 1
+  name: Super Benediction
+  description: "\xE7a fait tout plein de trucs et c'est cool 2."
+  icon: {fileID: -827593702, guid: 0456fd65b8346ff46a4b099d0216cd60, type: 3}

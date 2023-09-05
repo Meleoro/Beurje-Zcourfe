@@ -1,24 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BenedictionManager : MonoBehaviour
 {
-    [Header("Additional PM")] 
-    public bool additionalPM;
+    [Header("Général")] 
+    public static BenedictionManager instance;
+    public List<BenedictionData> possessedBlessings;
 
-    public void GainAdditionalPM()
+    public void Awake()
     {
-        additionalPM = true;
+        if (instance == null) instance = this;
+    }
+
+    public void GetNewBlessing(BenedictionData blessingGot)
+    {
+        possessedBlessings.Add(blessingGot);
+        
+        switch (blessingGot.ID)
+        {
+            case 0 :
+                
+                break;
+        }
     }
 
     public bool VerifyAdditionalPM()
     {
-        if (additionalPM)
-        {
-            return true;
-        }
-
         return false;
     }
 }

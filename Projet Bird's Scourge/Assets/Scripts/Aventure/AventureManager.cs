@@ -27,10 +27,14 @@ public class AventureManager : MonoBehaviour
     
     [Header("Events")] 
     public List<EventData> possibleEvents;
+    
+    [Header("Blessings")] 
+    public List<BenedictionData> possibleBlessings;
 
     [Header("Références")]
     [HideInInspector] public AventureCreator scriptCreator;
     [HideInInspector] public AventureController scriptController;
+    
 
 
     private void Awake()
