@@ -14,6 +14,8 @@ public class ObjectController : MonoBehaviour
     
     [Header("CurrentInfos")]
     private ShopItemData currentItem;
+    private bool unitsOverlayed;
+    private Unit overlayedUnit;
 
     [Header("References")] 
     private ObjectEffects effectScript;
@@ -48,10 +50,73 @@ public class ObjectController : MonoBehaviour
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D[] hits = Physics2D.RaycastAll(mousePos, Vector2.zero);
-        
-        
+
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].collider.CompareTag("Unit"))
+            {
+                OverlayUnit(hits[i].collider.GetComponent<Unit>());
+                break;
+            }
+            
+            RemoveUnitOverlay();
+        }
     }
 
+    private void OverlayUnit(Unit currentOverlayedUnit)
+    {
+        if (currentItem.useType == ShopItemData.UseType.selectUnit)
+        {
+            if (overlayedUnit == null)
+            {
+                currentOverlayedUnit.ActivateOutline(Color.white);
+                overlayedUnit = currentOverlayedUnit;
+            }
+            
+            else if (overlayedUnit != currentOverlayedUnit)
+            {
+                currentOverlayedUnit.ActivateOutline(Color.white);
+                overlayedUnit = currentOverlayedUnit;
+            }
+        }
+        
+        else if (currentItem.useType == ShopItemData.UseType.selectRange && !unitsOverlayed)
+        {
+            unitsOverlayed = true;
+            
+            List<Unit> currentUnits = new List<Unit>(BattleManager.Instance.currentUnits);
+
+            for (int i = 0; i < currentUnits.Count; i++)
+            {
+                currentUnits[i].ActivateOutline(Color.white);
+            }
+        }
+    }
+
+
+    private void RemoveUnitOverlay()
+    {
+        if (overlayedUnit != null)
+        {
+            overlayedUnit.DesactivateOutline();
+            overlayedUnit = null;
+        }
+
+        if (unitsOverlayed)
+        {
+            unitsOverlayed = false;
+                
+            List<Unit> currentUnits = new List<Unit>(BattleManager.Instance.currentUnits);
+
+            for (int i = 0; i < currentUnits.Count; i++)
+            {
+                currentUnits[i].DesactivateOutline();
+            } 
+        }
+    }
+    
+    
+    
     private void VerifyClickedElement()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
