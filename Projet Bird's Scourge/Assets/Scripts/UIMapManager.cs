@@ -88,7 +88,12 @@ public class UIMapManager : MonoBehaviour
     public TextMeshProUGUI merchantTalk;
     public List<TextMeshProUGUI> pricesList;
     public List<Image> imagesList;
-    public List<ShopItemData> itemDataList;
+    public List<Button> slotList;
+    [Range(1,4)] public int nbOfResources;
+    [Range(1,7)] public int nbOfItems;
+    [Range(1,7)] public int nbOfBlessings;
+    public List<ShopItemData> possibleRessourcesList;
+    public List<ShopItemData> finalItemList;
   
 
     #region Fonction Générales
@@ -415,63 +420,122 @@ public class UIMapManager : MonoBehaviour
 
     public IEnumerator PopUpShop()
     {
+        GenerateItemList();
+        
+        for (int i = 0; i < pricesList.Count; i++)
+        {
+            imagesList[i].sprite = finalItemList[i].image;
+            pricesList[i].text = finalItemList[i].price.ToString();
+            if (finalItemList[i].price > ResourcesSaveManager.Instance.gold)
+            {
+                pricesList[i].color = Color.red;
+            }
+        }
+        
         canvasShop.transform.localScale = Vector3.zero;
         canvasShop.SetActive(true);
         canvasShop.transform.DOScale(Vector3.one, 0.5f);
         yield return new WaitForSeconds(0.5f);
-        for (int i = 0; i < pricesList.Count; i++)
-        {
-            pricesList[i].text = itemDataList[i].price.ToString();
-            if (itemDataList[i].price > ResourcesSaveManager.Instance.gold)
-            {
-                pricesList[i].color = Color.red;
-            }
-            imagesList[i].sprite = itemDataList[i].image;
-        }
+        UpdateItemPrice();
     }
 
     public void UpdateMerchantText(int index)
     {
-        merchantTalk.text = itemDataList[index].description;
+        merchantTalk.text = finalItemList[index].description;
     }
 
     public void UpdateItemPrice()
     {
         for (int i = 0; i < pricesList.Count; i++)
         {
-            if (itemDataList[i].price > ResourcesSaveManager.Instance.gold)
+            if (finalItemList[i].price > ResourcesSaveManager.Instance.gold)
             {
                 pricesList[i].color = Color.red;
             }
         }
     }
+
+    public void GenerateItemList()
+    {
+        for (int i = 0; i < nbOfResources; i++)
+        {
+            ShopItemData chosenResource = possibleRessourcesList[Random.Range(0, possibleRessourcesList.Count - 1)];
+            finalItemList.Add(chosenResource);
+            possibleRessourcesList.Remove(chosenResource);
+        }
+        
+        for (int i = 0; i < nbOfItems; i++)
+        {
+            finalItemList.Add(AventureManager.Instance.possibleItems[Random.Range(0,AventureManager.Instance.possibleItems.Count - 1)]);
+        }
+        
+        for (int i = 0; i < nbOfBlessings; i++)
+        {
+            ShopItemData chosenBlessing =
+                AventureManager.Instance.possibleBlessings[Random.Range(0, AventureManager.Instance.possibleBlessings.Count - 1)];
+
+            AventureManager.Instance.possibleBlessings.Remove(chosenBlessing); // Enlève la blessing tirée de possibleBlessing pour pas la tirer 2 fois
+            finalItemList.Add(chosenBlessing);
+        }
+    }
+    
     public void BuyItem(int index)
     {
-        if (ResourcesSaveManager.Instance.gold >= itemDataList[index].price) // Check si on peut l'acheter
+        if (ResourcesSaveManager.Instance.gold >= finalItemList[index].price) // Check si on peut l'acheter
         {
-            ResourcesSaveManager.Instance.gold -= itemDataList[index].price; // Enlève l'agent
+            ResourcesSaveManager.Instance.gold -= finalItemList[index].price; // Enlève l'agent
            
-            switch (itemDataList[index].itemType) // Execute l'effet
+            switch (finalItemList[index].itemType) // Execute l'effet
             {
                 case ShopItemData.type.wood:
-                    ResourcesSaveManager.Instance.wood += itemDataList[index].amount;
+                    ResourcesSaveManager.Instance.wood += finalItemList[index].amount;
                     break;
 
                 case ShopItemData.type.stone:
-                    ResourcesSaveManager.Instance.stone += itemDataList[index].amount;
+                    ResourcesSaveManager.Instance.stone += finalItemList[index].amount;
                     break;
 
                 case ShopItemData.type.iron:
-                    ResourcesSaveManager.Instance.iron += itemDataList[index].amount;
+                    ResourcesSaveManager.Instance.iron += finalItemList[index].amount;
                     break;
 
                 case ShopItemData.type.food:
-                    ResourcesSaveManager.Instance.food += itemDataList[index].amount;
+                    ResourcesSaveManager.Instance.food += finalItemList[index].amount;
+                    break;
+                case ShopItemData.type.blessing:
+                    BenedictionManager.instance.GetNewBlessing(finalItemList[index]);
+                    slotList[index].interactable = false;
+                    pricesList[index].color = Color.red;
+                    pricesList[index].text = "Sold";
+                    break;
+                case ShopItemData.type.item:
+                    Debug.Log("+ 1 nouvel item !");
                     break;
             }
             UpdateStateBar();
             UpdateItemPrice();
         }
+    }
+
+    public void CloseShop()
+    {
+        foreach (ShopItemData item in finalItemList)  // Remet les blessings non utilisée dans les possible blessings
+        {
+            if (item.itemType == ShopItemData.type.blessing)
+            {
+                if (!BenedictionManager.instance.possessedBlessings.Contains(item))
+                {
+                    AventureManager.Instance.possibleBlessings.Add(item);
+                }
+            }
+            
+            if (item.itemType == ShopItemData.type.wood || item.itemType == ShopItemData.type.stone || item.itemType == ShopItemData.type.iron || item.itemType == ShopItemData.type.food)
+            {
+                possibleRessourcesList.Add(item);
+            }
+        }
+        
+        finalItemList.Clear();
     }
 
     #endregion

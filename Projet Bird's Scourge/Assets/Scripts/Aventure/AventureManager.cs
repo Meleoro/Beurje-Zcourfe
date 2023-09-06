@@ -29,7 +29,10 @@ public class AventureManager : MonoBehaviour
     public List<EventData> possibleEvents;
     
     [Header("Blessings")] 
-    public List<BenedictionData> possibleBlessings;
+    public List<ShopItemData> possibleBlessings;
+    
+    [Header("Items")] 
+    public List<ShopItemData> possibleItems;
 
     [Header("Références")]
     [HideInInspector] public AventureCreator scriptCreator;

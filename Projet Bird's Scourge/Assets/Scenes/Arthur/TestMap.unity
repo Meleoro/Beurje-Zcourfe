@@ -183,6 +183,10 @@ PrefabInstance:
       propertyPath: startInAventure
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7422361610681158717, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
+      propertyPath: gold
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8008650245741842786, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
       propertyPath: m_Name
       value: Essential
