@@ -96,9 +96,15 @@ public class ObjectController : MonoBehaviour
         }
     }
     
-    private void TileClicked()
+    private void TileClicked(OverlayTile clickedTile)
     {
-        
+        if (currentItem.useType == ShopItemData.UseType.selectTile)
+        {
+            if (currentItem.effectType == ShopItemData.EffectType.summon)
+            {
+                
+            }
+        }
     }
     
     
