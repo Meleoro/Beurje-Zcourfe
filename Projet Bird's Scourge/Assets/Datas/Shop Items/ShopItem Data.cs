@@ -17,7 +17,9 @@ public class ShopItemData : ScriptableObject
     public enum EffectType
     {
         heal,
-        damage
+        damage,
+        buff,
+        summon,
     }
     public EffectType effectType = EffectType.heal;
    

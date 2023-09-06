@@ -22,8 +22,9 @@ public class Unit : MonoBehaviour
     public int PM;
     private bool isSelected;
     private bool outlineActive;
-    private bool outlineTurnLauched;
+    public bool outlineTurnLauched;
     public bool mustBeSelected;
+    public bool objectFlicker;
 
     
     [Header("ElementsToSave")] 
@@ -385,7 +386,12 @@ public class Unit : MonoBehaviour
             if (!isSelected && !outlineTurnLauched)
             {
                 outlineTurnLauched = true;
-                StartCoroutine(OutlineTurn(MouseManager.Instance.unitTurnOutlineColor, MouseManager.Instance.turnOutlineSpeed));
+                
+                if(!objectFlicker)
+                    StartCoroutine(OutlineTurn(MouseManager.Instance.unitTurnOutlineColor, MouseManager.Instance.turnOutlineSpeed));
+                
+                else
+                    StartCoroutine(OutlineTurn(Color.white, MouseManager.Instance.turnOutlineSpeed));
             }
 
             else if (isSelected && outlineTurnLauched)

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1201e9c701489b4f99a1ec4af8701e0, type: 3}
   m_Name: Potion
   m_EditorClassIdentifier: 
-  useType: 0
-  effectType: 0
+  useType: 3
+  effectType: 3
   itemType: 4
   name: Small Potion
   price: 35
