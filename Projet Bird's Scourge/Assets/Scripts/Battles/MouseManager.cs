@@ -41,12 +41,16 @@ public class MouseManager : MonoBehaviour
     [HideInInspector] public Unit selectedUnit;
     [HideInInspector] public Ennemy selectedEnnemy;
 
+    [Header("Objects")] 
+    public bool isUsingObject;
+
     [Header("Other")]
     [HideInInspector] public bool noControl;
     [HideInInspector] public bool isOnButton;
     private List<OverlayTile> currentPath = new List<OverlayTile>();
 
-    [Header("References")]
+    [Header("References")] 
+    private ObjectController scriptObject;
     private PathFinder pathFinder;
     private ArrowCreator arrowCreator;
     private EffectMaker effectMaker;
@@ -67,12 +71,14 @@ public class MouseManager : MonoBehaviour
         pathFinder = new PathFinder();
         arrowCreator = new ArrowCreator();
         effectMaker = new EffectMaker();
+
+        scriptObject = GetComponent<ObjectController>();
     }
 
 
     void Update()
     {
-        if (!noControl)
+        if (!noControl && !isUsingObject)
         {
             OverlayTile currentTile = GetFocusedElement();
 
@@ -93,6 +99,11 @@ public class MouseManager : MonoBehaviour
                 
                 //ManageOverlayTiles();
             }
+        }
+        
+        else if(isUsingObject)
+        {
+            scriptObject.ObjectSelectionUpdate();
         }
     }
 

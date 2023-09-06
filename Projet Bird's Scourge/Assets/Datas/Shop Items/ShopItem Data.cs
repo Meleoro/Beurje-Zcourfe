@@ -4,6 +4,22 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ShopItem")]
 public class ShopItemData : ScriptableObject
 {
+    
+    public enum UseType
+    {
+        selectUnit,
+        selectEnnemy,
+        selectRange,
+        selectTile
+    }
+    public UseType useType = UseType.selectUnit;
+    
+    public enum EffectType
+    {
+        heal,
+        damage
+    }
+    public EffectType effectType = EffectType.heal;
    
     public enum type
     {
