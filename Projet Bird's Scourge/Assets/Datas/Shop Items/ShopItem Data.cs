@@ -40,10 +40,10 @@ public class ShopItemData : ScriptableObject
   
     [Header("Resources")]
     public int amount;
-    
+
     [Header("Item")]
     //public ItemData associatedItem;
-    
+
     [Header("Blessing")]
-    public BenedictionData associatedBenediction;
+    public int ID;
 }
