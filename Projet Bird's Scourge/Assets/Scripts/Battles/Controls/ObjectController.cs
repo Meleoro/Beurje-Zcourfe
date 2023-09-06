@@ -87,9 +87,9 @@ public class ObjectController : MonoBehaviour
     
     private void EnnemyClicked(Ennemy clickedEnnemy)
     {
-        if (currentItem.useType == ShopItemData.UseType.selectUnit)
+        if (currentItem.useType == ShopItemData.UseType.selectEnnemy)
         {
-            if (currentItem.effectType == ShopItemData.EffectType.heal)
+            if (currentItem.effectType == ShopItemData.EffectType.damage)
             {
                 StartCoroutine(effectScript.DamageEffect(currentItem, clickedEnnemy));
             }
@@ -118,9 +118,11 @@ public class ObjectController : MonoBehaviour
                 break;
             
             case ShopItemData.UseType.selectEnnemy :
+                MustSelectEnnemy(itemData);
                 break;
             
             case ShopItemData.UseType.selectRange :
+                MustSelectUnit(itemData);
                 break;
             
             case ShopItemData.UseType.selectTile :
@@ -137,9 +139,11 @@ public class ObjectController : MonoBehaviour
                 break;
             
             case ShopItemData.UseType.selectEnnemy :
+                StopMustSelectEnnemy(currentItem);
                 break;
             
             case ShopItemData.UseType.selectRange :
+                StopMustSelectUnit(currentItem);
                 break;
             
             case ShopItemData.UseType.selectTile :
@@ -151,6 +155,7 @@ public class ObjectController : MonoBehaviour
     }
 
 
+    
     private void MustSelectUnit(ShopItemData itemData)
     {
         List<Unit> currentUnits = new List<Unit>(BattleManager.Instance.currentUnits);
@@ -181,6 +186,29 @@ public class ObjectController : MonoBehaviour
             currentUnits[i].DesactivateOutline();
             currentUnits[i].outlineTurnLauched = false;
             currentUnits[i].objectFlicker = false;
+        }
+    }
+
+
+    private void MustSelectEnnemy(ShopItemData itemData)
+    {
+        List<Ennemy> currentEnnemies = new List<Ennemy>(BattleManager.Instance.currentEnnemies);
+
+        for (int i = 0; i < currentEnnemies.Count; i++)
+        {
+            currentEnnemies[i].StopAllCoroutines();
+            currentEnnemies[i].ActivateFlicker(); 
+        }
+    }
+    
+    private void StopMustSelectEnnemy(ShopItemData itemData)
+    {
+        List<Ennemy> currentEnnemies = new List<Ennemy>(BattleManager.Instance.currentEnnemies);
+
+        for (int i = 0; i < currentEnnemies.Count; i++)
+        {
+            currentEnnemies[i].StopAllCoroutines();
+            currentEnnemies[i].DesactivateOutline(); 
         }
     }
 }
