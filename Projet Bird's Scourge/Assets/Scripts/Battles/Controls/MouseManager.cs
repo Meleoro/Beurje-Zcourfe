@@ -42,6 +42,7 @@ public class MouseManager : MonoBehaviour
     [HideInInspector] public Ennemy selectedEnnemy;
 
     [Header("Objects")] 
+    public ShopItemData testItem;
     public bool isUsingObject;
 
     [Header("Other")]
@@ -78,6 +79,11 @@ public class MouseManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            scriptObject.UseObject(testItem);
+        }
+        
         if (!noControl && !isUsingObject)
         {
             OverlayTile currentTile = GetFocusedElement();

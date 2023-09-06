@@ -53,6 +53,7 @@ public class CameraManager : MonoBehaviour
     public Light2D FXAventure;
     public Light2D FXBattle;
     public Transform cameraParent;
+    public CameraEffects effectsScript;
 
     [Header("Other")]
     [HideInInspector] public float screenWidth;
@@ -76,6 +77,8 @@ public class CameraManager : MonoBehaviour
 
         screenHeight = _camera.pixelHeight;
         screenWidth = _camera.pixelWidth;
+
+        effectsScript = GetComponent<CameraEffects>();
 
         /*if(cameraParent is not null)
             originalPos = cameraParent.transform.position;

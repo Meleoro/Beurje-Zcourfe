@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 952684494445953623}
   - component: {fileID: 3232164338771744088}
   - component: {fileID: 3004902933839461279}
+  - component: {fileID: 7069237386747891792}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -281,8 +282,21 @@ MonoBehaviour:
   FXAventure: {fileID: 6362287375282396953}
   FXBattle: {fileID: 83049223448871562}
   cameraParent: {fileID: 0}
+  effectsScript: {fileID: 0}
   screenWidth: 0
   screenHeight: 0
+--- !u!114 &7069237386747891792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2649350130129897931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5110058f61643842b4b30513158a9d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6445688200004470535
 GameObject:
   m_ObjectHideFlags: 0

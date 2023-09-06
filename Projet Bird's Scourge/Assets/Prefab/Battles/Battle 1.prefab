@@ -10778,6 +10778,8 @@ GameObject:
   - component: {fileID: 741630602310693780}
   - component: {fileID: 6217091681733392990}
   - component: {fileID: 1789948722559518678}
+  - component: {fileID: 8968566931835663668}
+  - component: {fileID: 6566052728581450547}
   m_Layer: 0
   m_Name: Cursor
   m_TagString: Untagged
@@ -10878,8 +10880,35 @@ MonoBehaviour:
   competenceUsed: {fileID: 0}
   selectedUnit: {fileID: 0}
   selectedEnnemy: {fileID: 0}
+  testItem: {fileID: 11400000, guid: c5d38f7d6d448784fb7e71c4458b53c2, type: 2}
+  isUsingObject: 0
   noControl: 0
   isOnButton: 0
+--- !u!114 &8968566931835663668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265041702834994273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 415f438098a31334db47362776a05327, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectUnitOutline: {r: 1, g: 1, b: 1, a: 1}
+--- !u!114 &6566052728581450547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265041702834994273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b6463d01712e5408277f9ad3536bde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4268310383405360248
 GameObject:
   m_ObjectHideFlags: 0
@@ -11795,7 +11824,7 @@ Transform:
   - {fileID: 4630227729384766914}
   - {fileID: 1753616676840146024}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &444871648844107493
 MonoBehaviour:

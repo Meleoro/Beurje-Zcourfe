@@ -21,11 +21,11 @@ public class Unit : MonoBehaviour
     [HideInInspector] public int haste;
     public int PM;
     private bool isSelected;
+    private bool outlineActive;
     private bool outlineTurnLauched;
     public bool mustBeSelected;
 
-
-    [Header("ElementsToSave")] 
+    
     [Header("ElementsToSave")] 
     public int currentHealth;
     [SerializeField] private int currentLevel;
@@ -69,18 +69,11 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        /*if (currentTile is null && MapManager.Instance.tilesAppeared)
-        {
-            FindCurrentTile();
-            
-            BattleManager.Instance.AddUnit(this, false);
-            //InitialiseTurn();
-        }*/
-
         ManageFlickerOutline();
     }
     
-    // MAKE APPEAR THE ENNEMY
+    
+    // MAKE APPEAR THE UNIT
     public void Initialise()
     {
         FindCurrentTile();
@@ -365,6 +358,9 @@ public class Unit : MonoBehaviour
     
     public void ActivateOutline(Color newColor)
     {
+        outlineActive = true;
+        ManageFlickerOutline();
+        
         spriteRenderer.material.SetFloat("_DoOutline", 1);
 
         if(newColor != null)
@@ -376,13 +372,15 @@ public class Unit : MonoBehaviour
     public void DesactivateOutline()
     {
         spriteRenderer.material.SetFloat("_DoOutline", 0);
+        
+        outlineActive = false;
     }
 
 
     // MANAGES WHEN AN UNIT NEEDS ITS OUTLINE TO FLICKER
     private void ManageFlickerOutline()
     {
-        if (mustBeSelected)
+        if (mustBeSelected && !outlineActive)
         {
             if (!isSelected && !outlineTurnLauched)
             {
@@ -397,12 +395,13 @@ public class Unit : MonoBehaviour
             }
         }
 
-        else if(outlineTurnLauched)
+        else if(outlineTurnLauched || outlineActive)
         {
             StopAllCoroutines();
             outlineTurnLauched = false;
 
-            DesactivateOutline();
+            if(!outlineActive)
+                DesactivateOutline();
         }
     }
     

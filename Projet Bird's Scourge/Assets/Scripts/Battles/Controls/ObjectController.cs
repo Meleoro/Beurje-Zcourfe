@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,21 @@ public class ObjectController : MonoBehaviour
     [Header("UnitSelect")] 
     public Color selectUnitOutline;
     
-    
+    [Header("CurrentInfos")]
     private ShopItemData currentItem;
-    
-    
+
+    [Header("References")] 
+    private ObjectEffects effectScript;
+    private MouseManager orignalScript;
+
+
+    private void Start()
+    {
+        effectScript = GetComponent<ObjectEffects>();
+        orignalScript = GetComponent<MouseManager>();
+    }
+
+
     public void ObjectSelectionUpdate()
     {
         VerifyOverlayedElement();
@@ -40,7 +52,7 @@ public class ObjectController : MonoBehaviour
         {
             if (hits[i].collider.CompareTag("Unit"))
             {
-                UnitClicked();
+                UnitClicked(hits[i].collider.GetComponent<Unit>());
                 break;
             }
 
@@ -61,13 +73,13 @@ public class ObjectController : MonoBehaviour
     
 
     
-    private void UnitClicked()
+    private void UnitClicked(Unit clickedUnit)
     {
         if (currentItem.useType == ShopItemData.UseType.selectUnit)
         {
             if (currentItem.effectType == ShopItemData.EffectType.heal)
             {
-                
+                StartCoroutine(effectScript.HealEffect(currentItem, clickedUnit));
             }
         }
     }
@@ -90,6 +102,7 @@ public class ObjectController : MonoBehaviour
     public void UseObject(ShopItemData itemData)
     {
         currentItem = itemData;
+        orignalScript.isUsingObject = true;
         
         switch (itemData.useType)
         {
@@ -108,6 +121,28 @@ public class ObjectController : MonoBehaviour
         }
     }
 
+    public void StopUseObject()
+    {
+        switch (currentItem.useType)
+        {
+            case ShopItemData.UseType.selectUnit :
+                StopMustSelectUnit(currentItem);
+                break;
+            
+            case ShopItemData.UseType.selectEnnemy :
+                break;
+            
+            case ShopItemData.UseType.selectRange :
+                break;
+            
+            case ShopItemData.UseType.selectTile :
+                break;
+        }
+        
+        currentItem = null;
+        orignalScript.isUsingObject = false;
+    }
+
 
     private void MustSelectUnit(ShopItemData itemData)
     {
@@ -116,6 +151,16 @@ public class ObjectController : MonoBehaviour
         for (int i = 0; i < currentUnits.Count; i++)
         {
             currentUnits[i].ActivateOutline(selectUnitOutline);
+        }
+    }
+    
+    private void StopMustSelectUnit(ShopItemData itemData)
+    {
+        List<Unit> currentUnits = new List<Unit>(BattleManager.Instance.currentUnits);
+
+        for (int i = 0; i < currentUnits.Count; i++)
+        {
+            currentUnits[i].DesactivateOutline();
         }
     }
 }
