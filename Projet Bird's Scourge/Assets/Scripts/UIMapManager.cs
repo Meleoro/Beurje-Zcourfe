@@ -86,6 +86,7 @@ public class UIMapManager : MonoBehaviour
     [Header("Pop UP Shop")] 
     public GameObject canvasShop;
     public TextMeshProUGUI merchantTalk;
+    public TextMeshProUGUI itemName;
     public List<TextMeshProUGUI> pricesList;
     public List<Image> imagesList;
     public List<Button> slotList;
@@ -425,10 +426,12 @@ public class UIMapManager : MonoBehaviour
         for (int i = 0; i < pricesList.Count; i++)
         {
             imagesList[i].sprite = finalItemList[i].image;
+            pricesList[i].fontSize = 25f;
+            pricesList[i].color = new Color32(128, 97, 66,255);
             pricesList[i].text = finalItemList[i].price.ToString();
             if (finalItemList[i].price > ResourcesSaveManager.Instance.gold)
             {
-                pricesList[i].color = Color.red;
+                pricesList[i].color = new Color32(170, 0, 0,255);
             }
         }
         
@@ -441,6 +444,12 @@ public class UIMapManager : MonoBehaviour
 
     public void UpdateMerchantText(int index)
     {
+        if (finalItemList[index].itemType == ShopItemData.type.wood ||
+            finalItemList[index].itemType == ShopItemData.type.stone ||
+            finalItemList[index].itemType == ShopItemData.type.iron ||
+            finalItemList[index].itemType == ShopItemData.type.food)
+            itemName.text = finalItemList[index].amount + " " + finalItemList[index].name;
+        else itemName.text = finalItemList[index].name;
         merchantTalk.text = finalItemList[index].description;
     }
 
@@ -450,7 +459,7 @@ public class UIMapManager : MonoBehaviour
         {
             if (finalItemList[i].price > ResourcesSaveManager.Instance.gold)
             {
-                pricesList[i].color = Color.red;
+                pricesList[i].color = new Color32(170, 0, 0,255);
             }
         }
     }
@@ -505,7 +514,8 @@ public class UIMapManager : MonoBehaviour
                 case ShopItemData.type.blessing:
                     BenedictionManager.instance.GetNewBlessing(finalItemList[index]);
                     slotList[index].interactable = false;
-                    pricesList[index].color = Color.red;
+                    pricesList[index].color = new Color32(170, 0, 0,255);
+                    pricesList[index].fontSize = 21.5f;
                     pricesList[index].text = "Sold";
                     break;
                 case ShopItemData.type.item:
