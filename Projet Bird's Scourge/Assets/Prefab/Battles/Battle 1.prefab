@@ -10778,6 +10778,7 @@ GameObject:
   - component: {fileID: 741630602310693780}
   - component: {fileID: 6217091681733392990}
   - component: {fileID: 1789948722559518678}
+  - component: {fileID: 3474505599995512266}
   - component: {fileID: 8968566931835663668}
   - component: {fileID: 6566052728581450547}
   m_Layer: 0
@@ -10878,12 +10879,32 @@ MonoBehaviour:
   tilesCompetenceDisplayed: []
   tilesAtRangeDisplayed: []
   competenceUsed: {fileID: 0}
+  overlayedUnit: {fileID: 0}
+  overlayedEnnemy: {fileID: 0}
   selectedUnit: {fileID: 0}
   selectedEnnemy: {fileID: 0}
   testItem: {fileID: 11400000, guid: c5d38f7d6d448784fb7e71c4458b53c2, type: 2}
   isUsingObject: 0
   noControl: 0
   isOnButton: 0
+--- !u!114 &3474505599995512266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265041702834994273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f5742e9160fe7144963fb0feb5f7370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorOutlineSelectedUnit: {r: 1, g: 1, b: 1, a: 1}
+  colorOutlineSelectedEnnemy: {r: 1, g: 0, b: 0, a: 1}
+  overlayedUnit: {fileID: 0}
+  selectedUnit: {fileID: 0}
+  overlayedEnnemy: {fileID: 0}
+  selectedEnnemy: {fileID: 0}
 --- !u!114 &8968566931835663668
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -384,6 +384,7 @@ public class Ennemy : MonoBehaviour
     public void DesactivateOutline()
     {
         GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
+        DesactivateFlicker();
     }
 
     public void ActivateFlicker()

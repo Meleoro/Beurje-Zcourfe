@@ -69,7 +69,7 @@ public class Unit : MonoBehaviour
 
     private void Update()
     {
-        ManageFlickerOutline();
+        ManageFlickerOutline(false);
     }
     
     
@@ -348,7 +348,7 @@ public class Unit : MonoBehaviour
     {
         isSelected = true;
         
-        ManageFlickerOutline();
+        ManageFlickerOutline(false);
     }
 
     public void DeselectUnit()
@@ -359,7 +359,7 @@ public class Unit : MonoBehaviour
     public void ActivateOutline(Color newColor)
     {
         outlineActive = true;
-        ManageFlickerOutline();
+        ManageFlickerOutline(true);
         
         spriteRenderer.material.SetFloat("_DoOutline", 1);
 
@@ -378,7 +378,7 @@ public class Unit : MonoBehaviour
 
 
     // MANAGES WHEN AN UNIT NEEDS ITS OUTLINE TO FLICKER
-    private void ManageFlickerOutline()
+    private void ManageFlickerOutline(bool forceStop)
     {
         if (mustBeSelected && !outlineActive)
         {
@@ -395,7 +395,7 @@ public class Unit : MonoBehaviour
             }
         }
 
-        else if(outlineTurnLauched || outlineActive)
+        else if(outlineTurnLauched || forceStop)
         {
             StopAllCoroutines();
             outlineTurnLauched = false;
