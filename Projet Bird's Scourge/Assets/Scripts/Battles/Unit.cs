@@ -134,6 +134,11 @@ public class Unit : MonoBehaviour
                 yield return new WaitForSeconds(1f);
                 
                 int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                
+                // Bénédiction ID 2 --------------------------------------------------
+                if (BenedictionManager.instance.CheckIfBlessingGot(2) && currentHealth <= data.levels[currentLevel].PV * 30 / 100) attackHitRate += 15;
+                // Bénédiction ID 2 --------------------------------------------------
+                
                 int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
                 int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
                 
@@ -200,6 +205,11 @@ public class Unit : MonoBehaviour
     public void DisplayBattleStats(Ennemy clickedEnnemy, DataCompetence competenceUsed, int competenceLevel)
     {
         int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.levels[0].PV);
+     
+        // Bénédiction ID 2 --------------------------------------------------
+        if (BenedictionManager.instance.CheckIfBlessingGot(2) && currentHealth <= data.levels[currentLevel].PV * 30 / 100) attackHitRate += 15;
+        // Bénédiction ID 2 --------------------------------------------------
+        
         int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[0].PV);
         int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[0].PV);
 

@@ -7556,7 +7556,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f43dc4aa52b6c5a44a718943856e5bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possessedBlessings: []
+  possessedBlessings:
+  - {fileID: 11400000, guid: 90df762512d8528489ec8d4821ee7cc2, type: 2}
   iconBlessingList:
   - {fileID: 45255487543673077}
   - {fileID: 2323979010613716789}

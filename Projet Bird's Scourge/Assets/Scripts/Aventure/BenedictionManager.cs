@@ -64,7 +64,6 @@ public class BenedictionManager : MonoBehaviour
     {
         if (possessedBlessings[index])
         {
-            Debug.Log("oui");
             infoBubbleList[index].SetActive(true);
             infoBubbleList[index].transform.localScale = Vector3.zero;
             infoBubbleList[index].transform.DOScale(Vector3.one, 0.3f);
@@ -75,7 +74,6 @@ public class BenedictionManager : MonoBehaviour
     {
         if (possessedBlessings[index])
         {
-            Debug.Log("non");
             infoBubbleList[index].transform.DOScale(Vector3.zero, 0.3f);
             infoBubbleList[index].SetActive(false);
         }
