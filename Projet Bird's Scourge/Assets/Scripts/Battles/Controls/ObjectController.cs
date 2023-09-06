@@ -7,6 +7,7 @@ public class ObjectController : MonoBehaviour
 {
     [Header("UnitSelect")] 
     public Color selectUnitOutline;
+    private Unit mustBeSelectedSave;
     
     [Header("CurrentInfos")]
     private ShopItemData currentItem;
@@ -58,7 +59,7 @@ public class ObjectController : MonoBehaviour
 
             if (hits[i].collider.CompareTag("Ennemy"))
             {
-                EnnemyClicked();
+                EnnemyClicked(hits[i].collider.GetComponent<Ennemy>());
                 break;
             }
 
@@ -84,9 +85,15 @@ public class ObjectController : MonoBehaviour
         }
     }
     
-    private void EnnemyClicked()
+    private void EnnemyClicked(Ennemy clickedEnnemy)
     {
-        
+        if (currentItem.useType == ShopItemData.UseType.selectUnit)
+        {
+            if (currentItem.effectType == ShopItemData.EffectType.heal)
+            {
+                StartCoroutine(effectScript.DamageEffect(currentItem, clickedEnnemy));
+            }
+        }
     }
     
     private void TileClicked()
@@ -150,7 +157,14 @@ public class ObjectController : MonoBehaviour
 
         for (int i = 0; i < currentUnits.Count; i++)
         {
-            currentUnits[i].ActivateOutline(selectUnitOutline);
+            if (currentUnits[i].mustBeSelected)
+                mustBeSelectedSave = currentUnits[i];
+                
+            
+            currentUnits[i].StopAllCoroutines();
+            currentUnits[i].outlineTurnLauched = false;
+            currentUnits[i].mustBeSelected = true;
+            currentUnits[i].objectFlicker = true;
         }
     }
     
@@ -160,7 +174,13 @@ public class ObjectController : MonoBehaviour
 
         for (int i = 0; i < currentUnits.Count; i++)
         {
+            if(mustBeSelectedSave != currentUnits[i])
+                currentUnits[i].mustBeSelected = false;
+
+            currentUnits[i].StopAllCoroutines();
             currentUnits[i].DesactivateOutline();
+            currentUnits[i].outlineTurnLauched = false;
+            currentUnits[i].objectFlicker = false;
         }
     }
 }
