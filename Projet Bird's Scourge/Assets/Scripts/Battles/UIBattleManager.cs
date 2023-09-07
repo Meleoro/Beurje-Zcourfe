@@ -18,6 +18,7 @@ public class UIBattleManager : MonoBehaviour
     [Header("Extensions")]
     public UIBattleButtons buttonScript;
     public UIBattleAttack attackScript;
+    public UIBattleObject objectsScript;
 
     [Header("Paramètres")] 
     public float dureeAnimTour;

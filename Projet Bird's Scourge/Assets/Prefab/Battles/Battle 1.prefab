@@ -835,6 +835,7 @@ GameObject:
   - component: {fileID: 5764069547690877472}
   - component: {fileID: 6467984301106180366}
   - component: {fileID: 5073459675851280951}
+  - component: {fileID: 8121207910871145057}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -875,6 +876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonScript: {fileID: 6467984301106180366}
   attackScript: {fileID: 5073459675851280951}
+  objectsScript: {fileID: 8121207910871145057}
   dureeAnimTour: 3
   dureeAnimAttaque: 2
   fondBarreInfo: {fileID: 8641550429628930982}
@@ -1054,6 +1056,27 @@ MonoBehaviour:
   rightCharaParent: {fileID: 5141649329702234183}
   leftChara: {fileID: 3883719743480049560}
   rightChara: {fileID: 1946965769018530418}
+  attackFond: {fileID: 6627574131451859915}
+  ghostPrefab: {fileID: 7425228971653179180, guid: 603f8388e42aa624b81f7311160f6d47, type: 3}
+  ghostParentLeft: {fileID: 4185373620769516865}
+  ghostParentRight: {fileID: 4616180528849428766}
+--- !u!114 &8121207910871145057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625871887068318018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a79164e0cf3afa418b698dfecac55cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageNumber: {fileID: 1191027423845377578}
+  attackUIParent: {fileID: 2250659786296942425}
+  attackUI: {fileID: 8346734038773744536}
+  currentImageParent: {fileID: 7850210266704907563}
+  currentImage: {fileID: 3883719743480049560}
   attackFond: {fileID: 6627574131451859915}
   ghostPrefab: {fileID: 7425228971653179180, guid: 603f8388e42aa624b81f7311160f6d47, type: 3}
   ghostParentLeft: {fileID: 4185373620769516865}
@@ -10918,6 +10941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectUnitOutline: {r: 1, g: 1, b: 1, a: 1}
+  tilesSelected: []
 --- !u!114 &6566052728581450547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18686,7 +18710,9 @@ MonoBehaviour:
   - {fileID: 0}
   haste: 0
   PM: 4
+  outlineTurnLauched: 0
   mustBeSelected: 0
+  objectFlicker: 0
   currentHealth: 10
   currentLevel: 1
   attackLevel: 1
