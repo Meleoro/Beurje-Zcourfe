@@ -12,6 +12,11 @@ public class UIBattleObject : MonoBehaviour
     float currentHeightRatio;
     float charaWidthOffset;
     float charaHeightOffset;
+
+    [Header("Prefabs")] 
+    public GameObject imageParentObject;
+    public GameObject textObject;
+    
     
     [Header("References")] 
     public TextMeshProUGUI damageNumber;
@@ -37,15 +42,15 @@ public class UIBattleObject : MonoBehaviour
     
     
     // WHEN THE ATTACK UI HAS TO APPEAR
-    public IEnumerator UniqueCharaAttack(DataUnit currentUnit, int damage, bool deadEnnemy, DataCompetence.VFXTypes VFXType)
+    public IEnumerator UniqueCharaAttack(DataUnit currentUnit, int damage, bool deadEnnemy, DataCompetence.VFXTypes VFXType, Vector2 pos)
     {
         CompetenceType currentCompetenceType = CompetenceType.attack;
         
-        SetupFeel(currentUnit.damageSprite, currentUnit);
+        SetupFeel(currentUnit.damageSprite, currentUnit, pos);
         
         StartCoroutine(CharacterFeel(currentUnit, currentCompetenceType, deadEnnemy));
 
-        StartCoroutine(TextFeel(currentCompetenceType, damage));
+        StartCoroutine(TextFeel(currentCompetenceType, damage, pos));
 
         StartCoroutine(GhostTrail(10, 0.04f, 0.1f, currentCompetenceType));
         
@@ -58,15 +63,15 @@ public class UIBattleObject : MonoBehaviour
     
     
     // WHEN THE HEAL UI HAS TO APPEAR
-    public IEnumerator UniqueCharaHeal(DataUnit currentUnit, int damage, bool deadEnnemy, DataCompetence.VFXTypes VFXType)
+    public IEnumerator UniqueCharaHeal(DataUnit currentUnit, int damage, bool deadEnnemy, DataCompetence.VFXTypes VFXType, Vector2 pos)
     {
         CompetenceType currentCompetenceType = CompetenceType.heal;
         
-        SetupFeel(currentUnit.attackSprite, currentUnit);
+        SetupFeel(currentUnit.attackSprite, currentUnit, pos);
         
         StartCoroutine(CharacterFeel(currentUnit, currentCompetenceType, deadEnnemy));
 
-        StartCoroutine(TextFeel(currentCompetenceType, damage));
+        StartCoroutine(TextFeel(currentCompetenceType, damage, pos));
 
         //StartCoroutine(GhostTrail(10, 0.04f, 0.1f, currentCompetenceType));
         
@@ -79,25 +84,28 @@ public class UIBattleObject : MonoBehaviour
     
     
     
-    private void SetupFeel(Sprite currentSprite, DataUnit currentData)
+    private void SetupFeel(Sprite currentSprite, DataUnit currentData, Vector2 wantedPos)
     {
-        currentWidthRatio = CameraManager.Instance.screenWidth / 800;
-        currentHeightRatio = CameraManager.Instance.screenHeight / 300;
-
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         attackUI.gameObject.SetActive(true);
+        
+        charaWidthOffset = 800 * currentData.XPosModificator * currentWidthRatio;
+        charaHeightOffset = 300 * currentData.YPosModificator * currentHeightRatio;
+        
+        
 
+        currentImageParent = Instantiate(imageParentObject, wantedPos, Quaternion.identity, attackUI).GetComponent<RectTransform>();
+        currentImage = currentImageParent.GetComponentInChildren<Image>();
+        
+        Destroy(currentImageParent.gameObject, 5);
+        
         currentImage.gameObject.SetActive(true);
         currentImage.sprite = currentSprite;
         
-        currentImageParent.localScale = Vector3.one * currentData.attackSpriteSize;
-        
-        
-        charaWidthOffset = 800 * currentData.XPosModificator;
-        charaHeightOffset = 300 * currentData.YPosModificator;
+        currentImageParent.localScale = Vector3.one * (0.8f * currentData.attackSpriteSize);
 
-        currentImageParent.localPosition = new Vector3(0 + charaWidthOffset, 0 + charaHeightOffset, currentImageParent.position.z);
+        currentImageParent.localPosition = new Vector3(wantedPos.x + charaWidthOffset, wantedPos.y + charaHeightOffset, currentImageParent.position.z);
             
 
         attackFond.DOFade(0.8f, 0.05f);
@@ -117,7 +125,7 @@ public class UIBattleObject : MonoBehaviour
         if(currentCompetenceType == CompetenceType.attack)
             currentImage.rectTransform.DOShakePosition(0.5f, new Vector3(1, 1, 0) * (10 * currentWidthRatio), 20);
         
-        currentImageParent.DOScale(Vector3.one * (1.2f * currentData.attackSpriteSize), 0.15f);
+        currentImageParent.DOScale(Vector3.one * (1f * currentData.attackSpriteSize), 0.15f);
 
         if (!deathBlow)
         {
@@ -170,8 +178,12 @@ public class UIBattleObject : MonoBehaviour
     }
 
 
-    private IEnumerator TextFeel(CompetenceType currentCompetenceType, int damage)
+    private IEnumerator TextFeel(CompetenceType currentCompetenceType, int damage, Vector2 wantedPos)
     {
+        damageNumber = Instantiate(textObject, wantedPos, Quaternion.identity, attackUI).GetComponent<TextMeshProUGUI>();
+        Destroy(damageNumber.gameObject, 5);
+        
+        
         Vector3 posLeftBottomCorner = new Vector3(-attackUIParent.rect.width * 0.5f, -attackUIParent.rect.height * 0.5f, 0);
         float healModificator = 1;
 
@@ -180,8 +192,8 @@ public class UIBattleObject : MonoBehaviour
             healModificator = 0.8f;
         }
         
-        Vector3 pos1 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, 400f / 800f), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, 150f / 300f), 0);
-        Vector3 pos2 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, 400f * healModificator / 800f), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, 150f / 300f), 0);
+        Vector3 pos1 = new Vector3(wantedPos.x * currentWidthRatio, wantedPos.y * currentHeightRatio, 0);
+        Vector3 pos2 = new Vector3(wantedPos.x * currentWidthRatio, wantedPos.y * currentHeightRatio, 0);
         
         damageNumber.rectTransform.localPosition = pos1;
         damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, 0);
@@ -261,7 +273,7 @@ public class UIBattleObject : MonoBehaviour
         
         else if (currentVFXType == DataCompetence.VFXTypes.heal)
         {
-            UIVfxManager.Instance.DoHeal(ghostParentLeft.GetComponent<RectTransform>(), ghostParentRight.GetComponent<RectTransform>(), false);
+            UIVfxManager.Instance.DoHeal(currentImageParent, currentImageParent, false);
         }
     }
     

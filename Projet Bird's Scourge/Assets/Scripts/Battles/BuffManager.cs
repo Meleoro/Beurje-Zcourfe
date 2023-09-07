@@ -57,7 +57,7 @@ public class BuffManager : MonoBehaviour
     
     // -------------------------- APPLY BUFFS ------------------------------
 
-    // APPLY DAMAGE BUFF
+    // RETURNS DAMAGE BUFF
     public int GetDamageBuff(int currentDamages, Unit currentUnit, Ennemy currentEnnemy)
     {
         int addedDamages = 0;
@@ -90,7 +90,7 @@ public class BuffManager : MonoBehaviour
     }
     
     
-    // APPLY ACCURACY BUFF
+    // RETURNS ACCURACY BUFF
     public int GetAccuracyBuff(int currentAccuracyPercentage, Unit currentUnit, Ennemy currentEnnemy)
     {
         int addedAccuracyPercentage = 0;
@@ -123,7 +123,7 @@ public class BuffManager : MonoBehaviour
     }
     
     
-    // APPLY CRIT BUFF
+    // RETURNS CRIT BUFF
     public int GetCritBuff(int currentCritPercentage, Unit currentUnit, Ennemy currentEnnemy)
     {
         int addedCritPercentage = 0;
@@ -156,7 +156,7 @@ public class BuffManager : MonoBehaviour
     }
     
     
-    // APPLY DEFENSE BUFF
+    // RETURNS DEFENSE BUFF
     public int GetDefenseBuff(int currentDefense, Unit currentUnit, Ennemy currentEnnemy)
     {
         int addedDefense = 0;

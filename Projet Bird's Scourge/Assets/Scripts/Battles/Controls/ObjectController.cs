@@ -156,6 +156,14 @@ public class ObjectController : MonoBehaviour
                 StartCoroutine(effectScript.HealEffect(currentItem, clickedUnit));
             }
         }
+        
+        else if (currentItem.useType == ShopItemData.UseType.selectRange)
+        {
+            if (currentItem.effectType == ShopItemData.EffectType.heal)
+            {
+                StartCoroutine(effectScript.HealEffect(currentItem, clickedUnit));
+            }
+        }
     }
     
     private void EnnemyClicked(Ennemy clickedEnnemy)

@@ -14,6 +14,7 @@ public class ShopItemData : ScriptableObject
     }
     public UseType useType = UseType.selectUnit;
     
+    
     public enum EffectType
     {
         heal,
