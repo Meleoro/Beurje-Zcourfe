@@ -1,10 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using UnityEngine;
+using Object = System.Object;
 
 public class ObjectController : MonoBehaviour
 {
+    public static ObjectController instance;
+    
     [Header("UnitSelect")] 
     public Color selectUnitOutline;
     private Unit mustBeSelectedSave;
@@ -23,6 +27,11 @@ public class ObjectController : MonoBehaviour
     private RangeFinder rangeFinder;
     private EffectMaker effectMaker;
 
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
 
     private void Start()
     {
@@ -149,6 +158,8 @@ public class ObjectController : MonoBehaviour
     
     private void UnitClicked(Unit clickedUnit)
     {
+        InventaireManager.Instance.ConsumeItem();
+        
         if (currentItem.useType == ShopItemData.UseType.selectUnit)
         {
             if (currentItem.effectType == ShopItemData.EffectType.heal)
@@ -178,6 +189,8 @@ public class ObjectController : MonoBehaviour
     
     private void EnnemyClicked(Ennemy clickedEnnemy)
     {
+        InventaireManager.Instance.ConsumeItem();
+        
         if (currentItem.useType == ShopItemData.UseType.selectEnnemy)
         {
             if (currentItem.effectType == ShopItemData.EffectType.damage)
@@ -189,6 +202,8 @@ public class ObjectController : MonoBehaviour
     
     private void TileClicked(OverlayTile clickedTile)
     {
+        InventaireManager.Instance.ConsumeItem();
+        
         if (currentItem.useType == ShopItemData.UseType.selectTile)
         {
             if (currentItem.effectType == ShopItemData.EffectType.summon)

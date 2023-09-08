@@ -191,7 +191,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Essential
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7573938814324896966, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7089778343506198476, guid: 50ef9e9b142d85747b9a4ea0843de16b, type: 3}

@@ -21,6 +21,7 @@ public class BenedictionManager : MonoBehaviour
     public void Awake()
     {
         if (instance == null) instance = this;
+            else Destroy(gameObject);
         UpdateBlessingUI();
         
         for (int i = 0; i < possessedBlessings.Count; i++)

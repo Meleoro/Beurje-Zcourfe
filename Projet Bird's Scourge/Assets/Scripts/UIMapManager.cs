@@ -519,7 +519,13 @@ public class UIMapManager : MonoBehaviour
                     pricesList[index].text = "Sold";
                     break;
                 case ShopItemData.type.item:
-                    Debug.Log("+ 1 nouvel item !");
+                  // InventaireManager.Instance.GetNewItem(finalItemList[index]);
+                   InventaireManager.Instance.inventory.Add(finalItemList[index]);
+                   InventaireManager.Instance.UpdateInventoryUI();
+                    slotList[index].interactable = false;
+                    pricesList[index].color = new Color32(170, 0, 0,255);
+                    pricesList[index].fontSize = 21.5f;
+                    pricesList[index].text = "Sold";
                     break;
             }
             UpdateStateBar();
