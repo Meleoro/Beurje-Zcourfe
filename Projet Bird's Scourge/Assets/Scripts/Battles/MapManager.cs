@@ -185,6 +185,12 @@ public class MapManager : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
         
+        for (int i = 0; i < BattleManager.Instance.currentSummons.Count; i++)
+        {
+            BattleManager.Instance.currentSummons[i].Initialise();
+            yield return new WaitForSeconds(0.2f);
+        }
+        
         yield return new WaitForSeconds(0.5f);
         
         tilesAppeared = true;

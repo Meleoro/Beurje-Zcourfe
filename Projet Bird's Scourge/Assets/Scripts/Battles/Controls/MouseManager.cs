@@ -223,7 +223,7 @@ public class MouseManager : MonoBehaviour
             }
 
             // Shows the infos of the currently playing ennemy
-            else if (BattleManager.Instance.order[0].CompareTag("Ennemy"))
+            else if (BattleManager.Instance.order[0].CompareTag("Ennemy") || BattleManager.Instance.order[0].CompareTag("Summon"))
             {
                 UIBattleManager.Instance.OpenUnitInfos(BattleManager.Instance.order[0].GetComponent<Ennemy>().data,
                     null, BattleManager.Instance.order[0].GetComponent<Ennemy>());
@@ -417,20 +417,16 @@ public class MouseManager : MonoBehaviour
         
         else if(currentEnnemy != null)
         {
-            tilesAtRangeDisplayed = currentEnnemy.currentMoveTiles;
-            
-            if(selectedEnnemy is null)
-                StartCoroutine(effectMaker.MoveTilesAppear(currentEnnemy.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColor));
-                
-            else
-                StartCoroutine(effectMaker.MoveTilesAppear(currentEnnemy.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColorSelected));
-
-            /*for (int i = 0; i < tilesAtRangeDisplayed.Count; i++)
+            if (currentEnnemy != selectedEnnemy || forceChange)
             {
-                //tilesAtRangeDisplayed[i].ShowTile();
-
-                tilesAtRangeDisplayed[i].ChangeColor(tilesMovementColor);
-            }*/
+                tilesAtRangeDisplayed = currentEnnemy.currentMoveTiles;
+            
+                if(selectedEnnemy is null)
+                    StartCoroutine(effectMaker.MoveTilesAppear(currentEnnemy.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColor));
+                
+                else
+                    StartCoroutine(effectMaker.MoveTilesAppear(currentEnnemy.currentTile, tilesAtRangeDisplayed, 0.05f, tilesMovementColorSelected));
+            }
         }
 
         else
@@ -529,7 +525,7 @@ public class MouseManager : MonoBehaviour
     // DISPLAY THE ARROW OF THE PATH THAT WILL USE THE UNIT
     private void DisplayArrow(OverlayTile focusedTile)
     {
-        if (unitSelect && !competenceSelect)
+        if (unitSelect && !competenceSelect && selectedEnnemy == null)
         {
             if (selectedUnit.mustBeSelected)
             {

@@ -40,10 +40,14 @@ public class RangeFinder
     }
 
 
-    public List<OverlayTile> FindTilesAttackEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel, OverlayTile currentTile, bool shyBehavior)
+    public List<OverlayTile> FindTilesAttackEnnemy(List<OverlayTile> possibleMoves, DataCompetence competenceUsed, int competenceLevel, OverlayTile currentTile, bool shyBehavior, bool isUnitSummon)
     {
         List<OverlayTile> result = new List<OverlayTile>();
         List<Vector2Int> tilesUnits = BattleManager.Instance.activeUnits.Keys.ToList();
+        tilesUnits.AddRange(BattleManager.Instance.activeSummons.Keys.ToList());
+        
+        if(isUnitSummon)
+            tilesUnits = BattleManager.Instance.activeEnnemies.Keys.ToList();
 
         int greaterDistanceUnit = 0;
         int nearestDistanceUnit = 100;
