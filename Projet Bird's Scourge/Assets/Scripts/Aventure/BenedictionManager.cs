@@ -79,4 +79,63 @@ public class BenedictionManager : MonoBehaviour
             infoBubbleList[index].SetActive(false);
         }
     }
+
+    public void BlessingEffect(int ID,Unit currentUnit, Ennemy currentEnnemy)
+    {
+        List<Unit> concernedUnits = new List<Unit>();
+        List<Ennemy> concernedEnnemys = new List<Ennemy>();
+        concernedUnits.Add(currentUnit);
+        concernedEnnemys.Add(currentEnnemy); 
+        
+        if (CheckIfBlessingGot(ID))
+        {
+            Debug.Log("J'ai la blessing");
+            switch (ID)
+            {
+                case 0:
+                    if (VerifyEnnemyHealth(currentEnnemy, 80, false))
+                    {
+                        Debug.Log("La condition est verifiée");
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,100,1,concernedUnits,concernedEnnemys);
+                    }
+                       
+                    break;
+            } 
+        }
+    }
+    
+    
+    // ---------------------------- Fonctions de Check de Conditions -------------------------------------------
+
+    public bool VerifyUnitHealth(Unit currentUnit,int percentNeeded,bool moreOrLess)
+    {
+        if (moreOrLess)
+        {
+            if (currentUnit.currentHealth >= currentUnit.data.levels[currentUnit.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+
+        }
+        else
+        {
+            if (currentUnit.currentHealth <= currentUnit.data.levels[currentUnit.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+        }
+    }
+    
+    public bool VerifyEnnemyHealth(Ennemy currentEnnemy,int percentNeeded,bool moreOrLess)
+    {
+        if (moreOrLess)
+        {
+            if (currentEnnemy.currentHealth >= currentEnnemy.data.levels[currentEnnemy.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+
+        }
+        else
+        {
+            if (currentEnnemy.currentHealth <= currentEnnemy.data.levels[currentEnnemy.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+        }
+    }
+    
+    
 }
