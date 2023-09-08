@@ -471,7 +471,8 @@ public class BattleManager : MonoBehaviour
     public IEnumerator NextTurn()
     {
         isChangingTurn = true;
-        
+     
+        BuffManager.Instance.NextTurn();
         MouseManager.Instance.noControl = true;
 
         

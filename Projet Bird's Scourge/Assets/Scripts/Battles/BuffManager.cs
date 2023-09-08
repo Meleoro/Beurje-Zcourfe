@@ -198,7 +198,6 @@ public class BuffManager : MonoBehaviour
                 {
                     if (characters[j].unit == concernedUnit[i])
                     {
-                        Debug.Log("Je gagne le buff");
                         characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration));
                     }
                 }

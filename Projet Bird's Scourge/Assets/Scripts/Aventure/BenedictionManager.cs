@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -80,7 +81,7 @@ public class BenedictionManager : MonoBehaviour
         }
     }
 
-    public void BlessingEffect(int ID,Unit currentUnit, Ennemy currentEnnemy)
+    public void BlessingEffect(int ID,Unit currentUnit, Ennemy currentEnnemy,int inflictedDamage)
     {
         List<Unit> concernedUnits = new List<Unit>();
         List<Ennemy> concernedEnnemys = new List<Ennemy>();
@@ -89,19 +90,42 @@ public class BenedictionManager : MonoBehaviour
         
         if (CheckIfBlessingGot(ID))
         {
-            Debug.Log("J'ai la blessing");
             switch (ID)
             {
                 case 0:
-                    if (VerifyEnnemyHealth(currentEnnemy, 80, false))
-                    {
-                        Debug.Log("La condition est verifiée");
-                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,100,1,concernedUnits,concernedEnnemys);
-                    }
-                       
+                    if (VerifyEnnemyHealth(currentEnnemy, 30, false))
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,20,1,concernedUnits,concernedEnnemys);
+                    break;
+                case 1:
+                    BuffManager.Instance.AddBuff(BuffManager.BuffType.crit,5,1,concernedUnits,concernedEnnemys);
+                        break;
+                case 2:
+                    if (VerifyUnitHealth(currentUnit, 30, false))
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.accuracy,15,1,concernedUnits,concernedEnnemys);
+                    break;
+                case 3:
+                    currentUnit.currentHealth += Mathf.RoundToInt(inflictedDamage / 10 * 100);
+                    if (currentUnit.currentHealth >= currentUnit.data.levels[currentUnit.CurrentLevel].PV) 
+                        currentUnit.currentHealth = currentUnit.data.levels[currentUnit.CurrentLevel].PV;
+                    break;
+                case 4:
+                    if(VerifyEnnemyDead(currentEnnemy))
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,10,3,concernedUnits,concernedEnnemys);
+                    break;
+                case 5:
+                    if(VerifyEnnemyDead(currentEnnemy))
+                        currentUnit.currentHealth += Mathf.RoundToInt(currentUnit.data.levels[currentUnit.CurrentLevel].PV / 10 * 100);
+                    if (currentUnit.currentHealth >= currentUnit.data.levels[currentUnit.CurrentLevel].PV)
+                        currentUnit.currentHealth = currentUnit.data.levels[currentUnit.CurrentLevel].PV;
+                    break;
+                case 6:
+                    if (inflictedDamage > 0) ResourcesSaveManager.Instance.gold += 1;
+                    UIMapManager.Instance.UpdateStateBar();
                     break;
             } 
         }
+        concernedUnits.Clear();
+        concernedEnnemys.Clear();
     }
     
     
@@ -136,6 +160,11 @@ public class BenedictionManager : MonoBehaviour
             else return false;
         }
     }
-    
+
+    public bool VerifyEnnemyDead(Ennemy currentEnnemy)
+    {
+        if (currentEnnemy.currentHealth <= currentEnnemy.data.levels[currentEnnemy.CurrentLevel].PV) return true;
+        else return false;
+    }
     
 }
