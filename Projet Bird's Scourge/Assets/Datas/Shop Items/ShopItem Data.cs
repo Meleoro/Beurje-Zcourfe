@@ -4,6 +4,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ShopItem")]
 public class ShopItemData : ScriptableObject
 {
+    public enum type
+    {
+        wood,
+        stone,
+        iron,
+        food,
+        item,
+        blessing
+    } 
+    public type itemType = type.wood;
     
     public enum UseType
     {
@@ -23,17 +33,18 @@ public class ShopItemData : ScriptableObject
         summon,
     }
     public EffectType effectType = EffectType.heal;
-   
-    public enum type
-    {
-        wood,
-        stone,
-        iron,
-        food,
-        item,
-        blessing
-    } 
-    public type itemType = type.wood;
+
+    public int healAmount;
+    public int damageAmount;
+
+    [Header("Buff Item")]
+    public BuffManager.BuffType buffType = BuffManager.BuffType.damage;
+    public int damageBuffAmount;
+    public int accuracyBuffAmount;
+    public int critBuffAmount;
+    public int defenseBuffAmount;
+    public int buffDuration;
+    
    
     [Header("Général")]
     public string name;

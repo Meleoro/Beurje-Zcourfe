@@ -202,6 +202,8 @@ public class BattleManager : MonoBehaviour
     // Create the order of the fight in the beginning 
     public void CalculateOrder()
     {
+        BuffManager.Instance.InitialiseListCharacters();
+        
         int wantedLength = 4;
 
         order = new List<GameObject>();

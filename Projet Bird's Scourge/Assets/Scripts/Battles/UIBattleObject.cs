@@ -32,11 +32,12 @@ public class UIBattleObject : MonoBehaviour
     public enum CompetenceType
     {
         attack,
-        attackCrit,
-        miss,
         heal,
         summon,
-        buff
+        buffDamage,
+        buffAccuracy,
+        buffCrit,
+        buffDefense
     }
     
     
@@ -72,6 +73,42 @@ public class UIBattleObject : MonoBehaviour
         StartCoroutine(CharacterFeel(currentUnit, currentCompetenceType, deadEnnemy));
 
         StartCoroutine(TextFeel(currentCompetenceType, damage, pos));
+
+        //StartCoroutine(GhostTrail(10, 0.04f, 0.1f, currentCompetenceType));
+        
+        LaunchVFX(VFXType);
+
+        yield return new WaitForSeconds(1.3f);
+
+        StartCoroutine(EndFeel());
+    }
+    
+    
+    // WHEN THE HEAL UI HAS TO APPEAR
+    public IEnumerator UniqueCharaBuff(DataUnit currentUnit, BuffManager.BuffType buffType, int buffValue, DataCompetence.VFXTypes VFXType, Vector2 pos)
+    {
+        CompetenceType currentCompetenceType = CompetenceType.buffDamage;
+        
+        switch (buffType)
+        {
+            case BuffManager.BuffType.accuracy : 
+                currentCompetenceType = CompetenceType.buffAccuracy;
+                break;
+            
+            case BuffManager.BuffType.crit : 
+                currentCompetenceType = CompetenceType.buffCrit;
+                break;
+            
+            case BuffManager.BuffType.defense : 
+                currentCompetenceType = CompetenceType.buffDefense;
+                break;
+        }
+
+        SetupFeel(currentUnit.attackSprite, currentUnit, pos);
+        
+        StartCoroutine(CharacterFeel(currentUnit, currentCompetenceType, false));
+
+        StartCoroutine(TextFeel(currentCompetenceType, buffValue, pos));
 
         //StartCoroutine(GhostTrail(10, 0.04f, 0.1f, currentCompetenceType));
         
@@ -129,10 +166,17 @@ public class UIBattleObject : MonoBehaviour
 
         if (!deathBlow)
         {
-            Color wantedColor = Color.red;
+            Color wantedColor;
+            
+            if (CompetenceType.attack == currentCompetenceType)
+                wantedColor = Color.red;
 
-            if (CompetenceType.heal == currentCompetenceType)
+            else if (CompetenceType.heal == currentCompetenceType)
                 wantedColor = Color.green;
+            
+            else
+                wantedColor = Color.yellow;
+            
         
             Color colorImage = Color.black;
             DOTween.To(() => colorImage, x => colorImage = x, wantedColor, 0.3f)
@@ -217,10 +261,33 @@ public class UIBattleObject : MonoBehaviour
             damageNumber.text = damage.ToString();
             damageNumber.color = Color.green;
         }
-        else
+        else if (currentCompetenceType == CompetenceType.attack)
         {   
             damageNumber.text = damage.ToString();
             damageNumber.color = Color.red;
+        }
+        else
+        {
+            switch (currentCompetenceType)
+            {
+                case (CompetenceType.buffDamage) :
+                    damageNumber.text = "Attack + " + damage.ToString() + "%";
+                    break;
+                
+                case (CompetenceType.buffAccuracy) :
+                    damageNumber.text = "Accuracy + " + damage.ToString() + "%";
+                    break;
+                
+                case (CompetenceType.buffCrit) :
+                    damageNumber.text = "Crit + " + damage.ToString() + "%";
+                    break;
+                
+                case (CompetenceType.buffDefense) :
+                    damageNumber.text = "Defense + " + damage.ToString() + "%";
+                    break;
+            }
+            
+            damageNumber.color = Color.yellow;
         }
         
 

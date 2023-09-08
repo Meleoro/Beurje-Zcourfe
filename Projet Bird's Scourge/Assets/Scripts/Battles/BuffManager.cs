@@ -42,14 +42,6 @@ public class BuffManager : MonoBehaviour
         {
             characters.Add(new UnitBuff(null, BattleManager.Instance.currentEnnemies[i]));
         }
-
-        VefifyBenedictions();
-    }
-
-
-    public void VefifyBenedictions()
-    {
-        
     }
     
     
@@ -198,24 +190,30 @@ public class BuffManager : MonoBehaviour
     // CALLED TO ADD A BUFF TO A LIST OF UNITS
     public void AddBuff(BuffType buffType, int buffValue, int buffDuration, List<Unit> concernedUnit, List<Ennemy> concernedEnnemies)
     {
-        for (int i = 0; i < concernedUnit.Count; i++)
+        if (concernedUnit is not null)
         {
-            for (int j = 0; j < characters.Count; j++)
+            for (int i = 0; i < concernedUnit.Count; i++)
             {
-                if (characters[j].unit == concernedUnit[i])
+                for (int j = 0; j < characters.Count; j++)
                 {
-                    characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration));
+                    if (characters[j].unit == concernedUnit[i])
+                    {
+                        characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration));
+                    }
                 }
             }
         }
         
-        for (int i = 0; i < concernedEnnemies.Count; i++)
+        else if (concernedEnnemies is not null)
         {
-            for (int j = 0; j < characters.Count; j++)
+            for (int i = 0; i < concernedEnnemies.Count; i++)
             {
-                if (characters[j].ennemy == concernedEnnemies[i])
+                for (int j = 0; j < characters.Count; j++)
                 {
-                    characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration));
+                    if (characters[j].ennemy == concernedEnnemies[i])
+                    {
+                        characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration));
+                    }
                 }
             }
         }

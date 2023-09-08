@@ -155,6 +155,11 @@ public class ObjectController : MonoBehaviour
             {
                 StartCoroutine(effectScript.HealEffect(currentItem, clickedUnit));
             }
+            
+            else if (currentItem.effectType == ShopItemData.EffectType.buff)
+            {
+                StartCoroutine(effectScript.BuffEffect(currentItem, clickedUnit));
+            }
         }
         
         else if (currentItem.useType == ShopItemData.UseType.selectRange)
@@ -162,6 +167,11 @@ public class ObjectController : MonoBehaviour
             if (currentItem.effectType == ShopItemData.EffectType.heal)
             {
                 StartCoroutine(effectScript.HealEffect(currentItem, clickedUnit));
+            }
+            
+            else if (currentItem.effectType == ShopItemData.EffectType.buff)
+            {
+                StartCoroutine(effectScript.BuffEffect(currentItem, clickedUnit));
             }
         }
     }

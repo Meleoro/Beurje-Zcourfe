@@ -11702,6 +11702,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2026886303022342793}
   - component: {fileID: 444871648844107493}
+  - component: {fileID: 69951079072892352}
   m_Layer: 0
   m_Name: Battle 1
   m_TagString: Untagged
@@ -11769,6 +11770,19 @@ MonoBehaviour:
   unitSpot1: {fileID: 8233672066014875820}
   unitSpot2: {fileID: 4594634865901839860}
   unitSpot3: {fileID: 5245828737687115693}
+--- !u!114 &69951079072892352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4736870783535128294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf1b0b78f129564db6553ab61adda5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters: []
 --- !u!1 &4921777903291028783
 GameObject:
   m_ObjectHideFlags: 0
