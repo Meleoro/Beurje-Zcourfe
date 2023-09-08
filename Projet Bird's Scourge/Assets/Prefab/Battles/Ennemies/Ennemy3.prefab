@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6314134945597204167}
   - component: {fileID: 89559877310451403}
   - component: {fileID: 8216069370002093697}
+  - component: {fileID: 7124634106641858158}
   - component: {fileID: 6019403310159601744}
   m_Layer: 0
   m_Name: Ennemy3
@@ -206,6 +207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: a4ad7c64515177c4098566a0c85bef02, type: 2}
   currentLevel: 1
+  isUnitSummon: 0
+  isSummoned: 0
   currentTile: {fileID: 0}
   currentMoveTiles: []
   tilesAttack: []
@@ -213,6 +216,18 @@ MonoBehaviour:
   tilesCompetence2: []
   haste: 0
   currentHealth: 10
+--- !u!114 &7124634106641858158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2478420452852901089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5465add9e2f00ca4ab5e8c3df04a2c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!61 &6019403310159601744
 BoxCollider2D:
   m_ObjectHideFlags: 0

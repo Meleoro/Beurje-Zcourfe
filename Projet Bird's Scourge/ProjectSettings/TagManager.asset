@@ -10,6 +10,7 @@ TagManager:
   - Nod
   - Zone
   - Region
+  - Summon
   layers:
   - Default
   - TransparentFX

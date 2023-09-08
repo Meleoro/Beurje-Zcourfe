@@ -9,6 +9,7 @@ public class Ennemy : MonoBehaviour
     [Header("GeneralDatas")] 
     public DataUnit data;
     [Min(1)] [SerializeField] int currentLevel = 1;
+    public bool isUnitSummon;
     public int CurrentLevel => currentLevel - 1;
     [HideInInspector] public bool isSummoned;
 
@@ -27,36 +28,28 @@ public class Ennemy : MonoBehaviour
     [Header("References")]
     private RangeFinder rangeFinder;
     private PathFinder pathFinder;
-    private StatsCalculator statsCalculator;
     private SpriteRenderer spriteRenderer;
+    private EnnemyAttacks attackScript;
     
 
     private void Start()
     {
         rangeFinder = new RangeFinder();
         pathFinder = new PathFinder();
-        statsCalculator = new StatsCalculator();
 
+        attackScript = GetComponent<EnnemyAttacks>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         currentHealth = data.levels[CurrentLevel].PV;
         
-        BattleManager.Instance.AddEnnemyList(this);
+        
+        if(!isUnitSummon)
+            BattleManager.Instance.AddEnnemyList(this);
+            
+        else
+            BattleManager.Instance.AddSummonList(this);
         
         spriteRenderer.enabled = false;
-    }
-    
-
-    private void Update()
-    {
-        /*if (currentTile is null && MapManager.Instance.tilesAppeared)
-        {
-            FindCurrentTile();
-            
-            BattleManager.Instance.AddEnnemy(this, isSummoned);
-            
-            FindTilesAtRange();
-        }*/
     }
 
 
@@ -66,7 +59,11 @@ public class Ennemy : MonoBehaviour
         FindCurrentTile();
         FindTilesAtRange();
             
-        BattleManager.Instance.AddEnnemy(this, isSummoned);
+        if(!isUnitSummon)
+            BattleManager.Instance.AddEnnemy(this, isSummoned);
+        
+        else
+            BattleManager.Instance.AddSummon(this, isSummoned);
 
         spriteRenderer.enabled = true;
 
@@ -100,7 +97,7 @@ public class Ennemy : MonoBehaviour
         {
             case DataCompetence.Effets.none :
                 moveTileAttackTile =
-                    rangeFinder.FindTilesAttackEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.levels[CurrentLevel].shyBehavior);
+                    rangeFinder.FindTilesAttackEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.levels[CurrentLevel].shyBehavior, isUnitSummon);
                 break;
             
             case DataCompetence.Effets.invocation :
@@ -117,9 +114,27 @@ public class Ennemy : MonoBehaviour
         {
             if (!isSummon)
             {
-                Unit attackedUnit = BattleManager.Instance.activeUnits[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
+                Unit attackedUnit = null;
+                Ennemy attackedEnnemy = null;
+                Ennemy attackedSummon = null;
+
+                if (!isUnitSummon)
+                {
+                    if (BattleManager.Instance.activeUnits.ContainsKey(
+                            (Vector2Int)moveTileAttackTile[1].posOverlayTile))
+                    {
+                        attackedUnit = BattleManager.Instance.activeUnits[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
+                    }
+                    else
+                    {
+                        attackedSummon = BattleManager.Instance.activeSummons[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
+                    }
+                }
+                
+                else
+                    attackedEnnemy = BattleManager.Instance.activeEnnemies[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
             
-                StartCoroutine(MoveToTileAttack(movePath, attackedUnit, data.attaqueData));
+                StartCoroutine(MoveToTileAttack(movePath, attackedUnit, attackedEnnemy, attackedSummon, data.attaqueData));
             }
 
             else
@@ -134,91 +149,7 @@ public class Ennemy : MonoBehaviour
             StartCoroutine(MoveToTile(movePath));
         }
     }
-
-
-    // ATTACK ONE PLAYER'S UNIT
-    public IEnumerator AttackUnit(Unit attackedUnit, DataCompetence competenceUsed)
-    {
-        IntroCompetence(attackedUnit.currentTile);
-
-        yield return new WaitForSeconds(1.5f);
-                
-        int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[0].baseHitRate,attackedUnit.data.levels[attackedUnit.CurrentLevel].agilite);
-        int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[0].damageMultiplier, attackedUnit.data.levels[attackedUnit.CurrentLevel].defense);
-        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[0].criticalMultiplier, attackedUnit.data.levels[attackedUnit.CurrentLevel].chance);
-                
-        // Si l'attaque touche
-        if (Random.Range(0, 100) <= attackHitRate) 
-        {
-            // Si c'est un critique
-            if (Random.Range(0, 100) <= attackCriticalRate) 
-            {
-                bool deadUnit = attackedUnit.TakeDamages(attackDamage * 2);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage * 2,false,true, deadUnit, competenceUsed.VFXType));
-            }
-            // si ce n'est pas un critique
-            else 
-            {
-                bool deadUnit = attackedUnit.TakeDamages(attackDamage);
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,attackDamage,false,false, deadUnit, competenceUsed.VFXType)); 
-            }
-        }
-        // Si c'est un miss
-        else 
-        { 
-            StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(attackedUnit.data, data, false,0,true,false, false, competenceUsed.VFXType));
-        }
-
-        yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
-        
-        EndCompetence(attackedUnit.currentTile);
-    }
-
-
-    // SUMMONS ANOTHER ENNEMY
-    public IEnumerator SummonUnit(DataCompetence currentCompetence, OverlayTile currentCompetenceTile)
-    {
-        IntroCompetence(currentCompetenceTile);
-        
-        yield return new WaitForSeconds(1.5f);
-
-        StartCoroutine(UIBattleManager.Instance.attackScript.SummonUIFeel(
-            currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data, data, false, currentCompetence.VFXType));
-        
-        yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
-        
-        GameObject summonedEnnemy = currentCompetence.levels[0].summonedUnit;
-        Vector2 spawnPos = currentCompetenceTile.transform.position + Vector3.up * 0.5f;
-
-        GameObject currentEnnemy = Instantiate(summonedEnnemy, spawnPos, Quaternion.identity);
-        currentEnnemy.GetComponent<Ennemy>().isSummoned = true;
-        
-        yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
-        
-        EndCompetence(currentCompetenceTile);
-    }
-
-    public void IntroCompetence(OverlayTile currentCompetenceTile)
-    {
-        // Camera
-        List<Vector2> positions = new List<Vector2>();
-        
-        positions.Add(transform.position);
-        positions.Add(currentCompetenceTile.transform.position);
-        
-        StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
-        
-        // Tile
-        currentCompetenceTile.LaunchFlicker(0.5f, MouseManager.Instance.tilesAttackColorOver);
-    }
-
-    public void EndCompetence(OverlayTile currentCompetenceTile)
-    {
-        currentCompetenceTile.StopFlicker();
-        
-        UIBattleManager.Instance.UpdateTurnUI();
-        StartCoroutine(BattleManager.Instance.NextTurn());
-    }
+    
     
     
     // REDUCE THE HEALTH OF THE ENNEMY AND VERIFY IF HE IS DEAD
@@ -240,7 +171,12 @@ public class Ennemy : MonoBehaviour
     {
         DesactivateFlicker();
         
-        BattleManager.Instance.RemoveEnnemy(this);
+        if(!isUnitSummon)
+            BattleManager.Instance.RemoveEnnemy(this);
+        
+        else
+            BattleManager.Instance.RemoveSummon(this);
+        
         Destroy(gameObject);
     }
     
@@ -284,7 +220,7 @@ public class Ennemy : MonoBehaviour
     
     
     // MOVE WITH BREAKS + ATTACK
-    public IEnumerator MoveToTileAttack(List<OverlayTile> path, Unit attackedUnit, DataCompetence competenceUsed)
+    public IEnumerator MoveToTileAttack(List<OverlayTile> path, Unit attackedUnit, Ennemy attackedEnnemy, Ennemy attackedSummon, DataCompetence competenceUsed)
     {
         currentTile.isBlocked = false;
         
@@ -300,7 +236,7 @@ public class Ennemy : MonoBehaviour
         }
         
         // Attack part
-        StartCoroutine(AttackUnit(attackedUnit, competenceUsed));
+        StartCoroutine(attackScript.AttackUnit(attackedUnit, attackedEnnemy, attackedSummon, competenceUsed));
         
         currentTile = path[path.Count - 1];
         currentTile.isBlocked = true;
@@ -328,7 +264,7 @@ public class Ennemy : MonoBehaviour
         }
         
         // Attack part
-        StartCoroutine(SummonUnit(competenceUsed, attackedTile));
+        StartCoroutine(attackScript.SummonUnit(competenceUsed, attackedTile));
         
         currentTile = path[path.Count - 1];
         currentTile.isBlocked = true;

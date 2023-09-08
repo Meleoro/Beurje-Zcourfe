@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11e573b8e61ddc4c8f994878d654055, type: 3}
+  m_Name: Summon1
+  m_EditorClassIdentifier: 
+  charaName: Hoplitake
+  isEnnemy: 1
+  idleSprite: {fileID: 21300000, guid: 13f67bb6b7b2530488e2599bfb0e432f, type: 3}
+  attackSprite: {fileID: 21300000, guid: d053b309b11b31b46a9bd0daa541f9e6, type: 3}
+  damageSprite: {fileID: 21300000, guid: 6485f11a0c1c8c74a9d3fadbaa861722, type: 3}
+  attaqueData: {fileID: 11400000, guid: 8b80294e95d6d894dacb6b8e23d09164, type: 2}
+  levelUnlockCompetence1: 0
+  competence1Data: {fileID: 0}
+  levelUnlockCompetence2: 0
+  competence2Data: {fileID: 0}
+  levelUnlockPassif: 0
+  passifData: {fileID: 0}
+  attackSpriteSize: 1
+  XPosModificator: 0
+  YPosModificator: 0
+  levels:
+  - level: 0
+    PV: 10
+    PM: 0
+    movePatern:
+    - list: 0000010000
+    - list: 00000100000000000000
+    - list: 010100010100000000000000000000
+    - list: 0000010000000000000000000000000000000000
+    - list: 00000100000000000000000000000000000000000000000000
+    shyBehavior: 1
+    moveDiagonal: 0
+    force: 3
+    defense: 3
+    vitesse: 10
+    agilite: 3
+    chance: 1

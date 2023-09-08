@@ -11,7 +11,6 @@ public class Unit : MonoBehaviour
     [Header("GeneralDatas")] 
     public DataUnit data;
     
-    
     [Header("CurrentDatas")]
     [HideInInspector] public OverlayTile currentTile;
     [HideInInspector] public List<OverlayTile> currentTilesAtRange = new List<OverlayTile>();

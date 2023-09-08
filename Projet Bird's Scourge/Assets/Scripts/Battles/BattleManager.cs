@@ -17,11 +17,13 @@ public class BattleManager : MonoBehaviour
     [Header("Start")]
     [HideInInspector] public List<Unit> currentUnits = new List<Unit>();
     [HideInInspector] public List<Ennemy> currentEnnemies = new List<Ennemy>();
+    [HideInInspector] public List<Ennemy> currentSummons = new List<Ennemy>();
     private int numberCharas;
 
     [Header("Units/Ennemies")]
     public Dictionary<Vector2Int, Unit> activeUnits = new Dictionary<Vector2Int, Unit>();
     public Dictionary<Vector2Int, Ennemy> activeEnnemies = new Dictionary<Vector2Int, Ennemy>();
+    public Dictionary<Vector2Int, Ennemy> activeSummons = new Dictionary<Vector2Int, Ennemy>();
 
     [Header("Order")] 
     public List<GameObject> order;
@@ -109,7 +111,7 @@ public class BattleManager : MonoBehaviour
         if(!currentUnits.Contains(newUnit))
             currentUnits.Add(newUnit);
         
-        if(!summoned && activeUnits.Count + activeEnnemies.Count >= numberCharas)
+        if(!summoned && activeUnits.Count + activeEnnemies.Count + activeSummons.Count >= numberCharas)
             CalculateOrder();
     }
 
@@ -120,7 +122,18 @@ public class BattleManager : MonoBehaviour
         if(!currentEnnemies.Contains(newEnnemy))
             currentEnnemies.Add(newEnnemy);
         
-        if(!summoned && activeUnits.Count + activeEnnemies.Count >= numberCharas)
+        if(!summoned && activeUnits.Count + activeEnnemies.Count + activeSummons.Count >= numberCharas)
+            CalculateOrder();
+    }
+    
+    public void AddSummon(Ennemy newSummon, bool summoned)
+    {
+        activeSummons.Add(new Vector2Int(newSummon.currentTile.posOverlayTile.x, newSummon.currentTile.posOverlayTile.y), newSummon);
+        
+        if(!currentSummons.Contains(newSummon))
+            currentSummons.Add(newSummon);
+        
+        if(!summoned && activeUnits.Count + activeEnnemies.Count + activeSummons.Count >= numberCharas)
             CalculateOrder();
     }
     
@@ -137,6 +150,14 @@ public class BattleManager : MonoBehaviour
     public void AddEnnemyList(Ennemy newEnnemy)
     {
         currentEnnemies.Add(newEnnemy);
+        
+        numberCharas += 1;
+    }
+    
+    // IS NEEDED FOR THE START OF THE GAME 
+    public void AddSummonList(Ennemy newSummon)
+    {
+        currentSummons.Add(newSummon);
         
         numberCharas += 1;
     }
@@ -173,6 +194,22 @@ public class BattleManager : MonoBehaviour
         
         ActualiseOrder();
     }
+    
+    public void RemoveSummon(Ennemy summon)
+    {
+        activeSummons.Remove(new Vector2Int(summon.currentTile.posOverlayTile.x, summon.currentTile.posOverlayTile.y));
+        currentSummons.Remove(summon);
+        
+        for (int i = 0; i < order.Count; i++)
+        {
+            if (order[i] == summon.gameObject)
+            {
+                order.RemoveAt(i);
+            }
+        }
+        
+        ActualiseOrder();
+    }
 
 
     public void ActualiseUnits()
@@ -192,6 +229,13 @@ public class BattleManager : MonoBehaviour
         for (int i = 0; i < currentEnnemies.Count; i++)
         {
             activeEnnemies.Add((Vector2Int)currentEnnemies[i].currentTile.posOverlayTile, currentEnnemies[i]);
+        }
+        
+        activeSummons.Clear();
+        
+        for (int i = 0; i < currentSummons.Count; i++)
+        {
+            activeSummons.Add((Vector2Int)currentSummons[i].currentTile.posOverlayTile, currentSummons[i]);
         }
     }
 
@@ -229,6 +273,14 @@ public class BattleManager : MonoBehaviour
                 if (currentEnnemies[i].haste >= 100)
                 {
                     newElements.Add(currentEnnemies[i].gameObject);
+                }
+            }
+            
+            for (int i = 0; i < currentSummons.Count; i++)
+            {
+                if (currentSummons[i].haste >= 100)
+                {
+                    newElements.Add(currentSummons[i].gameObject);
                 }
             }
             
@@ -308,6 +360,14 @@ public class BattleManager : MonoBehaviour
                 }
             }
             
+            for (int i = 0; i < currentSummons.Count; i++)
+            {
+                if (currentSummons[i].haste >= 100)
+                {
+                    newElements.Add(currentSummons[i].gameObject);
+                }
+            }
+            
             
             // Finaly we sort and add them
             while (newElements.Count > 0)
@@ -371,6 +431,14 @@ public class BattleManager : MonoBehaviour
                 currentEnnemies[i].haste += currentEnnemies[i].data.levels[currentEnnemies[i].CurrentLevel].vitesse;
             }
         }
+        
+        for (int i = 0; i < currentSummons.Count; i++)
+        {
+            if (currentSummons[i].haste < 100)
+            {
+                currentSummons[i].haste += currentSummons[i].data.levels[currentEnnemies[i].CurrentLevel].vitesse;
+            }
+        }
     }
 
 
@@ -389,7 +457,7 @@ public class BattleManager : MonoBehaviour
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(true);
         }
         
-        else if (order[0].CompareTag("Ennemy"))
+        else if (order[0].CompareTag("Ennemy") || order[0].CompareTag("Summon"))
         {
             StartCoroutine(order[0].GetComponent<Ennemy>().DoTurn());
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
@@ -413,7 +481,7 @@ public class BattleManager : MonoBehaviour
             GainMana(1);
         }
         
-        else if (order[0].CompareTag("Ennemy"))
+        else if (order[0].CompareTag("Ennemy") || order[0].CompareTag("Summon"))
         {
             order[0].GetComponent<Ennemy>().DesactivateOutline();
         }
@@ -438,7 +506,7 @@ public class BattleManager : MonoBehaviour
             MouseManager.Instance.noControl = false;
         }
         
-        else if (order[0].CompareTag("Ennemy"))
+        else if (order[0].CompareTag("Ennemy") || order[0].CompareTag("Summon"))
         {
             StartCoroutine(order[0].GetComponent<Ennemy>().DoTurn());
             UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
