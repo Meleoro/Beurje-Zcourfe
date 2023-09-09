@@ -200,7 +200,7 @@ public class UIBattleAttack : MonoBehaviour
     }
     
     // WHEN THE BUFF UI HAS TO APPEAR
-    public IEnumerator BuffUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit, DataCompetence.VFXTypes VFXType, Buff currentBuff)
+    public IEnumerator BuffUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, bool miss, bool crit, DataCompetence.VFXTypes VFXType, Buff currentBuff)
     {
         CompetenceType currentCompetenceType = CompetenceType.buff;
 
@@ -212,7 +212,7 @@ public class UIBattleAttack : MonoBehaviour
 
         StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
-        StartCoroutine(TextFeel(leftOrigin, healValue, currentCompetenceType, currentBuff));
+        StartCoroutine(TextFeel(leftOrigin, 0, currentCompetenceType, currentBuff));
         
         LaunchVFX(leftOrigin, VFXType);
 

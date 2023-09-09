@@ -91,7 +91,7 @@ public class Ennemy : MonoBehaviour
     
         List<OverlayTile> moveTileAttackTile = new List<OverlayTile>();
 
-        bool isSummon = false;
+        bool isCompetence = false;
         
         switch (data.attaqueData.levels[0].newEffet)
         {
@@ -103,7 +103,13 @@ public class Ennemy : MonoBehaviour
             case DataCompetence.Effets.invocation :
                 moveTileAttackTile =
                     rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.levels[CurrentLevel].shyBehavior, false);
-                isSummon = true;
+                isCompetence = true;
+                break;
+            
+            case DataCompetence.Effets.soin :
+                moveTileAttackTile =
+                    rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.levels[CurrentLevel].shyBehavior, true);
+                isCompetence = true;
                 break;
         }
 
@@ -112,7 +118,7 @@ public class Ennemy : MonoBehaviour
         // If the ennemy move then attack
         if (moveTileAttackTile.Count == 2)
         {
-            if (!isSummon)
+            if (!isCompetence)
             {
                 Unit attackedUnit = null;
                 Ennemy attackedEnnemy = null;
@@ -139,7 +145,28 @@ public class Ennemy : MonoBehaviour
 
             else
             {
-                StartCoroutine(MoveToTileSummon(movePath, data.attaqueData, moveTileAttackTile[1]));
+                Unit aimedUnit = null;
+                Ennemy aimedEnnemy = null;
+                Ennemy aimedSummon = null;
+
+                if (isUnitSummon)
+                {
+                    if (BattleManager.Instance.activeUnits.ContainsKey(
+                            (Vector2Int)moveTileAttackTile[1].posOverlayTile))
+                    {
+                        aimedUnit = BattleManager.Instance.activeUnits[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
+                    }
+                    else
+                    {
+                        aimedSummon = BattleManager.Instance.activeSummons[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
+                    }
+                }
+                
+                else
+                    aimedEnnemy = BattleManager.Instance.activeEnnemies[(Vector2Int)moveTileAttackTile[1].posOverlayTile];
+                
+                
+                StartCoroutine(MoveToTileCompetence(movePath, data.attaqueData, moveTileAttackTile[1], aimedUnit, aimedEnnemy, aimedSummon));
             }
         }
 
@@ -248,7 +275,7 @@ public class Ennemy : MonoBehaviour
     
     
     // MOVE WITH BREAKS + SUMMON
-    public IEnumerator MoveToTileSummon(List<OverlayTile> path, DataCompetence competenceUsed, OverlayTile attackedTile)
+    public IEnumerator MoveToTileCompetence(List<OverlayTile> path, DataCompetence competenceUsed, OverlayTile attackedTile, Unit aimedUnit, Ennemy aimedEnnemy, Ennemy aimedSummon)
     {
         currentTile.isBlocked = false;
         
@@ -264,7 +291,17 @@ public class Ennemy : MonoBehaviour
         }
         
         // Attack part
-        StartCoroutine(attackScript.SummonUnit(competenceUsed, attackedTile));
+        switch (data.attaqueData.levels[0].newEffet)
+        {
+            case DataCompetence.Effets.invocation :
+                StartCoroutine(attackScript.SummonUnit(competenceUsed, attackedTile));
+                break;
+            
+            case DataCompetence.Effets.buff :
+                StartCoroutine(attackScript.BuffUnit(competenceUsed, aimedUnit, aimedEnnemy, aimedSummon));
+                break;
+        }
+        
         
         currentTile = path[path.Count - 1];
         currentTile.isBlocked = true;
@@ -273,7 +310,6 @@ public class Ennemy : MonoBehaviour
         
         FindTilesAtRange();
     }
-    
     
     
     //--------------------------TILES PART------------------------------

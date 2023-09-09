@@ -157,6 +157,94 @@ public class EnnemyAttacks : MonoBehaviour
         
         EndCompetence(currentCompetenceTile);
     }
+    
+    
+    // BUFF OR HEAL ANOTHER CHARACTER
+    public IEnumerator BuffUnit(DataCompetence currentCompetence, Unit attackedUnit, Ennemy attackedEnnemy, Ennemy attackedSummon)
+    {
+        DataUnit data = originalScript.data;
+        currentLevel = originalScript.CurrentLevel;
+
+        DataUnit dataUnit;
+        OverlayTile currentTile;
+        int unitLevel;
+        bool leftOrigin;
+
+        if (attackedUnit is not null)
+        {
+            currentTile = attackedUnit.currentTile;
+            dataUnit = attackedUnit.data;
+            unitLevel = attackedUnit.CurrentLevel;
+            leftOrigin = false;
+        }
+        else if (attackedEnnemy is not null)
+        {
+            currentTile = attackedEnnemy.currentTile;
+            dataUnit = attackedEnnemy.data;
+            unitLevel = attackedEnnemy.CurrentLevel;
+            leftOrigin = true;
+        }
+        else
+        {
+            currentTile = attackedSummon.currentTile;
+            dataUnit = attackedSummon.data;
+            unitLevel = attackedSummon.CurrentLevel;
+            leftOrigin = false;
+        }
+        
+        IntroCompetence(currentTile);
+        
+        yield return new WaitForSeconds(1.5f);
+
+        if (currentCompetence.levels[0].newEffet == DataCompetence.Effets.buff)
+        {
+            if (attackedUnit is not null)
+            {
+                StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(
+                    data, attackedUnit.data, true, false, false,currentCompetence.VFXType, currentCompetence.levels[0].createdBuff));
+                
+                Buff currentBuff = currentCompetence.levels[0].createdBuff;
+                List<Unit> aimedUnit = new List<Unit>();
+                aimedUnit.Add(attackedUnit);
+
+                BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false,
+                    aimedUnit, null);
+            }
+                
+            else if (attackedEnnemy is not null)
+            {
+                StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(
+                    attackedEnnemy.data, data, false, false, false,currentCompetence.VFXType, currentCompetence.levels[0].createdBuff));
+                
+                Buff currentBuff = currentCompetence.levels[0].createdBuff;
+                List<Ennemy> aimedEnnemy = new List<Ennemy>();
+                aimedEnnemy.Add(attackedEnnemy);
+
+                BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false,
+                    null, aimedEnnemy);
+            }
+                
+            else
+            {
+                StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(
+                    data, attackedSummon.data, true, false, false,currentCompetence.VFXType, currentCompetence.levels[0].createdBuff));
+                
+                Buff currentBuff = currentCompetence.levels[0].createdBuff;
+                List<Ennemy> aimedEnnemy = new List<Ennemy>();
+                aimedEnnemy.Add(attackedSummon);
+
+                BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false,
+                    null, aimedEnnemy);
+            }
+        }
+        
+        
+        yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
+        
+        EndCompetence(currentTile);
+    }
+    
+    
 
     public void IntroCompetence(OverlayTile currentCompetenceTile)
     {

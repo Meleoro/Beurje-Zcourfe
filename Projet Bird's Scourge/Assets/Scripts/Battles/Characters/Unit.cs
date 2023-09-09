@@ -222,7 +222,7 @@ public class Unit : MonoBehaviour
                         concernedUnits.Add(clickedUnit);
                         BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false, concernedUnits, null);
                         
-                        StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(data, clickedUnit.data, true, 0, false, false, competenceUsed.VFXType, currentBuff));
+                        StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(data, clickedUnit.data, true, false, false, competenceUsed.VFXType, currentBuff));
                         break;
                 }
                 
