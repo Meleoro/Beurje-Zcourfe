@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Divine Balance
   m_EditorClassIdentifier: 
   competenceName: Divine Balance
+  VFXType: 0
   levels:
   - competenceDescription: Heals half the damage inflicted in HP
     competenceManaCost: 0
@@ -35,4 +36,9 @@ MonoBehaviour:
     newEffet: 2
     summonedUnit: {fileID: 0}
     healedPV: 5
+    createdBuff:
+      buffType: 0
+      buffValue: 0
+      buffDuration: 0
+      isBenedicton: 0
     newAlteration: 0

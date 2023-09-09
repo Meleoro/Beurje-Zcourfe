@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Divine Blessing
   m_EditorClassIdentifier: 
   competenceName: Divine Blessing
+  VFXType: 0
   levels:
   - competenceDescription: Applies Regeneration for 3 turns and remove negatives
       alteration
@@ -33,7 +34,12 @@ MonoBehaviour:
     - list: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     newPaternePrefab: 0
     newPortee: 0
-    newEffet: 6
+    newEffet: 3
     summonedUnit: {fileID: 0}
     healedPV: 5
+    createdBuff:
+      buffType: 0
+      buffValue: 25
+      buffDuration: 3
+      isBenedicton: 0
     newAlteration: 0

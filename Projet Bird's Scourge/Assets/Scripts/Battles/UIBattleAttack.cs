@@ -96,6 +96,7 @@ public class UIBattleAttack : MonoBehaviour
         attackCrit,
         miss,
         heal,
+        healCrit,
         summon,
         buff
     }
@@ -170,7 +171,7 @@ public class UIBattleAttack : MonoBehaviour
         
         StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType, deadEnnemy));
 
-        StartCoroutine(TextFeel(leftOrigin, miss, crit, damage, false, false));
+        StartCoroutine(TextFeel(leftOrigin, damage, currentCompetenceType, null));
 
         StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin, currentCompetenceType));
         
@@ -191,18 +192,17 @@ public class UIBattleAttack : MonoBehaviour
 
         StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
-        StartCoroutine(TextFeel(false, false, false, 0, true, false));
+        StartCoroutine(TextFeel(false, 0, currentCompetenceType, null));
         
         yield return new WaitForSeconds(1.5f);
 
         StartCoroutine(EndFeel());
     }
     
-    
-    // WHEN THE BUFF / HEAL UI HAS TO APPEAR
-    public IEnumerator HealUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit, DataCompetence.VFXTypes VFXType)
+    // WHEN THE BUFF UI HAS TO APPEAR
+    public IEnumerator BuffUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit, DataCompetence.VFXTypes VFXType, Buff currentBuff)
     {
-        CompetenceType currentCompetenceType = CompetenceType.heal;
+        CompetenceType currentCompetenceType = CompetenceType.buff;
 
         if (leftOrigin)
             SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData, leftOrigin);
@@ -212,7 +212,33 @@ public class UIBattleAttack : MonoBehaviour
 
         StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
-        StartCoroutine(TextFeel(leftOrigin, miss, crit, healValue, false, true));
+        StartCoroutine(TextFeel(leftOrigin, healValue, currentCompetenceType, currentBuff));
+        
+        LaunchVFX(leftOrigin, VFXType);
+
+        yield return new WaitForSeconds(1.5f);
+
+        StartCoroutine(EndFeel());
+    }
+    
+    
+    // WHEN THE HEAL UI HAS TO APPEAR
+    public IEnumerator HealUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit, DataCompetence.VFXTypes VFXType)
+    {
+        CompetenceType currentCompetenceType = CompetenceType.heal;
+
+        if (crit)
+            currentCompetenceType = CompetenceType.healCrit;
+
+        if (leftOrigin)
+            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData, leftOrigin);
+
+        else
+            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
+
+        StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
+
+        StartCoroutine(TextFeel(leftOrigin, healValue, currentCompetenceType, null));
         
         LaunchVFX(leftOrigin, VFXType);
 
@@ -467,12 +493,12 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // MANAGE THE DAMAGE TEXT
-    public IEnumerator TextFeel(bool leftOrigin, bool miss, bool crit, int damage, bool isSummon, bool isHeal)
+    public IEnumerator TextFeel(bool leftOrigin, int damage, CompetenceType currentCompetenceType, Buff currentBuff)
     {
         Vector3 posLeftBottomCorner = new Vector3(-attackUIParent.rect.width * 0.5f, -attackUIParent.rect.height * 0.5f, 0);
         float healModificator = 1;
 
-        if (isHeal || isSummon)
+        if (currentCompetenceType == CompetenceType.heal || currentCompetenceType == CompetenceType.summon || currentCompetenceType == CompetenceType.buff)
         {
             healModificator = 0.8f;
         }
@@ -511,41 +537,59 @@ public class UIBattleAttack : MonoBehaviour
         }
 
 
-        if (isSummon)
+        switch (currentCompetenceType)
         {
-            damageNumber.text = "Summoned";
-            damageNumber.color = colorSummonText;
-        }
-        else
-        {
-            if (!miss)
-            {
-                if (crit)
-                {
-                    damageNumber.text = "CRIT " + damage.ToString();
-
-                    if (isHeal)
-                        damageNumber.color = colorCritHealText;
-
-                    else
-                        damageNumber.color = colorCritAttack;
-                }
-                else
-                {
-                    damageNumber.text = damage.ToString();
-
-                    if (isHeal)
-                        damageNumber.color = colorNormalHealText;
-
-                    else
-                        damageNumber.color = colorNormalAttack;
-                }
-            }
-            else
-            {
+            case CompetenceType.summon : 
+                damageNumber.text = "Summoned";
+                damageNumber.color = colorSummonText;
+                break;
+            
+            case CompetenceType.heal :
+                damageNumber.text = damage.ToString();
+                damageNumber.color = colorNormalHealText;
+                break;
+            
+            case CompetenceType.healCrit :
+                damageNumber.text = "CRIT " + damage.ToString();
+                damageNumber.color = colorCritHealText;
+                break;
+            
+            case CompetenceType.miss : 
                 damageNumber.text = "Miss";
                 damageNumber.color = colorMissAttack;
-            }
+                break;
+            
+            case CompetenceType.attack :
+                damageNumber.text = damage.ToString();
+                damageNumber.color = colorNormalAttack;
+                break;
+            
+            case CompetenceType.attackCrit :
+                damageNumber.text = "CRIT " + damage.ToString();
+                damageNumber.color = colorCritAttack;
+                break;
+            
+            case CompetenceType.buff :
+                switch (currentBuff.buffType)
+                {
+                    case (BuffManager.BuffType.damage) :
+                        damageNumber.text = "Attack + " + currentBuff.buffValue.ToString() + "%";
+                        break;
+                
+                    case (BuffManager.BuffType.accuracy) :
+                        damageNumber.text = "Accuracy + " + currentBuff.buffValue.ToString() + "%";
+                        break;
+                
+                    case (BuffManager.BuffType.crit) :
+                        damageNumber.text = "Crit + " + currentBuff.buffValue.ToString() + "%";
+                        break;
+                
+                    case (BuffManager.BuffType.defense) :
+                        damageNumber.text = "Defense + " + currentBuff.buffValue.ToString() + "%";
+                        break;
+                }
+                damageNumber.color = colorCritAttack;
+                break;
         }
 
         yield return new WaitForSeconds(textFadeStart);

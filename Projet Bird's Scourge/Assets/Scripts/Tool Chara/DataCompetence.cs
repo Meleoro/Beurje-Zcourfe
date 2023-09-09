@@ -12,10 +12,7 @@ public class DataCompetence : ScriptableObject
         none,
         invocation,
         soin,
-        poussee,
-        teleportation,
-        inversion,
-        benediction
+        buff
     }
 
     public enum Alterations
@@ -82,6 +79,8 @@ public class CompetenceLevel
     public DataCompetence.Effets newEffet;
     public GameObject summonedUnit;
     public int healedPV;
+
+    public Buff createdBuff;
     
     public DataCompetence.Alterations newAlteration;
 }

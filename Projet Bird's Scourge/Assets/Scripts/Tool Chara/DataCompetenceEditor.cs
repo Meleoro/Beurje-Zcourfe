@@ -157,6 +157,7 @@ public class DataCompetenceEditor : Editor
                 SerializedProperty newEffet = MyListRef.FindPropertyRelative("newEffet");
                 SerializedProperty summonedUnit = MyListRef.FindPropertyRelative("summonedUnit");
                 SerializedProperty healedPV = MyListRef.FindPropertyRelative("healedPV");
+                SerializedProperty createdBuff = MyListRef.FindPropertyRelative("createdBuff");
                 
                 SerializedProperty newAlteration = MyListRef.FindPropertyRelative("newAlteration");
 
@@ -233,6 +234,10 @@ public class DataCompetenceEditor : Editor
                         
                         case DataCompetence.Effets.soin :
                             EditorGUILayout.PropertyField(healedPV);
+                            break;
+                        
+                        case DataCompetence.Effets.buff :
+                            EditorGUILayout.PropertyField(createdBuff);
                             break;
                     }
 

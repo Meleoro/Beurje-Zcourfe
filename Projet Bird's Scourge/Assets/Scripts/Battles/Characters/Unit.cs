@@ -110,6 +110,11 @@ public class Unit : MonoBehaviour
                 if(clickedUnit != null)
                     StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
                 break;
+            
+            case DataCompetence.Effets.buff :
+                if(clickedUnit != null)
+                    StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
+                break;
         }
     }
     
@@ -123,8 +128,7 @@ public class Unit : MonoBehaviour
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
             {
-              
-
+                
                 #region Toutes les blessing avec un effet avant d'attaquer -----------------------------------------------------------------
                 
                 BenedictionManager.instance.BlessingEffect(0,this,clickedEnnemy,0);
@@ -203,11 +207,24 @@ public class Unit : MonoBehaviour
                 StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
 
                 yield return new WaitForSeconds(1f);
-
-                int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
                 
-                clickedUnit.currentHealth += addedPV;
-                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data, clickedUnit.data, true, addedPV, false, false, competenceUsed.VFXType));
+                switch (competenceUsed.levels[competenceLevel].newEffet)
+                {
+                    case DataCompetence.Effets.soin :
+                        int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
+                        clickedUnit.currentHealth += addedPV;
+                        StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data, clickedUnit.data, true, addedPV, false, false, competenceUsed.VFXType));
+                        break;
+            
+                    case DataCompetence.Effets.buff :
+                        List<Unit> concernedUnits = new List<Unit>();
+                        Buff currentBuff = competenceUsed.levels[competenceLevel].createdBuff;
+                        concernedUnits.Add(clickedUnit);
+                        BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false, concernedUnits, null);
+                        
+                        StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(data, clickedUnit.data, true, 0, false, false, competenceUsed.VFXType, currentBuff));
+                        break;
+                }
                 
                 UIBattleManager.Instance.UpdateTurnUI();
                 //StartCoroutine(BattleManager.Instance.NextTurn());
