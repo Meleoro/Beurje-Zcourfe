@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6197697264180450109}
   - component: {fileID: 9162873510781305361}
   - component: {fileID: 4800476705381207183}
+  - component: {fileID: 5297134249131868117}
   m_Layer: 0
   m_Name: Ennemy2
   m_TagString: Ennemy
@@ -35,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 6419370339588909153}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5126740244306462644
 SpriteRenderer:
@@ -189,6 +190,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.8964567, y: 0.70853657}
   m_EdgeRadius: 0
+--- !u!114 &5297134249131868117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3151643708691705637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eedfd1b69e7b264ea47629f0153e946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
 --- !u!1 &6244669619415696409
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6419370339588909153}
   - component: {fileID: 1280040438196422153}
+  - component: {fileID: 4399253355690785393}
   m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
@@ -273,3 +288,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4399253355690785393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6244669619415696409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eedfd1b69e7b264ea47629f0153e946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: -2

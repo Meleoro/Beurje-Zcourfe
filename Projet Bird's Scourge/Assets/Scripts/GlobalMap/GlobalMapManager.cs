@@ -80,8 +80,6 @@ public class GlobalMapManager : MonoBehaviour
     public IEnumerator QuitRegion()
     {
         scriptController.noControl = true;
-        
-        float dissolveValue = 0;
 
         CameraManager.Instance.transform.DOMove(cameraOriginalPos, 1);
         CameraManager.Instance._camera.DOOrthoSize(cameraOriginalSize, 1);

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1455038286815819301}
   - component: {fileID: 7073065512772450559}
   - component: {fileID: 5975924124810133892}
+  - component: {fileID: 1113912707156964017}
   m_Layer: 0
   m_Name: Unit2
   m_TagString: Unit
@@ -34,7 +35,7 @@ Transform:
   m_Children:
   - {fileID: 8141318995721977713}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &207210562728664346
 SpriteRenderer:
@@ -246,12 +247,27 @@ MonoBehaviour:
   - {fileID: 0}
   haste: 0
   PM: 3
+  outlineTurnLauched: 0
   mustBeSelected: 0
+  objectFlicker: 0
   currentHealth: 10
   currentLevel: 1
   attackLevel: 1
   competence1Level: 1
   competence2Level: 1
+--- !u!114 &1113912707156964017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262518477433530119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eedfd1b69e7b264ea47629f0153e946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: 0
 --- !u!1 &8962025898618089936
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +278,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8141318995721977713}
   - component: {fileID: 5391094824246488352}
+  - component: {fileID: 884732550700319216}
   m_Layer: 0
   m_Name: Shadow
   m_TagString: Untagged
@@ -336,3 +353,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &884732550700319216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8962025898618089936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5eedfd1b69e7b264ea47629f0153e946, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: -2
