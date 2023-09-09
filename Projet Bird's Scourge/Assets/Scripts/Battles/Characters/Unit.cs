@@ -227,6 +227,8 @@ public class Unit : MonoBehaviour
         attackCriticalRate += BuffManager.Instance.GetDamageBuff(attackCriticalRate,this,null);
         
         UIBattleManager.Instance.OpenAttackPreview(attackDamage,attackHitRate,attackCriticalRate,this,clickedEnnemy);
+        
+        BuffManager.Instance.RemoveBenedictions(this);
     }
 
     

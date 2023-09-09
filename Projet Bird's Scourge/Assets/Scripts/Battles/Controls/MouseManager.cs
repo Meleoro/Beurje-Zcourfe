@@ -255,7 +255,7 @@ public class MouseManager : MonoBehaviour
     {
         outlineScript.ManageOverlayElement(null, currentOverlayedEnnemy);
 
-        if (competenceSelect)
+        if (competenceSelect && selectedUnit != null)
         {
             selectedUnit.DisplayBattleStats(currentOverlayedEnnemy, competenceUsed, competenceLevel);
 

@@ -188,7 +188,7 @@ public class BuffManager : MonoBehaviour
     // ------------------------- MANAGE BUFFS -----------------------------
 
     // CALLED TO ADD A BUFF TO A LIST OF UNITS
-    public void AddBuff(BuffType buffType, int buffValue, int buffDuration, List<Unit> concernedUnit, List<Ennemy> concernedEnnemies)
+    public void AddBuff(BuffType buffType, int buffValue, int buffDuration, bool isBenediction, List<Unit> concernedUnit, List<Ennemy> concernedEnnemies)
     {
         if (concernedUnit is not null)
         {
@@ -198,7 +198,7 @@ public class BuffManager : MonoBehaviour
                 {
                     if (characters[j].unit == concernedUnit[i])
                     {
-                        characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration));
+                        characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration, isBenediction));
                     }
                 }
             }
@@ -212,7 +212,7 @@ public class BuffManager : MonoBehaviour
                 {
                     if (characters[j].ennemy == concernedEnnemies[i])
                     {
-                        characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration));
+                        characters[j].currentBuffs.Add(new Buff(buffType, buffValue, buffDuration, isBenediction));
                     }
                 }
             }
@@ -224,13 +224,36 @@ public class BuffManager : MonoBehaviour
     {
         for (int i = 0; i < characters.Count; i++)
         {
-            for (int j = characters[i].currentBuffs.Count - 1; j <= 0; j--)
+            for (int j = characters[i].currentBuffs.Count - 1; j >= 0; j--)
             {
                 characters[i].currentBuffs[j].buffDuration -= 1;
 
                 if (characters[i].currentBuffs[j].buffDuration <= 0)
                 {
                     characters[i].currentBuffs.RemoveAt(j);
+                }
+            }
+        }
+    }
+    
+    // USED TO APPLY THE BENEDICTIONS 
+    public void RemoveBenedictions(Unit currentUnit)
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (characters[i].unit == currentUnit)
+            {
+                for (int j = characters[i].currentBuffs.Count - 1; j >= 0; j--)
+                {
+                    if (characters[i].currentBuffs[j].isBenedicton)
+                    {
+                        characters[i].currentBuffs[j].buffDuration -= 1;
+
+                        if (characters[i].currentBuffs[j].buffDuration <= 0)
+                        {
+                            characters[i].currentBuffs.RemoveAt(j);
+                        }
+                    }
                 }
             }
         }
@@ -264,11 +287,13 @@ public class Buff
     public BuffManager.BuffType buffType;
     public int buffValue;    // EST EN POURCETAGE ATTENTION
     public int buffDuration;
+    public bool isBenedicton;
 
-    public Buff(BuffManager.BuffType currentBuffType, int currentBuffValue, int currentBuffDuration)
+    public Buff(BuffManager.BuffType currentBuffType, int currentBuffValue, int currentBuffDuration, bool currentIsBenedicton)
     {
         buffType = currentBuffType;
         buffValue = currentBuffValue;
         buffDuration = currentBuffDuration;
+        isBenedicton = currentIsBenedicton;
     }
 }

@@ -94,14 +94,14 @@ public class BenedictionManager : MonoBehaviour
             {
                 case 0:
                     if (VerifyEnnemyHealth(currentEnnemy, 30, false))
-                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,20,1,concernedUnits,concernedEnnemys);
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,20,1, true, concernedUnits,concernedEnnemys);
                     break;
                 case 1:
-                    BuffManager.Instance.AddBuff(BuffManager.BuffType.crit,5,1,concernedUnits,concernedEnnemys);
+                    BuffManager.Instance.AddBuff(BuffManager.BuffType.crit,5,1,true,concernedUnits,concernedEnnemys);
                         break;
                 case 2:
                     if (VerifyUnitHealth(currentUnit, 30, false))
-                        BuffManager.Instance.AddBuff(BuffManager.BuffType.accuracy,15,1,concernedUnits,concernedEnnemys);
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.accuracy,15,1,true,concernedUnits,concernedEnnemys);
                     break;
                 case 3:
                     currentUnit.currentHealth += Mathf.RoundToInt(inflictedDamage / 10 * 100);
@@ -110,7 +110,7 @@ public class BenedictionManager : MonoBehaviour
                     break;
                 case 4:
                     if(VerifyEnnemyDead(currentEnnemy))
-                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,10,3,concernedUnits,concernedEnnemys);
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,10,3,true,concernedUnits,concernedEnnemys);
                     break;
                 case 5:
                     if(VerifyEnnemyDead(currentEnnemy))

@@ -107,7 +107,7 @@ public class ObjectEffects : MonoBehaviour
         
         if (itemData.useType == ShopItemData.UseType.selectRange)
         {
-            BuffManager.Instance.AddBuff(itemData.buffType, buffValue, itemData.buffDuration, BattleManager.Instance.currentUnits, null);
+            BuffManager.Instance.AddBuff(itemData.buffType, buffValue, itemData.buffDuration, false, BattleManager.Instance.currentUnits, null);
             
             for (int i = 0; i < BattleManager.Instance.currentUnits.Count; i++)
             {
@@ -123,8 +123,8 @@ public class ObjectEffects : MonoBehaviour
         {
             List<Unit> currentUnits = new List<Unit>();
             currentUnits.Add(currentUnit);
-            
-            BuffManager.Instance.AddBuff(itemData.buffType, buffValue, itemData.buffDuration, currentUnits, null);
+
+            BuffManager.Instance.AddBuff(itemData.buffType, buffValue, itemData.buffDuration, false, currentUnits, null);
             
             StartCoroutine(UIBattleManager.Instance.objectsScript.UniqueCharaBuff(currentUnit.data, itemData.buffType, buffValue, DataCompetence.VFXTypes.heal, new Vector2(1, 1)));
         }
