@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1201e9c701489b4f99a1ec4af8701e0, type: 3}
+  m_Name: 1 - Blessed Arrow
+  m_EditorClassIdentifier: 
+  itemType: 5
+  useType: 0
+  effectType: 0
+  healAmount: 0
+  damageAmount: 0
+  buffType: 0
+  damageBuffAmount: 0
+  accuracyBuffAmount: 0
+  critBuffAmount: 0
+  defenseBuffAmount: 0
+  buffDuration: 0
+  name: Blessed Arrow
+  price: 15
+  image: {fileID: 21300000, guid: 03b3f669dc5706a4592344c6385af858, type: 3}
+  description: +5 CRT to any attack.
+  amount: 0
+  ID: 1

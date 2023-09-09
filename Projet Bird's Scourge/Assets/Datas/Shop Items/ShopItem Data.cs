@@ -55,8 +55,17 @@ public class ShopItemData : ScriptableObject
     [Header("Resources")]
     public int amount;
 
-    [Header("Item")]
-    //public ItemData associatedItem;
+    [Header("Item")] 
+    public int sellPrice;
+    public int destroyResources;
+    public enum PossibleRessources
+    {
+        wood,
+        stone,
+        iron,
+        food
+    }
+    public PossibleRessources resourceGot = PossibleRessources.wood;
 
     [Header("Blessing")]
     public int ID;

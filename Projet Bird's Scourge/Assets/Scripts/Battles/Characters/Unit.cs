@@ -123,6 +123,16 @@ public class Unit : MonoBehaviour
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
             {
+              
+
+                #region Toutes les blessing avec un effet avant d'attaquer -----------------------------------------------------------------
+                
+                BenedictionManager.instance.BlessingEffect(0,this,clickedEnnemy,0);
+                BenedictionManager.instance.BlessingEffect(1,this,clickedEnnemy,0);
+                BenedictionManager.instance.BlessingEffect(2,this,clickedEnnemy,0);
+                BenedictionManager.instance.BlessingEffect(6,this,clickedEnnemy,0);
+                #endregion
+                
                 List<Vector2> positions = new List<Vector2>();
 
                 positions.Add(transform.position);
@@ -131,15 +141,13 @@ public class Unit : MonoBehaviour
                 StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
 
                 yield return new WaitForSeconds(1f);
-                
-                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
-                
-                // Bénédiction ID 2 --------------------------------------------------
-                if (BenedictionManager.instance.CheckIfBlessingGot(2) && currentHealth <= data.levels[currentLevel].PV * 30 / 100) attackHitRate += 15;
-                // Bénédiction ID 2 --------------------------------------------------
-                
+
+                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                attackHitRate += BuffManager.Instance.GetAccuracyBuff(attackHitRate,this,null);
                 int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                attackDamage += BuffManager.Instance.GetDamageBuff(attackDamage,this,null);
                 int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                attackCriticalRate += BuffManager.Instance.GetDamageBuff(attackCriticalRate,this,null);
                 
                 if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
                 {
@@ -163,8 +171,16 @@ public class Unit : MonoBehaviour
                     StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, 0,true,false, false, competenceUsed.VFXType));
                 }
                 
+                
+                #region Toutes les blessing avec un effet après avoir attaqué -----------------------------------------------------------------
+                BenedictionManager.instance.BlessingEffect(3,this,clickedEnnemy,attackDamage);
+                BenedictionManager.instance.BlessingEffect(4,this,clickedEnnemy,0);
+                BenedictionManager.instance.BlessingEffect(5,this,clickedEnnemy,0);
+                #endregion
+                
+                
                 UIBattleManager.Instance.UpdateTurnUI();
-                //StartCoroutine(BattleManager.Instance.NextTurn());
+                StartCoroutine(BattleManager.Instance.NextTurn());
             }
         }
     }
@@ -203,15 +219,13 @@ public class Unit : MonoBehaviour
     // SHOW CHANCES TO HIT, DO A CRITICAL HIT AND THE DAMAGES
     public void DisplayBattleStats(Ennemy clickedEnnemy, DataCompetence competenceUsed, int competenceLevel)
     {
-        int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate,clickedEnnemy.data.levels[0].PV);
-     
-        // Bénédiction ID 2 --------------------------------------------------
-        if (BenedictionManager.instance.CheckIfBlessingGot(2) && currentHealth <= data.levels[currentLevel].PV * 30 / 100) attackHitRate += 15;
-        // Bénédiction ID 2 --------------------------------------------------
+        int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+        attackHitRate += BuffManager.Instance.GetAccuracyBuff(attackHitRate,this,null);
+        int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+        attackDamage += BuffManager.Instance.GetDamageBuff(attackDamage,this,null);
+        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+        attackCriticalRate += BuffManager.Instance.GetDamageBuff(attackCriticalRate,this,null);
         
-        int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[0].PV);
-        int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[0].PV);
-
         UIBattleManager.Instance.OpenAttackPreview(attackDamage,attackHitRate,attackCriticalRate,this,clickedEnnemy);
     }
 

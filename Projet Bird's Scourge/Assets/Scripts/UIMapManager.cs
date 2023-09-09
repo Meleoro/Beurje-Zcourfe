@@ -422,6 +422,7 @@ public class UIMapManager : MonoBehaviour
     public IEnumerator PopUpShop()
     {
         GenerateItemList();
+        InventaireManager.Instance.isShop = true;
         
         for (int i = 0; i < pricesList.Count; i++)
         {
@@ -550,7 +551,8 @@ public class UIMapManager : MonoBehaviour
                 possibleRessourcesList.Add(item);
             }
         }
-        
+
+        InventaireManager.Instance.isShop = false;
         finalItemList.Clear();
     }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -79,4 +80,91 @@ public class BenedictionManager : MonoBehaviour
             infoBubbleList[index].SetActive(false);
         }
     }
+
+    public void BlessingEffect(int ID,Unit currentUnit, Ennemy currentEnnemy,int inflictedDamage)
+    {
+        List<Unit> concernedUnits = new List<Unit>();
+        List<Ennemy> concernedEnnemys = new List<Ennemy>();
+        concernedUnits.Add(currentUnit);
+        concernedEnnemys.Add(currentEnnemy); 
+        
+        if (CheckIfBlessingGot(ID))
+        {
+            switch (ID)
+            {
+                case 0:
+                    if (VerifyEnnemyHealth(currentEnnemy, 30, false))
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,20,1,concernedUnits,concernedEnnemys);
+                    break;
+                case 1:
+                    BuffManager.Instance.AddBuff(BuffManager.BuffType.crit,5,1,concernedUnits,concernedEnnemys);
+                        break;
+                case 2:
+                    if (VerifyUnitHealth(currentUnit, 30, false))
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.accuracy,15,1,concernedUnits,concernedEnnemys);
+                    break;
+                case 3:
+                    currentUnit.currentHealth += Mathf.RoundToInt(inflictedDamage / 10 * 100);
+                    if (currentUnit.currentHealth >= currentUnit.data.levels[currentUnit.CurrentLevel].PV) 
+                        currentUnit.currentHealth = currentUnit.data.levels[currentUnit.CurrentLevel].PV;
+                    break;
+                case 4:
+                    if(VerifyEnnemyDead(currentEnnemy))
+                        BuffManager.Instance.AddBuff(BuffManager.BuffType.damage,10,3,concernedUnits,concernedEnnemys);
+                    break;
+                case 5:
+                    if(VerifyEnnemyDead(currentEnnemy))
+                        currentUnit.currentHealth += Mathf.RoundToInt(currentUnit.data.levels[currentUnit.CurrentLevel].PV / 10 * 100);
+                    if (currentUnit.currentHealth >= currentUnit.data.levels[currentUnit.CurrentLevel].PV)
+                        currentUnit.currentHealth = currentUnit.data.levels[currentUnit.CurrentLevel].PV;
+                    break;
+                case 6:
+                    if (inflictedDamage > 0) ResourcesSaveManager.Instance.gold += 1;
+                    UIMapManager.Instance.UpdateStateBar();
+                    break;
+            } 
+        }
+        concernedUnits.Clear();
+        concernedEnnemys.Clear();
+    }
+    
+    
+    // ---------------------------- Fonctions de Check de Conditions -------------------------------------------
+
+    public bool VerifyUnitHealth(Unit currentUnit,int percentNeeded,bool moreOrLess)
+    {
+        if (moreOrLess)
+        {
+            if (currentUnit.currentHealth >= currentUnit.data.levels[currentUnit.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+
+        }
+        else
+        {
+            if (currentUnit.currentHealth <= currentUnit.data.levels[currentUnit.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+        }
+    }
+    
+    public bool VerifyEnnemyHealth(Ennemy currentEnnemy,int percentNeeded,bool moreOrLess)
+    {
+        if (moreOrLess)
+        {
+            if (currentEnnemy.currentHealth >= currentEnnemy.data.levels[currentEnnemy.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+
+        }
+        else
+        {
+            if (currentEnnemy.currentHealth <= currentEnnemy.data.levels[currentEnnemy.CurrentLevel].PV * percentNeeded / 100) return true;
+            else return false;
+        }
+    }
+
+    public bool VerifyEnnemyDead(Ennemy currentEnnemy)
+    {
+        if (currentEnnemy.currentHealth <= currentEnnemy.data.levels[currentEnnemy.CurrentLevel].PV) return true;
+        else return false;
+    }
+    
 }
