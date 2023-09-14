@@ -111,6 +111,12 @@ public class Ennemy : MonoBehaviour
                     rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.levels[CurrentLevel].shyBehavior, true);
                 isCompetence = true;
                 break;
+            
+            case DataCompetence.Effets.buff :
+                moveTileAttackTile =
+                    rangeFinder.FindTilesCompetenceEnnemy(currentMoveTiles, data.attaqueData, 0, currentTile, data.levels[CurrentLevel].shyBehavior, true);
+                isCompetence = true;
+                break;
         }
 
         List<OverlayTile> movePath = pathFinder.FindPath(currentTile, moveTileAttackTile[0], data.levels[CurrentLevel].moveDiagonal);
@@ -298,6 +304,10 @@ public class Ennemy : MonoBehaviour
                 break;
             
             case DataCompetence.Effets.buff :
+                StartCoroutine(attackScript.BuffUnit(competenceUsed, aimedUnit, aimedEnnemy, aimedSummon));
+                break;
+            
+            case DataCompetence.Effets.soin :
                 StartCoroutine(attackScript.BuffUnit(competenceUsed, aimedUnit, aimedEnnemy, aimedSummon));
                 break;
         }

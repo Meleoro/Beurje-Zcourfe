@@ -238,6 +238,42 @@ public class EnnemyAttacks : MonoBehaviour
             }
         }
         
+        else if (currentCompetence.levels[0].newEffet == DataCompetence.Effets.soin)
+        {
+            if (attackedUnit is not null)
+            {
+                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(
+                    data, attackedUnit.data, true, currentCompetence.levels[0].healedPV, false, false, currentCompetence.VFXType));
+
+                attackedUnit.currentHealth += currentCompetence.levels[0].healedPV;
+
+                if (attackedUnit.currentHealth > attackedUnit.data.levels[attackedUnit.CurrentLevel].PV)
+                    attackedUnit.currentHealth = attackedUnit.data.levels[attackedUnit.CurrentLevel].PV;
+            }
+                
+            else if (attackedEnnemy is not null)
+            {
+                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(
+                    attackedEnnemy.data, data, false, currentCompetence.levels[0].healedPV, false,false, currentCompetence.VFXType));
+                
+                attackedEnnemy.currentHealth += currentCompetence.levels[0].healedPV;
+
+                if (attackedEnnemy.currentHealth > attackedEnnemy.data.levels[attackedEnnemy.CurrentLevel].PV)
+                    attackedEnnemy.currentHealth = attackedEnnemy.data.levels[attackedEnnemy.CurrentLevel].PV;
+            }
+                
+            else
+            {
+                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(
+                    data, attackedSummon.data, true, currentCompetence.levels[0].healedPV, false,false, currentCompetence.VFXType));
+                
+                attackedSummon.currentHealth += currentCompetence.levels[0].healedPV;
+
+                if (attackedSummon.currentHealth > attackedSummon.data.levels[attackedSummon.CurrentLevel].PV)
+                    attackedSummon.currentHealth = attackedSummon.data.levels[attackedSummon.CurrentLevel].PV;
+            }
+        }
+        
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque);
         

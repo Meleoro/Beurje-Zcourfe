@@ -174,7 +174,7 @@ public class RangeFinder
                 Vector2Int currentAttackCoordinates = (Vector2Int) attackTiles[j].posOverlayTile;
 
                 // If the attack hits an unit
-                if (!isBuff || tilesAllies.Contains(currentAttackCoordinates))
+                if (!isBuff || (tilesAllies.Contains(currentAttackCoordinates) && currentAttackCoordinates != (Vector2Int)currentTile.posOverlayTile))
                 {
                     // If the ennemy wants to go as near as possible
                     if (!shyBehavior)

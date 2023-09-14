@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Shaman S-1
   m_EditorClassIdentifier: 
   competenceName: Invocation
+  VFXType: 0
   levels:
   - competenceDescription: "Invoque une unit\xE9 champignon"
     competenceManaCost: 2
@@ -35,4 +36,9 @@ MonoBehaviour:
     newEffet: 1
     summonedUnit: {fileID: 3151643708691705637, guid: e5e5b57d75b3bb14896de80efa602e2d, type: 3}
     healedPV: 0
+    createdBuff:
+      buffType: 0
+      buffValue: 0
+      buffDuration: 0
+      isBenedicton: 0
     newAlteration: 0

@@ -36,4 +36,9 @@ MonoBehaviour:
     newEffet: 0
     summonedUnit: {fileID: 0}
     healedPV: 0
+    createdBuff:
+      buffType: 0
+      buffValue: 0
+      buffDuration: 0
+      isBenedicton: 0
     newAlteration: 0

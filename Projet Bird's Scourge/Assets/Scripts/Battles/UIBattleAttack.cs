@@ -83,8 +83,8 @@ public class UIBattleAttack : MonoBehaviour
 
 
     [Header("Other")]
-    float currentWidthRatio;
-    float currentHeightRatio;
+    /*float currentWidthRatio;
+    float currentHeightRatio;*/
     float attackerWidthOffset;
     float attackerHeightOffset;
     float attackedWidthOffset;
@@ -114,6 +114,7 @@ public class UIBattleAttack : MonoBehaviour
     public GameObject ghostPrefab;
     public Transform ghostParentLeft;
     public Transform ghostParentRight;
+    private UIAttackEffectCreator effectCreator;
 
 
     public void Start()
@@ -125,6 +126,8 @@ public class UIBattleAttack : MonoBehaviour
 
         originalYLeft = leftCharaParent.localPosition.y;
         originalYRight = rightCharaParent.localPosition.y;
+
+        effectCreator = new UIAttackEffectCreator();
     }
 
 
@@ -205,10 +208,10 @@ public class UIBattleAttack : MonoBehaviour
         CompetenceType currentCompetenceType = CompetenceType.buff;
 
         if (leftOrigin)
-            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData, leftOrigin);
+            SetupFeel(leftData.attackSprite, rightData.idleSprite, leftData, rightData, leftOrigin);
 
         else
-            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
+            SetupFeel(leftData.idleSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
 
         StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
@@ -231,10 +234,10 @@ public class UIBattleAttack : MonoBehaviour
             currentCompetenceType = CompetenceType.healCrit;
 
         if (leftOrigin)
-            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData, leftOrigin);
+            SetupFeel(leftData.attackSprite, rightData.idleSprite, leftData, rightData, leftOrigin);
 
         else
-            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
+            SetupFeel(leftData.idleSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
 
         StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
 
@@ -252,8 +255,8 @@ public class UIBattleAttack : MonoBehaviour
     // SETUP THE DIFFERENT ELEMENTS
     public void SetupFeel(Sprite leftSprite, Sprite rightSprite, DataUnit leftData, DataUnit rightData, bool leftOrigin)
     {
-        currentWidthRatio = CameraManager.Instance.screenWidth / 800;
-        currentHeightRatio = CameraManager.Instance.screenHeight / 300;
+        /*currentWidthRatio = CameraManager.Instance.screenWidth / 800;
+        currentHeightRatio = CameraManager.Instance.screenHeight / 300;*/
 
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
@@ -343,31 +346,32 @@ public class UIBattleAttack : MonoBehaviour
         {
             if(CompetenceType.attackCrit == currentCompetenceType)
             {
-                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackerShakeVibrato);
-                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackedShakeVibrato);
+                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude), attackerShakeVibrato);
+                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude), attackedShakeVibrato);
             }
             else
             {
-                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackerShakeVibrato);
-                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude * currentWidthRatio), attackedShakeVibrato);
+                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude), attackerShakeVibrato);
+                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude), attackedShakeVibrato);
             }
         }
 
-        attackerParent.DOLocalMoveX(attackerParent.localPosition.x + (attackerMovement * rightModificator * currentWidthRatio) + attackerWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
-        attackedParent.DOLocalMoveX(attackedParent.localPosition.x + (attackedMovement * rightModificator * currentWidthRatio) + attackedWidthOffset, attackedMovementDuration).SetEase(attackedMovementEase);
+        Vector2 newPos = new Vector2(attackerMovement * rightModificator + attackerWidthOffset, 0);
+        float newSize = attackerScale * attackerData.attackSpriteSize;
+        float newRot = attackerRotation * attackerData.attackSpriteSize;
 
-        attackerParent.DOLocalRotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
-        attackedParent.DOLocalRotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
+        effectCreator.SpriteEffect1(attackerParent, attackerMovementDuration, newPos, newSize, newRot, attackerMovementEase, attackerMovementEase);
+        
+        
+        newPos = new Vector2(attackedMovement * rightModificator + attackedWidthOffset, 0);
+        newSize = attackedScale * attackedData.attackSpriteSize;
+        newRot = attackedRotation * rightModificator;
 
-        attackerParent.DOScale(Vector3.one * (attackerScale * attackerData.attackSpriteSize), attackerScaleDuration);
-        attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration);
+        effectCreator.SpriteEffect1(attackedParent, attackedMovementDuration, newPos, newSize, newRot, attackedMovementEase, attackedMovementEase);
 
-        Color colorAttacker = attackerImage.material.GetColor("_Color");
-        DOTween.To(() => colorAttacker, x => colorAttacker = x, colorStandard, fadeColorStartDuration)
-            .OnUpdate(() => {
-                attackerImage.material.SetColor("_Color", colorAttacker);
-            });
-
+        
+        
+        effectCreator.ChangeColor(attackerImage, colorStandard, fadeColorStartDuration);
 
         if (!deathBlow)
         {
@@ -382,33 +386,19 @@ public class UIBattleAttack : MonoBehaviour
             else if (CompetenceType.heal == currentCompetenceType)
                 wantedColor = colorHeal;
 
-
-            attackedImage.material.SetColor("_Color", colorStandard);
-            Color colorAttacked = attackedImage.material.GetColor("_Color");
-            DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
-                .OnUpdate(() => {
-                    attackedImage.material.SetColor("_Color", colorAttacked);
-                });
+            
+            effectCreator.ChangeColor(attackedImage, wantedColor, flickerColorDuration);
 
             yield return new WaitForSeconds(flickerColorDuration);
-
-            colorAttacked = attackedImage.material.GetColor("_Color");
-            DOTween.To(() => colorAttacked, x => colorAttacked = x, colorStandard, flickerColorDuration)
-                .OnUpdate(() => {
-                    attackedImage.material.SetColor("_Color", colorAttacked);
-                });
+            
+            effectCreator.ChangeColor(attackedImage, colorStandard, flickerColorDuration);
         }
 
         else
         {
             Color wantedColor = colorDamage;
 
-            attackedImage.material.SetColor("_Color", colorStandard);
-            Color colorAttacked = attackedImage.material.GetColor("_Color");
-            DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
-                .OnUpdate(() => {
-                    attackedImage.material.SetColor("_Color", colorAttacked);
-                });
+            effectCreator.ChangeColor(attackedImage, wantedColor, flickerColorDuration);
 
             yield return new WaitForSeconds(flickerColorDuration);
             
@@ -417,13 +407,9 @@ public class UIBattleAttack : MonoBehaviour
                 .OnUpdate(() => {
                     attackedImage.material.SetFloat("_DissolveValue", dissoveValue);
                 });
-
-
-            colorAttacked = attackedImage.material.GetColor("_Color");
-            DOTween.To(() => colorAttacked, x => colorAttacked = x, colorEnd, flickerColorDuration)
-                .OnUpdate(() => {
-                    attackedImage.material.SetColor("_Color", colorAttacked);
-                });
+            
+            
+            effectCreator.ChangeColor(attackedImage, colorStandard, flickerColorDuration);
         }
     }
 
@@ -453,7 +439,7 @@ public class UIBattleAttack : MonoBehaviour
             rightModificator = 1;
         }
 
-        attackerParent.DOLocalMoveX(attackerParent.localPosition.x + (attackerMovement * rightModificator * currentWidthRatio) + attackerWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
+        attackerParent.DOLocalMoveX(attackerParent.localPosition.x + (attackerMovement * rightModificator) + attackerWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
         //attackedParent.DOLocalMoveX(attackedParent.localPosition.x + (-attackedMovement * rightModificator) + attackedWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
 
         attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
@@ -627,8 +613,8 @@ public class UIBattleAttack : MonoBehaviour
             });
         
         
-        leftCharaParent.DOLocalMoveX(leftCharaParent.localPosition.x + (-50 * currentWidthRatio), fadeColorEndDuration).SetEase(attackerMovementEase);
-        rightCharaParent.DOLocalMoveX(rightCharaParent.localPosition.x + (50 * currentWidthRatio), fadeColorEndDuration).SetEase(attackerMovementEase);
+        leftCharaParent.DOLocalMoveX(leftCharaParent.localPosition.x + (-50), fadeColorEndDuration).SetEase(attackerMovementEase);
+        rightCharaParent.DOLocalMoveX(rightCharaParent.localPosition.x + (50), fadeColorEndDuration).SetEase(attackerMovementEase);
         
         leftCharaParent.DOScale(leftCharaParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
         rightCharaParent.DOScale(rightCharaParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
