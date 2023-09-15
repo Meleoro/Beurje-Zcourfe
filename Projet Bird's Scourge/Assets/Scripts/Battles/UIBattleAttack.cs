@@ -85,10 +85,8 @@ public class UIBattleAttack : MonoBehaviour
     [Header("Other")]
     /*float currentWidthRatio;
     float currentHeightRatio;*/
-    float attackerWidthOffset;
-    float attackerHeightOffset;
-    float attackedWidthOffset;
-    float attackedHeightOffset;
+    float currentWidthOffset;
+    float currentHeightOffset;
 
     public enum CompetenceType
     {
@@ -101,6 +99,10 @@ public class UIBattleAttack : MonoBehaviour
         buff
     }
 
+    
+    [Header("Prefabs")] 
+    public GameObject imageParentObject;
+    public GameObject textObject;
 
     [Header("References")] 
     public TextMeshProUGUI damageNumber;
@@ -115,6 +117,10 @@ public class UIBattleAttack : MonoBehaviour
     public Transform ghostParentLeft;
     public Transform ghostParentRight;
     private UIAttackEffectCreator effectCreator;
+    
+    private RectTransform currentImageParent;
+    private Image currentImage;
+    private TextMeshProUGUI currentTMPRO;
 
 
     public void Start()
@@ -126,6 +132,9 @@ public class UIBattleAttack : MonoBehaviour
 
         originalYLeft = leftCharaParent.localPosition.y;
         originalYRight = rightCharaParent.localPosition.y;
+        
+        leftCharaParent.gameObject.SetActive(false);
+        rightChara.gameObject.SetActive(false);
 
         effectCreator = new UIAttackEffectCreator();
     }
@@ -154,27 +163,55 @@ public class UIBattleAttack : MonoBehaviour
 
         damageNumber.rectTransform.localScale = Vector3.one * textOriginalRot;
     }
+
+    
+    public void LaunchAttack(List<DataUnit> leftDatas, List<DataUnit> rightDatas, CompetenceType currentCompetenceType, bool leftOrigin, bool deadEnnemy, int damage, DataCompetence.VFXTypes currentVFXType, Buff createdBuff)
+    {
+        List<Vector2> leftPos = new List<Vector2>();
+        List<Vector2> rightPos = new List<Vector2>();
+
+        float offset = 50;
+
+        for (int i = 0; i < leftDatas.Count; i++)
+        {
+            leftPos.Add(new Vector2(originalXLeft + i * offset, originalYLeft));
+        }
+        
+        for (int i = 0; i < rightDatas.Count; i++)
+        {
+            rightPos.Add(new Vector2(originalXRight - i * offset, originalYRight));
+        }
+        
+
+        for (int i = 0; i < leftDatas.Count; i++)
+        {
+            StartCoroutine(CharacterFeel(leftDatas[i], leftPos[i], true, leftOrigin, deadEnnemy,
+                currentCompetenceType, currentVFXType));
+        }
+        
+        for (int i = 0; i < rightDatas.Count; i++)
+        {
+            StartCoroutine(CharacterFeel(rightDatas[i], rightPos[i], false, leftOrigin, deadEnnemy,
+                currentCompetenceType, currentVFXType));
+        }
+        
+        StartCoroutine(TextFeel(leftOrigin, damage, currentCompetenceType, createdBuff));
+    }
     
     
     // WHEN THE ATTACK UI HAS TO APPEAR
-    public IEnumerator AttackUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int damage, bool miss, bool crit, bool deadEnnemy, DataCompetence.VFXTypes VFXType)
+    public IEnumerator CharacterFeel(DataUnit currentData, Vector2 currentPos, bool isLeft, bool leftOrigin, bool deadEnnemy, CompetenceType currentCompetenceType, DataCompetence.VFXTypes VFXType)
     {
-        CompetenceType currentCompetenceType = CompetenceType.attack;
-
-        if (miss) currentCompetenceType = CompetenceType.miss;
-
-        else if (crit) currentCompetenceType = CompetenceType.attackCrit;
-
-
-        if (leftOrigin)
-            SetupFeel(leftData.attackSprite, rightData.damageSprite, leftData, rightData, leftOrigin);
-        
+        if ((leftOrigin && isLeft) || (!leftOrigin && !isLeft))
+        {
+            SetupFeel(currentData.attackSprite, currentData, currentPos);
+        }
         else
-            SetupFeel(leftData.damageSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
+        {
+            SetupFeel(currentData.damageSprite, currentData, currentPos);
+        }
         
-        StartCoroutine(CharacterFeel(leftOrigin, leftData, rightData, currentCompetenceType, deadEnnemy));
-
-        StartCoroutine(TextFeel(leftOrigin, damage, currentCompetenceType, null));
+        StartCoroutine(CharacterFeel(leftOrigin, isLeft, currentData, currentCompetenceType, deadEnnemy));
 
         StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin, currentCompetenceType));
         
@@ -186,78 +223,9 @@ public class UIBattleAttack : MonoBehaviour
     }
     
     
-    // WHEN THE SUMMON UI HAS TO APPEAR
-    public IEnumerator SummonUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, DataCompetence.VFXTypes VFXType)
-    {
-        CompetenceType currentCompetenceType = CompetenceType.summon;
-
-        SetupFeel(leftData.attackSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
-
-        StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
-
-        StartCoroutine(TextFeel(false, 0, currentCompetenceType, null));
-        
-        yield return new WaitForSeconds(1.5f);
-
-        StartCoroutine(EndFeel());
-    }
-    
-    // WHEN THE BUFF UI HAS TO APPEAR
-    public IEnumerator BuffUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, bool miss, bool crit, DataCompetence.VFXTypes VFXType, Buff currentBuff)
-    {
-        CompetenceType currentCompetenceType = CompetenceType.buff;
-
-        if (leftOrigin)
-            SetupFeel(leftData.attackSprite, rightData.idleSprite, leftData, rightData, leftOrigin);
-
-        else
-            SetupFeel(leftData.idleSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
-
-        StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
-
-        StartCoroutine(TextFeel(leftOrigin, 0, currentCompetenceType, currentBuff));
-        
-        LaunchVFX(leftOrigin, VFXType);
-
-        yield return new WaitForSeconds(1.5f);
-
-        StartCoroutine(EndFeel());
-    }
-    
-    
-    // WHEN THE HEAL UI HAS TO APPEAR
-    public IEnumerator HealUIFeel(DataUnit leftData, DataUnit rightData, bool leftOrigin, int healValue, bool miss, bool crit, DataCompetence.VFXTypes VFXType)
-    {
-        CompetenceType currentCompetenceType = CompetenceType.heal;
-
-        if (crit)
-            currentCompetenceType = CompetenceType.healCrit;
-
-        if (leftOrigin)
-            SetupFeel(leftData.attackSprite, rightData.idleSprite, leftData, rightData, leftOrigin);
-
-        else
-            SetupFeel(leftData.idleSprite, rightData.attackSprite, leftData, rightData, leftOrigin);
-
-        StartCoroutine(CharacterFeelHeal(leftOrigin, leftData, rightData, currentCompetenceType));
-
-        StartCoroutine(TextFeel(leftOrigin, healValue, currentCompetenceType, null));
-        
-        LaunchVFX(leftOrigin, VFXType);
-
-        yield return new WaitForSeconds(1.5f);
-
-        StartCoroutine(EndFeel());
-    }
-    
-    
-    
     // SETUP THE DIFFERENT ELEMENTS
-    public void SetupFeel(Sprite leftSprite, Sprite rightSprite, DataUnit leftData, DataUnit rightData, bool leftOrigin)
+    public void SetupFeel(Sprite currentSprite, DataUnit currentData, Vector2 wantedPos)
     {
-        /*currentWidthRatio = CameraManager.Instance.screenWidth / 800;
-        currentHeightRatio = CameraManager.Instance.screenHeight / 300;*/
-
         CameraManager.Instance.canMove = false;
         UIBattleManager.Instance.buttonScript.SwitchButtonInteractible(false);
         attackUI.gameObject.SetActive(true);
@@ -265,216 +233,136 @@ public class UIBattleAttack : MonoBehaviour
         leftChara.gameObject.SetActive(true);
         rightChara.gameObject.SetActive(true);
 
-        leftChara.sprite = leftSprite;
-        rightChara.sprite = rightSprite;
+        currentImageParent = Instantiate(imageParentObject, wantedPos, Quaternion.identity, attackUI).GetComponent<RectTransform>();
+        currentImage = currentImageParent.GetComponentInChildren<Image>();
+        
+        Destroy(currentImageParent.gameObject, 3);
 
-        leftCharaParent.localScale = Vector3.one * leftData.attackSpriteSize;
-        rightCharaParent.localScale = Vector3.one * rightData.attackSpriteSize;
+        
+        currentImage.gameObject.SetActive(true);
+        currentImage.sprite = currentSprite;
+        
+        currentWidthOffset = 800 * currentData.XPosModificator;
+        currentHeightOffset = 300 * currentData.YPosModificator;
+        
+        currentImageParent.localScale = Vector3.one * currentData.attackSpriteSize;
+        currentImageParent.localPosition = new Vector3(wantedPos.x + currentWidthOffset, wantedPos.y + currentHeightOffset, currentImageParent.position.z);
 
-        if (leftOrigin)
-        {
-            attackerWidthOffset = 800 * leftData.XPosModificator;
-            attackerHeightOffset = 300 * leftData.YPosModificator;
-
-            attackedWidthOffset = 800 * rightData.XPosModificator;
-            attackedHeightOffset = 300 * rightData.YPosModificator;
-
-            leftCharaParent.localPosition = new Vector3(originalXLeft + attackerWidthOffset, originalYLeft + attackerHeightOffset, leftCharaParent.position.z);
-            rightCharaParent.localPosition = new Vector3(originalXRight + attackedWidthOffset, originalYRight + attackedHeightOffset, rightCharaParent.position.z);
-        }
-        else
-        {
-            attackerWidthOffset = 800 * rightData.XPosModificator;
-            attackerHeightOffset = 300 * rightData.YPosModificator;
-
-            attackedWidthOffset = 800 * leftData.XPosModificator;
-            attackedHeightOffset = 300 * leftData.YPosModificator;
-
-            leftCharaParent.localPosition = new Vector3(originalXLeft + attackedWidthOffset, originalYLeft + attackedHeightOffset, leftCharaParent.position.z);
-            rightCharaParent.localPosition = new Vector3(originalXRight + attackerWidthOffset, originalYRight + attackerHeightOffset, rightCharaParent.position.z);
-        }
-
+        
         attackFond.DOFade(0.8f, apparitionFadeDuration);
 
-        float fadeLeft = leftChara.material.GetFloat("_Alpha");
-        DOTween.To(() => fadeLeft, x => fadeLeft = x, 1, fadeColorStartDuration * 0.25f)
+        float fade = currentImage.material.GetFloat("_Alpha");
+        DOTween.To(() => fade, x => fade = x, 1, fadeColorStartDuration * 0.25f)
             .OnUpdate(() => {
-                leftChara.material.SetFloat("_Alpha", fadeLeft);
+                currentImage.material.SetFloat("_Alpha", fade);
             });
 
-        float fadeRight = rightChara.material.GetFloat("_Alpha");
-        DOTween.To(() => fadeRight, x => fadeRight = x, 1, fadeColorStartDuration * 0.25f)
-            .OnUpdate(() => {
-                rightChara.material.SetFloat("_Alpha", fadeRight);
-            });
-        
-        leftChara.material.SetFloat("_DissolveValue", 0);
-        rightChara.material.SetFloat("_DissolveValue", 0);
+        currentImage.material.SetFloat("_DissolveValue", 0);
     }
 
 
     // GENERATE THE MOVEMENT OF THE CHARACTERS
-    public IEnumerator CharacterFeel(bool leftOrigin, DataUnit leftData, DataUnit rightData, CompetenceType currentCompetenceType, bool deathBlow)
+    public IEnumerator CharacterFeel(bool leftOrigin, bool isLeft, DataUnit currentData, CompetenceType currentCompetenceType, bool deathBlow)
     {
-        RectTransform attackerParent = rightCharaParent;
-        Image attackerImage = rightChara;
-        DataUnit attackerData = rightData;
+        float rightModificator = -1;
 
-        RectTransform attackedParent = leftCharaParent;
-        Image attackedImage = leftChara;
-        DataUnit attackedData = leftData;
-
-        int rightModificator = -1;
-
-
-        if (leftOrigin)
-        {
-            attackerParent = leftCharaParent;
-            attackerImage = leftChara;
-            attackerData = leftData;
-
-            attackedParent = rightCharaParent;
-            attackedImage = rightChara;
-            attackedData = rightData;
-
+        if (isLeft)
             rightModificator = 1;
+            
+            
+        float shakeDuration = attackedShakeDuration;
+        float shakeAmplitude = attackedShakeAmplitude;
+        int shakeVibrato = attackedShakeVibrato;
+
+        float movementValue = attackedMovement;
+        float scaleValue = attackedScale;
+        float rotValue = attackedRotation;
+
+        Ease currentMovementEase = attackedMovementEase;
+        Ease currentRotEase = attackedRotationEase;
+
+        bool isAttacker = false;
+
+        if ((isLeft && leftOrigin) || (!isLeft && !leftOrigin))
+        {
+            shakeDuration = attackerShakeDuration;
+            shakeAmplitude = attackerShakeAmplitude;
+            shakeVibrato = attackerShakeVibrato;
+            
+            movementValue = attackerMovement;
+            scaleValue = attackerScale;
+            rotValue = attackerRotation;
+            
+            currentMovementEase = attackerMovementEase;
+            currentRotEase = attackerRotationEase;
+
+            isAttacker = true;
         }
         
-        
-
+            
         if (CompetenceType.miss != currentCompetenceType)
         {
             if(CompetenceType.attackCrit == currentCompetenceType)
             {
-                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude), attackerShakeVibrato);
-                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1.2f, 1, 0) * (attackedShakeAmplitude), attackedShakeVibrato);
+                currentImageParent.DOShakePosition(shakeDuration, new Vector3(1.2f, 1, 0) * (shakeAmplitude), shakeVibrato);
             }
             else
             {
-                attackerImage.rectTransform.DOShakePosition(attackerShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude), attackerShakeVibrato);
-                attackedImage.rectTransform.DOShakePosition(attackedShakeDuration, new Vector3(1, 1, 0) * (attackedShakeAmplitude), attackedShakeVibrato);
+                currentImageParent.DOShakePosition(shakeDuration, new Vector3(1, 1, 0) * (shakeAmplitude), shakeVibrato);
             }
         }
 
-        Vector2 newPos = new Vector2(attackerMovement * rightModificator + attackerWidthOffset, 0);
-        float newSize = attackerScale * attackerData.attackSpriteSize;
-        float newRot = attackerRotation * attackerData.attackSpriteSize;
+        Vector2 newPos = new Vector2(movementValue * rightModificator + currentWidthOffset, 0);
+        float newSize = scaleValue * currentData.attackSpriteSize;
+        float newRot = rotValue * rightModificator;
 
-        effectCreator.SpriteEffect1(attackerParent, attackerMovementDuration, newPos, newSize, newRot, attackerMovementEase, attackerMovementEase);
-        
-        
-        newPos = new Vector2(attackedMovement * rightModificator + attackedWidthOffset, 0);
-        newSize = attackedScale * attackedData.attackSpriteSize;
-        newRot = attackedRotation * rightModificator;
+        effectCreator.SpriteEffect1(currentImageParent, attackerMovementDuration, newPos, newSize, newRot, currentMovementEase, currentRotEase);
 
-        effectCreator.SpriteEffect1(attackedParent, attackedMovementDuration, newPos, newSize, newRot, attackedMovementEase, attackedMovementEase);
 
-        
-        
-        effectCreator.ChangeColor(attackerImage, colorStandard, fadeColorStartDuration);
-
-        if (!deathBlow)
+        if (isAttacker)
         {
-            Color wantedColor = colorDamage;
-
-            if (CompetenceType.miss == currentCompetenceType)
-                wantedColor = colorMissAttack;
-
-            else if (CompetenceType.attackCrit == currentCompetenceType)
-                wantedColor = colorCritAttack;
-
-            else if (CompetenceType.heal == currentCompetenceType)
-                wantedColor = colorHeal;
-
-            
-            effectCreator.ChangeColor(attackedImage, wantedColor, flickerColorDuration);
-
-            yield return new WaitForSeconds(flickerColorDuration);
-            
-            effectCreator.ChangeColor(attackedImage, colorStandard, flickerColorDuration);
+            effectCreator.ChangeColor(currentImage, colorStandard, fadeColorStartDuration);
         }
-
         else
         {
-            Color wantedColor = colorDamage;
+            if (!deathBlow)
+            {
+                Color wantedColor = colorDamage;
 
-            effectCreator.ChangeColor(attackedImage, wantedColor, flickerColorDuration);
+                if (CompetenceType.miss == currentCompetenceType)
+                    wantedColor = colorMissAttack;
 
-            yield return new WaitForSeconds(flickerColorDuration);
+                else if (CompetenceType.attackCrit == currentCompetenceType)
+                    wantedColor = colorCritAttack;
+
+                else if (CompetenceType.heal == currentCompetenceType)
+                    wantedColor = colorHeal;
+
             
-            float dissoveValue = attackedImage.material.GetFloat("_DissolveValue");
-            DOTween.To(() => dissoveValue, x => dissoveValue = x, 1, flickerColorDuration * 3)
-                .OnUpdate(() => {
-                    attackedImage.material.SetFloat("_DissolveValue", dissoveValue);
-                });
+                effectCreator.ChangeColor(currentImage, wantedColor, flickerColorDuration);
+
+                yield return new WaitForSeconds(flickerColorDuration);
             
+                effectCreator.ChangeColor(currentImage, colorStandard, flickerColorDuration);
+            }
+
+            else
+            {
+                Color wantedColor = colorDamage;
+
+                effectCreator.ChangeColor(currentImage, wantedColor, flickerColorDuration);
+
+                yield return new WaitForSeconds(flickerColorDuration);
             
-            effectCreator.ChangeColor(attackedImage, colorStandard, flickerColorDuration);
+                float dissoveValue = currentImage.material.GetFloat("_DissolveValue");
+                DOTween.To(() => dissoveValue, x => dissoveValue = x, 1, flickerColorDuration * 3)
+                    .OnUpdate(() => {
+                        currentImage.material.SetFloat("_DissolveValue", dissoveValue);
+                    });
+            
+                effectCreator.ChangeColor(currentImage, colorStandard, flickerColorDuration);
+            }
         }
-    }
-
-    public IEnumerator CharacterFeelHeal(bool leftOrigin, DataUnit leftData, DataUnit rightData, CompetenceType currentCompetenceType)
-    {
-        RectTransform attackerParent = rightCharaParent;
-        Image attackerImage = rightChara;
-        DataUnit attackerData = rightData;
-
-        RectTransform attackedParent = leftCharaParent;
-        Image attackedImage = leftChara;
-        DataUnit attackedData = leftData;
-
-        int rightModificator = -1;
-
-
-        if (leftOrigin)
-        {
-            attackerParent = leftCharaParent;
-            attackerImage = leftChara;
-            attackerData = leftData;
-
-            attackedParent = rightCharaParent;
-            attackedImage = rightChara;
-            attackedData = rightData;
-
-            rightModificator = 1;
-        }
-
-        attackerParent.DOLocalMoveX(attackerParent.localPosition.x + (attackerMovement * rightModificator) + attackerWidthOffset, attackerMovementDuration).SetEase(attackerMovementEase);
-        //attackedParent.DOLocalMoveX(attackedParent.localPosition.x + (-attackedMovement * rightModificator) + attackedWidthOffset * currentWidthRatio, attackedMovementDuration).SetEase(attackedMovementEase);
-
-        attackerParent.DORotate(attackerParent.rotation.eulerAngles + new Vector3(0, 0, attackerRotation * rightModificator), attackerRotationDuration).SetEase(attackerRotationEase);
-        attackedParent.DORotate(attackedParent.rotation.eulerAngles + new Vector3(0, 0, attackedRotation * rightModificator), attackedRotationDuration).SetEase(attackedRotationEase);
-
-        attackerParent.DOScale(Vector3.one * (attackerScale * attackerData.attackSpriteSize), attackerScaleDuration);
-        attackedParent.DOScale(Vector3.one * (attackedScale * attackedData.attackSpriteSize), attackedScaleDuration * 3f).SetEase(Ease.OutElastic);
-
-        Color colorAttacker = attackerImage.material.GetColor("_Color");
-        DOTween.To(() => colorAttacker, x => colorAttacker = x, colorStandard, fadeColorStartDuration)
-            .OnUpdate(() => {
-                attackerImage.material.SetColor("_Color", colorAttacker);
-            });
-
-        
-        Color wantedColor = colorHeal;
-
-        if (currentCompetenceType == CompetenceType.summon)
-            wantedColor = colorSummon;
-
-        
-        attackedImage.material.SetColor("_Color", colorStandard);
-        Color colorAttacked = attackedImage.material.GetColor("_Color");
-        DOTween.To(() => colorAttacked, x => colorAttacked = x, wantedColor, flickerColorDuration)
-            .OnUpdate(() => {
-                attackedImage.material.SetColor("_Color", colorAttacked);
-            });
-
-        yield return new WaitForSeconds(flickerColorDuration);
-
-        colorAttacked = attackedImage.material.GetColor("_Color");
-        DOTween.To(() => colorAttacked, x => colorAttacked = x, colorStandard, flickerColorDuration)
-            .OnUpdate(() => {
-                attackedImage.material.SetColor("_Color", colorAttacked);
-            });
     }
     
     

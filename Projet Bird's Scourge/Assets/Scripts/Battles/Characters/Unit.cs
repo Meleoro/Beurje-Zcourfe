@@ -152,6 +152,12 @@ public class Unit : MonoBehaviour
                 attackDamage += BuffManager.Instance.GetDamageBuff(attackDamage,this,null);
                 int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
                 attackCriticalRate += BuffManager.Instance.GetDamageBuff(attackCriticalRate,this,null);
+
+                List<DataUnit> currentEnnemies = new List<DataUnit>();
+                List<DataUnit> currentUnits = new List<DataUnit>();
+                
+                currentUnits.Add(data);
+                currentEnnemies.Add(clickedEnnemy.data);
                 
                 if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
                 {
@@ -160,19 +166,19 @@ public class Unit : MonoBehaviour
                         bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage * 2);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
                         
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true,attackDamage * 2,false,true, deadEnnemy, competenceUsed.VFXType));
+                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.attackCrit, true, deadEnnemy, attackDamage * 2, competenceUsed.VFXType, null);
                     }
                     else // si ce n'est pas un critique
                     {
                         bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage);
                         BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
             
-                        StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, attackDamage,false,false, deadEnnemy, competenceUsed.VFXType)); 
+                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.attack, true, deadEnnemy, attackDamage, competenceUsed.VFXType, null);
                     }
                 }
                 else // Si c'est un miss
                 {
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, clickedEnnemy.data, true, 0,true,false, false, competenceUsed.VFXType));
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.miss,true, false, attackDamage * 2, competenceUsed.VFXType, null);
                 }
                 
                 
@@ -199,6 +205,12 @@ public class Unit : MonoBehaviour
         {
             if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
             {
+                List<DataUnit> currentEnnemies = new List<DataUnit>();
+                List<DataUnit> currentUnits = new List<DataUnit>();
+                
+                currentUnits.Add(data);
+                currentEnnemies.Add(clickedUnit.data);
+                
                 List<Vector2> positions = new List<Vector2>();
 
                 positions.Add(transform.position);
@@ -213,7 +225,7 @@ public class Unit : MonoBehaviour
                     case DataCompetence.Effets.soin :
                         int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
                         clickedUnit.currentHealth += addedPV;
-                        StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(data, clickedUnit.data, true, addedPV, false, false, competenceUsed.VFXType));
+                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.heal, true, false, addedPV, competenceUsed.VFXType, null);
                         break;
             
                     case DataCompetence.Effets.buff :
@@ -222,7 +234,7 @@ public class Unit : MonoBehaviour
                         concernedUnits.Add(clickedUnit);
                         BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false, concernedUnits, null);
                         
-                        StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(data, clickedUnit.data, true, false, false, competenceUsed.VFXType, currentBuff));
+                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.buff, true, false, 0, competenceUsed.VFXType, currentBuff);
                         break;
                 }
                 

@@ -58,6 +58,22 @@ public class EnnemyAttacks : MonoBehaviour
         int attackHitRate = statsCalculator.CalculateHitRate(data.levels[currentLevel].agilite, competenceUsed.levels[0].baseHitRate,dataUnit.levels[unitLevel].agilite);
         int attackDamage = statsCalculator.CalculateDamages(data.levels[currentLevel].force, competenceUsed.levels[0].damageMultiplier, dataUnit.levels[unitLevel].defense);
         int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[currentLevel].chance, competenceUsed.levels[0].criticalMultiplier, dataUnit.levels[unitLevel].chance);
+        
+        List<DataUnit> currentEnnemiesR = new List<DataUnit>();
+        currentEnnemiesR.Add(data);
+        
+        List<DataUnit> currentUnits = new List<DataUnit>();
+        List<DataUnit> currentSummons = new List<DataUnit>();
+        List<DataUnit> currentEnnemiesL = new List<DataUnit>();
+        
+        if(attackedUnit is not null)
+            currentUnits.Add(attackedUnit.data);
+        
+        if(attackedSummon is not null)
+            currentSummons.Add(attackedSummon.data);
+        
+        if(attackedEnnemy is not null)
+            currentEnnemiesL.Add(attackedEnnemy.data);
                 
         // Si l'attaque touche
         if (Random.Range(0, 100) <= attackHitRate) 
@@ -69,19 +85,19 @@ public class EnnemyAttacks : MonoBehaviour
                 if (attackedUnit is not null)
                 {
                     deadUnit = attackedUnit.TakeDamages(attackDamage * 2);
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(dataUnit, data, leftOrigin, attackDamage * 2,false,true, deadUnit, competenceUsed.VFXType)); 
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemiesR, UIBattleAttack.CompetenceType.attackCrit, false, deadUnit, attackDamage * 2, competenceUsed.VFXType, null);
                 }
                 
                 else if (attackedEnnemy is not null)
                 {
                     deadUnit = attackedEnnemy.TakeDamages(attackDamage * 2);
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, dataUnit, leftOrigin, attackDamage * 2,false,true, deadUnit, competenceUsed.VFXType)); 
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentEnnemiesL, currentEnnemiesR, UIBattleAttack.CompetenceType.attackCrit, false, deadUnit, attackDamage * 2, competenceUsed.VFXType, null);
                 }
                 
                 else
                 {
                     deadUnit = attackedSummon.TakeDamages(attackDamage * 2);
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(dataUnit, data, leftOrigin, attackDamage * 2,false,true, deadUnit, competenceUsed.VFXType)); 
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentSummons, currentEnnemiesR, UIBattleAttack.CompetenceType.attackCrit, false, deadUnit, attackDamage * 2, competenceUsed.VFXType, null);
                 }
             }
             // si ce n'est pas un critique
@@ -91,19 +107,19 @@ public class EnnemyAttacks : MonoBehaviour
                 if (attackedUnit is not null)
                 {
                     deadUnit = attackedUnit.TakeDamages(attackDamage);
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(dataUnit, data, leftOrigin, attackDamage,false,false, deadUnit, competenceUsed.VFXType)); 
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemiesR, UIBattleAttack.CompetenceType.attack, false, deadUnit, attackDamage, competenceUsed.VFXType, null);
                 }
                 
                 else if (attackedEnnemy is not null)
                 {
                     deadUnit = attackedEnnemy.TakeDamages(attackDamage);
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, dataUnit, leftOrigin, attackDamage,false,false, deadUnit, competenceUsed.VFXType)); 
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemiesR, UIBattleAttack.CompetenceType.attack, false, deadUnit, attackDamage, competenceUsed.VFXType, null);
                 }
                 
                 else
                 {
                     deadUnit = attackedSummon.TakeDamages(attackDamage);
-                    StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(dataUnit, data, leftOrigin, attackDamage,false,false, deadUnit, competenceUsed.VFXType)); 
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemiesR, UIBattleAttack.CompetenceType.attack, false, deadUnit, attackDamage, competenceUsed.VFXType, null);
                 }
             }
         }
@@ -112,17 +128,17 @@ public class EnnemyAttacks : MonoBehaviour
         {
             if (attackedUnit is not null)
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(dataUnit, data, leftOrigin, attackDamage,true ,false, false, competenceUsed.VFXType)); 
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemiesR, UIBattleAttack.CompetenceType.miss, false, false, attackDamage, competenceUsed.VFXType, null);
             }
                 
             else if (attackedEnnemy is not null)
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(data, dataUnit, leftOrigin, attackDamage,true ,false, false, competenceUsed.VFXType)); 
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentEnnemiesL, currentEnnemiesR, UIBattleAttack.CompetenceType.miss, false, false, attackDamage, competenceUsed.VFXType, null);
             }
                 
             else
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.AttackUIFeel(dataUnit, data, leftOrigin, attackDamage,true ,false, false, competenceUsed.VFXType)); 
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentSummons, currentEnnemiesR, UIBattleAttack.CompetenceType.miss, false, false, attackDamage, competenceUsed.VFXType, null);
             }
         }
 
@@ -141,9 +157,14 @@ public class EnnemyAttacks : MonoBehaviour
         IntroCompetence(currentCompetenceTile);
         
         yield return new WaitForSeconds(1.5f);
+        
+        List<DataUnit> leftDatas = new List<DataUnit>();
+        leftDatas.Add(currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data);
 
-        StartCoroutine(UIBattleManager.Instance.attackScript.SummonUIFeel(
-            currentCompetence.levels[0].summonedUnit.GetComponent<Ennemy>().data, data, false, currentCompetence.VFXType));
+        List<DataUnit> rightDatas = new List<DataUnit>();
+        rightDatas.Add(data);
+        
+        UIBattleManager.Instance.attackScript.LaunchAttack(leftDatas, rightDatas, UIBattleAttack.CompetenceType.summon, false, false, 0, currentCompetence.VFXType, null);
         
         yield return new WaitForSeconds(UIBattleManager.Instance.dureeAnimAttaque * 0.5f);
         
@@ -195,13 +216,29 @@ public class EnnemyAttacks : MonoBehaviour
         IntroCompetence(currentTile);
         
         yield return new WaitForSeconds(1.5f);
+        
+        List<DataUnit> currentEnnemiesR = new List<DataUnit>();
+        currentEnnemiesR.Add(data);
+        
+        List<DataUnit> currentUnits = new List<DataUnit>();
+        List<DataUnit> currentSummons = new List<DataUnit>();
+        List<DataUnit> currentEnnemiesL = new List<DataUnit>();
+        
+        if(attackedUnit is not null)
+            currentUnits.Add(attackedUnit.data);
+        
+        if(attackedSummon is not null)
+            currentSummons.Add(attackedSummon.data);
+        
+        if(attackedEnnemy is not null)
+            currentEnnemiesL.Add(attackedEnnemy.data);
+        
 
         if (currentCompetence.levels[0].newEffet == DataCompetence.Effets.buff)
         {
             if (attackedUnit is not null)
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(
-                    data, attackedUnit.data, true, false, false,currentCompetence.VFXType, currentCompetence.levels[0].createdBuff));
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemiesR, UIBattleAttack.CompetenceType.buff, false, false, 0, currentCompetence.VFXType, currentCompetence.levels[0].createdBuff);
                 
                 Buff currentBuff = currentCompetence.levels[0].createdBuff;
                 List<Unit> aimedUnit = new List<Unit>();
@@ -213,8 +250,7 @@ public class EnnemyAttacks : MonoBehaviour
                 
             else if (attackedEnnemy is not null)
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(
-                    attackedEnnemy.data, data, false, false, false,currentCompetence.VFXType, currentCompetence.levels[0].createdBuff));
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentEnnemiesL, currentEnnemiesR, UIBattleAttack.CompetenceType.buff, false, false, 0, currentCompetence.VFXType, currentCompetence.levels[0].createdBuff);
                 
                 Buff currentBuff = currentCompetence.levels[0].createdBuff;
                 List<Ennemy> aimedEnnemy = new List<Ennemy>();
@@ -226,8 +262,7 @@ public class EnnemyAttacks : MonoBehaviour
                 
             else
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.BuffUIFeel(
-                    data, attackedSummon.data, true, false, false,currentCompetence.VFXType, currentCompetence.levels[0].createdBuff));
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentSummons, currentEnnemiesR, UIBattleAttack.CompetenceType.buff, false, false, 0, currentCompetence.VFXType, currentCompetence.levels[0].createdBuff);
                 
                 Buff currentBuff = currentCompetence.levels[0].createdBuff;
                 List<Ennemy> aimedEnnemy = new List<Ennemy>();
@@ -242,8 +277,7 @@ public class EnnemyAttacks : MonoBehaviour
         {
             if (attackedUnit is not null)
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(
-                    data, attackedUnit.data, true, currentCompetence.levels[0].healedPV, false, false, currentCompetence.VFXType));
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemiesR, UIBattleAttack.CompetenceType.heal, false, false, currentCompetence.levels[0].healedPV, currentCompetence.VFXType, null);
 
                 attackedUnit.currentHealth += currentCompetence.levels[0].healedPV;
 
@@ -253,8 +287,7 @@ public class EnnemyAttacks : MonoBehaviour
                 
             else if (attackedEnnemy is not null)
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(
-                    attackedEnnemy.data, data, false, currentCompetence.levels[0].healedPV, false,false, currentCompetence.VFXType));
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentEnnemiesL, currentEnnemiesR, UIBattleAttack.CompetenceType.heal, false, false, currentCompetence.levels[0].healedPV, currentCompetence.VFXType, null);
                 
                 attackedEnnemy.currentHealth += currentCompetence.levels[0].healedPV;
 
@@ -264,8 +297,7 @@ public class EnnemyAttacks : MonoBehaviour
                 
             else
             {
-                StartCoroutine(UIBattleManager.Instance.attackScript.HealUIFeel(
-                    data, attackedSummon.data, true, currentCompetence.levels[0].healedPV, false,false, currentCompetence.VFXType));
+                UIBattleManager.Instance.attackScript.LaunchAttack(currentSummons, currentEnnemiesR, UIBattleAttack.CompetenceType.heal, false, false, currentCompetence.levels[0].healedPV, currentCompetence.VFXType, null);
                 
                 attackedSummon.currentHealth += currentCompetence.levels[0].healedPV;
 

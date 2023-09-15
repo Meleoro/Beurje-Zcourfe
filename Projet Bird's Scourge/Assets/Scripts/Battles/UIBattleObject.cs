@@ -135,7 +135,7 @@ public class UIBattleObject : MonoBehaviour
         currentImageParent = Instantiate(imageParentObject, wantedPos, Quaternion.identity, attackUI).GetComponent<RectTransform>();
         currentImage = currentImageParent.GetComponentInChildren<Image>();
         
-        Destroy(currentImageParent.gameObject, 5);
+        Destroy(currentImageParent.gameObject, 3);
         
         currentImage.gameObject.SetActive(true);
         currentImage.sprite = currentSprite;
