@@ -205,21 +205,21 @@ public class UIBattleAttack : MonoBehaviour
         if ((leftOrigin && isLeft) || (!leftOrigin && !isLeft))
         {
             SetupFeel(currentData.attackSprite, currentData, currentPos);
+            StartCoroutine(GhostTrail(10, 0.04f, 0.1f, currentCompetenceType, true));
         }
         else
         {
             SetupFeel(currentData.damageSprite, currentData, currentPos);
+            StartCoroutine(GhostTrail(10, 0.04f, 0.1f, currentCompetenceType, false));
         }
         
         StartCoroutine(CharacterFeel(leftOrigin, isLeft, currentData, currentCompetenceType, deadEnnemy));
-
-        StartCoroutine(GhostTrail(10, 0.04f, 0.1f, leftOrigin, currentCompetenceType));
         
         LaunchVFX(leftOrigin, VFXType);
 
         yield return new WaitForSeconds(1.3f);
 
-        StartCoroutine(EndFeel());
+        StartCoroutine(EndFeel(isLeft));
     }
     
     
@@ -235,6 +235,8 @@ public class UIBattleAttack : MonoBehaviour
 
         currentImageParent = Instantiate(imageParentObject, wantedPos, Quaternion.identity, attackUI).GetComponent<RectTransform>();
         currentImage = currentImageParent.GetComponentInChildren<Image>();
+        
+        currentImage.material = Instantiate(currentImage.material);
         
         Destroy(currentImageParent.gameObject, 3);
 
@@ -252,12 +254,14 @@ public class UIBattleAttack : MonoBehaviour
         attackFond.DOFade(0.8f, apparitionFadeDuration);
 
         float fade = currentImage.material.GetFloat("_Alpha");
+        Image imageToModify = currentImage;
+        
         DOTween.To(() => fade, x => fade = x, 1, fadeColorStartDuration * 0.25f)
             .OnUpdate(() => {
-                currentImage.material.SetFloat("_Alpha", fade);
+                imageToModify.material.SetFloat("_Alpha", fade);
             });
 
-        currentImage.material.SetFloat("_DissolveValue", 0);
+        imageToModify.material.SetFloat("_DissolveValue", 0);
     }
 
 
@@ -319,9 +323,10 @@ public class UIBattleAttack : MonoBehaviour
         effectCreator.SpriteEffect1(currentImageParent, attackerMovementDuration, newPos, newSize, newRot, currentMovementEase, currentRotEase);
 
 
+        Image imageToModify = currentImage;
         if (isAttacker)
         {
-            effectCreator.ChangeColor(currentImage, colorStandard, fadeColorStartDuration);
+            effectCreator.ChangeColor(imageToModify, colorStandard, fadeColorStartDuration);
         }
         else
         {
@@ -339,28 +344,28 @@ public class UIBattleAttack : MonoBehaviour
                     wantedColor = colorHeal;
 
             
-                effectCreator.ChangeColor(currentImage, wantedColor, flickerColorDuration);
+                effectCreator.ChangeColor(imageToModify, wantedColor, flickerColorDuration);
 
                 yield return new WaitForSeconds(flickerColorDuration);
             
-                effectCreator.ChangeColor(currentImage, colorStandard, flickerColorDuration);
+                effectCreator.ChangeColor(imageToModify, colorStandard, flickerColorDuration);
             }
 
             else
             {
                 Color wantedColor = colorDamage;
 
-                effectCreator.ChangeColor(currentImage, wantedColor, flickerColorDuration);
+                effectCreator.ChangeColor(imageToModify, wantedColor, flickerColorDuration);
 
                 yield return new WaitForSeconds(flickerColorDuration);
             
-                float dissoveValue = currentImage.material.GetFloat("_DissolveValue");
+                float dissoveValue = imageToModify.material.GetFloat("_DissolveValue");
                 DOTween.To(() => dissoveValue, x => dissoveValue = x, 1, flickerColorDuration * 3)
                     .OnUpdate(() => {
-                        currentImage.material.SetFloat("_DissolveValue", dissoveValue);
+                        imageToModify.material.SetFloat("_DissolveValue", dissoveValue);
                     });
             
-                effectCreator.ChangeColor(currentImage, colorStandard, flickerColorDuration);
+                effectCreator.ChangeColor(imageToModify, colorStandard, flickerColorDuration);
             }
         }
     }
@@ -473,39 +478,34 @@ public class UIBattleAttack : MonoBehaviour
 
 
     // FADES OUT OF THE ATTACK UI
-    public IEnumerator EndFeel()
+    public IEnumerator EndFeel(bool isLeft)
     {
-        float fadeLeft = leftChara.material.GetFloat("_Alpha");
+        Image imageToModify = currentImage;
+        
+        float fadeLeft = imageToModify.material.GetFloat("_Alpha");
         DOTween.To(() => fadeLeft, x => fadeLeft = x, 0.5f, fadeColorEndDuration)
             .OnUpdate(() => {
-                leftChara.material.SetFloat("_Alpha", fadeLeft);
-            });
-
-        float fadeRight = rightChara.material.GetFloat("_Alpha");
-        DOTween.To(() => fadeRight, x => fadeRight = x, 0.5f, fadeColorEndDuration)
-            .OnUpdate(() => {
-                rightChara.material.SetFloat("_Alpha", fadeRight);
+                imageToModify.material.SetFloat("_Alpha", fadeLeft);
             });
         
-        
-        Color colorLeft = leftChara.material.GetColor("_Color");
+        Color colorLeft = imageToModify.material.GetColor("_Color");
         DOTween.To(() => colorLeft, x => colorLeft = x, colorEnd, fadeColorEndDuration)
             .OnUpdate(() => {
-                leftChara.material.SetColor("_Color", colorLeft);
+                imageToModify.material.SetColor("_Color", colorLeft);
             });
+
+
+        if (isLeft)
+        {
+            currentImageParent.DOLocalMoveX(currentImageParent.localPosition.x + (-50), fadeColorEndDuration).SetEase(attackerMovementEase);
+            currentImageParent.DOScale(currentImageParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
+        }
         
-        Color colorRight = rightChara.material.GetColor("_Color");
-        DOTween.To(() => colorRight, x => colorRight = x, colorEnd, fadeColorEndDuration)
-            .OnUpdate(() => {
-                rightChara.material.SetColor("_Color", colorRight);
-            });
-        
-        
-        leftCharaParent.DOLocalMoveX(leftCharaParent.localPosition.x + (-50), fadeColorEndDuration).SetEase(attackerMovementEase);
-        rightCharaParent.DOLocalMoveX(rightCharaParent.localPosition.x + (50), fadeColorEndDuration).SetEase(attackerMovementEase);
-        
-        leftCharaParent.DOScale(leftCharaParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
-        rightCharaParent.DOScale(rightCharaParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
+        else
+        {
+            currentImageParent.DOLocalMoveX(currentImageParent.localPosition.x + (50), fadeColorEndDuration).SetEase(attackerMovementEase);
+            currentImageParent.DOScale(currentImageParent.localScale * 0.8f, fadeColorEndDuration).SetEase(attackerMovementEase);
+        }
         
         attackFond.DOFade(0f, fadeColorEndDuration + 0.01f);
         
@@ -535,40 +535,40 @@ public class UIBattleAttack : MonoBehaviour
 
 
     // CREATES THE GHOST TRAIL ON THE ATTACKED UNIT
-    public IEnumerator GhostTrail(int iterations, float durationBetween, float ghostDuration, bool leftOrigin, CompetenceType currentCompetenceType)
+    public IEnumerator GhostTrail(int iterations, float durationBetween, float ghostDuration, CompetenceType currentCompetenceType, bool isKind)
     {
+        Image imageToModify = currentImage;
+        
         while (iterations > 0)
         {
             iterations -= 1;
 
             GameObject currentPrefab = null;
             Image currentGhost = null;
+            
+            currentPrefab = Instantiate(ghostPrefab, imageToModify.rectTransform.position, Quaternion.identity, ghostParentRight);
 
-            if (leftOrigin)
+            currentGhost = currentPrefab.GetComponent<Image>();
+            currentGhost.sprite = imageToModify.sprite;
+
+            if (!isKind)
             {
-                currentPrefab = Instantiate(ghostPrefab, rightChara.rectTransform.position, Quaternion.identity, ghostParentRight);
+                Color wantedColor = colorDamage;
 
-                currentGhost = currentPrefab.GetComponent<Image>();
-                currentGhost.sprite = rightChara.sprite;
+                if (currentCompetenceType == CompetenceType.miss)
+                    wantedColor = colorMissAttack;
+
+                if (currentCompetenceType == CompetenceType.attackCrit)
+                    wantedColor = colorCritAttack;
+                
+                currentGhost.material.SetColor("_Color", wantedColor);
             }
             else
             {
-                currentPrefab = Instantiate(ghostPrefab, leftChara.rectTransform.position, Quaternion.identity, ghostParentLeft);
-
-                currentGhost = currentPrefab.GetComponent<Image>();
-                currentGhost.sprite = leftChara.sprite;
+                currentGhost.material.SetColor("_Color", Color.white);
             }
 
-            Color wantedColor = colorDamage;
-
-            if (currentCompetenceType == CompetenceType.miss)
-                wantedColor = colorMissAttack;
-
-            if (currentCompetenceType == CompetenceType.attackCrit)
-                wantedColor = colorCritAttack;
-
             currentGhost.DOFade(1, ghostDuration).OnComplete(() => { currentGhost.DOFade(0, 0.2f); });
-            currentGhost.material.SetColor("_Color", wantedColor);
 
             yield return new WaitForSeconds(durationBetween);
         }
