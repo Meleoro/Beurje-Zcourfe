@@ -14,6 +14,7 @@ public class TilesMouseManager : MonoBehaviour
     [Header("Tiles Lists")]
     [HideInInspector] public List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
     [HideInInspector] public List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
+    [HideInInspector] public List<OverlayTile> tilesCompetenceSelected = new List<OverlayTile>();
     [HideInInspector] public OverlayTile currentSelectedTile;
 
     [Header("Controller Infos")] 
@@ -26,16 +27,20 @@ public class TilesMouseManager : MonoBehaviour
 
     [Header("Current Infos")] 
     private bool competenceDisplayed;
+    private DataCompetence currentCompetence;
+    private int currentCompetenceLevel;
 
     [Header("References")] 
     private MouseManager mainScript;
     private EffectMaker effectMaker;
+    private RangeFinder rangeFinder;
 
 
     private void Start()
     {
         mainScript = GetComponent<MouseManager>();
         effectMaker = new EffectMaker();
+        rangeFinder = new RangeFinder();
     }
 
     
@@ -58,6 +63,8 @@ public class TilesMouseManager : MonoBehaviour
         
         
         competenceDisplayed = mainScript.competenceDisplayed;
+        currentCompetenceLevel = mainScript.competenceLevel;
+        currentCompetence = mainScript.competenceUsed;
     }
 
     private void SetInfos()
@@ -191,19 +198,59 @@ public class TilesMouseManager : MonoBehaviour
         
         if (currentSelectedTile != currentTile)
         {
-            if (currentSelectedTile is not null)
+            if (!currentCompetence.levels[currentCompetenceLevel].isZoneEffect)
             {
-                currentSelectedTile.DeselectEffect(0.05f, tilesAttackColor);
+                if (currentSelectedTile is not null)
+                {
+                    currentSelectedTile.DeselectEffect(0.05f, tilesAttackColor);
+                }
+
+                if (currentTile is not null && tilesCompetenceDisplayed.Contains(currentTile))
+                {
+                    currentSelectedTile = currentTile;
+                
+                    StartCoroutine(currentSelectedTile.SelectEffect(0.05f, tilesAttackColorSelected));
+                }
             }
 
-            if (currentTile is not null && tilesCompetenceDisplayed.Contains(currentTile))
+            else if(tilesCompetenceDisplayed.Contains(currentTile))
             {
-                currentSelectedTile = currentTile;
-                
-                StartCoroutine(currentSelectedTile.SelectEffect(0.05f, tilesAttackColorSelected));
+                ManageSelectedZoneTiles(currentTile);
             }
         }
         
         SetInfos();
+    }
+
+
+    private void ManageSelectedZoneTiles(OverlayTile currentTile)
+    {
+        List<OverlayTile> currentTilesZone =
+            rangeFinder.FindTilesCompetence(currentTile, currentCompetence, currentCompetenceLevel);
+
+        for (int i = 0; i < currentTilesZone.Count; i++)
+        {
+            if (!tilesCompetenceSelected.Contains(currentTilesZone[i]))
+            {
+                StartCoroutine(currentTilesZone[i].SelectEffect(0.1f, tilesAttackColorSelected));
+                tilesCompetenceSelected.Add(currentTilesZone[i]);
+            }
+        }
+        
+        for (int i = tilesCompetenceSelected.Count - 1; i >= 0; i--)
+        {
+            if (!currentTilesZone.Contains(tilesCompetenceSelected[i]))
+            {
+                if(tilesCompetenceDisplayed.Contains(tilesCompetenceSelected[i]))
+                    tilesCompetenceSelected[i].DeselectEffect(0.1f, tilesAttackColor);
+
+                else
+                    tilesCompetenceSelected[i].ResetTile();
+                
+                
+                
+                tilesCompetenceSelected.RemoveAt(i);
+            }
+        }
     }
 }

@@ -281,6 +281,8 @@ public class RangeFinder
             }
         }
         
+        tilesToColor.Add(start);
+        
         return tilesToColor;
     }
 
