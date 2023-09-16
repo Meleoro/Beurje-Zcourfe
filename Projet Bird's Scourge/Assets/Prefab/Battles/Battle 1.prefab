@@ -10670,6 +10670,7 @@ GameObject:
   - component: {fileID: 741630602310693780}
   - component: {fileID: 6217091681733392990}
   - component: {fileID: 1789948722559518678}
+  - component: {fileID: 2011287399986147437}
   - component: {fileID: 3474505599995512266}
   - component: {fileID: 8968566931835663668}
   - component: {fileID: 6566052728581450547}
@@ -10770,7 +10771,13 @@ MonoBehaviour:
   turnOutlineSpeed: 2
   tilesCompetenceDisplayed: []
   tilesAtRangeDisplayed: []
+  indexCompetence: 0
+  competenceLevel: 0
   competenceUsed: {fileID: 0}
+  competenceSelect: 0
+  unitSelect: 0
+  competenceDisplayed: 0
+  currentSelectedTile: {fileID: 0}
   overlayedUnit: {fileID: 0}
   overlayedEnnemy: {fileID: 0}
   selectedUnit: {fileID: 0}
@@ -10779,6 +10786,26 @@ MonoBehaviour:
   isUsingObject: 0
   noControl: 0
   isOnButton: 0
+  tilesScript: {fileID: 0}
+--- !u!114 &2011287399986147437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265041702834994273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b2b0f213eb6ea544be7ef511c091357, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilesMovementColor: {r: 0.58431375, g: 0.7058824, b: 0.7176471, a: 1}
+  tilesMovementColorSelected: {r: 0.5882353, g: 0.9607844, b: 1, a: 1}
+  tilesAttackColor: {r: 1, g: 0.08627451, b: 0.03137255, a: 1}
+  tilesAttackColorSelected: {r: 1, g: 0.43137258, b: 0.39607847, a: 1}
+  tilesCompetenceDisplayed: []
+  tilesAtRangeDisplayed: []
+  selectedTiles: []
 --- !u!114 &3474505599995512266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11740,7 +11767,7 @@ Transform:
   - {fileID: 1753616676840146024}
   - {fileID: 1441214032450215431}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &444871648844107493
 MonoBehaviour:

@@ -311,7 +311,7 @@ public class Unit : MonoBehaviour
     {
         currentTilesAtRange = rangeFinder.FindTilesInRange(currentTile, PM);
         
-        MouseManager.Instance.ManageOverlayTiles(forceReset, forceChange);
+        MouseManager.Instance.tilesScript.ManageOverlayTiles(forceReset, forceChange);
     }
 
     

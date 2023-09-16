@@ -17,11 +17,13 @@ public class OutlineManage : MonoBehaviour
 
     [Header("References")] 
     private MouseManager originalScript;
+    private TilesMouseManager tilesScript;
 
     
     private void Start()
     {
         originalScript = GetComponent<MouseManager>();
+        tilesScript = GetComponent<TilesMouseManager>();
     }
 
 
@@ -75,7 +77,7 @@ public class OutlineManage : MonoBehaviour
             }
              
             SendVariables();
-            originalScript.ManageOverlayTiles();
+            tilesScript.ManageOverlayTiles();
         }
 
         // If it's an unit
@@ -89,7 +91,7 @@ public class OutlineManage : MonoBehaviour
                 overlayedUnit = currentOverlayedUnit;
                     
                 SendVariables();
-                originalScript.ManageOverlayTiles();
+                tilesScript.ManageOverlayTiles();
             }
         }
 
@@ -104,7 +106,7 @@ public class OutlineManage : MonoBehaviour
                 overlayedEnnemy = currentOverlayedEnnemy;
 
                 SendVariables();
-                originalScript.ManageOverlayTiles();
+                tilesScript.ManageOverlayTiles();
             }
         }
     }
@@ -126,19 +128,8 @@ public class OutlineManage : MonoBehaviour
                 selectedEnnemy = null;
 
                 SendVariables();
-                originalScript.ManageOverlayTiles(true, true);
+                tilesScript.ManageOverlayTiles(true, true);
             }
-                
-            // If it's an automatic selection
-            /*else if (currentUnit != currentOverlayedUnit)
-            {
-                selectedUnit = currentUnit;
-                selectedEnnemy = null;
-                    
-                ManageOverlayTiles(true, true);
-
-                currentOverlayedUnit = currentUnit;
-            }*/
 
             else
             {
@@ -146,7 +137,7 @@ public class OutlineManage : MonoBehaviour
                 selectedEnnemy = null;
                     
                 SendVariables();
-                originalScript.ManageOverlayTiles(false, true);
+                tilesScript.ManageOverlayTiles(false, true);
             }
                 
             selectedUnit.ActivateOutline(colorOutlineSelectedUnit);

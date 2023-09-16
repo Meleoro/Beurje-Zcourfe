@@ -30,7 +30,7 @@ public class EffectMaker
         
         openList.Add(center);
 
-        while (closeList.Count < tiles.Count - 1 && tiles == MouseManager.Instance.tilesAtRangeDisplayed && limit > 0)
+        while (closeList.Count < tiles.Count - 1 && tiles == MouseManager.Instance.tilesScript.tilesAtRangeDisplayed && limit > 0)
         {
             limit -= 1;
             
