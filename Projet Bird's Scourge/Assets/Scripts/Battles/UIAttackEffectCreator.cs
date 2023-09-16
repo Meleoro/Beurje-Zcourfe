@@ -18,10 +18,6 @@ public class UIAttackEffectCreator
     
     public void ChangeColor(Image currentImage, Color newColor, float duration)
     {
-        /*MaterialPropertyBlock b = new MaterialPropertyBlock(); 
-        b.SetFloat("_MODE", 1f); 
-        currentImage.material.SetPropertyBlock(b);*/
-        
         Color colorAttacker = currentImage.material.GetColor("_Color");
         DOTween.To(() => colorAttacker, x => colorAttacker = x, newColor, duration)
             .OnUpdate(() => {

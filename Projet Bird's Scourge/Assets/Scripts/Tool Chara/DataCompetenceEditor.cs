@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Rendering;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -113,12 +114,25 @@ public class DataCompetenceEditor : Editor
 
                     SerializedProperty currentLevel = listLevels.GetArrayElementAtIndex(listLevels.arraySize - 1);
                     SerializedProperty currentPaterne = currentLevel.FindPropertyRelative("newPaterne");
+                    SerializedProperty currentZone = currentLevel.FindPropertyRelative("zonePatern");
                     
                     for (int i = 0; i < 9; i++)
                     {
                         currentPaterne.InsertArrayElementAtIndex(currentPaterne.arraySize);
 
                         SerializedProperty newList = currentPaterne.GetArrayElementAtIndex(currentPaterne.arraySize - 1).FindPropertyRelative("list");
+
+                        for (int j = 0; j < 9; j++)
+                        {
+                            newList.InsertArrayElementAtIndex(newList.arraySize);
+                        }
+                    }
+                    
+                    for (int i = 0; i < 9; i++)
+                    {
+                        currentZone.InsertArrayElementAtIndex(currentZone.arraySize);
+
+                        SerializedProperty newList = currentZone.GetArrayElementAtIndex(currentZone.arraySize - 1).FindPropertyRelative("list");
 
                         for (int j = 0; j < 9; j++)
                         {
@@ -147,12 +161,14 @@ public class DataCompetenceEditor : Editor
                 SerializedProperty criticalMultiplier = MyListRef.FindPropertyRelative("criticalMultiplier");
                 SerializedProperty competenceDescription = MyListRef.FindPropertyRelative("competenceDescription");
                 SerializedProperty competenceManaCost = MyListRef.FindPropertyRelative("competenceManaCost");
-               
-
+                
                 SerializedProperty isCustom = MyListRef.FindPropertyRelative("isCustom");
                 SerializedProperty newPaterne = MyListRef.FindPropertyRelative("newPaterne");
                 SerializedProperty newPaternePrefab = MyListRef.FindPropertyRelative("newPaternePrefab");
                 SerializedProperty newPortee = MyListRef.FindPropertyRelative("newPortee");
+
+                SerializedProperty isZoneEffect = MyListRef.FindPropertyRelative("isZoneEffect");
+                SerializedProperty zonePatern = MyListRef.FindPropertyRelative("zonePatern");
                 
                 SerializedProperty newEffet = MyListRef.FindPropertyRelative("newEffet");
                 SerializedProperty summonedUnit = MyListRef.FindPropertyRelative("summonedUnit");
@@ -215,6 +231,34 @@ public class DataCompetenceEditor : Editor
                             
                         EditorGUILayout.PropertyField(newPaternePrefab);
                         EditorGUILayout.PropertyField(newPortee);
+                    }
+                    
+                    
+                    GUILayout.Space(3);
+                    EditorGUILayout.PropertyField(isZoneEffect);
+                    
+                    if (currentScript.levels[i].isZoneEffect)
+                    {
+                        using (new GUILayout.VerticalScope(EditorStyles.helpBox, new [] {GUILayout.MinWidth(200)}))
+                        {
+                            for (int k = 0; k < 9; k++) 
+                            {
+                                using (new GUILayout.HorizontalScope())
+                                {
+                                    SerializedProperty currentList = zonePatern.GetArrayElementAtIndex(k).FindPropertyRelative("list");
+                                    
+                                    for (int j = 0; j < 9; j++)
+                                    {
+                                        if (k != 4 || j != 4)
+                                        {
+                                            EditorGUILayout.PropertyField(currentList.GetArrayElementAtIndex(j), GUIContent.none, GUILayout.MinWidth(EditorGUIUtility.labelWidth - 350));
+                                        }
+                                        else
+                                            GUILayout.Space(21);
+                                    }
+                                }
+                            }
+                        }
                     }
                     
                     

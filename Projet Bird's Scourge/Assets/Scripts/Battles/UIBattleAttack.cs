@@ -549,6 +549,8 @@ public class UIBattleAttack : MonoBehaviour
             currentPrefab = Instantiate(ghostPrefab, imageToModify.rectTransform.position, Quaternion.identity, ghostParentRight);
 
             currentGhost = currentPrefab.GetComponent<Image>();
+            currentGhost.material = Instantiate(currentGhost.material);
+            
             currentGhost.sprite = imageToModify.sprite;
 
             if (!isKind)

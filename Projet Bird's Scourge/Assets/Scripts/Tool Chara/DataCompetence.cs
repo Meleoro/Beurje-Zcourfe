@@ -75,6 +75,9 @@ public class CompetenceLevel
     [SerializeField] public List<ListBool> newPaterne = new List<ListBool>();
     public DataCompetence.Paternes newPaternePrefab;
     public int newPortee;
+
+    public bool isZoneEffect;
+    [SerializeField] public List<ListBool> zonePatern = new List<ListBool>();
     
     public DataCompetence.Effets newEffet;
     public GameObject summonedUnit;
