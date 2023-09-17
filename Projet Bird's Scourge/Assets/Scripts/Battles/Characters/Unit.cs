@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 using Random = UnityEngine.Random;
@@ -93,153 +94,225 @@ public class Unit : MonoBehaviour
         transform.DOScale( new Vector3(1f, 1f, 1), 0.25f);
     }
     
+    
 
     //--------------------------ATTACK PART------------------------------
 
-    public void LaunchAttack(Ennemy clickedEnnemy, Unit clickedUnit, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
+    public void LaunchAttack(List<Ennemy> clickedEnnemy, List<Unit> clickedUnit, List<Ennemy> clickedSummons, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
         switch (competenceUsed.levels[competenceLevel].newEffet)
         {
             case DataCompetence.Effets.none :
-                if(clickedEnnemy != null)
+                if(clickedEnnemy.Count > 0)
                     StartCoroutine(AttackEnnemies(clickedEnnemy, competenceTiles, competenceUsed, competenceLevel));
                 break;
             
 
             case DataCompetence.Effets.soin :
-                if(clickedUnit != null)
-                    StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
+                if(clickedUnit.Count > 0 || clickedSummons.Count >= 0)
+                    StartCoroutine(UseCompetence(clickedUnit, clickedSummons, competenceTiles, competenceUsed, competenceLevel));
                 break;
             
             case DataCompetence.Effets.buff :
-                if(clickedUnit != null)
-                    StartCoroutine(UseCompetence(clickedUnit, competenceTiles, competenceUsed, competenceLevel));
+                if(clickedUnit.Count > 0 || clickedSummons.Count >= 0)
+                    StartCoroutine(UseCompetence(clickedUnit, clickedSummons, competenceTiles, competenceUsed, competenceLevel));
                 break;
         }
     }
     
     
     // VERIFY IF WE CAN ATTACK THE CLICKED ENNEMY, THEN ATTACK HIM
-    public IEnumerator AttackEnnemies(Ennemy clickedEnnemy, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
+    public IEnumerator AttackEnnemies(List<Ennemy> clickedEnnemies, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
-        MouseManager.Instance.noControl = true;
-
-        if (competenceTiles.Contains(clickedEnnemy.currentTile))
+        if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
         {
-            if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
+            MouseManager.Instance.noControl = true;
+            
+            List<Vector2> positions = new List<Vector2>();
+            
+            positions.Add(transform.position); 
+            positions.Add(clickedEnnemies[0].transform.position);
+
+            StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
+            
+
+            List<UIBattleAttack.CompetenceType> competenceTypes = new List<UIBattleAttack.CompetenceType>();
+            List<int> damages = new List<int>();
+            List<bool> deadEnnemies = new List<bool>();
+            
+            for (int i = 0; i < clickedEnnemies.Count; i++)
             {
-                
                 #region Toutes les blessing avec un effet avant d'attaquer -----------------------------------------------------------------
                 
-                BenedictionManager.instance.BlessingEffect(0,this,clickedEnnemy,0);
-                BenedictionManager.instance.BlessingEffect(1,this,clickedEnnemy,0);
-                BenedictionManager.instance.BlessingEffect(2,this,clickedEnnemy,0);
-                BenedictionManager.instance.BlessingEffect(6,this,clickedEnnemy,0);
+                BenedictionManager.instance.BlessingEffect(0,this,clickedEnnemies[i],0);
+                BenedictionManager.instance.BlessingEffect(1,this,clickedEnnemies[i],0);
+                BenedictionManager.instance.BlessingEffect(2,this,clickedEnnemies[i],0);
+                BenedictionManager.instance.BlessingEffect(6,this,clickedEnnemies[i],0);
                 #endregion
-                
-                List<Vector2> positions = new List<Vector2>();
 
-                positions.Add(transform.position);
-                positions.Add(clickedEnnemy.transform.position);
-
-                StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
-
-                yield return new WaitForSeconds(1f);
-
-                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                int attackHitRate = statsCalculator.CalculateHitRate(data.levels[CurrentLevel].agilite, competenceUsed.levels[competenceLevel].baseHitRate, clickedEnnemies[i].data.levels[clickedEnnemies[i].CurrentLevel].PV);
                 attackHitRate += BuffManager.Instance.GetAccuracyBuff(attackHitRate,this,null);
-                int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                int attackDamage = statsCalculator.CalculateDamages(data.levels[CurrentLevel].force, competenceUsed.levels[competenceLevel].damageMultiplier, clickedEnnemies[i].data.levels[clickedEnnemies[i].CurrentLevel].PV);
                 attackDamage += BuffManager.Instance.GetDamageBuff(attackDamage,this,null);
-                int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemy.data.levels[clickedEnnemy.CurrentLevel].PV);
+                int attackCriticalRate = statsCalculator.CalculateCriticalRate(data.levels[CurrentLevel].chance, competenceUsed.levels[competenceLevel].criticalMultiplier, clickedEnnemies[i].data.
+                    levels[clickedEnnemies[i].CurrentLevel].PV);
                 attackCriticalRate += BuffManager.Instance.GetDamageBuff(attackCriticalRate,this,null);
-
-                List<DataUnit> currentEnnemies = new List<DataUnit>();
-                List<DataUnit> currentUnits = new List<DataUnit>();
                 
-                currentUnits.Add(data);
-                currentEnnemies.Add(clickedEnnemy.data);
                 
                 if (Random.Range(0, 100) <= attackHitRate) // Si l'attaque touche
                 {
                     if (Random.Range(0, 100) <= attackCriticalRate) // Si c'est un critique
                     {
-                        bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage * 2);
-                        BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
+                        deadEnnemies.Add(clickedEnnemies[i].TakeDamages(attackDamage * 2));
+                        damages.Add(attackDamage * 2);
                         
-                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.attackCrit, true, deadEnnemy, attackDamage * 2, competenceUsed.VFXType, null);
+                        competenceTypes.Add(UIBattleAttack.CompetenceType.attackCrit);
                     }
+                    
                     else // si ce n'est pas un critique
                     {
-                        bool deadEnnemy = clickedEnnemy.TakeDamages(attackDamage);
-                        BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
-            
-                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.attack, true, deadEnnemy, attackDamage, competenceUsed.VFXType, null);
+                        deadEnnemies.Add(clickedEnnemies[i].TakeDamages(attackDamage));
+                        damages.Add(attackDamage);
+                        
+                        competenceTypes.Add(UIBattleAttack.CompetenceType.attack);
                     }
                 }
+                
                 else // Si c'est un miss
                 {
-                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.miss,true, false, attackDamage * 2, competenceUsed.VFXType, null);
+                    deadEnnemies.Add(false);
+                    damages.Add(0);
+                    
+                    competenceTypes.Add(UIBattleAttack.CompetenceType.miss);
                 }
                 
                 
                 #region Toutes les blessing avec un effet après avoir attaqué -----------------------------------------------------------------
-                BenedictionManager.instance.BlessingEffect(3,this,clickedEnnemy,attackDamage);
-                BenedictionManager.instance.BlessingEffect(4,this,clickedEnnemy,0);
-                BenedictionManager.instance.BlessingEffect(5,this,clickedEnnemy,0);
+                BenedictionManager.instance.BlessingEffect(3,this,clickedEnnemies[i],attackDamage);
+                BenedictionManager.instance.BlessingEffect(4,this,clickedEnnemies[i],0);
+                BenedictionManager.instance.BlessingEffect(5,this,clickedEnnemies[i],0);
                 #endregion
                 
-                
-                UIBattleManager.Instance.UpdateTurnUI();
-                StartCoroutine(BattleManager.Instance.NextTurn());
             }
+            
+            yield return new WaitForSeconds(1f);
+            
+            BattleManager.Instance.LoseMana(competenceUsed.levels[competenceLevel].competenceManaCost);
+
+            List<DataUnit> currentUnits = new List<DataUnit>();
+            List<DataUnit> currentEnnemies = new List<DataUnit>();
+            
+            currentUnits.Add(data);
+
+            for (int i = 0; i < clickedEnnemies.Count; i++)
+            {
+                currentEnnemies.Add(clickedEnnemies[i].data);
+            }
+            
+            UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, competenceTypes, true, deadEnnemies, damages, competenceUsed.VFXType, null);
+            
+            yield return new WaitForSeconds(2f);
+            
+            UIBattleManager.Instance.UpdateTurnUI();
+            StartCoroutine(BattleManager.Instance.NextTurn());
         }
     }
     
     
     // VERIFY IF WE CAN BUFF / HEAL / SUMMON AN ALLY
-    public IEnumerator UseCompetence(Unit clickedUnit, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
+    public IEnumerator UseCompetence(List<Unit> clickedUnits, List<Ennemy> clickedSummons, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
-        MouseManager.Instance.noControl = true;
-
-        if (competenceTiles.Contains(clickedUnit.currentTile))
+        if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
         {
-            if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
+            MouseManager.Instance.noControl = true;
+             
+            
+            List<Vector2> positions = new List<Vector2>();
+
+            positions.Add(transform.position);
+            positions.Add(clickedUnits[0].transform.position);
+
+            StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
+            
+            yield return new WaitForSeconds(1f);
+
+            Buff currentBuff = competenceUsed.levels[competenceLevel].createdBuff;
+
+            List<UIBattleAttack.CompetenceType> currentCompetenceTypes = new List<UIBattleAttack.CompetenceType>();
+            List<int> healedAmounts = new List<int>();
+            List<bool> deadEnnemies = new List<bool>();
+            
+
+            for (int i = 0; i < clickedUnits.Count; i++)
             {
-                List<DataUnit> currentEnnemies = new List<DataUnit>();
-                List<DataUnit> currentUnits = new List<DataUnit>();
-                
-                currentUnits.Add(data);
-                currentEnnemies.Add(clickedUnit.data);
-                
-                List<Vector2> positions = new List<Vector2>();
-
-                positions.Add(transform.position);
-                positions.Add(clickedUnit.transform.position);
-
-                StartCoroutine(CameraManager.Instance.EnterCameraBattle(positions, 0.7f, 3f));
-
-                yield return new WaitForSeconds(1f);
-                
                 switch (competenceUsed.levels[competenceLevel].newEffet)
                 {
                     case DataCompetence.Effets.soin :
-                        int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnit.data.levels[clickedUnit.CurrentLevel].PV - clickedUnit.currentHealth);
-                        clickedUnit.currentHealth += addedPV;
-                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.heal, true, false, addedPV, competenceUsed.VFXType, null);
+                        int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedUnits[i].data.levels[clickedUnits[i].CurrentLevel].PV - clickedUnits[i].currentHealth);
+                        clickedUnits[i].currentHealth += addedPV;
+                        currentCompetenceTypes.Add(UIBattleAttack.CompetenceType.heal);
+                        healedAmounts.Add(addedPV);
+                        deadEnnemies.Add(false);
                         break;
-            
+        
                     case DataCompetence.Effets.buff :
                         List<Unit> concernedUnits = new List<Unit>();
-                        Buff currentBuff = competenceUsed.levels[competenceLevel].createdBuff;
-                        concernedUnits.Add(clickedUnit);
+                        currentBuff = competenceUsed.levels[competenceLevel].createdBuff;
+                        concernedUnits.Add(clickedUnits[i]);
                         BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false, concernedUnits, null);
-                        
-                        UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.buff, true, false, 0, competenceUsed.VFXType, currentBuff);
                         break;
                 }
+            }
+            
+            for (int i = 0; i < clickedSummons.Count; i++)
+            {
+                switch (competenceUsed.levels[competenceLevel].newEffet)
+                {
+                    case DataCompetence.Effets.soin :
+                        int addedPV = Mathf.Clamp(competenceUsed.levels[competenceLevel].healedPV, 0, clickedSummons[i].data.levels[clickedSummons[i].CurrentLevel].PV - clickedSummons[i].currentHealth);
+                        clickedSummons[i].currentHealth += addedPV;
+                        currentCompetenceTypes.Add(UIBattleAttack.CompetenceType.heal);
+                        healedAmounts.Add(addedPV);
+                        deadEnnemies.Add(false);
+                        break;
+        
+                    case DataCompetence.Effets.buff :
+                        List<Ennemy> concernedSummons = new List<Ennemy>();
+                        currentBuff = competenceUsed.levels[competenceLevel].createdBuff;
+                        concernedSummons.Add(clickedSummons[i]);
+                        BuffManager.Instance.AddBuff(currentBuff.buffType, currentBuff.buffValue, currentBuff.buffDuration, false, null, concernedSummons);
+                        break;
+                }
+            }
                 
-                UIBattleManager.Instance.UpdateTurnUI();
-                //StartCoroutine(BattleManager.Instance.NextTurn());
+            
+            UIBattleManager.Instance.UpdateTurnUI();
+            
+            List<DataUnit> currentUnits = new List<DataUnit>();
+            currentUnits.Add(data);
+            
+            List<DataUnit> currentEnnemies = new List<DataUnit>();
+
+            for (int i = 0; i < clickedUnits.Count; i++)
+            {
+                currentEnnemies.Add(clickedUnits[i].data);
+            }
+            
+            for (int i = 0; i < clickedSummons.Count; i++)
+            {
+                currentEnnemies.Add(clickedSummons[i].data);
+            }
+            
+            
+            switch (competenceUsed.levels[competenceLevel].newEffet)
+            {
+                case DataCompetence.Effets.soin :
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, currentCompetenceTypes, true, deadEnnemies, healedAmounts, competenceUsed.VFXType, currentBuff);
+                    break;
+        
+                case DataCompetence.Effets.buff :
+                    UIBattleManager.Instance.attackScript.LaunchAttack(currentUnits, currentEnnemies, UIBattleAttack.CompetenceType.buff, true, false, 0, competenceUsed.VFXType, currentBuff);
+                    break;
             }
         }
     }

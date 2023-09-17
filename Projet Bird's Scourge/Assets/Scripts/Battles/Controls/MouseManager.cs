@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,12 +16,6 @@ public class MouseManager : MonoBehaviour
     }
 
     [Header("Param�tres")]
-    [SerializeField] private bool outlineWhenOver;
-    [SerializeField] private Color outlineSelectedUnit;
-    [SerializeField] private Color outlineSelectedEnnemy;
-    [SerializeField] private Color tilesMovementColor;
-    [SerializeField] private Color tilesMovementColorSelected;
-    [SerializeField] private Color tilesAttackColor;
     public Color tilesAttackColorOver;
     public Color unitTurnOutlineColor;
     public float turnOutlineSpeed;
@@ -28,6 +23,7 @@ public class MouseManager : MonoBehaviour
     [Header("OverlayTiles")]
     [HideInInspector] public List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
     [HideInInspector] public List<OverlayTile> tilesAtRangeDisplayed = new List<OverlayTile>();
+    [HideInInspector] public List<OverlayTile> tilesSelectedZone = new List<OverlayTile>();
     [HideInInspector] public int indexCompetence;
     [HideInInspector] public int competenceLevel;
     [HideInInspector] public DataCompetence competenceUsed;
@@ -50,6 +46,9 @@ public class MouseManager : MonoBehaviour
     [HideInInspector] public bool noControl;
     [HideInInspector] public bool isOnButton;
     private List<OverlayTile> currentPath = new List<OverlayTile>();
+    private List<Ennemy> clickedEnnemies = new List<Ennemy>();
+    private List<Ennemy> clickedSummons = new List<Ennemy>();
+    private List<Unit> clickedUnits = new List<Unit>();
 
     [Header("References")] 
     private ObjectController scriptObject;
@@ -138,7 +137,8 @@ public class MouseManager : MonoBehaviour
                 {
                     if (competenceSelect)
                     {
-                        selectedUnit.LaunchAttack(null, clickedObject.GetComponent<Unit>(), tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+                        ActualiseClickedCharas(clickedObject.GetComponent<Ennemy>().currentTile);
+                        selectedUnit.LaunchAttack(clickedEnnemies, clickedUnits, clickedSummons, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
                         break;
                     }
                     
@@ -150,36 +150,93 @@ public class MouseManager : MonoBehaviour
                 {
                     if (competenceSelect)
                     {
-                        selectedUnit.LaunchAttack(clickedObject.GetComponent<Ennemy>(), null, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+                        ActualiseClickedCharas(clickedObject.GetComponent<Unit>().currentTile);
+                        selectedUnit.LaunchAttack(clickedEnnemies, clickedUnits, clickedSummons, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
                         break;
                     }
                     
                     SelectEnnemy(clickedObject.GetComponent<Ennemy>());
                 }
 
-                else if (unitSelect && clickedObject.CompareTag("Tile") && !competenceSelect)
+                else if (unitSelect && clickedObject.CompareTag("Tile"))
                 {
-                    if (tilesAtRangeDisplayed.Contains(clickedObject.GetComponent<OverlayTile>()))
-                    {
-                        StartCoroutine(selectedUnit.MoveToTile(currentPath));
+                    CLickTile(clickedObject.GetComponent<OverlayTile>());
 
-                        break;
-                    }
-
-                    else if (!isOnButton)
-                    {
-                        outlineScript.ManageClickedElement(null, null);
-
-                        StopSelection();
-
-                        break;
-                    }
+                    break;
                 }
             }
         }
         else if(!isOnButton)
         {
             StopSelection();
+        }
+    }
+
+    private void CLickTile(OverlayTile clickedTile)
+    {
+        if (competenceSelect)
+        {
+            ActualiseClickedCharas(clickedTile);
+            
+            selectedUnit.LaunchAttack(clickedEnnemies, clickedUnits, clickedSummons, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+        }
+        
+        else if (tilesAtRangeDisplayed.Contains(clickedTile))
+        {
+            StartCoroutine(selectedUnit.MoveToTile(currentPath));
+        }
+
+        else if (!isOnButton)
+        {
+            outlineScript.ManageClickedElement(null, null);
+
+            StopSelection();
+        }
+    }
+
+    private void ActualiseClickedCharas(OverlayTile clickedTile)
+    {
+        clickedUnits.Clear();
+        clickedEnnemies.Clear();
+        clickedSummons.Clear();
+        
+        if (competenceUsed.levels[competenceLevel].isZoneEffect)
+        {
+            for (int i = 0; i < tilesSelectedZone.Count; i++)
+            {
+                if (BattleManager.Instance.activeUnits.Keys.Contains((Vector2Int)tilesSelectedZone[i].posOverlayTile))
+                {
+                    clickedUnits.Add(BattleManager.Instance.activeUnits[(Vector2Int)tilesSelectedZone[i].posOverlayTile]);
+                }
+                    
+                else if (BattleManager.Instance.activeEnnemies.Keys.Contains((Vector2Int)tilesSelectedZone[i].posOverlayTile))
+                {
+                    clickedEnnemies.Add(BattleManager.Instance.activeEnnemies[(Vector2Int)tilesSelectedZone[i].posOverlayTile]);
+                }
+                    
+                else if (BattleManager.Instance.activeSummons.Keys.Contains((Vector2Int)tilesSelectedZone[i].posOverlayTile))
+                {
+                    clickedSummons.Add(BattleManager.Instance.activeSummons[(Vector2Int)tilesSelectedZone[i].posOverlayTile]);
+                }
+            }
+        }
+
+        else
+        {
+            if (BattleManager.Instance.activeUnits.Keys.Contains((Vector2Int)clickedTile.posOverlayTile))
+            {
+                clickedUnits.Add(BattleManager.Instance.activeUnits[(Vector2Int)clickedTile.posOverlayTile]);
+            }
+                    
+            else if (BattleManager.Instance.activeEnnemies.Keys.Contains((Vector2Int)clickedTile.posOverlayTile))
+            {
+                clickedEnnemies.Add(BattleManager.Instance.activeEnnemies[(Vector2Int)clickedTile.posOverlayTile]);
+            }
+                    
+            else if (BattleManager.Instance.activeSummons.Keys.Contains((Vector2Int)clickedTile.posOverlayTile))
+            {
+                clickedSummons.Add(BattleManager.Instance.activeSummons[(Vector2Int)clickedTile.posOverlayTile]);
+            }
         }
     }
     

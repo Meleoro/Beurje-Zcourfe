@@ -165,12 +165,62 @@ public class UIBattleAttack : MonoBehaviour
     }
 
     
-    public void LaunchAttack(List<DataUnit> leftDatas, List<DataUnit> rightDatas, CompetenceType currentCompetenceType, bool leftOrigin, bool deadEnnemy, int damage, DataCompetence.VFXTypes currentVFXType, Buff createdBuff)
+    public void LaunchAttack(List<DataUnit> leftDatas, List<DataUnit> rightDatas, List<CompetenceType> currentCompetenceTypes, bool leftOrigin, List<bool> deadEnnemies, List<int> damages, DataCompetence.VFXTypes currentVFXType, Buff createdBuff)
     {
         List<Vector2> leftPos = new List<Vector2>();
         List<Vector2> rightPos = new List<Vector2>();
 
-        float offset = 50;
+        float offset = 200;
+
+        float leftMax = leftDatas.Count * 0.5f;
+        float rightMax = rightDatas.Count * 0.5f;
+        
+        for (int i = 0; i < leftDatas.Count; i++)
+        {
+            leftPos.Add(new Vector2(originalXLeft + (-leftMax + i * offset), originalYLeft));
+        }
+        
+        for (int i = 0; i < rightDatas.Count; i++)
+        {
+            rightPos.Add(new Vector2(originalXRight + (-rightMax + i * offset), originalYRight));
+        }
+        
+
+        for (int i = 0; i < leftDatas.Count; i++)
+        {
+            StartCoroutine(CharacterFeel(leftDatas[i], leftPos[i], true, leftOrigin,  deadEnnemies[i],
+                currentCompetenceTypes[i], currentVFXType));
+        }
+        
+        for (int i = 0; i < rightDatas.Count; i++)
+        {
+            StartCoroutine(CharacterFeel(rightDatas[i], rightPos[i], false, leftOrigin, deadEnnemies[i],
+                currentCompetenceTypes[i], currentVFXType));
+        }
+
+        
+        if (leftOrigin)
+        {
+            for (int i = 0; i < rightDatas.Count; i++)
+            {
+                StartCoroutine(TextFeel(leftOrigin, damages[i], currentCompetenceTypes[i], createdBuff, rightPos[i]));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < leftDatas.Count; i++)
+            {
+                StartCoroutine(TextFeel(leftOrigin, damages[i], currentCompetenceTypes[i], createdBuff, leftPos[i]));
+            }
+        }
+    }
+    
+    public void LaunchAttack(List<DataUnit> leftDatas, List<DataUnit> rightDatas, CompetenceType currentCompetenceTypes, bool leftOrigin, bool deadEnnemies, int damages, DataCompetence.VFXTypes currentVFXType, Buff createdBuff)
+    {
+        List<Vector2> leftPos = new List<Vector2>();
+        List<Vector2> rightPos = new List<Vector2>();
+
+        float offset = 60;
 
         for (int i = 0; i < leftDatas.Count; i++)
         {
@@ -185,18 +235,20 @@ public class UIBattleAttack : MonoBehaviour
 
         for (int i = 0; i < leftDatas.Count; i++)
         {
-            StartCoroutine(CharacterFeel(leftDatas[i], leftPos[i], true, leftOrigin, deadEnnemy,
-                currentCompetenceType, currentVFXType));
+            StartCoroutine(CharacterFeel(leftDatas[i], leftPos[i], true, leftOrigin,  deadEnnemies,
+                currentCompetenceTypes, currentVFXType));
         }
         
         for (int i = 0; i < rightDatas.Count; i++)
         {
-            StartCoroutine(CharacterFeel(rightDatas[i], rightPos[i], false, leftOrigin, deadEnnemy,
-                currentCompetenceType, currentVFXType));
+            StartCoroutine(CharacterFeel(rightDatas[i], rightPos[i], false, leftOrigin, deadEnnemies,
+                currentCompetenceTypes, currentVFXType));
         }
+
         
-        StartCoroutine(TextFeel(leftOrigin, damage, currentCompetenceType, createdBuff));
+        StartCoroutine(TextFeel(leftOrigin, damages, currentCompetenceTypes, createdBuff, leftPos[0]));
     }
+    
     
     
     // WHEN THE ATTACK UI HAS TO APPEAR
@@ -372,7 +424,7 @@ public class UIBattleAttack : MonoBehaviour
     
     
     // MANAGE THE DAMAGE TEXT
-    public IEnumerator TextFeel(bool leftOrigin, int damage, CompetenceType currentCompetenceType, Buff currentBuff)
+    public IEnumerator TextFeel(bool leftOrigin, int damage, CompetenceType currentCompetenceType, Buff currentBuff, Vector2 wantedPos)
     {
         Vector3 posLeftBottomCorner = new Vector3(-attackUIParent.rect.width * 0.5f, -attackUIParent.rect.height * 0.5f, 0);
         float healModificator = 1;
@@ -382,7 +434,26 @@ public class UIBattleAttack : MonoBehaviour
             healModificator = 0.8f;
         }
 
-        if (leftOrigin)
+
+        currentTMPRO = Instantiate(textObject, wantedPos, Quaternion.identity, attackUI).GetComponent<TextMeshProUGUI>();
+        Destroy(currentTMPRO, 3f);
+
+        float XMove = textXEnd - textXOrigin;
+        float YMove = textYEnd - textYOrigin;
+        
+        currentTMPRO.rectTransform.localPosition = wantedPos;
+        currentTMPRO.rectTransform.rotation = Quaternion.Euler(0, 0, -textOriginalRot);
+        currentTMPRO.rectTransform.localScale = Vector3.one * textOriginalSize;
+        
+        currentTMPRO.rectTransform.DOLocalMoveX(wantedPos.x + XMove, textMoveDuration).SetEase(textMoveEase);
+        currentTMPRO.rectTransform.DOLocalMoveY(wantedPos.y + YMove, textMoveDuration).SetEase(textMoveEase);
+        
+        currentTMPRO.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
+
+        currentTMPRO.rectTransform.DORotate(new Vector3(0, 0, -textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
+        
+
+        /*if (leftOrigin)
         {
             Vector3 pos1 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYOrigin / 300), 0);
             Vector3 pos2 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXEnd * healModificator / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYEnd / 300), 0);
@@ -413,67 +484,67 @@ public class UIBattleAttack : MonoBehaviour
             damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
             damageNumber.rectTransform.DORotate(new Vector3(0, 0, textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
-        }
+        }*/
 
 
         switch (currentCompetenceType)
         {
             case CompetenceType.summon : 
-                damageNumber.text = "Summoned";
-                damageNumber.color = colorSummonText;
+                currentTMPRO.text = "Summoned";
+                currentTMPRO.color = colorSummonText;
                 break;
             
             case CompetenceType.heal :
-                damageNumber.text = damage.ToString();
-                damageNumber.color = colorNormalHealText;
+                currentTMPRO.text = damage.ToString();
+                currentTMPRO.color = colorNormalHealText;
                 break;
             
             case CompetenceType.healCrit :
-                damageNumber.text = "CRIT " + damage.ToString();
-                damageNumber.color = colorCritHealText;
+                currentTMPRO.text = "CRIT " + damage.ToString();
+                currentTMPRO.color = colorCritHealText;
                 break;
             
             case CompetenceType.miss : 
-                damageNumber.text = "Miss";
-                damageNumber.color = colorMissAttack;
+                currentTMPRO.text = "Miss";
+                currentTMPRO.color = colorMissAttack;
                 break;
             
             case CompetenceType.attack :
-                damageNumber.text = damage.ToString();
-                damageNumber.color = colorNormalAttack;
+                currentTMPRO.text = damage.ToString();
+                currentTMPRO.color = colorNormalAttack;
                 break;
             
             case CompetenceType.attackCrit :
-                damageNumber.text = "CRIT " + damage.ToString();
-                damageNumber.color = colorCritAttack;
+                currentTMPRO.text = "CRIT " + damage.ToString();
+                currentTMPRO.color = colorCritAttack;
                 break;
             
             case CompetenceType.buff :
                 switch (currentBuff.buffType)
                 {
                     case (BuffManager.BuffType.damage) :
-                        damageNumber.text = "Attack + " + currentBuff.buffValue.ToString() + "%";
+                        currentTMPRO.text = "Attack + " + currentBuff.buffValue.ToString() + "%";
                         break;
                 
                     case (BuffManager.BuffType.accuracy) :
-                        damageNumber.text = "Accuracy + " + currentBuff.buffValue.ToString() + "%";
+                        currentTMPRO.text = "Accuracy + " + currentBuff.buffValue.ToString() + "%";
                         break;
                 
                     case (BuffManager.BuffType.crit) :
-                        damageNumber.text = "Crit + " + currentBuff.buffValue.ToString() + "%";
+                        currentTMPRO.text = "Crit + " + currentBuff.buffValue.ToString() + "%";
                         break;
                 
                     case (BuffManager.BuffType.defense) :
-                        damageNumber.text = "Defense + " + currentBuff.buffValue.ToString() + "%";
+                        currentTMPRO.text = "Defense + " + currentBuff.buffValue.ToString() + "%";
                         break;
                 }
-                damageNumber.color = colorCritAttack;
+                currentTMPRO.color = colorCritAttack;
                 break;
         }
 
         yield return new WaitForSeconds(textFadeStart);
 
-        damageNumber.DOFade(0, textFadeDuration);
+        currentTMPRO.DOFade(0, textFadeDuration);
     }
 
 

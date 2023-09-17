@@ -49,6 +49,7 @@ public class TilesMouseManager : MonoBehaviour
     {
         tilesCompetenceDisplayed = mainScript.tilesCompetenceDisplayed;
         tilesAtRangeDisplayed = mainScript.tilesAtRangeDisplayed;
+        tilesCompetenceSelected = mainScript.tilesSelectedZone;
         currentSelectedTile = mainScript.currentSelectedTile;
         
         
@@ -71,6 +72,7 @@ public class TilesMouseManager : MonoBehaviour
     {
         mainScript.tilesCompetenceDisplayed = tilesCompetenceDisplayed;
         mainScript.tilesAtRangeDisplayed = tilesAtRangeDisplayed;
+        mainScript.tilesSelectedZone = tilesCompetenceSelected;
         mainScript.currentSelectedTile = currentSelectedTile;
         
         

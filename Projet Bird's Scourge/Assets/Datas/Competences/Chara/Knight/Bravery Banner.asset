@@ -18,7 +18,7 @@ MonoBehaviour:
   - competenceDescription: "Je sais plus desole mon ami j'ai tout cass\xE9"
     competenceManaCost: 0
     damageMultiplier: 1
-    baseHitRate: 1
+    baseHitRate: 80
     criticalMultiplier: 1
     isCustom: 1
     newPaterne:
