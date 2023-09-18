@@ -138,7 +138,10 @@ public class MouseManager : MonoBehaviour
                     if (competenceSelect)
                     {
                         ActualiseClickedCharas(clickedObject.GetComponent<Unit>().currentTile);
-                        selectedUnit.LaunchAttack(clickedEnnemies, clickedUnits, clickedSummons, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+                        if (clickedUnits.Count != 0 && clickedSummons.Count != 0)
+                        {
+                            selectedUnit.LaunchAttack(clickedEnnemies, clickedUnits, clickedSummons, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+                        }
                         break;
                     }
                     
@@ -151,7 +154,9 @@ public class MouseManager : MonoBehaviour
                     if (competenceSelect)
                     {
                         ActualiseClickedCharas(clickedObject.GetComponent<Ennemy>().currentTile);
-                        selectedUnit.LaunchAttack(clickedEnnemies, clickedUnits, clickedSummons, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+                        if(clickedEnnemies.Count != 0)
+                            selectedUnit.LaunchAttack(clickedEnnemies, clickedUnits, clickedSummons, tilesCompetenceDisplayed, competenceUsed, competenceLevel);
+                        
                         break;
                     }
                     

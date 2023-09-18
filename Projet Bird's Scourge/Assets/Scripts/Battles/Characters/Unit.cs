@@ -222,10 +222,12 @@ public class Unit : MonoBehaviour
     // VERIFY IF WE CAN BUFF / HEAL / SUMMON AN ALLY
     public IEnumerator UseCompetence(List<Unit> clickedUnits, List<Ennemy> clickedSummons, List<OverlayTile> competenceTiles, DataCompetence competenceUsed, int competenceLevel)
     {
+        if (VerifyIsOkay(clickedUnits, clickedSummons))
+            yield break;
+        
         if (competenceUsed.levels[competenceLevel].competenceManaCost <= BattleManager.Instance.currentMana)
         {
             MouseManager.Instance.noControl = true;
-             
             
             List<Vector2> positions = new List<Vector2>();
 
@@ -295,7 +297,8 @@ public class Unit : MonoBehaviour
 
             for (int i = 0; i < clickedUnits.Count; i++)
             {
-                currentEnnemies.Add(clickedUnits[i].data);
+                if(clickedUnits[i] != this)
+                    currentEnnemies.Add(clickedUnits[i].data);
             }
             
             for (int i = 0; i < clickedSummons.Count; i++)
@@ -315,6 +318,21 @@ public class Unit : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private bool VerifyIsOkay(List<Unit> clickedUnits, List<Ennemy> clickedSummons)
+    {
+        if (clickedUnits.Count > 1 || clickedSummons.Count >= 1)
+        {
+            return false;
+        }
+
+        if (clickedUnits[0] == this)
+        {
+            return true;
+        }
+
+        return false;
     }
 
     
