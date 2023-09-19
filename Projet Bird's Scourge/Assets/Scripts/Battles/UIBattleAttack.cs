@@ -303,9 +303,9 @@ public class UIBattleAttack : MonoBehaviour
         
         currentImageParent.localScale = Vector3.one * currentData.attackSpriteSize;
         currentImageParent.localPosition = new Vector3(wantedPos.x + currentWidthOffset, wantedPos.y + currentHeightOffset, currentImageParent.position.z);
-
         
-        attackFond.DOFade(0.8f, apparitionFadeDuration);
+        
+        StartCoroutine(effectCreator.FondEffect(attackFond));
 
         float fade = currentImage.material.GetFloat("_Alpha");
         Image imageToModify = currentImage;

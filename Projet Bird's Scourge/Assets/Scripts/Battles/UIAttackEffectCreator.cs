@@ -7,6 +7,18 @@ using UnityEngine.UI;
 public class UIAttackEffectCreator
 {
     public UIBattleAttack mainScript;
+
+
+    public IEnumerator FondEffect(Image fond)
+    {
+        fond.DOFade(1, 0.1f);
+        fond.color = Color.white;
+
+        yield return new WaitForSeconds(0.11f);
+        
+        fond.DOColor(Color.black, 0.2f);
+        fond.DOFade(0.8f, 0.2f);
+    }
     
     
     public void SpriteEffect1(RectTransform currentRectTransform, RectTransform currentParentRectTransform, float duration, Vector2 newPos, float newSize, float newRot)
