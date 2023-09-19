@@ -215,6 +215,8 @@ public class UIBattleAttack : MonoBehaviour
         }
     }
     
+    
+    
     public void LaunchAttack(List<DataUnit> leftDatas, List<DataUnit> rightDatas, CompetenceType currentCompetenceTypes, bool leftOrigin, bool deadEnnemies, int damages, DataCompetence.VFXTypes currentVFXType, Buff createdBuff)
     {
         List<Vector2> leftPos = new List<Vector2>();
@@ -325,8 +327,7 @@ public class UIBattleAttack : MonoBehaviour
         if (isLeft)
             rightModificator = 1;
             
-            
-        float shakeDuration = attackedShakeDuration;
+        
         float shakeAmplitude = attackedShakeAmplitude;
         int shakeVibrato = attackedShakeVibrato;
 
@@ -334,45 +335,26 @@ public class UIBattleAttack : MonoBehaviour
         float scaleValue = attackedScale;
         float rotValue = attackedRotation;
 
-        Ease currentMovementEase = attackedMovementEase;
-        Ease currentRotEase = attackedRotationEase;
-
         bool isAttacker = false;
 
         if ((isLeft && leftOrigin) || (!isLeft && !leftOrigin))
         {
-            shakeDuration = attackerShakeDuration;
             shakeAmplitude = attackerShakeAmplitude;
             shakeVibrato = attackerShakeVibrato;
             
             movementValue = attackerMovement;
             scaleValue = attackerScale;
             rotValue = attackerRotation;
-            
-            currentMovementEase = attackerMovementEase;
-            currentRotEase = attackerRotationEase;
 
             isAttacker = true;
         }
         
-            
-        /*if (CompetenceType.miss != currentCompetenceType)
-        {
-            if(CompetenceType.attackCrit == currentCompetenceType)
-            {
-                currentImageParent.DOShakePosition(shakeDuration, new Vector3(1.2f, 1, 0) * (shakeAmplitude), shakeVibrato);
-            }
-            else
-            {
-                currentImageParent.DOShakePosition(shakeDuration, new Vector3(1, 1, 0) * (shakeAmplitude), shakeVibrato);
-            }
-        }*/
 
         Vector2 newPos = new Vector2(movementValue * rightModificator + currentWidthOffset, 0);
         float newSize = scaleValue * currentData.attackSpriteSize;
         float newRot = rotValue * rightModificator;
 
-        StartCoroutine(effectCreator.SpriteEffect2(currentImage.rectTransform, currentImageParent, attackerMovementDuration, newPos, newSize, newRot, shakeAmplitude, shakeVibrato, currentCompetenceType));
+        StartCoroutine(effectCreator.SpriteEffect2(currentImage.rectTransform, currentImageParent, attackerMovementDuration, newPos, newSize, newRot, shakeAmplitude, shakeVibrato, currentCompetenceType, this));
 
 
         Image imageToModify = currentImage;

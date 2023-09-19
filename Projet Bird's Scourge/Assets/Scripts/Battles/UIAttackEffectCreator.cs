@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class UIAttackEffectCreator
 {
+    public UIBattleAttack mainScript;
+    
+    
     public void SpriteEffect1(RectTransform currentRectTransform, RectTransform currentParentRectTransform, float duration, Vector2 newPos, float newSize, float newRot)
     {
         currentRectTransform.DOLocalMoveX(currentRectTransform.localPosition.x + newPos.x, duration).SetEase(Ease.OutQuad);
@@ -17,15 +20,17 @@ public class UIAttackEffectCreator
     
     
     public IEnumerator SpriteEffect2(RectTransform currentRectTransform, RectTransform currentParentRectTransform, float duration, Vector2 newPos, float newSize, float newRot, float shakeAmplitude, int shakeVibrato,
-        UIBattleAttack.CompetenceType currentCompetenceType)
+        UIBattleAttack.CompetenceType currentCompetenceType, UIBattleAttack currentMainScript)
     {
-        float duration1 = 0.15f;
-        float duration2 = 0.85f;
+        mainScript = currentMainScript;
+        
+        float duration1 = 0.18f;
+        float duration2 = 0.82f;
         
         
         if (currentCompetenceType != UIBattleAttack.CompetenceType.miss)
         {
-            currentParentRectTransform.DOShakePosition(duration * duration1, new Vector3(1.2f, 1, 0) * shakeAmplitude, shakeVibrato);
+            mainScript.attackUI.DOShakePosition(duration * duration2 * 0.5f, new Vector3(1, 1, 0) * (shakeAmplitude * 2f));
         }
         
         
@@ -41,7 +46,7 @@ public class UIAttackEffectCreator
         
         if (currentCompetenceType != UIBattleAttack.CompetenceType.miss)
         {
-            currentParentRectTransform.DOShakePosition(duration * duration2, new Vector3(1.2f, 1, 0) * shakeAmplitude, (int)(shakeVibrato * 0.3f));
+            currentParentRectTransform.DOShakePosition(duration * duration2 * 0.5f, new Vector3(1.2f, 1, 0) * (shakeAmplitude * 1.5f), (int)(shakeVibrato * 1.5f));
         }
         
         
