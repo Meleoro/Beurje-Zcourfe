@@ -10760,20 +10760,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eb9691a29aea5546b56a9b7f06f6b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineWhenOver: 0
-  outlineSelectedUnit: {r: 0.86226416, g: 1, b: 0.86334443, a: 1}
-  outlineSelectedEnnemy: {r: 1, g: 0, b: 0, a: 1}
-  tilesMovementColor: {r: 0.58508366, g: 0.70580345, b: 0.7169812, a: 1}
-  tilesMovementColorSelected: {r: 0.5896226, g: 0.962693, b: 1, a: 1}
-  tilesAttackColor: {r: 1, g: 0.42972097, b: 0.397, a: 1}
   tilesAttackColorOver: {r: 1, g: 0.08724213, b: 0.033018887, a: 1}
   unitTurnOutlineColor: {r: 1, g: 0.7666348, b: 0, a: 1}
   turnOutlineSpeed: 2
   tilesCompetenceDisplayed: []
   tilesAtRangeDisplayed: []
+  tilesSelectedZone: []
   indexCompetence: 0
   competenceLevel: 0
   competenceUsed: {fileID: 0}
+  kindCompetence: 0
   competenceSelect: 0
   unitSelect: 0
   competenceDisplayed: 0
@@ -10801,11 +10797,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilesMovementColor: {r: 0.58431375, g: 0.7058824, b: 0.7176471, a: 1}
   tilesMovementColorSelected: {r: 0.5882353, g: 0.9607844, b: 1, a: 1}
-  tilesAttackColor: {r: 1, g: 0.08627451, b: 0.03137255, a: 1}
-  tilesAttackColorSelected: {r: 1, g: 0.43137258, b: 0.39607847, a: 1}
+  tilesAttackColor: {r: 0.8490566, g: 0.048124664, b: 0, a: 1}
+  tilesAttackColorSelected: {r: 1, g: 0.7815327, b: 0.7688679, a: 1}
+  tilesBuffColor: {r: 0.20231223, g: 1, b: 0, a: 1}
+  tilesBuffColorSelected: {r: 0.7216981, g: 1, b: 0.7237444, a: 1}
   tilesCompetenceDisplayed: []
   tilesAtRangeDisplayed: []
-  selectedTiles: []
+  tilesCompetenceSelected: []
+  currentSelectedTile: {fileID: 0}
 --- !u!114 &3474505599995512266
 MonoBehaviour:
   m_ObjectHideFlags: 0

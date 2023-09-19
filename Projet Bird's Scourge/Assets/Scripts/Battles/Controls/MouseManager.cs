@@ -27,6 +27,7 @@ public class MouseManager : MonoBehaviour
     [HideInInspector] public int indexCompetence;
     [HideInInspector] public int competenceLevel;
     [HideInInspector] public DataCompetence competenceUsed;
+    [HideInInspector] public bool kindCompetence;
     [HideInInspector] public bool competenceSelect;
     [HideInInspector] public bool unitSelect;
     [HideInInspector] public bool competenceDisplayed;
@@ -308,7 +309,8 @@ public class MouseManager : MonoBehaviour
     {
         outlineScript.ManageOverlayElement(currentOverlayedUnit, null);
 
-        UIBattleManager.Instance.OpenUnitInfos(currentOverlayedUnit.data, currentOverlayedUnit, null);
+        if(!competenceSelect)
+            UIBattleManager.Instance.OpenUnitInfos(currentOverlayedUnit.data, currentOverlayedUnit, null);
     }
 
     
@@ -452,6 +454,16 @@ public class MouseManager : MonoBehaviour
             competenceUsed = selectedUnit.data.competence2Data;
             tilesCompetenceDisplayed = selectedUnit.tilesCompetence2;
             competenceLevel = selectedUnit.Competence2Level;
+        }
+
+        
+        if (competenceUsed.levels[competenceLevel].newEffet == DataCompetence.Effets.none)
+        {
+            kindCompetence = false;
+        }
+        else
+        {
+            kindCompetence = true;
         }
         
         
