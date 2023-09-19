@@ -170,7 +170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 200, y: -20}
+  m_AnchoredPosition: {x: 300, y: -20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &381279842163484566
@@ -1005,10 +1005,10 @@ MonoBehaviour:
   attackedShakeDuration: 0.8
   attackedShakeAmplitude: 10
   attackedShakeVibrato: 20
-  attackerMovement: 120
+  attackerMovement: 200
   attackerMovementDuration: 0.8
   attackerMovementEase: 15
-  attackedMovement: 76
+  attackedMovement: 120
   attackedMovementDuration: 0.397
   attackedMovementEase: 15
   attackerRotation: -5
@@ -18641,7 +18641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8222857347137891680, guid: 3da3e9e3960ae7643b8a3adbc9c81af0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -200
+      value: -300
       objectReference: {fileID: 0}
     - target: {fileID: 8222857347137891680, guid: 3da3e9e3960ae7643b8a3adbc9c81af0, type: 3}
       propertyPath: m_AnchoredPosition.y

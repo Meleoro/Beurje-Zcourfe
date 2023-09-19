@@ -21,10 +21,10 @@ public class UIBattleAttack : MonoBehaviour
     [Range(0, 25)] public int attackedShakeVibrato;
 
     [Header("Movement")]
-    [Range(-150f, 150f)] public float attackerMovement = 0;
+    [Range(-250, 250)] public float attackerMovement = 0;
     [Range(0f, 2f)] public float attackerMovementDuration = 0;
     public Ease attackerMovementEase;
-    [Range(-150f, 150f)] public float attackedMovement = 0;
+    [Range(-250, 250)] public float attackedMovement = 0;
     [Range(0f, 2f)] public float attackedMovementDuration = 0;
     public Ease attackedMovementEase;
     private float originalXLeft;
@@ -169,9 +169,9 @@ public class UIBattleAttack : MonoBehaviour
     {
         List<Vector2> leftPos = new List<Vector2>();
         List<Vector2> rightPos = new List<Vector2>();
-
+        
         float offset = 200;
-
+        
         float leftMax = leftDatas.Count * 0.5f;
         float rightMax = rightDatas.Count * 0.5f;
         
@@ -185,7 +185,7 @@ public class UIBattleAttack : MonoBehaviour
             rightPos.Add(new Vector2(originalXRight + (-rightMax + i * offset), originalYRight));
         }
         
-
+        
         for (int i = 0; i < leftDatas.Count; i++)
         {
             StartCoroutine(CharacterFeel(leftDatas[i], leftPos[i], true, leftOrigin,  deadEnnemies[i],
@@ -197,7 +197,7 @@ public class UIBattleAttack : MonoBehaviour
             StartCoroutine(CharacterFeel(rightDatas[i], rightPos[i], false, leftOrigin, deadEnnemies[i],
                 currentCompetenceTypes[i], currentVFXType));
         }
-
+        
         
         if (leftOrigin)
         {
@@ -356,7 +356,7 @@ public class UIBattleAttack : MonoBehaviour
         }
         
             
-        if (CompetenceType.miss != currentCompetenceType)
+        /*if (CompetenceType.miss != currentCompetenceType)
         {
             if(CompetenceType.attackCrit == currentCompetenceType)
             {
@@ -366,13 +366,13 @@ public class UIBattleAttack : MonoBehaviour
             {
                 currentImageParent.DOShakePosition(shakeDuration, new Vector3(1, 1, 0) * (shakeAmplitude), shakeVibrato);
             }
-        }
+        }*/
 
         Vector2 newPos = new Vector2(movementValue * rightModificator + currentWidthOffset, 0);
         float newSize = scaleValue * currentData.attackSpriteSize;
         float newRot = rotValue * rightModificator;
 
-        effectCreator.SpriteEffect1(currentImageParent, attackerMovementDuration, newPos, newSize, newRot, currentMovementEase, currentRotEase);
+        StartCoroutine(effectCreator.SpriteEffect2(currentImage.rectTransform, currentImageParent, attackerMovementDuration, newPos, newSize, newRot, shakeAmplitude, shakeVibrato, currentCompetenceType));
 
 
         Image imageToModify = currentImage;
@@ -451,40 +451,6 @@ public class UIBattleAttack : MonoBehaviour
         currentTMPRO.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
 
         currentTMPRO.rectTransform.DORotate(new Vector3(0, 0, -textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
-        
-
-        /*if (leftOrigin)
-        {
-            Vector3 pos1 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYOrigin / 300), 0);
-            Vector3 pos2 = new Vector3(Mathf.Lerp(posLeftBottomCorner.x, -posLeftBottomCorner.x, textXEnd * healModificator / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYEnd / 300), 0);
-            
-            damageNumber.rectTransform.localPosition = pos1;
-            damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, -textOriginalRot);
-            damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
-
-            damageNumber.rectTransform.DOLocalMoveX(pos2.x, textMoveDuration).SetEase(textMoveEase);
-            damageNumber.rectTransform.DOLocalMoveY(pos2.y, textMoveDuration).SetEase(textMoveEase);
-
-            damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
-
-            damageNumber.rectTransform.DORotate(new Vector3(0, 0, -textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
-        }
-        else
-        {
-            Vector3 pos1 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXOrigin / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYOrigin / 300), 0);
-            Vector3 pos2 = new Vector3(Mathf.Lerp(-posLeftBottomCorner.x, posLeftBottomCorner.x, textXEnd * healModificator / 800), Mathf.Lerp(posLeftBottomCorner.y, -posLeftBottomCorner.y, textYEnd / 300), 0);
-            
-            damageNumber.rectTransform.localPosition = pos1;
-            damageNumber.rectTransform.rotation = Quaternion.Euler(0, 0, textOriginalRot);
-            damageNumber.rectTransform.localScale = Vector3.one * textOriginalSize;
-
-            damageNumber.rectTransform.DOLocalMoveX(pos2.x, textMoveDuration).SetEase(textMoveEase);
-            damageNumber.rectTransform.DOLocalMoveY(pos2.y, textMoveDuration).SetEase(textMoveEase);
-
-            damageNumber.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
-
-            damageNumber.rectTransform.DORotate(new Vector3(0, 0, textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
-        }*/
 
 
         switch (currentCompetenceType)
