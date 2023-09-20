@@ -19093,11 +19093,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7852515591086436945, guid: 5678581953fca6348b652b2d5ea0d59b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -367.1
+      value: -240
       objectReference: {fileID: 0}
     - target: {fileID: 7852515591086436945, guid: 5678581953fca6348b652b2d5ea0d59b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 19.4
       objectReference: {fileID: 0}
     - target: {fileID: 7852515591086436945, guid: 5678581953fca6348b652b2d5ea0d59b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -19114,10 +19114,6 @@ PrefabInstance:
     - target: {fileID: 8578533488904465156, guid: 5678581953fca6348b652b2d5ea0d59b, type: 3}
       propertyPath: m_Name
       value: DamageNumber
-      objectReference: {fileID: 0}
-    - target: {fileID: 8772883874032751806, guid: 5678581953fca6348b652b2d5ea0d59b, type: 3}
-      propertyPath: m_text
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -417,20 +417,27 @@ public class UIBattleAttack : MonoBehaviour
         }
 
 
-        currentTMPRO = Instantiate(textObject, wantedPos, Quaternion.identity, attackUI).GetComponent<TextMeshProUGUI>();
+        Vector2 modificator = new Vector2(attackedMovement, 0);
+        if (leftOrigin)
+        {
+            modificator = new Vector2(-attackedMovement, 0);
+        }
+
+
+        currentTMPRO = Instantiate(textObject, wantedPos + modificator, Quaternion.identity, attackUI).GetComponent<TextMeshProUGUI>();
         Destroy(currentTMPRO, 3f);
 
-        float XMove = textXEnd - textXOrigin;
-        float YMove = textYEnd - textYOrigin;
+        float XMove = 130;
+        float YMove = 60;
         
-        currentTMPRO.rectTransform.localPosition = wantedPos;
+        currentTMPRO.rectTransform.localPosition = wantedPos + modificator;
         currentTMPRO.rectTransform.rotation = Quaternion.Euler(0, 0, -textOriginalRot);
         currentTMPRO.rectTransform.localScale = Vector3.one * textOriginalSize;
         
-        currentTMPRO.rectTransform.DOLocalMoveX(wantedPos.x + XMove, textMoveDuration).SetEase(textMoveEase);
-        currentTMPRO.rectTransform.DOLocalMoveY(wantedPos.y + YMove, textMoveDuration).SetEase(textMoveEase);
+        currentTMPRO.rectTransform.DOLocalMoveX(wantedPos.x + XMove + modificator.x, textMoveDuration).SetEase(textMoveEase);
+        currentTMPRO.rectTransform.DOLocalMoveY(wantedPos.y + YMove + modificator.y, textMoveDuration).SetEase(textMoveEase);
         
-        currentTMPRO.rectTransform.DOScale(Vector3.one * textEndSize, textMoveDuration);
+        currentTMPRO.rectTransform.DOScale(Vector3.one * (textEndSize * 2), textMoveDuration);
 
         currentTMPRO.rectTransform.DORotate(new Vector3(0, 0, -textEndRot * healModificator), textMoveDuration).SetEase(textRotateEase);
 

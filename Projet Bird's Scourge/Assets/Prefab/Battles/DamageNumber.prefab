@@ -66,10 +66,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: caca
+  m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0616bf2fa59b97c4a92d632ceaa7b4c9, type: 2}
-  m_sharedMaterial: {fileID: 7403570091586827775, guid: 0616bf2fa59b97c4a92d632ceaa7b4c9, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8649ef75ed187eb4b9aa7b4dddfb6b64, type: 2}
+  m_sharedMaterial: {fileID: -848803375518348381, guid: 8649ef75ed187eb4b9aa7b4dddfb6b64, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 33
+  m_fontStyle: 32
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
