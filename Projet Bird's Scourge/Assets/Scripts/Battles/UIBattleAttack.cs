@@ -170,19 +170,19 @@ public class UIBattleAttack : MonoBehaviour
         List<Vector2> leftPos = new List<Vector2>();
         List<Vector2> rightPos = new List<Vector2>();
         
-        float offset = 200;
-        
-        float leftMax = leftDatas.Count * 0.5f;
-        float rightMax = rightDatas.Count * 0.5f;
+        float offset = 250;
+
+        float startXLLeft = originalXLeft - (leftDatas.Count - 1) * offset / 2;
+        float startXRight = originalXRight - (rightDatas.Count - 1) * offset / 2;
         
         for (int i = 0; i < leftDatas.Count; i++)
         {
-            leftPos.Add(new Vector2(originalXLeft + (-leftMax + i * offset), originalYLeft));
+            leftPos.Add(new Vector2(startXLLeft + (i * offset), originalYLeft));
         }
         
         for (int i = 0; i < rightDatas.Count; i++)
         {
-            rightPos.Add(new Vector2(originalXRight + (-rightMax + i * offset), originalYRight));
+            rightPos.Add(new Vector2(startXRight + (i * offset), originalYRight));
         }
         
         
@@ -259,7 +259,6 @@ public class UIBattleAttack : MonoBehaviour
         if ((leftOrigin && isLeft) || (!leftOrigin && !isLeft))
         {
             SetupFeel(currentData.attackSprite, currentData, currentPos);
-            StartCoroutine(GhostTrail(10, 0.04f, 0.1f, currentCompetenceType, true));
         }
         else
         {
