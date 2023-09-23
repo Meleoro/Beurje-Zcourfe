@@ -39,6 +39,10 @@ public class BattleManager : MonoBehaviour
     public UnitSpot unitSpot2;
     public UnitSpot unitSpot3;
 
+    [Header("BossBattle")] 
+    public bool isBossBattle;
+    public Ennemy bossChara;
+
     [Header("Others")] 
     private bool doOnce;
 
@@ -77,6 +81,15 @@ public class BattleManager : MonoBehaviour
 
         CameraManager.Instance.CameraBattleEnd();
         Destroy(gameObject);
+    }
+
+
+    private void VerifyBossDeath(Ennemy killedEnnemy)
+    {
+        if (killedEnnemy == bossChara)
+        {
+            StartCoroutine(EndBattle());
+        }
     }
     
     
@@ -191,6 +204,8 @@ public class BattleManager : MonoBehaviour
                 order.RemoveAt(i);
             }
         }
+        
+        VerifyBossDeath(ennemy);
         
         ActualiseOrder();
     }
