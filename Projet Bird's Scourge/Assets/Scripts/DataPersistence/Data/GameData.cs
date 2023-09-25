@@ -6,12 +6,8 @@ using UnityEngine;
 public class GameData
 {
     [Header("Units")]
-    public int unit1Level;
-    public int unit2Level;
-    public int unit3Level;
-    public int unit4Level;
-    public int unit5Level;
-    public int unit6Level;
+    public List<int> unitsLevels = new List<int>();
+    public List<bool> unitsUnlocked = new List<bool>();
 
     [Header("Resources")] 
     public int wood;
@@ -35,12 +31,14 @@ public class GameData
     
     public GameData()
     {
-        unit1Level = 1;
-        unit2Level = 1;
-        unit3Level = 1;
-        unit4Level = 1;
-        unit5Level = 1;
-        unit6Level = 1;
+        unitsLevels = new List<int>();
+        unitsUnlocked = new List<bool>();
+
+        for (int i = 0; i < 6; i++)
+        {
+            unitsLevels.Add(1);
+            unitsUnlocked.Add(false);
+        }
 
         wood = 0;
         stone = 0;

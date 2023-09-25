@@ -5,16 +5,9 @@ using UnityEngine;
 public class UnitSaveManager : MonoBehaviour, IDataPersistence
 {
     public static UnitSaveManager Instance;
-    
-    
-    public int unit1Level;
-    public int unit2Level;
-    public int unit3Level;
-    public int unit4Level;
-    public int unit5Level;
-    public int unit6Level;
 
-    
+    public List<int> unitsLevels = new List<int>();
+    public List<bool> unitsUnlocked = new List<bool>();
     
     
     private void Awake()
@@ -30,22 +23,30 @@ public class UnitSaveManager : MonoBehaviour, IDataPersistence
     
     public void LoadSave(GameData gameData)
     {
-        unit1Level = gameData.unit1Level;
-        unit2Level = gameData.unit2Level;
-        unit3Level = gameData.unit3Level;
-        unit4Level = gameData.unit4Level;
-        unit5Level = gameData.unit5Level;
-        unit6Level = gameData.unit6Level;
+        unitsLevels = gameData.unitsLevels;
+        unitsUnlocked = gameData.unitsUnlocked;
     }
 
     
     public void SaveData(ref GameData gameData)
     {
-        gameData.unit1Level = unit1Level;
-        gameData.unit2Level = unit2Level;
-        gameData.unit3Level = unit3Level;
-        gameData.unit4Level = unit4Level;
-        gameData.unit5Level = unit5Level;
-        gameData.unit6Level = unit6Level;
+        gameData.unitsLevels = unitsLevels;
+        gameData.unitsUnlocked = unitsUnlocked;
+    }
+
+
+    public int GetLevel(int index)
+    {
+        return unitsLevels[index];
+    }
+    
+    public void GainLevel(int index)
+    {
+        unitsLevels[index] += 1;
+    }
+
+    public void GainUnit(int index)
+    {
+        unitsUnlocked[index] = true;
     }
 }

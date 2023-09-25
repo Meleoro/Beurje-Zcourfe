@@ -42,6 +42,7 @@ public class BattleManager : MonoBehaviour
     [Header("BossBattle")] 
     public bool isBossBattle;
     public Ennemy bossChara;
+    public int indexCharaUnlocked;
 
     [Header("Others")] 
     private bool doOnce;
@@ -86,9 +87,11 @@ public class BattleManager : MonoBehaviour
 
     private void VerifyBossDeath(Ennemy killedEnnemy)
     {
-        if (killedEnnemy == bossChara)
+        if (killedEnnemy == bossChara && isBossBattle)
         {
             StartCoroutine(EndBattle());
+            
+            UnitSaveManager.Instance.GainUnit(indexCharaUnlocked);
         }
     }
     
