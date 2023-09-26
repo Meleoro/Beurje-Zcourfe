@@ -137,6 +137,7 @@ public class AventureCreator : MonoBehaviour
     private void ChoseSpots(List<Vector2> possibleSpots)
     {
         int currentElementsInRaw = 0;
+        int currentElementsInPreviousRaw = 0;
 
         int columnNbr = (int)(possibleSpots.Count / data.rawsNbr);
 
@@ -150,7 +151,7 @@ public class AventureCreator : MonoBehaviour
             // We go across every column in on line
             for (int x = 0; x < data.rawsNbr; x++)
             {
-                if (VerifySpot(new Vector2Int(x, reelY), currentElementsInRaw, currentCounterCamp <= 1))
+                if (VerifySpot(new Vector2Int(x, reelY), currentElementsInRaw, currentCounterCamp <= 1, currentElementsInPreviousRaw))
                 {
                     Nod newSpot = Instantiate(spot, possibleSpots[i], Quaternion.identity, parentSpot).GetComponent<Nod>();
                     
@@ -208,6 +209,7 @@ public class AventureCreator : MonoBehaviour
                 
                 y -= 1;
                 i -= data.rawsNbr;
+                currentElementsInPreviousRaw = currentElementsInRaw;
                 currentElementsInRaw = 0;
             }
             
@@ -230,7 +232,7 @@ public class AventureCreator : MonoBehaviour
     
     
     // SAYS IF AN ELEMENT CAN SPAWN WITH A BIT OF RANDOM 
-    private bool VerifySpot(Vector2Int coordinates, int currentElementsInRaw, bool isCamp)
+    private bool VerifySpot(Vector2Int coordinates, int currentElementsInRaw, bool isCamp, int elementsInPrevious)
     {
         if (isCamp)
         {
@@ -252,24 +254,39 @@ public class AventureCreator : MonoBehaviour
             {
                 bool hasPrecedent = false;
                 
+                // UP BEHIND
                 if (coordinates.x - 1 >= 0)
                 {
                     if (map[coordinates.y - 1].list[coordinates.x - 1] is not null)
                     {
-                        hasPrecedent = true;
+                        if(elementsInPrevious != 1)
+                            hasPrecedent = true;
+                        
+                        else if (coordinates.x != 0)
+                            hasPrecedent = true;
                     }
                 }
-
+                
+                // BEHIND
                 if (map[coordinates.y - 1].list[coordinates.x])
                 {
-                    hasPrecedent = true;
+                    if(elementsInPrevious != 1)
+                        hasPrecedent = true;
+                        
+                    else if (coordinates.x != 0 && coordinates.x != data.rawsNbr - 1)
+                        hasPrecedent = true;
                 }
 
-                if (coordinates.x + 1 < data.maxElementsPerColumn)
+                // BOTTOM BEHIND
+                if (coordinates.x + 1 < data.rawsNbr)
                 {
                     if (map[coordinates.y - 1].list[coordinates.x + 1] is not null)
                     {
-                        hasPrecedent = true;
+                        if(elementsInPrevious != 1)
+                            hasPrecedent = true;
+                        
+                        else if (coordinates.x != data.rawsNbr - 1)
+                            hasPrecedent = true;
                     }
                 }
                 
