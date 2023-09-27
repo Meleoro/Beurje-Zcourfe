@@ -16,9 +16,7 @@ public class AventureManager : MonoBehaviour
     [HideInInspector] public int maxY;
     [HideInInspector] public int currentY;
     private float currentAvancee;
-    public GameObject unit1;
-    public GameObject unit2;
-    public GameObject unit3;
+    [HideInInspector] public DataSquad squadData;
 
     [Header("Parameters")] 
     public float aventureCamSize = 10.8f;
@@ -58,10 +56,12 @@ public class AventureManager : MonoBehaviour
         StartCoroutine(AventureEffect.Instance.AppearEffect());
     }
 
-    public void InitialisePossibleNods(AventureData data)
+    public void InitialiseAventure(AventureData data, DataSquad currentSquadData)
     {
         possibleBattles = data.battleNodes;
         possibleEvents = data.eventNodes;
+
+        squadData = currentSquadData;
     }
 
 
@@ -100,5 +100,24 @@ public class AventureManager : MonoBehaviour
     private void CalculateAvancee()
     {
         currentAvancee = ((float)currentY / maxY) * 100f;
+    }
+    
+    
+    // -------------------------- SQUAD DATA MANAGEMENT --------------------------
+
+    public void DataApplyHealth(List<Unit> units)
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            units[i].currentHealth = squadData.unitsHealth[i];
+        }
+    }
+
+    public void DataActualiseHealth(List<Unit> units)
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            squadData.unitsHealth[i] = units[i].currentHealth;
+        }
     }
 }

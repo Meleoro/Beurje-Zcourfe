@@ -17,13 +17,12 @@ public class GameManager : MonoBehaviour
     public GameObject globalMapObject;
     public Vector3 globalMapPos;
     private GameObject currentGlobalMap;
-    //private bool isInGlobalMap;
 
     [Header("Aventure")] 
     public GameObject aventureObject;
     public Vector3 aventurePos;
     private GameObject currentAventure;
-    //private bool isInAventure;
+    private DataSquad currentSquadData;
 
 
     private void Awake()
@@ -38,6 +37,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        currentSquadData = ScriptableObject.CreateInstance<DataSquad>();
+        
         if (startInMap)
             EnterGlobalMap();
 
@@ -89,7 +90,7 @@ public class GameManager : MonoBehaviour
         AventureManager.Instance.regionIndex = regionIndex;
         AventureManager.Instance.zoneIndex = zoneIndex;
         
-        AventureManager.Instance.InitialisePossibleNods(data);
+        AventureManager.Instance.InitialiseAventure(data, currentSquadData);
 
         /*isInGlobalMap = false;
         isInAventure = true;*/

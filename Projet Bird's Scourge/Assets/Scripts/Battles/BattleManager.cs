@@ -74,6 +74,8 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator EndBattle()
     {
+        AventureManager.Instance.DataActualiseHealth(currentUnits);
+        
         yield return new WaitForSeconds(2f);
         
         StartCoroutine(UIMapManager.Instance.StartBattleEffect());
@@ -105,17 +107,17 @@ public class BattleManager : MonoBehaviour
     {
         if (unit1 != null)
         {
-            unitSpot1.SpawnUnit(unit1);
+            unitSpot1.SpawnUnit(unit1, AventureManager.Instance.squadData.unitsHealth[0]);
         }
         
         if (unit2 != null)
         {
-            unitSpot2.SpawnUnit(unit2);
+            unitSpot2.SpawnUnit(unit2, AventureManager.Instance.squadData.unitsHealth[1]);
         }
         
         if (unit3 != null)
         {
-            unitSpot3.SpawnUnit(unit3);
+            unitSpot3.SpawnUnit(unit3, AventureManager.Instance.squadData.unitsHealth[2]);
         }
     }
     

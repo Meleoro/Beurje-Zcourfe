@@ -8,9 +8,10 @@ public class UnitSpot : MonoBehaviour
     public Color gizmoColor;
 
 
-    public void SpawnUnit(GameObject currentUnit)
+    public void SpawnUnit(GameObject currentUnit, int currentHealth)
     {
-        Instantiate(currentUnit, transform.position, Quaternion.identity, transform);
+        Unit unit = Instantiate(currentUnit, transform.position, Quaternion.identity, transform).GetComponent<Unit>();
+        unit.currentHealth = currentHealth;
     }
     
     
