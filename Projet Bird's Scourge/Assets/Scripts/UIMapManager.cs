@@ -128,45 +128,29 @@ public class UIMapManager : MonoBehaviour
         compteurFoodState.text = ResourcesSaveManager.Instance.food.ToString();
 
         // Texte compteur de HP
-        
-        compteurHPUnit1.text = AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit1.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV + " HP";
-        
-        compteurHPUnit2.text = AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit2.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV + " HP";
-        
-        compteurHPUnit3.text = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit3.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV + " HP";
-        
-        // Barres de vie
-        
-        lifeBarUnit1.maxValue = AventureManager.Instance.unit1.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
 
-        lifeBarUnit1.value = AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth;
-        
-        lifeBarUnit2.maxValue = AventureManager.Instance.unit2.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV;
+        for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+        {
+            compteurHPUnit1.text = AventureManager.Instance.squadData.units[i].GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.squadData.units[i].GetComponent<Unit>()
+                .data.levels[AventureManager.Instance.squadData.units[i].GetComponent<Unit>().CurrentLevel].PV + " HP";
+            
+            lifeBarUnit1.maxValue = AventureManager.Instance.squadData.units[i].GetComponent<Unit>()
+                .data.levels[AventureManager.Instance.squadData.units[i].GetComponent<Unit>().CurrentLevel].PV;
 
-        lifeBarUnit2.value = AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth;
-        
-        lifeBarUnit3.maxValue = AventureManager.Instance.unit3.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
-
-        lifeBarUnit3.value = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth;
-       
+            lifeBarUnit1.value = AventureManager.Instance.squadData.units[i].GetComponent<Unit>().currentHealth;
+        }
     }
 
     public IEnumerator DelayUpdateStateBar()
     {
         yield return new WaitForSeconds(1f);
         UpdateStateBar();
-        nomUnit1.text = AventureManager.Instance.unit1.GetComponent<Unit>().data.charaName;
-        nomUnit2.text = AventureManager.Instance.unit2.GetComponent<Unit>().data.charaName;
-        nomUnit3.text = AventureManager.Instance.unit3.GetComponent<Unit>().data.charaName;
-        imageUnit1.sprite = AventureManager.Instance.unit1.GetComponent<Unit>().data.idleSprite;
-        imageUnit2.sprite = AventureManager.Instance.unit2.GetComponent<Unit>().data.idleSprite;
-        imageUnit3.sprite = AventureManager.Instance.unit3.GetComponent<Unit>().data.idleSprite;
+        
+        for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+        {
+            nomUnit1.text = AventureManager.Instance.squadData.units[i].GetComponent<Unit>().data.charaName;
+            imageUnit1.sprite = AventureManager.Instance.squadData.units[i].GetComponent<Unit>().data.idleSprite;
+        }
     }
     public void ClosePopUp()
     {
@@ -352,45 +336,22 @@ public class UIMapManager : MonoBehaviour
     {
         if (index == 1)
         {
-            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth +=
-                (AventureManager.Instance.unit1.GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV * percentHealed / 100);
+            for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+            {
+                AventureManager.Instance.squadData.units[i].GetComponent<Unit>().currentHealth +=
+                    (AventureManager.Instance.squadData.units[i].GetComponent<Unit>()
+                        .data.levels[AventureManager.Instance.squadData.units[i].GetComponent<Unit>().CurrentLevel].PV * percentHealed / 100);
 
-            if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit1
-                    .GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV)
-            {
-                AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit1
-                    .GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
-            }
-              
-            
-            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth +=
-                (AventureManager.Instance.unit2.GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV * percentHealed / 100);
-            
-            if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit2
-                    .GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV)
-            {
-                AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit2
-                    .GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV;
+                if (AventureManager.Instance.squadData.units[i].GetComponent<Unit>().currentHealth > AventureManager.Instance.squadData.units[i]
+                        .GetComponent<Unit>()
+                        .data.levels[AventureManager.Instance.squadData.units[i].GetComponent<Unit>().CurrentLevel].PV)
+                {
+                    AventureManager.Instance.squadData.units[i].GetComponent<Unit>().currentHealth = AventureManager.Instance.squadData.units[i]
+                        .GetComponent<Unit>()
+                        .data.levels[AventureManager.Instance.squadData.units[i].GetComponent<Unit>().CurrentLevel].PV;
+                }
             }
             
-            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth +=
-                (AventureManager.Instance.unit3.GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV * percentHealed / 100);
-            
-            if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit3
-                    .GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV)
-            {
-                AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit3
-                    .GetComponent<Unit>()
-                    .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
-            }
             
             UpdateStateBar();
             ClosePopUp();

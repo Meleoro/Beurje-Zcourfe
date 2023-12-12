@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Sheild Bash
   m_EditorClassIdentifier: 
   competenceName: Sheild Bash
+  VFXType: 0
   levels:
   - competenceDescription: Stuns the target for 2 turns
     competenceManaCost: 2
@@ -32,9 +33,16 @@ MonoBehaviour:
     - list: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     newPaternePrefab: 0
     newPortee: 0
+    isZoneEffect: 0
+    zonePatern: []
     newEffet: 0
     summonedUnit: {fileID: 0}
-    healedPV: 0
+    healedPV: 5
+    createdBuff:
+      buffType: 0
+      buffValue: 0
+      buffDuration: 0
+      isBenedicton: 0
     newAlteration: 0
   - competenceDescription: Reduces the target's defense for 3 turns.
     competenceManaCost: 0
@@ -63,7 +71,14 @@ MonoBehaviour:
     - list: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
     newPaternePrefab: 0
     newPortee: 0
+    isZoneEffect: 0
+    zonePatern: []
     newEffet: 0
     summonedUnit: {fileID: 0}
     healedPV: 0
+    createdBuff:
+      buffType: 0
+      buffValue: 0
+      buffDuration: 0
+      isBenedicton: 0
     newAlteration: 0

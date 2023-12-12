@@ -76,26 +76,6 @@ public class DecorationCreator : MonoBehaviour
 
             currentX += distanceBetweenColumns;
         }
-        
-        /*for (int x = 0; x < iterations; x++)
-        {
-            for (int y = 0; y < rawsNbr; y++)
-            {
-                float posY = Mathf.Lerp(stockageCurrentMinY, stockageCurrentMaxY, ((float)y / rawsNbr) + (1f / rawsNbr) * 0.5f);
-                float posX = minX + distanceBetweenColumns * x;
-
-                float posModificator = 0.15f;
-                posX += Random.Range(-posModificator, posModificator);
-                posY += Random.Range(-posModificator, posModificator);
-                
-                possibleSpots.Add(new Vector2(posX, posY));
-            }
-
-            if (x == iterations - 1)
-            {
-                stockageCurrentMaxY = minY + distanceBetweenColumns * x;
-            }
-        }*/
 
         return possibleSpots;
     }
@@ -148,7 +128,7 @@ public class DecorationCreator : MonoBehaviour
 
                 if (index < possibleDecorations[j].probaSpawn)
                 {
-                    SpriteRenderer newDecoration = Instantiate(possibleDecorations[j].gameObject, possibleSpots[i], Quaternion.identity).GetComponent<SpriteRenderer>();
+                    SpriteRenderer newDecoration = Instantiate(possibleDecorations[j].gameObject, possibleSpots[i], Quaternion.identity, AventureManager.Instance.transform).GetComponent<SpriteRenderer>();
                     
                     AventureEffect.Instance.AddDecoration(newDecoration);
 

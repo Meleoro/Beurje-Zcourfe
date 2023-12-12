@@ -63,24 +63,27 @@ public class EventEffects : MonoBehaviour
                         if (currentStep == 1)
                         {
                             StartCoroutine(ChangeStep(2));
-                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 5;
-                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 5;
-                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 5;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+                            {
+                                AventureManager.Instance.squadData.unitsHealth[i] -= 5;
+                                
+                                if(AventureManager.Instance.squadData.unitsHealth[i] <= 0)
+                                    AventureManager.Instance.squadData.unitsHealth[i] = 1;
+                            }
                             UpdateStateBar();
                         }
                         
                         if (currentStep == 2)
                         {
                             StartCoroutine(ChangeStep(3));
-                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 7;
-                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 7;
-                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 7;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            
+                            for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+                            {
+                                AventureManager.Instance.squadData.unitsHealth[i] -= 7;
+                                
+                                if(AventureManager.Instance.squadData.unitsHealth[i] <= 0)
+                                    AventureManager.Instance.squadData.unitsHealth[i] = 1;
+                            }
                             UpdateStateBar();
                         }
                         
@@ -100,24 +103,26 @@ public class EventEffects : MonoBehaviour
                         
                         if (currentStep == 1)
                         {
-                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
-                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
-                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+                            {
+                                AventureManager.Instance.squadData.unitsHealth[i] -= 3;
+                                
+                                if(AventureManager.Instance.squadData.unitsHealth[i] <= 0)
+                                    AventureManager.Instance.squadData.unitsHealth[i] = 1;
+                            }
                             ClosePopUp();
                             UpdateStateBar();
                         }
                         
                         if (currentStep == 2)
                         {
-                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 5;
-                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 5;
-                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 5;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = 1;
+                            for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+                            {
+                                AventureManager.Instance.squadData.unitsHealth[i] -= 5;
+                                
+                                if(AventureManager.Instance.squadData.unitsHealth[i] <= 0)
+                                    AventureManager.Instance.squadData.unitsHealth[i] = 1;
+                            }
                             ClosePopUp();
                             UpdateStateBar();
                         }
@@ -149,12 +154,13 @@ public class EventEffects : MonoBehaviour
                         }
                         if (currentStep == 2)
                         {
-                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
-                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
-                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+                            {
+                                AventureManager.Instance.squadData.unitsHealth[i] -= 3;
+                                
+                                if(AventureManager.Instance.squadData.unitsHealth[i] <= 0)
+                                    AventureManager.Instance.squadData.unitsHealth[i] = 1;
+                            }
                             UpdateStateBar();
                             ClosePopUp();
                             StartCoroutine(ChangeStep(0));
@@ -175,12 +181,13 @@ public class EventEffects : MonoBehaviour
                         }
                         if (currentStep == 2)
                         {
-                            AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth -= 3;
-                            AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth -= 3;
-                            AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth -= 3;
-                            if(AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
-                            if(AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth <= 0) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = 1;
+                            for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+                            {
+                                AventureManager.Instance.squadData.unitsHealth[i] -= 3;
+                                
+                                if(AventureManager.Instance.squadData.unitsHealth[i] <= 0)
+                                    AventureManager.Instance.squadData.unitsHealth[i] = 1;
+                            }
                             UpdateStateBar();
                             ClosePopUp();
                             StartCoroutine(ChangeStep(0));
@@ -198,12 +205,17 @@ public class EventEffects : MonoBehaviour
                             if (ResourcesSaveManager.Instance.food >= 10)
                             {
                                 ResourcesSaveManager.Instance.food -= 10;
-                                AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth += 7;
-                                AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth += 7;
-                                AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth += 7;
-                                if (AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit1.GetComponent<Unit>().data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
-                                if (AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit2.GetComponent<Unit>().data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV; 
-                                if (AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth > AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV) AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth = AventureManager.Instance.unit3.GetComponent<Unit>().data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+                                for (int i = 0; i < AventureManager.Instance.squadData.units.Count; i++)
+                                {
+                                    AventureManager.Instance.squadData.unitsHealth[i] += 7;
+
+                                    int maxHP = AventureManager.Instance.squadData.units[i].GetComponent<Unit>().data.levels[
+                                            AventureManager.Instance.squadData.units[i].GetComponent<Unit>()
+                                                .CurrentLevel].PV;
+                                
+                                    if(AventureManager.Instance.squadData.unitsHealth[i] > maxHP)
+                                        AventureManager.Instance.squadData.unitsHealth[i] = maxHP;
+                                }
                                 StartCoroutine(ChangeStep(1));
                                 UpdateStateBar();
                             }
@@ -243,11 +255,7 @@ public class EventEffects : MonoBehaviour
                         if (currentStep == 1)
                         {
                             StartCoroutine(ChangeStep(1));
-                            List<GameObject> unitList = new List<GameObject>();
-                            unitList.Add(AventureManager.Instance.unit1);
-                            unitList.Add(AventureManager.Instance.unit2);
-                            unitList.Add(AventureManager.Instance.unit3);
-                            GameObject selectedUnit = unitList[Random.Range(0, 2)];
+                            GameObject selectedUnit = AventureManager.Instance.squadData.units[Random.Range(0, 2)];
                             selectedUnit.GetComponent<Unit>().currentHealth /= 2 ;
                             UpdateStateBar();
                             ClosePopUp();
@@ -263,11 +271,7 @@ public class EventEffects : MonoBehaviour
                         if (currentStep == 1)
                         {
                             StartCoroutine(ChangeStep(1));
-                            List<GameObject> unitList = new List<GameObject>();
-                            unitList.Add(AventureManager.Instance.unit1);
-                            unitList.Add(AventureManager.Instance.unit2);
-                            unitList.Add(AventureManager.Instance.unit3);
-                            GameObject selectedUnit = unitList[Random.Range(0, 2)];
+                            GameObject selectedUnit = AventureManager.Instance.squadData.units[Random.Range(0, 2)];
                             selectedUnit.GetComponent<Unit>().currentHealth /= 2 ;
                             UpdateStateBar();
                             ClosePopUp();
@@ -482,32 +486,30 @@ public class EventEffects : MonoBehaviour
         compteurFoodState.text = ResourcesSaveManager.Instance.food.ToString();
 
         // Texte compteur de HP
+        compteurHPUnit1.text = AventureManager.Instance.squadData.units[0].GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.squadData.units[0].GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.squadData.units[0].GetComponent<Unit>().CurrentLevel].PV + " HP";
         
-        compteurHPUnit1.text = AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit1.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV + " HP";
+        compteurHPUnit2.text = AventureManager.Instance.squadData.units[1].GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.squadData.units[1].GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.squadData.units[1].GetComponent<Unit>().CurrentLevel].PV + " HP";
         
-        compteurHPUnit2.text = AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit2.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV + " HP";
-        
-        compteurHPUnit3.text = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.unit3.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV + " HP";
+        compteurHPUnit3.text = AventureManager.Instance.squadData.units[2].GetComponent<Unit>().currentHealth + " / " + AventureManager.Instance.squadData.units[2].GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.squadData.units[2].GetComponent<Unit>().CurrentLevel].PV + " HP";
         
         // Barres de vie
-        
-        lifeBarUnit1.maxValue = AventureManager.Instance.unit1.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit1.GetComponent<Unit>().CurrentLevel].PV;
+        lifeBarUnit1.maxValue = AventureManager.Instance.squadData.units[0].GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.squadData.units[0].GetComponent<Unit>().CurrentLevel].PV;
 
-        lifeBarUnit1.value = AventureManager.Instance.unit1.GetComponent<Unit>().currentHealth;
+        lifeBarUnit1.value = AventureManager.Instance.squadData.units[0].GetComponent<Unit>().currentHealth;
         
-        lifeBarUnit2.maxValue = AventureManager.Instance.unit2.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit2.GetComponent<Unit>().CurrentLevel].PV;
+        lifeBarUnit2.maxValue = AventureManager.Instance.squadData.units[1].GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.squadData.units[1].GetComponent<Unit>().CurrentLevel].PV;
 
-        lifeBarUnit2.value = AventureManager.Instance.unit2.GetComponent<Unit>().currentHealth;
+        lifeBarUnit2.value = AventureManager.Instance.squadData.units[1].GetComponent<Unit>().currentHealth;
         
-        lifeBarUnit3.maxValue = AventureManager.Instance.unit3.GetComponent<Unit>()
-            .data.levels[AventureManager.Instance.unit3.GetComponent<Unit>().CurrentLevel].PV;
+        lifeBarUnit3.maxValue = AventureManager.Instance.squadData.units[2].GetComponent<Unit>()
+            .data.levels[AventureManager.Instance.squadData.units[2].GetComponent<Unit>().CurrentLevel].PV;
 
-        lifeBarUnit3.value = AventureManager.Instance.unit3.GetComponent<Unit>().currentHealth;
+        lifeBarUnit3.value = AventureManager.Instance.squadData.units[2].GetComponent<Unit>().currentHealth;
        
     }
     

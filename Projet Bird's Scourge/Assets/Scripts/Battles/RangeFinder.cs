@@ -248,7 +248,7 @@ public class RangeFinder
 
 
     // FIND THE TILES CONCERNED WITH THE COMPETENCE IN THE PARAMETERS
-    public List<OverlayTile> FindTilesCompetence(OverlayTile start, DataCompetence competenceUsed, int competenceLevel)
+    public List<OverlayTile> FindTilesCompetence(OverlayTile start, DataCompetence competenceUsed, int competenceLevel, bool zonePaterne = false)
     {
         // First we find the coordinates to check
         List<Vector2Int> coordinates = new List<Vector2Int>();
@@ -257,6 +257,10 @@ public class RangeFinder
         if (competenceUsed.levels[competenceLevel].isCustom)
         {
             List<ListBool> paterne = competenceUsed.levels[competenceLevel].newPaterne;
+            
+            if(zonePaterne)
+                paterne = competenceUsed.levels[competenceLevel].zonePatern;
+            
 
             for (int y = 0; y < paterne.Count; y++)
             {

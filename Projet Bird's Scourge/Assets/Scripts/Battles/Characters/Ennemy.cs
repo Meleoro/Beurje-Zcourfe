@@ -10,6 +10,7 @@ public class Ennemy : MonoBehaviour
     public DataUnit data;
     [Min(1)] [SerializeField] int currentLevel = 1;
     public bool isUnitSummon;
+    public bool isBoss;
     public int CurrentLevel => currentLevel - 1;
     [HideInInspector] public bool isSummoned;
 
@@ -29,6 +30,7 @@ public class Ennemy : MonoBehaviour
     private RangeFinder rangeFinder;
     private PathFinder pathFinder;
     private SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRendererMaterialOutline;
     private EnnemyAttacks attackScript;
     
 
@@ -50,6 +52,13 @@ public class Ennemy : MonoBehaviour
             BattleManager.Instance.AddSummonList(this);
         
         spriteRenderer.enabled = false;
+
+        
+        if (isBoss)
+            spriteRendererMaterialOutline = GetComponentInChildren<SpriteRenderer>();
+        
+        else
+            spriteRendererMaterialOutline = GetComponent<SpriteRenderer>();
     }
 
 
@@ -355,17 +364,17 @@ public class Ennemy : MonoBehaviour
     
     public void ActivateOutline(Color newColor)
     {
-        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 1);
+        spriteRendererMaterialOutline.material.SetFloat("_DoOutline", 1);
 
         if (newColor != null)
         {
-            GetComponent<SpriteRenderer>().material.SetColor("_OutlineColor", newColor);
+            spriteRendererMaterialOutline.material.SetColor("_OutlineColor", newColor);
         }
     }
 
     public void DesactivateOutline()
     {
-        GetComponent<SpriteRenderer>().material.SetFloat("_DoOutline", 0);
+        spriteRendererMaterialOutline.material.SetFloat("_DoOutline", 0);
         DesactivateFlicker();
     }
 
@@ -412,12 +421,12 @@ public class Ennemy : MonoBehaviour
         
         if(outlineColor != null)
         {
-            spriteRenderer.material.SetColor("_OutlineColor", outlineColor);
+            spriteRendererMaterialOutline.material.SetColor("_OutlineColor", outlineColor);
         }
         
         while (outlineValue < 1)
         {
-            spriteRenderer.material.SetFloat("_DoOutline", outlineValue);
+            spriteRendererMaterialOutline.material.SetFloat("_DoOutline", outlineValue);
         
             yield return new WaitForSeconds(Time.deltaTime);
         }
@@ -428,7 +437,7 @@ public class Ennemy : MonoBehaviour
         
         while (outlineValue > 0)
         {
-            spriteRenderer.material.SetFloat("_DoOutline", outlineValue);
+            spriteRendererMaterialOutline.material.SetFloat("_DoOutline", outlineValue);
         
             yield return new WaitForSeconds(Time.deltaTime);
         }

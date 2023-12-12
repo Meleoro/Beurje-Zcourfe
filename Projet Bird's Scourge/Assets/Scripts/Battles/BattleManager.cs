@@ -39,6 +39,11 @@ public class BattleManager : MonoBehaviour
     public UnitSpot unitSpot2;
     public UnitSpot unitSpot3;
 
+    [Header("BossBattle")] 
+    public bool isBossBattle;
+    public Ennemy bossChara;
+    public int indexCharaUnlocked;
+
     [Header("Others")] 
     private bool doOnce;
 
@@ -69,6 +74,8 @@ public class BattleManager : MonoBehaviour
 
     private IEnumerator EndBattle()
     {
+        AventureManager.Instance.DataActualiseHealth(currentUnits);
+        
         yield return new WaitForSeconds(2f);
         
         StartCoroutine(UIMapManager.Instance.StartBattleEffect());
@@ -77,6 +84,17 @@ public class BattleManager : MonoBehaviour
 
         CameraManager.Instance.CameraBattleEnd();
         Destroy(gameObject);
+    }
+
+
+    private void VerifyBossDeath(Ennemy killedEnnemy)
+    {
+        if (killedEnnemy == bossChara && isBossBattle)
+        {
+            StartCoroutine(EndBattle());
+            
+            UnitSaveManager.Instance.GainUnit(indexCharaUnlocked);
+        }
     }
     
     
@@ -89,17 +107,17 @@ public class BattleManager : MonoBehaviour
     {
         if (unit1 != null)
         {
-            unitSpot1.SpawnUnit(unit1);
+            unitSpot1.SpawnUnit(unit1, AventureManager.Instance.squadData.unitsHealth[0]);
         }
         
         if (unit2 != null)
         {
-            unitSpot2.SpawnUnit(unit2);
+            unitSpot2.SpawnUnit(unit2, AventureManager.Instance.squadData.unitsHealth[1]);
         }
         
         if (unit3 != null)
         {
-            unitSpot3.SpawnUnit(unit3);
+            unitSpot3.SpawnUnit(unit3, AventureManager.Instance.squadData.unitsHealth[2]);
         }
     }
     
@@ -191,6 +209,8 @@ public class BattleManager : MonoBehaviour
                 order.RemoveAt(i);
             }
         }
+        
+        VerifyBossDeath(ennemy);
         
         ActualiseOrder();
     }

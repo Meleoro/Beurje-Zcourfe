@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TilesMouseManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class TilesMouseManager : MonoBehaviour
     [SerializeField] private Color tilesMovementColorSelected;
     [SerializeField] private Color tilesAttackColor;
     [SerializeField] private Color tilesAttackColorSelected;
+    [SerializeField] private Color tilesBuffColor;
+    [SerializeField] private Color tilesBuffColorSelected;
     
     [Header("Tiles Lists")]
     [HideInInspector] public List<OverlayTile> tilesCompetenceDisplayed = new List<OverlayTile>();
@@ -17,6 +20,11 @@ public class TilesMouseManager : MonoBehaviour
     [HideInInspector] public List<OverlayTile> tilesCompetenceSelected = new List<OverlayTile>();
     [HideInInspector] public OverlayTile currentSelectedTile;
 
+    [Header("Characters")]
+    private List<Ennemy> selectedEnnemies = new List<Ennemy>();
+    private List<Ennemy> selectedSummons = new List<Ennemy>();
+    private List<Unit> selectedUnits = new List<Unit>();
+    
     [Header("Controller Infos")] 
     private bool competenceSelect;
     private bool charaSelect;
@@ -49,6 +57,7 @@ public class TilesMouseManager : MonoBehaviour
     {
         tilesCompetenceDisplayed = mainScript.tilesCompetenceDisplayed;
         tilesAtRangeDisplayed = mainScript.tilesAtRangeDisplayed;
+        tilesCompetenceSelected = mainScript.tilesSelectedZone;
         currentSelectedTile = mainScript.currentSelectedTile;
         
         
@@ -71,6 +80,7 @@ public class TilesMouseManager : MonoBehaviour
     {
         mainScript.tilesCompetenceDisplayed = tilesCompetenceDisplayed;
         mainScript.tilesAtRangeDisplayed = tilesAtRangeDisplayed;
+        mainScript.tilesSelectedZone = tilesCompetenceSelected;
         mainScript.currentSelectedTile = currentSelectedTile;
         
         
@@ -179,14 +189,29 @@ public class TilesMouseManager : MonoBehaviour
         if (!competenceDisplayed)
         {
             competenceDisplayed = true;
-            
-            if (selectedUnit is not null)
+
+            if (!mainScript.kindCompetence)
             {
-                StartCoroutine(effectMaker.AttackTilesAppear(selectedUnit.currentTile, tilesCompetenceDisplayed, 0.05f, tilesAttackColor));
+                if (selectedUnit is not null)
+                {
+                    StartCoroutine(effectMaker.AttackTilesAppear(selectedUnit.currentTile, tilesCompetenceDisplayed, 0.1f, tilesAttackColor));
+                }
+                else
+                {
+                    StartCoroutine(effectMaker.AttackTilesAppear(selectedEnnemy.currentTile, tilesCompetenceDisplayed, 0.1f, tilesAttackColor));
+                }
             }
+
             else
             {
-                StartCoroutine(effectMaker.AttackTilesAppear(selectedEnnemy.currentTile, tilesCompetenceDisplayed, 0.05f, tilesAttackColor));
+                if (selectedUnit is not null)
+                {
+                    StartCoroutine(effectMaker.AttackTilesAppear(selectedUnit.currentTile, tilesCompetenceDisplayed, 0.1f, tilesBuffColor));
+                }
+                else
+                {
+                    StartCoroutine(effectMaker.AttackTilesAppear(selectedEnnemy.currentTile, tilesCompetenceDisplayed, 0.1f, tilesBuffColor));
+                }
             }
         }
     }
@@ -215,7 +240,33 @@ public class TilesMouseManager : MonoBehaviour
 
             else if(tilesCompetenceDisplayed.Contains(currentTile))
             {
+                currentSelectedTile = currentTile;
                 ManageSelectedZoneTiles(currentTile);
+            }
+
+            else
+            {
+                currentSelectedTile = currentTile;
+
+                for(int i  = tilesCompetenceSelected.Count - 1; i >= 0; i--)
+                {
+                    if (tilesCompetenceDisplayed.Contains(tilesCompetenceSelected[i]))
+                    {
+                        if(!mainScript.kindCompetence) 
+                            tilesCompetenceSelected[i].DeselectEffect(0.1f, tilesAttackColor);
+                    
+                        else
+                            tilesCompetenceSelected[i].DeselectEffect(0.1f, tilesBuffColor);
+                    }
+                    else
+                    {
+                        tilesCompetenceSelected[i].ResetTile();
+                    }
+                        
+                    tilesCompetenceSelected.RemoveAt(i);
+                }
+                
+                ManageSelectedCharacters();
             }
         }
         
@@ -226,13 +277,19 @@ public class TilesMouseManager : MonoBehaviour
     private void ManageSelectedZoneTiles(OverlayTile currentTile)
     {
         List<OverlayTile> currentTilesZone =
-            rangeFinder.FindTilesCompetence(currentTile, currentCompetence, currentCompetenceLevel);
+            rangeFinder.FindTilesCompetence(currentTile, currentCompetence, currentCompetenceLevel, true);
 
         for (int i = 0; i < currentTilesZone.Count; i++)
         {
             if (!tilesCompetenceSelected.Contains(currentTilesZone[i]))
             {
-                StartCoroutine(currentTilesZone[i].SelectEffect(0.1f, tilesAttackColorSelected));
+                if(!mainScript.kindCompetence)
+                    StartCoroutine(currentTilesZone[i].SelectEffect(0.1f, tilesAttackColorSelected));
+                
+                else
+                    StartCoroutine(currentTilesZone[i].SelectEffect(0.1f, tilesBuffColorSelected));
+                
+                
                 tilesCompetenceSelected.Add(currentTilesZone[i]);
             }
         }
@@ -241,16 +298,111 @@ public class TilesMouseManager : MonoBehaviour
         {
             if (!currentTilesZone.Contains(tilesCompetenceSelected[i]))
             {
-                if(tilesCompetenceDisplayed.Contains(tilesCompetenceSelected[i]))
-                    tilesCompetenceSelected[i].DeselectEffect(0.1f, tilesAttackColor);
+                if (tilesCompetenceDisplayed.Contains(tilesCompetenceSelected[i]))
+                {
+                    if(!mainScript.kindCompetence) 
+                        tilesCompetenceSelected[i].DeselectEffect(0.1f, tilesAttackColor);
+                    
+                    else
+                        tilesCompetenceSelected[i].DeselectEffect(0.1f, tilesBuffColor);
+                }
 
                 else
                     tilesCompetenceSelected[i].ResetTile();
                 
-                
-                
                 tilesCompetenceSelected.RemoveAt(i);
             }
         }
+
+        ManageSelectedCharacters();
     }
+
+    
+    private void ManageSelectedCharacters()
+    {
+        List<Vector2Int> keysUnits = BattleManager.Instance.activeUnits.Keys.ToList();
+        List<Vector2Int> keysEnnemies = BattleManager.Instance.activeEnnemies.Keys.ToList();
+        List<Vector2Int> keysSummons = BattleManager.Instance.activeSummons.Keys.ToList();
+
+        List<Unit> currentSelectedUnits = new List<Unit>();
+        List<Ennemy> currentSelectedEnnemies = new List<Ennemy>();
+        List<Ennemy> currentSelectedSummons = new List<Ennemy>();
+        
+        for (int i = 0; i < tilesCompetenceSelected.Count; i++)
+        {
+            if (keysUnits.Contains((Vector2Int)tilesCompetenceSelected[i].posOverlayTile) && mainScript.kindCompetence)
+            {
+                currentSelectedUnits.Add(BattleManager.Instance.activeUnits[(Vector2Int)tilesCompetenceSelected[i].posOverlayTile]);
+            }
+            
+            else if (keysEnnemies.Contains((Vector2Int)tilesCompetenceSelected[i].posOverlayTile) && !mainScript.kindCompetence)
+            {
+                currentSelectedEnnemies.Add(BattleManager.Instance.activeEnnemies[(Vector2Int)tilesCompetenceSelected[i].posOverlayTile]);
+            }
+            
+            else if (keysSummons.Contains((Vector2Int)tilesCompetenceSelected[i].posOverlayTile) && mainScript.kindCompetence)
+            {
+                currentSelectedSummons.Add(BattleManager.Instance.activeSummons[(Vector2Int)tilesCompetenceSelected[i].posOverlayTile]);
+            }
+        }
+        
+        
+        // WE REMOVE ALL THE CHARACTERS WHO QUIT THE SELECTION
+        for (int i = selectedUnits.Count - 1; i >= 0; i--)
+        {
+            if (!currentSelectedUnits.Contains(selectedUnits[i]))
+            {
+                selectedUnits[i].DesactivateOutline();
+                selectedUnits.RemoveAt(i);
+            }
+        }
+        
+        for (int i = selectedEnnemies.Count - 1; i >= 0; i--)
+        {
+            if (!currentSelectedEnnemies.Contains(selectedEnnemies[i]))
+            {
+                selectedEnnemies[i].DesactivateOutline();
+                selectedEnnemies.RemoveAt(i);
+            }
+        }
+        
+        for (int i = selectedSummons.Count - 1; i >= 0; i--)
+        {
+            if (!currentSelectedSummons.Contains(selectedSummons[i]))
+            {
+                selectedSummons[i].DesactivateOutline();
+                selectedSummons.RemoveAt(i);
+            }
+        }
+
+        
+        // WE ADD THE NEW CHARACTERS IN THE SELECTION
+        for (int i = currentSelectedUnits.Count - 1; i >= 0; i--)
+        {
+            if (!selectedUnits.Contains(currentSelectedUnits[i]))
+            {
+                currentSelectedUnits[i].ActivateOutline(Color.green);
+                selectedUnits.Add(currentSelectedUnits[i]);
+            }
+        }
+        
+        for (int i = currentSelectedEnnemies.Count - 1; i >= 0; i--)
+        {
+            if (!selectedEnnemies.Contains(currentSelectedEnnemies[i]))
+            {
+                currentSelectedEnnemies[i].ActivateOutline(Color.red);
+                selectedEnnemies.Add(currentSelectedEnnemies[i]);
+            }
+        }
+        
+        for (int i = currentSelectedSummons.Count - 1; i >= 0; i--)
+        {
+            if (!selectedSummons.Contains(currentSelectedSummons[i]))
+            {
+                currentSelectedSummons[i].ActivateOutline(Color.green);
+                selectedSummons.Add(currentSelectedSummons[i]);
+            }
+        }
+    }
+    
 }

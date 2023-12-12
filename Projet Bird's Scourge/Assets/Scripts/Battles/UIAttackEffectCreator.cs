@@ -6,13 +6,64 @@ using UnityEngine.UI;
 
 public class UIAttackEffectCreator
 {
-    public void SpriteEffect1(RectTransform currentRectTransform, float duration, Vector2 newPos, float newSize, float newRot, Ease attackerMovementEase, Ease attackerRotationEase)
-    {
-        currentRectTransform.DOLocalMoveX(currentRectTransform.localPosition.x + newPos.x, duration).SetEase(attackerMovementEase);
+    public UIBattleAttack mainScript;
 
-        currentRectTransform.DOLocalRotate(currentRectTransform.rotation.eulerAngles + new Vector3(0, 0, newRot), duration).SetEase(attackerRotationEase);
+
+    public IEnumerator FondEffect(Image fond)
+    {
+        fond.DOFade(1, 0.1f);
+        fond.color = Color.white;
+
+        yield return new WaitForSeconds(0.11f);
+        
+        fond.DOColor(Color.black, 0.2f);
+        fond.DOFade(0.8f, 0.2f);
+    }
+    
+    
+    public void SpriteEffect1(RectTransform currentRectTransform, RectTransform currentParentRectTransform, float duration, Vector2 newPos, float newSize, float newRot)
+    {
+        currentRectTransform.DOLocalMoveX(currentRectTransform.localPosition.x + newPos.x, duration).SetEase(Ease.OutQuad);
+
+        currentRectTransform.DOLocalRotate(currentRectTransform.rotation.eulerAngles + new Vector3(0, 0, newRot), duration).SetEase(Ease.OutQuad);
 
         currentRectTransform.DOScale(Vector3.one * newSize, duration);
+    }
+    
+    
+    public IEnumerator SpriteEffect2(RectTransform currentRectTransform, RectTransform currentParentRectTransform, float duration, Vector2 newPos, float newSize, float newRot, float shakeAmplitude, int shakeVibrato,
+        UIBattleAttack.CompetenceType currentCompetenceType, UIBattleAttack currentMainScript)
+    {
+        mainScript = currentMainScript;
+        
+        float duration1 = 0.18f;
+        float duration2 = 0.82f;
+        
+        
+        if (currentCompetenceType != UIBattleAttack.CompetenceType.miss)
+        {
+            mainScript.attackUI.DOShakePosition(duration * duration2 * 0.5f, new Vector3(1, 1, 0) * (shakeAmplitude * 2f));
+        }
+        
+        
+        currentRectTransform.DOLocalMoveX(currentRectTransform.localPosition.x + newPos.x * duration2, duration * duration1)
+            .SetEase(Ease.Linear);
+            
+        currentRectTransform.DOLocalRotate(currentRectTransform.rotation.eulerAngles + new Vector3(0, 0, newRot), duration).SetEase(Ease.OutQuad);
+
+        currentRectTransform.DOScale(Vector3.one * newSize, duration);
+
+        yield return new WaitForSeconds(duration * duration1);
+        
+        
+        if (currentCompetenceType != UIBattleAttack.CompetenceType.miss)
+        {
+            currentParentRectTransform.DOShakePosition(duration * duration2 * 0.5f, new Vector3(1.2f, 1, 0) * (shakeAmplitude * 1.5f), (int)(shakeVibrato * 1.5f));
+        }
+        
+        
+        currentRectTransform.DOLocalMoveX(currentRectTransform.localPosition.x + newPos.x * duration1,
+            duration * duration2).SetEase(Ease.OutQuad); 
     }
     
     

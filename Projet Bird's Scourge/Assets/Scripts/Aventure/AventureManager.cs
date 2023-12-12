@@ -15,15 +15,14 @@ public class AventureManager : MonoBehaviour
     [HideInInspector] public int zoneIndex;
     [HideInInspector] public int maxY;
     [HideInInspector] public int currentY;
-    public GameObject unit1;
-    public GameObject unit2;
-    public GameObject unit3;
+    private float currentAvancee;
+    [HideInInspector] public DataSquad squadData;
 
     [Header("Parameters")] 
     public float aventureCamSize = 10.8f;
     
     [Header("Battles")] 
-    public List<GameObject> possibleBattles;
+    public List<ListBattle> possibleBattles;
     
     [Header("Events")] 
     public List<EventData> possibleEvents;
@@ -57,10 +56,12 @@ public class AventureManager : MonoBehaviour
         StartCoroutine(AventureEffect.Instance.AppearEffect());
     }
 
-    public void InitialisePossibleNods(AventureData data)
+    public void InitialiseAventure(AventureData data, DataSquad currentSquadData)
     {
         possibleBattles = data.battleNodes;
         possibleEvents = data.eventNodes;
+
+        squadData = currentSquadData;
     }
 
 
@@ -81,8 +82,42 @@ public class AventureManager : MonoBehaviour
     // CHOSES WHICH BATTLE PREFAB IS ASSIGNED TO A NODE
     public GameObject ChoseBattle()
     {
-        int battleIndex = Random.Range(0, possibleBattles.Count);
+        CalculateAvancee();
 
-        return possibleBattles[battleIndex];
+        for (int i = 0; i < possibleBattles.Count; i++)
+        {
+            if (currentAvancee <= ((float)(i + 1) / possibleBattles.Count) * 100f)
+            {
+                int battleIndex = Random.Range(0, possibleBattles[i].battleObjects.Count);
+                
+                return possibleBattles[i].battleObjects[battleIndex];
+            }
+        }
+
+        return possibleBattles[0].battleObjects[0];
+    }
+
+    private void CalculateAvancee()
+    {
+        currentAvancee = ((float)currentY / maxY) * 100f;
+    }
+    
+    
+    // -------------------------- SQUAD DATA MANAGEMENT --------------------------
+
+    public void DataApplyHealth(List<Unit> units)
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            units[i].currentHealth = squadData.unitsHealth[i];
+        }
+    }
+
+    public void DataActualiseHealth(List<Unit> units)
+    {
+        for (int i = 0; i < units.Count; i++)
+        {
+            squadData.unitsHealth[i] = units[i].currentHealth;
+        }
     }
 }

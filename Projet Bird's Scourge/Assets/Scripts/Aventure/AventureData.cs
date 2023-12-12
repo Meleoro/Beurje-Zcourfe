@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,14 @@ public class AventureData : ScriptableObject
     public List<NodeTypeClass> nodeTypes = new List<NodeTypeClass>();
 
     [Header("Nod Content")] 
-    public List<GameObject> battleNodes = new List<GameObject>();
+    public List<ListBattle> battleNodes = new List<ListBattle>();
     public List<EventData> eventNodes = new List<EventData>();
+}
+
+
+
+[Serializable]
+public class ListBattle
+{
+    public List<GameObject> battleObjects = new List<GameObject>();
 }
