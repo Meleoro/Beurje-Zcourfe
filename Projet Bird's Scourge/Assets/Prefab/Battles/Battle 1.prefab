@@ -11803,6 +11803,7 @@ MonoBehaviour:
   unitSpot3: {fileID: 5245828737687115693}
   isBossBattle: 1
   bossChara: {fileID: 6092526850219515826}
+  indexCharaUnlocked: 0
 --- !u!114 &69951079072892352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18247,7 +18248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5892380394978447621
 Transform:
   m_ObjectHideFlags: 0
@@ -18887,6 +18888,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Summon
       objectReference: {fileID: 0}
+    - target: {fileID: 8337190906301115193, guid: 0cfb1332e1020e94b9161df824332f3f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18977,7 +18982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 262518477433530119, guid: 41f5cb488bbe20845a1f4590d8b6f939, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 874423767439827105, guid: 41f5cb488bbe20845a1f4590d8b6f939, type: 3}
       propertyPath: m_RootOrder
@@ -19274,7 +19279,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8337190906301115193, guid: ca1c4a61bcd319c47bca22a3cd23a7c9, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
